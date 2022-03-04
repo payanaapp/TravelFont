@@ -1,4 +1,8 @@
-payana_bucket_creation_config_file = "/Users/abhinandankelgereramesh/Documents/payana-github/TravelFont/payana/payana_bl/cloud_storage_utils/config/gcs_bucket_schema.json"
+from TravelFont.payana.payana_bl.bigtable_utils.constants import bigtable_constants
+
+import os
+
+payana_bucket_creation_config_file = os.path.join(bigtable_constants.travelfont_home, "payana/payana_bl/cloud_storage_utils/config/gcs_bucket_schema.json")
 
 payana_bucket_location = "bucket_location"
 payana_bucket_storage_class = "bucket_storage_class"

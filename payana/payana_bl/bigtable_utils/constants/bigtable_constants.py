@@ -5,8 +5,15 @@
 
 from google.cloud.bigtable import enums
 
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+travelfont_home = os.environ.get("travelfont_home")
+
+
 # client_config.yaml constants
-bigtable_client_config_path = "/Users/abhinandankelgereramesh/Documents/payana-github/TravelFont/payana/payana_bl/bigtable_utils/config/client_config.yaml"
+bigtable_client_config_path = os.path.join(travelfont_home, "payana/payana_bl/bigtable_utils/config/client_config.yaml")
 bigtable_instance_id = "instance_id"
 bigtable_project_id = "project_id"
 bigtable_cluster_id = "cluster_id"
@@ -19,7 +26,7 @@ bigtable_storage_type = enums.StorageType.SSD
 bigtable_production = enums.Instance.Type.PRODUCTION
 
 # bigtable table creation schema constants
-bigtable_schema_config_file = "/Users/abhinandankelgereramesh/Documents/payana-github/TravelFont/payana/payana_bl/bigtable_utils/config/bigtable_schema.json"
+bigtable_schema_config_file = os.path.join(travelfont_home, "payana/payana_bl/bigtable_utils/config/bigtable_schema.json")
 bigtable_schema_column_family_id = "column_family_id"
 bigtable_schema_max_versions = "max_versions"
 bigtable_schema_description = "description"

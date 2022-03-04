@@ -21,6 +21,13 @@ https://flask-restplus.readthedocs.io/en/stable/scaling.html
 
 Fork and clone the Payana git project
 
+Go to payana folder - Find a .env file. If not present create a .env file and add the below variable
+
+travelfont_home="/Users/abhinandankelgereramesh/Documents/payana-github/TravelFont"
+Replace the path to your github root TravelFont folder
+
+Source the .env file
+
 Go to payana/payana_service and run -
 
 pip3 install -r requirements.txt
