@@ -1,0 +1,43 @@
+#!/usr/bin/env python
+
+"""Demonstrates how to delete a gcs bucket
+"""
+
+import argparse
+import json
+
+from payana.payana_bl.common_utils.payana_exception_handler_utils import payana_generic_exception_handler
+from payana.payana_core.cloud_storage_utils.delete_storage_bucket import delete_storage_bucket
+from payana.payana_bl.cloud_storage_utils.constants import gcs_constants
+
+# google cloud storage imports
+from google.cloud import storage
+
+
+@payana_generic_exception_handler
+def payana_delete_gcs_bucket(payana_bucket_creation_config_file):
+
+    print(__name__)
+
+    # creates gcs buckets
+    # read the bucket names and column families
+    with open(payana_bucket_creation_config_file) as json_data_file:
+        payana_bucket_creation_dict = json.load(json_data_file)
+
+    for bucket_name in payana_bucket_creation_dict.keys():
+
+        delete_storage_bucket(bucket_name)
+
+
+if __name__ == '__main__':
+
+    parser = argparse.ArgumentParser(
+        description=__doc__,
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+
+    parser.add_argument(
+        'payana_bucket_creation_config_file', help='Payana GCS bucket details config path.')
+
+    args = parser.parse_args()
+
+    payana_delete_gcs_bucket(args.payana_table_creation_config_file)

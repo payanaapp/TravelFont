@@ -1,0 +1,229 @@
+#!/usr/bin/env python
+
+"""Demonstrates how to write ProfileInfo into BigTable
+"""
+
+import argparse
+import random
+import json
+import time
+import hashlib
+from payana.payana_bl.bigtable_utils.constants import bigtable_constants
+from payana.payana_bl.bigtable_utils.PayanaBigTable import PayanaBigTable
+from payana.payana_bl.bigtable_utils.bigtable_read_write_object_wrapper import bigtable_write_object_wrapper
+from payana.payana_bl.common_utils.payana_exception_handler_utils import payana_generic_exception_handler
+
+
+# google cloud bigtable imports
+from google.cloud.bigtable import column_family
+
+
+class PayanaExcursionTable:
+
+    @payana_generic_exception_handler
+    def __init__(self, checkin_id_list, participants_list, activities_list, excursion_metadata):
+
+        self.checkin_id_list = checkin_id_list
+        self.participants_list = participants_list
+        self.excursion_metadata = excursion_metadata
+        self.activities_list = activities_list
+
+        self.column_family_checkin_id_list = bigtable_constants.payana_excursion_column_family_checkin_id_list
+        self.column_family_participants_list = bigtable_constants.payana_excursion_column_family_participants_list
+        self.column_qualifier_description = bigtable_constants.payana_excursion_column_family_description
+        self.column_qualifier_visit_timestamp = bigtable_constants.payana_excursion_column_family_visit_timestamp
+        self.column_qualifier_excursion_owner_profile_id = bigtable_constants.payana_excursion_column_family_excursion_owner_profile_id
+        self.column_family_excursion_metadata = bigtable_constants.payana_excursion_metadata
+        self.column_qualifier_excursion_place_id = bigtable_constants.payana_excursion_place_id
+        self.column_qualifier_excursion_transport_mode = bigtable_constants.payana_excursion_transport_mode
+        self.column_qualifier_excursion_place_name = bigtable_constants.payana_excursion_place_name
+
+        self.column_qualifier_itinerary_id = bigtable_constants.payana_excursion_itinerary_id
+        self.column_family_activities_list = bigtable_constants.payana_excursion_activities_list
+
+        self.column_qualifier_excursion_id = bigtable_constants.payana_excursion_id
+
+        if self.column_qualifier_description in self.excursion_metadata:
+            self.description = self.excursion_metadata[self.column_qualifier_description]
+        else:
+            # raise invalid key error or key missing error
+            pass
+
+        if self.column_qualifier_excursion_id in self.excursion_metadata:
+            self.excursion_id = self.excursion_metadata[self.column_qualifier_excursion_id]
+        else:
+            # raise invalid key error or key missing error
+            pass
+
+        if self.column_qualifier_visit_timestamp in self.excursion_metadata:
+            self.visit_timestamp = self.excursion_metadata[self.column_qualifier_visit_timestamp]
+        else:
+            # raise invalid key error or key missing error
+            pass
+
+        if self.column_qualifier_excursion_owner_profile_id in self.excursion_metadata:
+            self.excursion_owner_profile_id = self.excursion_metadata[
+                self.column_qualifier_excursion_owner_profile_id]
+        else:
+            # raise invalid key error or key missing error
+            pass
+
+        if self.column_qualifier_excursion_transport_mode in self.excursion_metadata:
+            self.excursion_transport_mode = self.excursion_metadata[
+                self.column_qualifier_excursion_transport_mode]
+        else:
+            # raise invalid key error or key missing error
+            pass
+
+        if self.column_qualifier_excursion_place_name in self.excursion_metadata:
+            self.excursion_place_name = self.excursion_metadata[
+            self.column_qualifier_excursion_place_name]
+        else:
+            # raise invalid key error or key missing error
+            pass
+
+        if self.column_qualifier_excursion_place_id in self.excursion_metadata:
+            self.excursion_place_id = self.excursion_metadata[
+                self.column_qualifier_excursion_place_id]
+        else:
+            # raise invalid key error or key missing error
+            pass
+
+        if self.column_qualifier_itinerary_id in self.excursion_metadata:
+            self.excursion_itinerary_id = self.excursion_metadata[
+                self.column_qualifier_itinerary_id]
+        else:
+            # raise invalid key error or key missing error
+            pass
+
+        self.update_bigtable_write_objects = []
+
+    @payana_generic_exception_handler
+    def toJSON(self):
+        return self.__dict__
+
+    @payana_generic_exception_handler
+    def generate_excursion_id(self):
+
+        current_timestamp_unix = str(time.time())
+        excursion_id_terms = [current_timestamp_unix,
+                              self.excursion_owner_profile_id]
+
+        rand_num = random.randint(0, 1)
+
+        if rand_num == 1:
+            excursion_id_terms[0], excursion_id_terms[1] = excursion_id_terms[1], excursion_id_terms[0]
+
+        excursion_id_hash = "".join(excursion_id_terms)
+
+        excursion_id_binary = hashlib.sha256(excursion_id_hash.encode())
+
+        self.excursion_id = excursion_id_binary.hexdigest()
+
+    @payana_generic_exception_handler
+    def update_excursion_bigtable(self):
+
+        if self.excursion_id is None or self.excursion_id == "":
+            self.generate_excursion_id()
+
+        payana_excursion_table_instance = PayanaBigTable(
+            bigtable_constants.payana_excursion_table)
+
+        self.create_bigtable_write_objects()
+
+        payana_excursion_table_instance.insert_columns(
+            self.update_bigtable_write_objects)
+
+    @payana_generic_exception_handler
+    def create_bigtable_write_objects(self):
+        self.set_checkin_id_list_write_object()
+        self.set_participants_list_write_object()
+        self.set_activities_list_write_object()
+        self.set_description_write_object()
+        self.set_visit_timestamp_write_object()
+        self.set_excursion_owner_profile_id_write_object()
+        self.set_excursion_place_name_write_object()
+        self.set_excursion_id_write_object()
+        self.set_excursion_transport_mode_write_object()
+        self.set_excursion_place_id_write_object()
+        self.set_excursion_itinerary_id_write_object()
+
+    @payana_generic_exception_handler
+    def set_checkin_id_list_write_object(self):
+
+        # excursion_id_list write object
+        for key, checkin_id in self.checkin_id_list.items():
+            self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+                self.excursion_id, self.column_family_checkin_id_list, key, checkin_id))
+
+    @payana_generic_exception_handler
+    def set_participants_list_write_object(self):
+
+        # participants_list write object
+        for participant, timestamp in self.participants_list.items():
+            self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+                self.excursion_id, self.column_family_participants_list, participant, timestamp))
+
+    @payana_generic_exception_handler
+    def set_activities_list_write_object(self):
+
+        # participants_list write object
+        for activity, number in self.activities_list.items():
+            self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+                self.excursion_id, self.column_family_activities_list, activity, number))
+
+    @payana_generic_exception_handler
+    def set_description_write_object(self):
+
+        # user_name write object
+        self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+            self.excursion_id, self.column_family_excursion_metadata, self.column_qualifier_description, self.description))
+
+    @payana_generic_exception_handler
+    def set_visit_timestamp_write_object(self):
+
+        # user_name write object
+        self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+            self.excursion_id, self.column_family_excursion_metadata, self.column_qualifier_visit_timestamp, self.visit_timestamp))
+
+    @payana_generic_exception_handler
+    def set_excursion_owner_profile_id_write_object(self):
+
+        # user_name write object
+        self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+            self.excursion_id, self.column_family_excursion_metadata, self.column_qualifier_excursion_owner_profile_id, self.excursion_owner_profile_id))
+
+    @payana_generic_exception_handler
+    def set_excursion_id_write_object(self):
+
+        # user_name write object
+        self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+            self.excursion_id, self.column_family_excursion_metadata, self.column_qualifier_excursion_id, self.excursion_id))
+
+    @payana_generic_exception_handler
+    def set_excursion_transport_mode_write_object(self):
+
+        # user_name write object
+        self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+            self.excursion_id, self.column_family_excursion_metadata, self.column_qualifier_excursion_transport_mode, self.excursion_transport_mode))
+
+    @payana_generic_exception_handler 
+    def set_excursion_place_name_write_object(self):
+
+        # user_name write object
+        self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+            self.excursion_id, self.column_family_excursion_metadata, self.column_qualifier_excursion_place_name, self.excursion_place_name))
+
+    @payana_generic_exception_handler
+    def set_excursion_place_id_write_object(self):
+
+        # user_name write object
+        self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+            self.excursion_id, self.column_family_excursion_metadata, self.column_qualifier_excursion_place_id, self.excursion_place_id))
+
+    @payana_generic_exception_handler
+    def set_excursion_itinerary_id_write_object(self):
+
+        # user_name write object
+        self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+            self.excursion_id, self.column_family_excursion_metadata, self.column_qualifier_itinerary_id, self.excursion_itinerary_id))
