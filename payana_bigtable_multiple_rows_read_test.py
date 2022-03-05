@@ -316,7 +316,9 @@ itinerary_obj = {
         "description": "Summer trip to Montana",
         "visit_timestamp": "123456789",
         "itinerary_id": "",
-        "itinerary_owner_profile_id": "1234567"
+        "itinerary_owner_profile_id": "1234567",
+        "place_id": "123456",
+        "place_name": "SF"
     }
 }
 
@@ -332,7 +334,9 @@ itinerary_obj_dup = {
         "description": "Summer trip to Montana",
         "visit_timestamp": "123456789",
         "itinerary_id": "",
-        "itinerary_owner_profile_id": "1234567"
+        "itinerary_owner_profile_id": "1234567",
+        "place_id": "123456",
+        "place_name": "SF"
     }
 }
 

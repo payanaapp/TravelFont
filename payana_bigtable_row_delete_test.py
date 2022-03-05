@@ -31,7 +31,7 @@ comment_obj = {
     "profile_id": "abkr",
     "profile_name": "abkr",
     "comment": "Beautiful pic!",
-    "likes": "user_123",
+    "likes_count": "11",
     "comment_id": "",
     "entity_id": "image_123"
 }
@@ -41,7 +41,7 @@ comment_obj_dup = {
     "profile_id": "abkr",
     "profile_name": "abkr",
     "comment": "Beautiful pic!",
-    "likes": "user_123",
+    "likes_count": "11",
     "comment_id": "",
     "entity_id": "image_456"
 }
@@ -51,7 +51,7 @@ comment_obj_dup_one = {
     "profile_id": "abkr",
     "profile_name": "abkr",
     "comment": "Beautiful pic!",
-    "likes": "user_123",
+    "likes_count": "11",
     "comment_id": "",
     "entity_id": "image_789"
 }
@@ -61,7 +61,7 @@ comment_obj_dup_two = {
     "profile_id": "abkr",
     "profile_name": "abkr",
     "comment": "Beautiful pic!",
-    "likes": "user_123",
+    "likes_count": "11",
     "comment_id": "",
     "entity_id": "image_101112"
 }

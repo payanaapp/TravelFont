@@ -18,6 +18,7 @@ from payana.payana_bl.common_utils.payana_exception_handler_utils import payana_
 
 # google cloud bigtable imports
 from google.cloud.bigtable import column_family
+from google.cloud.bigtable.row_set import RowSet
 
 
 @payana_generic_exception_handler
@@ -46,15 +47,19 @@ def bigtable_orchestration(client_config_path):
     row_key = 'greeting0'.encode()
     #row_object = bigtable_read_row_key_wrapper(row_key)
     bigtable_row = bigtable_row_read(table, row_key)
+    print(len(bigtable_row))
 
     # print the data
     column = 'greeting'.encode()
+    bigtable_row = bigtable_row[0]
     #bigtable_read_column_value_wrapper(row_key, column_family_id, row_key)
     cell = bigtable_row.cells[column_family_id][column][0]
     print(cell.value.decode('utf-8'))
 
+    row_set = RowSet()
+
     # read the whole table
-    bigtable_rows = bigtable_rows_read(table)
+    bigtable_rows = bigtable_rows_read(table, row_set)
 
     for row in bigtable_rows:
         cell = row.cells[column_family_id][column][0]
