@@ -61,6 +61,7 @@ payana_profile_table_phone = "phone"
 payana_profile_table_private_account = "private_account"
 payana_profile_table_gender = "gender"
 payana_profile_table_date_of_birth = "date_of_birth"
+payana_profile_table_top_activities = "top_activities"
 
 # payana_comments_table_field_names
 payana_comments_table_comments_family_id = "payana_comments"

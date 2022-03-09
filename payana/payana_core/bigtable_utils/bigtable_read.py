@@ -24,6 +24,7 @@ def bigtable_row_read(table, row_key, cell_version=1):
     row_filter = row_filters.CellsColumnLimitFilter(cell_version)
     row = table.read_row(row_key, row_filter)
     # [END bigtable_table_read]
+
     return [row] if row is not None else []
 
 #TO-DO : The calling function returns a PartialRowData object which might not have the full data. Fix the issue.

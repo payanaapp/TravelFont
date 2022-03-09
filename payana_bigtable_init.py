@@ -42,17 +42,29 @@ payana_comment_table = bigtable_constants.payana_comments_table
 payana_comment_read_obj = PayanaBigTable(payana_comment_table)
 print(payana_comment_read_obj.get_row_dict("image_123", include_column_family=False))
 
+payana_profile_table_personal_info_column_family = bigtable_constants.payana_profile_table_personal_info_column_family
+payana_profile_table_top_activities = bigtable_constants.payana_profile_table_top_activities
+
 profile_obj = {
-    "profile_name": "abkr",
-    "user_name": "abkr",
-    "blog_url": "abkr.com",
-    "profile_description": "abkr's profile",
-    "profile_id": "",
-    "email": "abkr@gmail.com",
-    "phone": "123456789",
-    "private_account": "true",
-    "gender": "male",
-    "date_of_birth": "11/11/1111"
+    payana_profile_table_personal_info_column_family :
+    {
+        "profile_name": "abkr",
+        "user_name": "abkr",
+        "blog_url": "abkr.com",
+        "profile_description": "abkr's profile",
+        "profile_id": "",
+        "email": "abkr@gmail.com",
+        "phone": "123456789",
+        "private_account": "true",
+        "gender": "male",
+        "date_of_birth": "11/11/1111"
+    },
+    payana_profile_table_top_activities : 
+    {
+        "hiking": "0.67", 
+        "adventure": "0.4", 
+        "fashion": "0.78"
+    }
 }
 
 payana_profile_obj = PayanaProfileTable(**profile_obj)
@@ -60,7 +72,8 @@ payana_profile_obj.update_profile_info_bigtable()
 profile_id = payana_profile_obj.profile_id
 payana_profile_table = bigtable_constants.payana_profile_table
 payana_profile_read_obj = PayanaBigTable(payana_profile_table)
-print(payana_profile_read_obj.get_row_dict(profile_id, include_column_family=False))
+payana_profile_obj_read = payana_profile_read_obj.get_row_dict(profile_id, include_column_family=True)
+print(payana_profile_obj_read)
 
 itinerary_obj = {
     "excursion_id_list": {
