@@ -193,4 +193,12 @@ updated_top_activities = profile_table_road_trip_delete[profile_id][column_famil
 
 print("Status of delete activity operation: " + str(activity_name not in updated_top_activities))
 
+#Remove the whole profile ID row
+profile_row_delete_object = bigtable_write_object_wrapper(profile_id, "", "", "")
+payana_profile_read_obj.delete_bigtable_row(profile_row_delete_object)
+
+profile_obj_read_activity_update = payana_profile_read_obj.get_row_dict(profile_id, include_column_family=True)
+
+print("Status of profile obj delete row:" + str(len(profile_obj_read_activity_update) == 0))
+
 payana_bigtable_cleanup(client_config_file_path, bigtable_tables_schema_path)

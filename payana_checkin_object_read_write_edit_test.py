@@ -242,6 +242,14 @@ for column_qualifier_airbnb_post_id, column_value_airbnb_post_id in airbnb_post_
     print("Status of update airbnb_post_id operation: " + str(column_qualifier_airbnb_post_id in updated_airbnb_post_id))
     print("Status of update airbnb_post_id value operation: " + str(column_value_airbnb_post_id in updated_airbnb_post_id[column_qualifier_airbnb_post_id]))
 
+#Remove the whole chekcin row
+checkin_row_delete_object = bigtable_write_object_wrapper(checkin_id, "", "", "")
+payana_checkin_read_obj.delete_bigtable_row(checkin_row_delete_object)
+
+checkin_obj_read_activity_update = payana_checkin_read_obj.get_row_dict(checkin_id, include_column_family=True)
+
+print("Status of checkin obj delete row:" + str(len(checkin_obj_read_activity_update) == 0))
+
 #Add a comment
 comment_obj = {
     "comment_timestamp": "123456789",
