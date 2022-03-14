@@ -169,6 +169,13 @@ for column_qualifier_activity, column_value_activity in new_activity.items():
 
     print("Status of update activity operation: " + str(column_qualifier_activity not in updated_activity_list))
 
+#Remove the whole excursion row
+excursion_row_delete_object = bigtable_write_object_wrapper(excursion_id, "", "", "")
+payana_excursion_read_obj.delete_bigtable_row(excursion_row_delete_object)
+
+excursion_obj_read_activity_update = payana_excursion_read_obj.get_row_dict(excursion_id, include_column_family=True)
+
+print("Status of excursion obj delete row:" + str(len(excursion_obj_read_activity_update) == 0))
 
 #Add a comment
 comment_obj = {

@@ -112,7 +112,7 @@ for column_qualifier_new_participant, column_value_new_participant in new_partic
     print("Status of update participant operation: " + str(column_qualifier_new_participant not in updated_participant_list))
 
 
-#Add a excursion ID -- no use case to call as an API end point. For debugging or backfilling purpose
+#Add an excursion ID -- no use case to call as an API end point. For debugging or backfilling purpose
 column_family_excursion_id_list = bigtable_constants.payana_itinerary_column_family_excursion_id_list
 new_excursion_id = {"4" : "12345"}
 
@@ -156,6 +156,14 @@ for column_qualifier_activity, column_value_activity in new_activity.items():
 
     print("Status of update activity operation: " + str(column_qualifier_activity not in updated_activity_list))
 
+
+#Remove the whole itinerary row
+itinerary_row_delete_object = bigtable_write_object_wrapper(itinerary_id, "", "", "")
+payana_itinerary_read_obj.delete_bigtable_row(itinerary_row_delete_object)
+
+itinerary_obj_read_activity_update = payana_itinerary_read_obj.get_row_dict(itinerary_id, include_column_family=True)
+
+print("Status of itinerary obj delete row:" + str(len(itinerary_obj_read_activity_update) == 0))
 
 #Add a comment
 comment_obj = {
