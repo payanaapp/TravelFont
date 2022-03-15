@@ -21,11 +21,10 @@ from google.cloud.bigtable import column_family
 class PayanaCountryTable:
 
     @payana_generic_exception_handler
-    def __init__(self, country, city, city_value=""):
+    def __init__(self, country, city_list):
 
         self.country = country
-        self.city = city
-        self.city_value = city_value
+        self.city_list = city_list
 
         self.update_bigtable_write_objects = []
 
@@ -52,7 +51,8 @@ class PayanaCountryTable:
 
     @payana_generic_exception_handler
     def set_city_write_object(self):
-
-        # place_id write object
-        self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-            self.country, self.column_family_id, self.city, self.city_value))
+        
+        # city list write object
+        for city, score in self.city_list.items():
+            self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+                self.country, self.column_family_id, city, score))
