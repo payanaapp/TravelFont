@@ -223,7 +223,10 @@ print(payana_neighboring_cities_read_obj.get_row_dict(city, include_column_famil
 
 state_obj = {
     "state": "california##usa",
-    "city": "cupertino##california##usa"
+    "city_list": {
+        "cupertino##california##usa" : "1.2",
+        "seattle##washington##usa" : "1.78"
+        }
 }
 
 payana_state_obj = PayanaStateTable(**state_obj)
@@ -235,7 +238,10 @@ print(payana_state_read_obj.get_row_dict(state, include_column_family=True))
 
 country_obj = {
     "country": "usa",
-    "city": "cupertino##california##usa"
+    "city_list": {
+        "cupertino##california##usa" : "1.2",
+        "seattle##washington##usa" : "1.78"
+        }
 }
 
 payana_country_obj = PayanaCountryTable(**country_obj)
