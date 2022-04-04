@@ -1,92 +1,278 @@
 {
     "payana_profile_table": {
-        "column_family_id":["personal_information", "top_activities", "heat_map_place_ids", "thumbnail_travel_buddies", "recent_itineraries", "highlighted_itineraries", "saved_itineraries"],
-        "description":"This table will hold all the profile details of the user",
-        "purpose":"To fetch the details of a profile",
+        "column_family_id": [
+            "personal_information",
+            "top_activities",
+            "heat_map_place_ids",
+            "thumbnail_travel_buddies",
+            "recent_itineraries",
+            "highlighted_itineraries",
+            "saved_itineraries"
+        ],
+        "description": "This table will hold all the profile details of the user",
+        "purpose": "To fetch the details of a profile",
         "max_versions": 1
     },
     "payana_itinerary_table": {
-        "column_family_id":["excursion_id_list", "participants_list", "activities_list", "itinerary_metadata"],
-        "description":"This table will hold all the details of an itinerary",
-        "purpose":"To fetch the details of an itinerary",
+        "column_family_id": [
+            "excursion_id_list",
+            "participants_list",
+            "activities_list",
+            "itinerary_metadata"
+        ],
+        "description": "This table will hold all the details of an itinerary",
+        "purpose": "To fetch the details of an itinerary",
         "max_versions": 1
     },
     "payana_excursion_table": {
-        "column_family_id":["checkin_id_list", "participants_list", "activities_list", "excursion_metadata"],
-        "description":"This table will hold all the details of an excursion",
-        "purpose":"To fetch the details of an excursion",
+        "column_family_id": [
+            "checkin_id_list",
+            "participants_list",
+            "activities_list",
+            "excursion_metadata"
+        ],
+        "description": "This table will hold all the details of an excursion",
+        "purpose": "To fetch the details of an excursion",
         "max_versions": 1
     },
     "payana_checkin_table": {
-        "column_family_id":["image_id_list", "participants_list", "activities_list", "checkin_metadata", "instagram_metadata", "airbnb_metadata"],
-        "description":"This table will hold all the details of a checkin",
-        "purpose":"To fetch the details of a checkin",
+        "column_family_id": [
+            "image_id_list",
+            "participants_list",
+            "activities_list",
+            "checkin_metadata",
+            "instagram_metadata",
+            "airbnb_metadata"
+        ],
+        "description": "This table will hold all the details of a checkin",
+        "purpose": "To fetch the details of a checkin",
         "max_versions": 1
     },
     "payana_travel_buddy_list_table": {
-        "column_family_id":["payana_travel_buddy_list"],
-        "description":"This table will hold all the list of friends of an user",
-        "purpose":"To fetch the list of all friends. Search friend itineraries from place A to place B or at a place -- stage 1",
+        "column_family_id": [
+            "payana_travel_buddy_list"
+        ],
+        "description": "This table will hold all the list of friends of an user",
+        "purpose": "To fetch the list of all friends. Search friend itineraries from place A to place B or at a place -- stage 1",
         "max_versions": 1
     },
     "payana_comments_table": {
-        "column_family_id":["payana_comments"],
-        "description":"This table will hold the list of all the comments on a picture/excursion/itinerary saved in GCS",
-        "purpose":"This table will hold the list of all the comments on a picture/excursion/itinerary saved in GCS",
+        "column_family_id": [
+            "payana_comments"
+        ],
+        "description": "This table will hold the list of all the comments on a picture/excursion/itinerary saved in GCS",
+        "purpose": "This table will hold the list of all the comments on a picture/excursion/itinerary saved in GCS",
         "max_versions": 1
     },
     "payana_likes_table": {
-        "column_family_id":["payana_likes"],
-        "description":"This table will hold the list of all the likes on a picture/excursion/itinerary saved in GCS",
-        "purpose":"To fetch the likes of picture/excursion/itinerary saved in GCS",
-        "max_versions": 1 
+        "column_family_id": [
+            "payana_likes"
+        ],
+        "description": "This table will hold the list of all the likes on a picture/excursion/itinerary saved in GCS",
+        "purpose": "To fetch the likes of picture/excursion/itinerary saved in GCS",
+        "max_versions": 1
     },
     "payana_place_metadata_table": {
-        "column_family_id":["place_metadata"],
-        "description":"This table will hold the city, state, country details of a place ID",
-        "purpose":"To fetch the the city, state, country details of a place ID",
+        "column_family_id": [
+            "place_metadata"
+        ],
+        "description": "This table will hold the city, state, country details of a place ID",
+        "purpose": "To fetch the the city, state, country details of a place ID",
         "max_versions": 1
     },
     "payana_place_state_table": {
-        "column_family_id":["city_list"],
-        "description":"This table will hold all the cities in the state",
-        "purpose":"To fetch all the cities in the state",
+        "column_family_id": [
+            "city_list"
+        ],
+        "description": "This table will hold all the cities in the state",
+        "purpose": "To fetch all the cities in the state",
         "max_versions": 1
     },
     "payana_place_country_table": {
-        "column_family_id":["city_list"],
-        "description":"This table will hold all the cities in the country",
-        "purpose":"To fetch all the cities in the country",
+        "column_family_id": [
+            "city_list"
+        ],
+        "description": "This table will hold all the cities in the country",
+        "purpose": "To fetch all the cities in the country",
         "max_versions": 1
     },
     "payana_neighboring_cities_table": {
-        "column_family_id":["neighboring_city_list"],
-        "description":"This table will hold all the neighboring city list for a given city",
-        "purpose":"This table will hold all the neighboring city list for a given city",
+        "column_family_id": [
+            "neighboring_city_list"
+        ],
+        "description": "This table will hold all the neighboring city list for a given city",
+        "purpose": "This table will hold all the neighboring city list for a given city",
         "max_versions": 1
     },
     "payana_personal_place_id_itinerary_table": {
-        "column_family_id":["generic_itinerary_id", "hiking_itinerary_id", "romantic_itinerary_id", "exotic_itinerary_id", "generic_excursion_id", "hiking_excursion_id", "romantic_excursion_id", "exotic_excursion_id", "generic_checkin_id", "hiking_checkin_id", "romantic_checkin_id", "exotic_checkin_id"],
-        "description":"This table will hold all the cities in the state",
-        "purpose":"To fetch all the cities in the state",
+        "column_family_id": [
+            "generic_itinerary_id",
+            "hiking_itinerary_id",
+            "romantic_itinerary_id",
+            "exotic_itinerary_id",
+            "generic_excursion_id",
+            "hiking_excursion_id",
+            "romantic_excursion_id",
+            "exotic_excursion_id",
+            "generic_checkin_id",
+            "hiking_checkin_id",
+            "romantic_checkin_id",
+            "exotic_checkin_id"
+        ],
+        "description": "This table will hold all the itineraries for a given profile and place ID",
+        "purpose": "This table will hold all the itineraries for a given profile and place ID",
         "max_versions": 1
     },
     "payana_personal_city_itinerary_table": {
-        "column_family_id":["generic_itinerary_id", "hiking_itinerary_id", "romantic_itinerary_id", "exotic_itinerary_id", "generic_excursion_id", "hiking_excursion_id", "romantic_excursion_id", "exotic_excursion_id", "generic_checkin_id", "hiking_checkin_id", "romantic_checkin_id", "exotic_checkin_id"],
-        "description":"This table will hold all the cities in the country",
-        "purpose":"To fetch all the cities in the country",
+        "column_family_id": [
+            "generic_itinerary_id",
+            "hiking_itinerary_id",
+            "romantic_itinerary_id",
+            "exotic_itinerary_id",
+            "generic_excursion_id",
+            "hiking_excursion_id",
+            "romantic_excursion_id",
+            "exotic_excursion_id",
+            "generic_checkin_id",
+            "hiking_checkin_id",
+            "romantic_checkin_id",
+            "exotic_checkin_id"
+        ],
+        "description": "This table will hold all the itineraries for a given profile and city",
+        "purpose": "This table will hold all the itineraries for a given profile and city",
         "max_versions": 1
     },
     "payana_personal_state_itinerary_table": {
-        "column_family_id":["generic_itinerary_id", "hiking_itinerary_id", "romantic_itinerary_id", "exotic_itinerary_id", "generic_excursion_id", "hiking_excursion_id", "romantic_excursion_id", "exotic_excursion_id", "generic_checkin_id", "hiking_checkin_id", "romantic_checkin_id", "exotic_checkin_id"],
-        "description":"This table will hold all the neighboring city list for a given city",
-        "purpose":"This table will hold all the neighboring city list for a given city",
+        "column_family_id": [
+            "generic_itinerary_id",
+            "hiking_itinerary_id",
+            "romantic_itinerary_id",
+            "exotic_itinerary_id",
+            "generic_excursion_id",
+            "hiking_excursion_id",
+            "romantic_excursion_id",
+            "exotic_excursion_id",
+            "generic_checkin_id",
+            "hiking_checkin_id",
+            "romantic_checkin_id",
+            "exotic_checkin_id"
+        ],
+        "description": "This table will hold all the itineraries for a given profile and state",
+        "purpose": "This table will hold all the itineraries for a given profile and state",
         "max_versions": 1
     },
     "payana_personal_country_itinerary_table": {
-        "column_family_id":["generic_itinerary_id", "hiking_itinerary_id", "romantic_itinerary_id", "exotic_itinerary_id", "generic_excursion_id", "hiking_excursion_id", "romantic_excursion_id", "exotic_excursion_id", "generic_checkin_id", "hiking_checkin_id", "romantic_checkin_id", "exotic_checkin_id"],
-        "description":"This table will hold all the neighboring city list for a given city",
-        "purpose":"This table will hold all the neighboring city list for a given city",
+        "column_family_id": [
+            "generic_itinerary_id",
+            "hiking_itinerary_id",
+            "romantic_itinerary_id",
+            "exotic_itinerary_id",
+            "generic_excursion_id",
+            "hiking_excursion_id",
+            "romantic_excursion_id",
+            "exotic_excursion_id",
+            "generic_checkin_id",
+            "hiking_checkin_id",
+            "romantic_checkin_id",
+            "exotic_checkin_id"
+        ],
+        "description": "This table will hold all the itineraries for a given profile and country",
+        "purpose": "This table will hold all the itineraries for a given profile and country",
         "max_versions": 1
-    }
+    },
+    "payana_profile_page_itinerary_table": {
+        "column_family_id": [
+            "generic_itinerary_id",
+            "hiking_itinerary_id",
+            "romantic_itinerary_id",
+            "exotic_itinerary_id",
+            "generic_excursion_id",
+            "hiking_excursion_id",
+            "romantic_excursion_id",
+            "exotic_excursion_id",
+            "generic_checkin_id",
+            "hiking_checkin_id",
+            "romantic_checkin_id",
+            "exotic_checkin_id"
+        ],
+        "description": "This table will hold all the neighboring city list for a given city",
+        "purpose": "This table will hold all the neighboring city list for a given city",
+        "max_versions": 1
+    },
+    "payana_global_place_id_itinerary_table": {
+        "column_family_id": [
+            "generic_itinerary_id",
+            "hiking_itinerary_id",
+            "romantic_itinerary_id",
+            "exotic_itinerary_id",
+            "generic_excursion_id",
+            "hiking_excursion_id",
+            "romantic_excursion_id",
+            "exotic_excursion_id",
+            "generic_checkin_id",
+            "hiking_checkin_id",
+            "romantic_checkin_id",
+            "exotic_checkin_id"
+        ],
+        "description": "This table will hold all the global itineraries for a given place ID",
+        "purpose": "This table will hold all the global itineraries for a given place ID",
+        "max_versions": 1
+    },
+    "payana_global_city_itinerary_table": {
+        "column_family_id": [
+            "generic_itinerary_id",
+            "hiking_itinerary_id",
+            "romantic_itinerary_id",
+            "exotic_itinerary_id",
+            "generic_excursion_id",
+            "hiking_excursion_id",
+            "romantic_excursion_id",
+            "exotic_excursion_id",
+            "generic_checkin_id",
+            "hiking_checkin_id",
+            "romantic_checkin_id",
+            "exotic_checkin_id"
+        ],
+        "description": "This table will hold all the global itineraries for a given city",
+        "purpose": "This table will hold all the global itineraries for a given city",
+        "max_versions": 1
+    },
+    "payana_global_state_itinerary_table": {
+        "column_family_id": [
+            "generic_itinerary_id",
+            "hiking_itinerary_id",
+            "romantic_itinerary_id",
+            "exotic_itinerary_id",
+            "generic_excursion_id",
+            "hiking_excursion_id",
+            "romantic_excursion_id",
+            "exotic_excursion_id",
+            "generic_checkin_id",
+            "hiking_checkin_id",
+            "romantic_checkin_id",
+            "exotic_checkin_id"
+        ],
+        "description": "This table will hold all the global itineraries for a given state",
+        "purpose": "This table will hold all the global itineraries for a given state",
+        "max_versions": 1
+    },
+    "payana_global_country_itinerary_table": {
+        "column_family_id": [
+            "generic_itinerary_id",
+            "hiking_itinerary_id",
+            "romantic_itinerary_id",
+            "exotic_itinerary_id",
+            "generic_excursion_id",
+            "hiking_excursion_id",
+            "romantic_excursion_id",
+            "exotic_excursion_id",
+            "generic_checkin_id",
+            "hiking_checkin_id",
+            "romantic_checkin_id",
+            "exotic_checkin_id"
+        ],
+        "description": "This table will hold all the global itineraries for a given country",
+        "purpose": "This table will hold all the global itineraries for a given country",
+        "max_versions": 1
+    },
 }
