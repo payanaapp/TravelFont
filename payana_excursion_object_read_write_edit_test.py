@@ -1,3 +1,4 @@
+import re
 from datetime import datetime
 import json
 from os import link
@@ -41,10 +42,15 @@ excursion_obj = {
         "transport_mode": "drive",
         "place_id": "1234567",
         "excursion_owner_profile_id": "1234567",
-        "visit_timestamp": "123456789",
-        "description": "",
+        "create_timestamp": "123456789",
+        "last_updated_timestamp": "123456789",
+        "description": "My excursion",
         "itinerary_id": "1234",
-        "place_name": "SF"
+        "place_name": "Land's End",
+        # Useful when search happens on a specific profile for a given city/state/country
+        "city": "SF##California##USA",
+        "state": "California##USA",
+        "country": "USA"
     }
 }
 
@@ -53,7 +59,8 @@ payana_excursion_obj.update_excursion_bigtable()
 excursion_id = payana_excursion_obj.excursion_id
 payana_excursion_table = bigtable_constants.payana_excursion_table
 payana_excursion_read_obj = PayanaBigTable(payana_excursion_table)
-excursion_obj_read = payana_excursion_read_obj.get_row_dict(excursion_id, include_column_family=True)
+excursion_obj_read = payana_excursion_read_obj.get_row_dict(
+    excursion_id, include_column_family=True)
 print(excursion_obj_read)
 
 print("Addition of a new excursion object: " + str(excursion_obj_read != None))
@@ -62,122 +69,188 @@ print("Addition of a new excursion object: " + str(excursion_obj_read != None))
 column_family_excursion_metadata = bigtable_constants.payana_excursion_metadata
 column_qualifier_excursion_place_id = bigtable_constants.payana_excursion_id
 new_place_id = "23456789"
-excursion_table_place_write_object = bigtable_write_object_wrapper(excursion_id, column_family_excursion_metadata, column_qualifier_excursion_place_id, new_place_id)
+excursion_table_place_write_object = bigtable_write_object_wrapper(
+    excursion_id, column_family_excursion_metadata, column_qualifier_excursion_place_id, new_place_id)
 payana_excursion_read_obj.insert_column(excursion_table_place_write_object)
-excursion_obj_read_place_update = payana_excursion_read_obj.get_row_dict(excursion_id, include_column_family=True)
-updated_place_id = excursion_obj_read_place_update[excursion_id][column_family_excursion_metadata][column_qualifier_excursion_place_id]
+excursion_obj_read_place_update = payana_excursion_read_obj.get_row_dict(
+    excursion_id, include_column_family=True)
+updated_place_id = excursion_obj_read_place_update[excursion_id][
+    column_family_excursion_metadata][column_qualifier_excursion_place_id]
 
-print("Status of update place ID operation: " + str(new_place_id == updated_place_id))
+print("Status of update place ID operation: " +
+      str(new_place_id == updated_place_id))
 
 # Change place name
 column_family_excursion_metadata = bigtable_constants.payana_excursion_metadata
 column_qualifier_excursion_place_name = bigtable_constants.payana_excursion_place_name
 new_place_name = "SC"
-excursion_table_place_write_object = bigtable_write_object_wrapper(excursion_id, column_family_excursion_metadata, column_qualifier_excursion_place_name, new_place_name)
+excursion_table_place_write_object = bigtable_write_object_wrapper(
+    excursion_id, column_family_excursion_metadata, column_qualifier_excursion_place_name, new_place_name)
 payana_excursion_read_obj.insert_column(excursion_table_place_write_object)
-excursion_obj_read_place_name_update = payana_excursion_read_obj.get_row_dict(excursion_id, include_column_family=True)
-updated_place_name = excursion_obj_read_place_name_update[excursion_id][column_family_excursion_metadata][column_qualifier_excursion_place_name]
+excursion_obj_read_place_name_update = payana_excursion_read_obj.get_row_dict(
+    excursion_id, include_column_family=True)
+updated_place_name = excursion_obj_read_place_name_update[excursion_id][
+    column_family_excursion_metadata][column_qualifier_excursion_place_name]
 
-print("Status of update place name operation: " + str(new_place_name == updated_place_name))
+print("Status of update place name operation: " +
+      str(new_place_name == updated_place_name))
+
+# Change city
+column_family_excursion_metadata = bigtable_constants.payana_excursion_metadata
+column_qualifier_excursion_city = bigtable_constants.payana_excursion_city
+new_city = "SJ"
+excursion_table_city_write_object = bigtable_write_object_wrapper(
+    excursion_id, column_family_excursion_metadata, column_qualifier_excursion_city, new_city)
+payana_excursion_read_obj.insert_column(excursion_table_city_write_object)
+excursion_obj_read_city_update = payana_excursion_read_obj.get_row_dict(
+    excursion_id, include_column_family=True)
+updated_city = excursion_obj_read_city_update[excursion_id][
+    column_family_excursion_metadata][column_qualifier_excursion_city]
+
+print("Status of update city operation: " +
+      str(new_city == updated_city))
 
 # Change description
 column_family_excursion_metadata = bigtable_constants.payana_excursion_metadata
 column_qualifier_description = bigtable_constants.payana_excursion_column_family_description
 new_description = "Totally enjoyed the beach!"
-excursion_table_description_write_object = bigtable_write_object_wrapper(excursion_id, column_family_excursion_metadata, column_qualifier_description, new_description)
-payana_excursion_read_obj.insert_column(excursion_table_description_write_object)
-excursion_obj_read_description_update = payana_excursion_read_obj.get_row_dict(excursion_id, include_column_family=True)
-updated_description = excursion_obj_read_description_update[excursion_id][column_family_excursion_metadata][column_qualifier_description]
+excursion_table_description_write_object = bigtable_write_object_wrapper(
+    excursion_id, column_family_excursion_metadata, column_qualifier_description, new_description)
+payana_excursion_read_obj.insert_column(
+    excursion_table_description_write_object)
+excursion_obj_read_description_update = payana_excursion_read_obj.get_row_dict(
+    excursion_id, include_column_family=True)
+updated_description = excursion_obj_read_description_update[excursion_id][
+    column_family_excursion_metadata][column_qualifier_description]
 
-print("Status of update description operation: " + str(new_description == updated_description))
+print("Status of update description operation: " +
+      str(new_description == updated_description))
 
-# Change transport
+# Change transport mode
 column_family_excursion_metadata = bigtable_constants.payana_excursion_metadata
 column_qualifier_transport_mode = bigtable_constants.payana_excursion_transport_mode
 new_transport_mode = "Cruise"
-excursion_table_transport_mode_write_object = bigtable_write_object_wrapper(excursion_id, column_family_excursion_metadata, column_qualifier_transport_mode, new_transport_mode)
-payana_excursion_read_obj.insert_column(excursion_table_transport_mode_write_object)
-excursion_obj_read_transport_mode_update = payana_excursion_read_obj.get_row_dict(excursion_id, include_column_family=True)
-updated_transport_mode = excursion_obj_read_transport_mode_update[excursion_id][column_family_excursion_metadata][column_qualifier_transport_mode]
+excursion_table_transport_mode_write_object = bigtable_write_object_wrapper(
+    excursion_id, column_family_excursion_metadata, column_qualifier_transport_mode, new_transport_mode)
+payana_excursion_read_obj.insert_column(
+    excursion_table_transport_mode_write_object)
+excursion_obj_read_transport_mode_update = payana_excursion_read_obj.get_row_dict(
+    excursion_id, include_column_family=True)
+updated_transport_mode = excursion_obj_read_transport_mode_update[excursion_id][
+    column_family_excursion_metadata][column_qualifier_transport_mode]
 
-print("Status of update transport mode operation: " + str(new_transport_mode == updated_transport_mode))
+print("Status of update transport mode operation: " +
+      str(new_transport_mode == updated_transport_mode))
 
 # Add a new participant
 column_family_participants_list = bigtable_constants.payana_excursion_column_family_participants_list
-new_participant = {"pf_id_new" : "1234567"}
+new_participant = {"pf_id_new": "1234567"}
 
 for column_qualifier_new_participant, column_value_new_participant in new_participant.items():
 
-    excursion_table_participant_write_object = bigtable_write_object_wrapper(excursion_id, column_family_participants_list, column_qualifier_new_participant, column_value_new_participant)
-    payana_excursion_read_obj.insert_column(excursion_table_participant_write_object)
-    excursion_obj_read_participant_mode_update = payana_excursion_read_obj.get_row_dict(excursion_id, include_column_family=True)
-    updated_participant_list = excursion_obj_read_participant_mode_update[excursion_id][column_family_participants_list]
+    excursion_table_participant_write_object = bigtable_write_object_wrapper(
+        excursion_id, column_family_participants_list, column_qualifier_new_participant, column_value_new_participant)
+    payana_excursion_read_obj.insert_column(
+        excursion_table_participant_write_object)
+    excursion_obj_read_participant_mode_update = payana_excursion_read_obj.get_row_dict(
+        excursion_id, include_column_family=True)
+    updated_participant_list = excursion_obj_read_participant_mode_update[
+        excursion_id][column_family_participants_list]
 
-    print("Status of update participant operation: " + str(column_qualifier_new_participant in updated_participant_list))
-    print("Status of update participant value operation: " + str(column_value_new_participant in updated_participant_list[column_qualifier_new_participant]))
+    print("Status of update participant operation: " +
+          str(column_qualifier_new_participant in updated_participant_list))
+    print("Status of update participant value operation: " +
+          str(column_value_new_participant in updated_participant_list[column_qualifier_new_participant]))
 
     # Delete the new participant added
-    payana_excursion_read_obj.delete_bigtable_row_column(excursion_table_participant_write_object)
-    excursion_obj_read_participant_mode_update = payana_excursion_read_obj.get_row_dict(excursion_id, include_column_family=True)
+    payana_excursion_read_obj.delete_bigtable_row_column(
+        excursion_table_participant_write_object)
+    excursion_obj_read_participant_mode_update = payana_excursion_read_obj.get_row_dict(
+        excursion_id, include_column_family=True)
 
-    updated_participant_list = excursion_obj_read_participant_mode_update[excursion_id][column_family_participants_list]
+    updated_participant_list = excursion_obj_read_participant_mode_update[
+        excursion_id][column_family_participants_list]
 
-    print("Status of update participant operation: " + str(column_qualifier_new_participant not in updated_participant_list))
+    print("Status of update participant operation: " +
+          str(column_qualifier_new_participant not in updated_participant_list))
 
 
-#Add a check in ID -- no use case to call as an API end point. For debugging or backfilling purpose
+# Add a check in ID
 column_family_checkin_id_list = bigtable_constants.payana_excursion_column_family_checkin_id_list
-new_checkin_id = {"4" : "12345"}
+new_checkin_id = {"4": "12345"}
 
 for column_qualifier_new_checkin_id, column_value_new_checkin_id in new_checkin_id.items():
 
-    excursion_table_checkin_id_write_object = bigtable_write_object_wrapper(excursion_id, column_family_checkin_id_list, column_qualifier_new_checkin_id, column_value_new_checkin_id)
-    payana_excursion_read_obj.insert_column(excursion_table_checkin_id_write_object)
-    excursion_obj_read_checkin_id_update = payana_excursion_read_obj.get_row_dict(excursion_id, include_column_family=True)
-    updated_checkin_id_list = excursion_obj_read_checkin_id_update[excursion_id][column_family_checkin_id_list]
+    excursion_table_checkin_id_write_object = bigtable_write_object_wrapper(
+        excursion_id, column_family_checkin_id_list, column_qualifier_new_checkin_id, column_value_new_checkin_id)
+    payana_excursion_read_obj.insert_column(
+        excursion_table_checkin_id_write_object)
+    excursion_obj_read_checkin_id_update = payana_excursion_read_obj.get_row_dict(
+        excursion_id, include_column_family=True)
+    updated_checkin_id_list = excursion_obj_read_checkin_id_update[
+        excursion_id][column_family_checkin_id_list]
 
-    print("Status of update check in ID operation: " + str(column_qualifier_new_checkin_id in updated_checkin_id_list))
-    print("Status of update check in ID value operation: " + str(column_value_new_checkin_id in updated_checkin_id_list[column_qualifier_new_checkin_id]))
+    print("Status of update check in ID operation: " +
+          str(column_qualifier_new_checkin_id in updated_checkin_id_list))
+    print("Status of update check in ID value operation: " +
+          str(column_value_new_checkin_id in updated_checkin_id_list[column_qualifier_new_checkin_id]))
 
     # Delete newly added checkin ID
-    payana_excursion_read_obj.delete_bigtable_row_column(excursion_table_checkin_id_write_object)
-    excursion_obj_read_checkin_id_update = payana_excursion_read_obj.get_row_dict(excursion_id, include_column_family=True)
+    payana_excursion_read_obj.delete_bigtable_row_column(
+        excursion_table_checkin_id_write_object)
+    excursion_obj_read_checkin_id_update = payana_excursion_read_obj.get_row_dict(
+        excursion_id, include_column_family=True)
 
-    updated_checkin_id_list = excursion_obj_read_checkin_id_update[excursion_id][column_family_checkin_id_list]
+    updated_checkin_id_list = excursion_obj_read_checkin_id_update[
+        excursion_id][column_family_checkin_id_list]
 
-    print("Status of delete checkin ID operation: " + str(column_qualifier_new_checkin_id not in updated_checkin_id_list))
+    print("Status of delete checkin ID operation: " +
+          str(column_qualifier_new_checkin_id not in updated_checkin_id_list))
 
 
-#Add an acivity
+# Add an acivity
 column_family_activity_list = bigtable_constants.payana_excursion_activities_list
-new_activity = {"date" : "3"}
+new_activity = {"date": "3"}
 
 for column_qualifier_activity, column_value_activity in new_activity.items():
 
-    excursion_table_activity_write_object = bigtable_write_object_wrapper(excursion_id, column_family_activity_list, column_qualifier_activity, column_value_activity)
-    payana_excursion_read_obj.insert_column(excursion_table_activity_write_object)
-    excursion_obj_read_activity_update = payana_excursion_read_obj.get_row_dict(excursion_id, include_column_family=True)
-    updated_activity_list = excursion_obj_read_activity_update[excursion_id][column_family_activity_list]
+    excursion_table_activity_write_object = bigtable_write_object_wrapper(
+        excursion_id, column_family_activity_list, column_qualifier_activity, column_value_activity)
+    payana_excursion_read_obj.insert_column(
+        excursion_table_activity_write_object)
+    excursion_obj_read_activity_update = payana_excursion_read_obj.get_row_dict(
+        excursion_id, include_column_family=True)
+    updated_activity_list = excursion_obj_read_activity_update[
+        excursion_id][column_family_activity_list]
 
-    print("Status of update activity operation: " + str(column_qualifier_activity in updated_activity_list))
-    print("Status of update activity value operation: " + str(column_value_activity in updated_activity_list[column_qualifier_activity]))
+    print("Status of update activity operation: " +
+          str(column_qualifier_activity in updated_activity_list))
+    print("Status of update activity value operation: " +
+          str(column_value_activity in updated_activity_list[column_qualifier_activity]))
 
     # Delete activity
-    payana_excursion_read_obj.delete_bigtable_row_column(excursion_table_activity_write_object)
-    excursion_obj_read_activity_update = payana_excursion_read_obj.get_row_dict(excursion_id, include_column_family=True)
-    updated_activity_list = excursion_obj_read_activity_update[excursion_id][column_family_activity_list]
+    payana_excursion_read_obj.delete_bigtable_row_column(
+        excursion_table_activity_write_object)
+    excursion_obj_read_activity_update = payana_excursion_read_obj.get_row_dict(
+        excursion_id, include_column_family=True)
+    updated_activity_list = excursion_obj_read_activity_update[
+        excursion_id][column_family_activity_list]
 
-    print("Status of update activity operation: " + str(column_qualifier_activity not in updated_activity_list))
+    print("Status of update activity operation: " +
+          str(column_qualifier_activity not in updated_activity_list))
 
-#Remove the whole excursion row
-excursion_row_delete_object = bigtable_write_object_wrapper(excursion_id, "", "", "")
+# Remove the whole excursion row
+excursion_row_delete_object = bigtable_write_object_wrapper(
+    excursion_id, "", "", "")
 payana_excursion_read_obj.delete_bigtable_row(excursion_row_delete_object)
 
-excursion_obj_read_activity_update = payana_excursion_read_obj.get_row_dict(excursion_id, include_column_family=True)
+excursion_obj_read_activity_update = payana_excursion_read_obj.get_row_dict(
+    excursion_id, include_column_family=True)
 
-print("Status of excursion obj delete row:" + str(len(excursion_obj_read_activity_update) == 0))
+print("Status of excursion obj delete row:" +
+      str(len(excursion_obj_read_activity_update) == 0))
 
-#Add a comment
+# Add a comment
 comment_obj = {
     "comment_timestamp": "123456789",
     "profile_id": "abkr",
@@ -194,7 +267,8 @@ entity_id = payana_comment_obj.entity_id
 comment_id = payana_comment_obj.comment_id
 payana_comment_table = bigtable_constants.payana_comments_table
 payana_comment_read_obj = PayanaBigTable(payana_comment_table)
-payana_comment_obj = payana_comment_read_obj.get_row_dict(entity_id, include_column_family=False)
+payana_comment_obj = payana_comment_read_obj.get_row_dict(
+    entity_id, include_column_family=False)
 
 print("Comment added: " + str(payana_comment_obj is not None))
 
@@ -220,20 +294,22 @@ entity_id = payana_comment_obj.entity_id
 comment_id = payana_comment_obj.comment_id
 payana_comment_table = bigtable_constants.payana_comments_table
 payana_comment_read_obj = PayanaBigTable(payana_comment_table)
-payana_comment_obj = payana_comment_read_obj.get_row_dict(entity_id, include_column_family=False)
+payana_comment_obj = payana_comment_read_obj.get_row_dict(
+    entity_id, include_column_family=False)
 payana_comment_obj_edited = payana_comment_obj[entity_id][comment_id]
 
-import re
 p = re.compile('(?<!\\\\)\'')
 payana_comment_obj_edited = p.sub('\"', payana_comment_obj_edited)
 
 payana_comment_obj_edited = json.loads(payana_comment_obj_edited)
 print(payana_comment_obj_edited)
 
-print("Comment timestamp edited: " + str(payana_comment_obj_edited[payana_comments_table_timestamp] == new_timestamp))
-print("Comment likes count edited: " + str(payana_comment_obj_edited[payana_comments_table_likes_count] == new_likes_count))
+print("Comment timestamp edited: " +
+      str(payana_comment_obj_edited[payana_comments_table_timestamp] == new_timestamp))
+print("Comment likes count edited: " +
+      str(payana_comment_obj_edited[payana_comments_table_likes_count] == new_likes_count))
 
-#Add another comment
+# Add another comment
 comment_obj_dup = {
     "comment_timestamp": "123456789",
     "profile_id": "abkr",
@@ -250,28 +326,35 @@ entity_id = payana_comment_obj_dup.entity_id
 comment_id = payana_comment_obj_dup.comment_id
 payana_comment_table = bigtable_constants.payana_comments_table
 payana_comment_read_obj = PayanaBigTable(payana_comment_table)
-payana_comment_obj = payana_comment_read_obj.get_row_dict(entity_id, include_column_family=False)
+payana_comment_obj = payana_comment_read_obj.get_row_dict(
+    entity_id, include_column_family=False)
 
-print("Status of new comment write: " + str(len(payana_comment_obj[entity_id]) == 2))
+print("Status of new comment write: " +
+      str(len(payana_comment_obj[entity_id]) == 2))
 
 # Delete one comment in the row
 payana_comments_family_id = bigtable_constants.payana_comments_table_comments_family_id
-payana_comment_bigtable_obj = bigtable_write_object_wrapper(entity_id, payana_comments_family_id, comment_id, "")
+payana_comment_bigtable_obj = bigtable_write_object_wrapper(
+    entity_id, payana_comments_family_id, comment_id, "")
 payana_comment_read_obj.delete_bigtable_row_column(payana_comment_bigtable_obj)
 
-comment_obj = payana_comment_read_obj.get_row_dict(entity_id, include_column_family=False)
+comment_obj = payana_comment_read_obj.get_row_dict(
+    entity_id, include_column_family=False)
 
-print("Status of one comment delete operation: " + str(len(comment_obj[entity_id]) == 1))
+print("Status of one comment delete operation: " +
+      str(len(comment_obj[entity_id]) == 1))
 
 # Delete the comment row
-payana_comment_bigtable_obj = bigtable_write_object_wrapper(entity_id, "", "", "")
+payana_comment_bigtable_obj = bigtable_write_object_wrapper(
+    entity_id, "", "", "")
 payana_comment_read_obj.delete_bigtable_row(payana_comment_bigtable_obj)
 
-comment_obj = payana_comment_read_obj.get_row_dict(entity_id, include_column_family=False)
+comment_obj = payana_comment_read_obj.get_row_dict(
+    entity_id, include_column_family=False)
 
 print("Status of comment row delete: " + str(len(comment_obj) == 0))
 
-#Add a like and read a like
+# Add a like and read a like
 likes_obj = {
     "payana_likes": {"pf_id_1": "1234567", "pf_id_2": "1234567", "pf_id_3": "1234567"},
     "entity_id": "12345"
@@ -283,24 +366,34 @@ payana_likes_obj.update_likes_bigtable()
 payana_likes_table = bigtable_constants.payana_likes_table
 like_object_id = payana_likes_obj.entity_id
 payana_likes_read_obj = PayanaBigTable(payana_likes_table)
-likes_obj = payana_likes_read_obj.get_row_dict(like_object_id, include_column_family=True)
+likes_obj = payana_likes_read_obj.get_row_dict(
+    like_object_id, include_column_family=True)
 
 participant_delete = "pf_id_1"
-print("Status of like write operation: " + str(participant_delete in likes_obj[like_object_id][payana_like_column_family]))
+print("Status of like write operation: " +
+      str(participant_delete in likes_obj[like_object_id][payana_like_column_family]))
+
+print("Status of likes count operation: " +
+      str(len(likes_obj[like_object_id][payana_like_column_family]) == 3))
 
 # Remove a specific like
-payana_like_bigtable_obj = bigtable_write_object_wrapper(like_object_id, payana_like_column_family, participant_delete, "")
+payana_like_bigtable_obj = bigtable_write_object_wrapper(
+    like_object_id, payana_like_column_family, participant_delete, "")
 payana_likes_read_obj.delete_bigtable_row_column(payana_like_bigtable_obj)
 
-likes_obj = payana_likes_read_obj.get_row_dict(like_object_id, include_column_family=True)
+likes_obj = payana_likes_read_obj.get_row_dict(
+    like_object_id, include_column_family=True)
 
-print("Status of like delete operation: " + str(participant_delete not in likes_obj[like_object_id][payana_like_column_family]))
+print("Status of like delete operation: " +
+      str(participant_delete not in likes_obj[like_object_id][payana_like_column_family]))
 
-#Remove the whole row
-payana_like_bigtable_obj = bigtable_write_object_wrapper(like_object_id, "", "", "")
+# Remove the whole row
+payana_like_bigtable_obj = bigtable_write_object_wrapper(
+    like_object_id, "", "", "")
 payana_likes_read_obj.delete_bigtable_row(payana_like_bigtable_obj)
 
-likes_obj = payana_likes_read_obj.get_row_dict(like_object_id, include_column_family=False)
+likes_obj = payana_likes_read_obj.get_row_dict(
+    like_object_id, include_column_family=False)
 print("Status of like row delete: " + str(len(likes_obj) == 0))
 
 

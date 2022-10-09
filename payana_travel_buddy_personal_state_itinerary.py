@@ -35,7 +35,7 @@ personal_state_itinerary_obj = {
     "activities": ["hiking", "romantic", "exotic"]
 }
 
-payana_personal_state_itinerary_obj = PayanaPersonalStateItineraryTable(**personal_state_itinerary_obj)
+payana_personal_state_itinerary_obj = PayanaPersonalStateItineraryTable(**personal_state_itinerary_obj) 
 payana_personal_state_itinerary_obj.update_personal_state_itinerary_bigtable()
 payana_personal_state_itinerary_table = bigtable_constants.payana_personal_state_itinerary_table
 row_id = payana_personal_state_itinerary_obj.row_id #We could use regular expression to exclude the year part while querying
@@ -209,7 +209,7 @@ for checkin_id, rating in checkin_update.items():
         checkin_activity_column_family_id = "_".join([activity, bigtable_constants.payana_personal_state_itinerary_table_checkin_id_quantifier_value])
 
         payana_personal_state_checkin_table_write_object = bigtable_write_object_wrapper(row_id, checkin_activity_column_family_id, checkin_id, "")
-        payana_personal_state_itinerary_read_obj.insert_column(payana_personal_state_checkin_table_write_object)
+        payana_personal_state_itinerary_read_obj.delete_bigtable_row_column(payana_personal_state_checkin_table_write_object)
         payana_personal_state_checkin_read_row_obj = payana_personal_state_itinerary_read_obj.get_row_dict(row_id, include_column_family=True)
         removed_checkin_row = payana_personal_state_checkin_read_row_obj[row_id][checkin_activity_column_family_id]
 

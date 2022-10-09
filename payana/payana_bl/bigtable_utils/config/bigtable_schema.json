@@ -274,5 +274,5 @@
         "description": "This table will hold all the global itineraries for a given country",
         "purpose": "This table will hold all the global itineraries for a given country",
         "max_versions": 1
-    },
+    }
 }
