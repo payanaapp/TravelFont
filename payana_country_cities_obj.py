@@ -31,7 +31,7 @@ column_family_id = bigtable_constants.payana_country_table_column_family_city_li
 country_obj = {
     "country": "usa",
     column_family_id: {
-        "cupertino##california##usa" : "1.2",
+        "cupertino##california##usa" : "1.2", #rating is to sort the top cities
         "seattle##washington##usa" : "1.78"
         }
 }

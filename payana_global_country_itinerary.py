@@ -14,11 +14,12 @@ from payana.payana_bl.bigtable_utils.PayanaLikesTable import PayanaLikesTable
 from payana.payana_bl.bigtable_utils.PayanaTravelBuddyTable import PayanaTravelBuddyTable
 from payana.payana_bl.bigtable_utils.PayanaPlaceIdMetadataTable import PayanaPlaceIdMetadataTable
 from payana.payana_bl.bigtable_utils.PayanaNeighboringCitiesTable import PayanaNeighboringCitiesTable
-from payana.payana_bl.bigtable_utils.PayanaStateTable import PayanaStateTable
 from payana.payana_bl.bigtable_utils.PayanaCountryTable import PayanaCountryTable
-from payana.payana_bl.bigtable_utils.PayanaGlobalCountryItineraryTable import PayanaGlobalCountryItineraryTable
+from payana.payana_bl.bigtable_utils.PayanaPersonalPlaceIdItineraryTable import PayanaPersonalPlaceIdItineraryTable
 from payana.payana_bl.bigtable_utils.PayanaPersonalCityItineraryTable import PayanaPersonalCityItineraryTable
-from payana.payana_bl.bigtable_utils.PayanaPersonalStateItineraryTable import PayanaPersonalStateItineraryTable
+from payana.payana_bl.bigtable_utils.PayanaPersonalCountryItineraryTable import PayanaPersonalCountryItineraryTable
+from payana.payana_bl.bigtable_utils.PayanaGlobalCountryItineraryTable import PayanaGlobalCountryItineraryTable
+
 
 client_config_file_path = bigtable_constants.bigtable_client_config_path
 bigtable_tables_schema_path = bigtable_constants.bigtable_schema_config_file
@@ -40,7 +41,7 @@ row_id = payana_global_country_itinerary_obj.row_id #We could use regular expres
 payana_global_country_itinerary_read_obj = PayanaBigTable(payana_global_country_itinerary_table)
 payana_global_country_itinerary_read_row_obj = payana_global_country_itinerary_read_obj.get_row_dict(row_id, include_column_family=True)
 
-print("Status of add global place ID itinerary: " + str(payana_global_country_itinerary_read_row_obj is not None))
+print("Status of add global country itinerary: " + str(payana_global_country_itinerary_read_row_obj is not None))
 
 activity_generic_column_family_id = bigtable_constants.payana_generic_activity_column_family
 
@@ -148,6 +149,7 @@ for itinerary_id, rating in itinerary_new.items():
     payana_global_country_itinerary_read_obj.delete_bigtable_row_column(payana_global_country_itinerary_table_write_object)
     payana_global_country_itinerary_read_row_obj = payana_global_country_itinerary_read_obj.get_row_dict(row_id, include_column_family=True)
     removed_itinerary_row = payana_global_country_itinerary_read_row_obj[row_id][itinerary_activity_generic_column_family_id]
+    print(removed_itinerary_row)
 
     print("Status of itinerary ID remove: " + str(itinerary_id not in removed_itinerary_row))
     
@@ -207,7 +209,7 @@ for checkin_id, rating in checkin_update.items():
         checkin_activity_column_family_id = "_".join([activity, bigtable_constants.payana_global_country_itinerary_table_checkin_id_quantifier_value])
 
         payana_global_country_checkin_table_write_object = bigtable_write_object_wrapper(row_id, checkin_activity_column_family_id, checkin_id, "")
-        payana_global_country_itinerary_read_obj.insert_column(payana_global_country_checkin_table_write_object)
+        payana_global_country_itinerary_read_obj.delete_bigtable_row_column(payana_global_country_checkin_table_write_object)
         payana_global_country_checkin_read_row_obj = payana_global_country_itinerary_read_obj.get_row_dict(row_id, include_column_family=True)
         removed_checkin_row = payana_global_country_checkin_read_row_obj[row_id][checkin_activity_column_family_id]
 
