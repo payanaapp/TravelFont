@@ -41,7 +41,6 @@ payana_personal_country_itinerary_table = bigtable_constants.payana_personal_cou
 row_id = payana_personal_country_itinerary_obj.row_id #We could use regular expression to exclude the year part while querying
 payana_personal_country_itinerary_read_obj = PayanaBigTable(payana_personal_country_itinerary_table)
 payana_personal_country_itinerary_read_row_obj = payana_personal_country_itinerary_read_obj.get_row_dict(row_id, include_column_family=True)
-
 print("Status of add personal place ID itinerary: " + str(payana_personal_country_itinerary_read_row_obj is not None))
 
 activity_generic_column_family_id = bigtable_constants.payana_generic_activity_column_family
@@ -67,7 +66,6 @@ for itinerary_id, rating in itinerary_new.items():
     payana_personal_country_itinerary_read_obj.insert_column(payana_personal_country_itinerary_table_write_object)
     payana_personal_country_itinerary_read_row_obj = payana_personal_country_itinerary_read_obj.get_row_dict(row_id, include_column_family=True)
     updated_rating = payana_personal_country_itinerary_read_row_obj[row_id][itinerary_activity_generic_column_family_id][itinerary_id]
-
     print("Status of itinerary ID update: " + str(rating == updated_rating))
     
 for excursion_id, rating in excursion_new.items():
@@ -146,6 +144,7 @@ for checkin_id, rating in checkin_update.items():
 
 #Remove an itinerary ID, excursion ID, check ID
 for itinerary_id, rating in itinerary_new.items():
+    print(payana_personal_country_itinerary_read_row_obj)
     payana_personal_country_itinerary_table_write_object = bigtable_write_object_wrapper(row_id, itinerary_activity_generic_column_family_id, itinerary_id, "")
     payana_personal_country_itinerary_read_obj.delete_bigtable_row_column(payana_personal_country_itinerary_table_write_object)
     payana_personal_country_itinerary_read_row_obj = payana_personal_country_itinerary_read_obj.get_row_dict(row_id, include_column_family=True)
