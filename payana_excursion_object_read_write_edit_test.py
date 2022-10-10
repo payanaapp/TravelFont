@@ -80,6 +80,51 @@ updated_place_id = excursion_obj_read_place_update[excursion_id][
 print("Status of update place ID operation: " +
       str(new_place_id == updated_place_id))
 
+# Change city
+column_family_excursion_metadata = bigtable_constants.payana_excursion_metadata
+column_qualifier_excursion_city = bigtable_constants.payana_excursion_id
+new_city = "Seattle"
+excursion_table_place_write_object = bigtable_write_object_wrapper(
+    excursion_id, column_family_excursion_metadata, column_qualifier_excursion_city, new_city)
+payana_excursion_read_obj.insert_column(excursion_table_place_write_object)
+excursion_obj_read_place_update = payana_excursion_read_obj.get_row_dict(
+    excursion_id, include_column_family=True)
+updated_city = excursion_obj_read_place_update[excursion_id][
+    column_family_excursion_metadata][column_qualifier_excursion_city]
+
+print("Status of update City operation: " +
+      str(new_city == updated_city))
+
+# Change state
+column_family_excursion_metadata = bigtable_constants.payana_excursion_metadata
+column_qualifier_excursion_state = bigtable_constants.payana_excursion_id
+new_state = "Washington"
+excursion_table_place_write_object = bigtable_write_object_wrapper(
+    excursion_id, column_family_excursion_metadata, column_qualifier_excursion_state, new_state)
+payana_excursion_read_obj.insert_column(excursion_table_place_write_object)
+excursion_obj_read_place_update = payana_excursion_read_obj.get_row_dict(
+    excursion_id, include_column_family=True)
+updated_state = excursion_obj_read_place_update[excursion_id][
+    column_family_excursion_metadata][column_qualifier_excursion_state]
+
+print("Status of update State operation: " +
+      str(new_state == updated_state))
+
+# Change Country
+column_family_excursion_metadata = bigtable_constants.payana_excursion_metadata
+column_qualifier_excursion_country = bigtable_constants.payana_excursion_id
+new_country = "Canada"
+excursion_table_place_write_object = bigtable_write_object_wrapper(
+    excursion_id, column_family_excursion_metadata, column_qualifier_excursion_country, new_country)
+payana_excursion_read_obj.insert_column(excursion_table_place_write_object)
+excursion_obj_read_place_update = payana_excursion_read_obj.get_row_dict(
+    excursion_id, include_column_family=True)
+updated_country = excursion_obj_read_place_update[excursion_id][
+    column_family_excursion_metadata][column_qualifier_excursion_country]
+
+print("Status of update Country operation: " +
+      str(new_country == updated_country))
+
 # Change place name
 column_family_excursion_metadata = bigtable_constants.payana_excursion_metadata
 column_qualifier_excursion_place_name = bigtable_constants.payana_excursion_place_name
