@@ -11,11 +11,11 @@ def payana_generic_exception_handler(func):
         except AttributeError as attr_exc:
             attr_exc_message = f"{func.__name__} : " + str(attr_exc)
             print(attr_exc_message)
-            raise Exception(attr_exc_message)
+            return False
         except Exception as exc:
             exc_message = f"{func.__name__} : " + str(exc)
             print(exc_message)
-            raise Exception(exc_message)
+            return False
             
 
     return inner_function

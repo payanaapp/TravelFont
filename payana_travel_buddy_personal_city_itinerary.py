@@ -36,7 +36,9 @@ personal_city_itinerary_obj = {
 }
 
 payana_personal_city_itinerary_obj = PayanaPersonalCityItineraryTable(**personal_city_itinerary_obj)
-payana_personal_city_itinerary_obj.update_personal_city_itinerary_bigtable()
+payana_personal_city_itinerary_obj_write_status = payana_personal_city_itinerary_obj.update_personal_city_itinerary_bigtable()
+print("payana_personal_city_itinerary_obj_write_status: " + str(payana_personal_city_itinerary_obj_write_status))
+
 payana_personal_city_itinerary_table = bigtable_constants.payana_personal_city_itinerary_table
 row_id = payana_personal_city_itinerary_obj.row_id #We could use regular expression to exclude the year part while querying
 payana_personal_city_itinerary_read_obj = PayanaBigTable(payana_personal_city_itinerary_table)
@@ -217,7 +219,9 @@ for checkin_id, rating in checkin_update.items():
 
 #Delete the whole row 
 payana_personal_city_row_delete_object = bigtable_write_object_wrapper(row_id, "", "", "")
-payana_personal_city_itinerary_read_obj.delete_bigtable_row(payana_personal_city_row_delete_object)
+payana_personal_city_itinerary_obj_delete_status = payana_personal_city_itinerary_read_obj.delete_bigtable_row(payana_personal_city_row_delete_object)
+print("payana_personal_city_itinerary_obj_delete_status: " + str(payana_personal_city_itinerary_obj_delete_status))
+
 payana_personal_city_read_row_obj = payana_personal_city_itinerary_read_obj.get_row_dict(row_id, include_column_family=True)
 
 print("Status of payana_personal_city delete row: " + str(len(payana_personal_city_read_row_obj) == 0))

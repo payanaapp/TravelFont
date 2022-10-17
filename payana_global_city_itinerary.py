@@ -27,197 +27,295 @@ payana_bigtable_init(client_config_file_path, bigtable_tables_schema_path)
 
 global_city_itinerary_obj = {
     "city": "cupertino##california##usa",
-    "itinerary_id": {"12345" : "0.48"},
-    "excursion_id": {"12345" : "0.48"},
-    "checkin_id": {"12345" : "0.48"},
+    "itinerary_id": {"12345": "0.48"},
+    "excursion_id": {"12345": "0.48"},
+    "checkin_id": {"12345": "0.48"},
     "activities": ["hiking", "romantic", "exotic"]
 }
 
-payana_global_city_itinerary_obj = PayanaGlobalCityItineraryTable(**global_city_itinerary_obj)
-payana_global_city_itinerary_obj.update_global_city_itinerary_bigtable()
-payana_global_city_itinerary_table = bigtable_constants.payana_global_city_itinerary_table
-row_id = payana_global_city_itinerary_obj.row_id #We could use regular expression to exclude the year part while querying
-payana_global_city_itinerary_read_obj = PayanaBigTable(payana_global_city_itinerary_table)
-payana_global_city_itinerary_read_row_obj = payana_global_city_itinerary_read_obj.get_row_dict(row_id, include_column_family=True)
+payana_global_city_itinerary_obj = PayanaGlobalCityItineraryTable(
+    **global_city_itinerary_obj)
 
-print("Status of add global city itinerary: " + str(payana_global_city_itinerary_read_row_obj is not None))
+payana_global_city_itinerary_obj_write_status = payana_global_city_itinerary_obj.update_global_city_itinerary_bigtable()
+print("payana_global_city_itinerary_obj write status: " +
+      str(payana_global_city_itinerary_obj_write_status))
+
+payana_global_city_itinerary_table = bigtable_constants.payana_global_city_itinerary_table
+# We could use regular expression to exclude the year part while querying
+row_id = payana_global_city_itinerary_obj.row_id
+payana_global_city_itinerary_read_obj = PayanaBigTable(
+    payana_global_city_itinerary_table)
+payana_global_city_itinerary_read_row_obj = payana_global_city_itinerary_read_obj.get_row_dict(
+    row_id, include_column_family=True)
+
+print("Status of add global city itinerary: " +
+      str(payana_global_city_itinerary_read_row_obj is not None))
 
 activity_generic_column_family_id = bigtable_constants.payana_generic_activity_column_family
 
 # generic activity write objects
-itinerary_activity_generic_column_family_id = "_".join([activity_generic_column_family_id, bigtable_constants.payana_global_city_itinerary_table_itinerary_id_quantifier_value])
+itinerary_activity_generic_column_family_id = "_".join(
+    [activity_generic_column_family_id, bigtable_constants.payana_global_city_itinerary_table_itinerary_id_quantifier_value])
 
-excursion_activity_generic_column_family_id = "_".join([activity_generic_column_family_id, bigtable_constants.payana_global_city_itinerary_table_excursion_id_quantifier_value])
+excursion_activity_generic_column_family_id = "_".join(
+    [activity_generic_column_family_id, bigtable_constants.payana_global_city_itinerary_table_excursion_id_quantifier_value])
 
-checkin_activity_generic_column_family_id = "_".join([activity_generic_column_family_id, bigtable_constants.payana_global_city_itinerary_table_checkin_id_quantifier_value])
+checkin_activity_generic_column_family_id = "_".join(
+    [activity_generic_column_family_id, bigtable_constants.payana_global_city_itinerary_table_checkin_id_quantifier_value])
 
 payana_global_city_itinerary_table_itinerary_id_quantifier_value = bigtable_constants.payana_global_city_itinerary_table_itinerary_id_quantifier_value
 payana_global_city_itinerary_table_excursion_id_quantifier_value = bigtable_constants.payana_global_city_itinerary_table_excursion_id_quantifier_value
 payana_global_city_itinerary_table_checkin_id_quantifier_value = bigtable_constants.payana_global_city_itinerary_table_checkin_id_quantifier_value
 
-#Add another itinerary ID, excursion ID and checkin ID
-itinerary_new = {"6789" : "0.48"}
-excursion_new =  {"6789" : "0.48"}
-checkin_new = {"6789" : "0.48"}
+# Add another itinerary ID, excursion ID and checkin ID
+itinerary_new = {"6789": "0.48"}
+excursion_new = {"6789": "0.48"}
+checkin_new = {"6789": "0.48"}
 
 for itinerary_id, rating in itinerary_new.items():
-    payana_global_city_itinerary_table_write_object = bigtable_write_object_wrapper(row_id, itinerary_activity_generic_column_family_id, itinerary_id, rating)
-    payana_global_city_itinerary_read_obj.insert_column(payana_global_city_itinerary_table_write_object)
-    payana_global_city_itinerary_read_row_obj = payana_global_city_itinerary_read_obj.get_row_dict(row_id, include_column_family=True)
-    updated_rating = payana_global_city_itinerary_read_row_obj[row_id][itinerary_activity_generic_column_family_id][itinerary_id]
+    payana_global_city_itinerary_table_write_object = bigtable_write_object_wrapper(
+        row_id, itinerary_activity_generic_column_family_id, itinerary_id, rating)
+    payana_global_city_itinerary_read_obj.insert_column(
+        payana_global_city_itinerary_table_write_object)
+    payana_global_city_itinerary_read_row_obj = payana_global_city_itinerary_read_obj.get_row_dict(
+        row_id, include_column_family=True)
+    updated_rating = payana_global_city_itinerary_read_row_obj[row_id][
+        itinerary_activity_generic_column_family_id][itinerary_id]
 
     print("Status of itinerary ID update: " + str(rating == updated_rating))
-    
+
 for excursion_id, rating in excursion_new.items():
-    payana_global_city_excursion_table_write_object = bigtable_write_object_wrapper(row_id, excursion_activity_generic_column_family_id, excursion_id, rating)
-    payana_global_city_itinerary_read_obj.insert_column(payana_global_city_excursion_table_write_object)
-    payana_global_city_excursion_read_row_obj = payana_global_city_itinerary_read_obj.get_row_dict(row_id, include_column_family=True)
-    updated_rating = payana_global_city_excursion_read_row_obj[row_id][excursion_activity_generic_column_family_id][excursion_id]
+    payana_global_city_excursion_table_write_object = bigtable_write_object_wrapper(
+        row_id, excursion_activity_generic_column_family_id, excursion_id, rating)
+    payana_global_city_itinerary_read_obj.insert_column(
+        payana_global_city_excursion_table_write_object)
+    payana_global_city_excursion_read_row_obj = payana_global_city_itinerary_read_obj.get_row_dict(
+        row_id, include_column_family=True)
+    updated_rating = payana_global_city_excursion_read_row_obj[row_id][
+        excursion_activity_generic_column_family_id][excursion_id]
 
     print("Status of excursion ID update: " + str(rating == updated_rating))
-    
+
 for checkin_id, rating in checkin_new.items():
-    payana_global_city_checkin_table_write_object = bigtable_write_object_wrapper(row_id, checkin_activity_generic_column_family_id, checkin_id, rating)
-    payana_global_city_itinerary_read_obj.insert_column(payana_global_city_checkin_table_write_object)
-    payana_global_city_checkin_read_row_obj = payana_global_city_itinerary_read_obj.get_row_dict(row_id, include_column_family=True)
-    updated_rating = payana_global_city_checkin_read_row_obj[row_id][checkin_activity_generic_column_family_id][checkin_id]
+    payana_global_city_checkin_table_write_object = bigtable_write_object_wrapper(
+        row_id, checkin_activity_generic_column_family_id, checkin_id, rating)
+    payana_global_city_itinerary_read_obj.insert_column(
+        payana_global_city_checkin_table_write_object)
+    payana_global_city_checkin_read_row_obj = payana_global_city_itinerary_read_obj.get_row_dict(
+        row_id, include_column_family=True)
+    updated_rating = payana_global_city_checkin_read_row_obj[row_id][
+        checkin_activity_generic_column_family_id][checkin_id]
 
     print("Status of checkin ID update: " + str(rating == updated_rating))
 
-#Add another itinerary ID, excursion ID and checkin ID with activities
+# Add another itinerary ID, excursion ID and checkin ID with activities
 global_city_itinerary_update_obj = {
-    "itinerary_id": {"34567" : "0.48"},
-    "excursion_id": {"34567" : "0.48"},
-    "checkin_id": {"34567" : "0.48"},
+    "itinerary_id": {"34567": "0.48"},
+    "excursion_id": {"34567": "0.48"},
+    "checkin_id": {"34567": "0.48"},
     "activities": ["hiking", "romantic", "exotic"]
 }
 
-itinerary_update = global_city_itinerary_update_obj[payana_global_city_itinerary_table_itinerary_id_quantifier_value]
-excursion_update =  global_city_itinerary_update_obj[payana_global_city_itinerary_table_excursion_id_quantifier_value]
-checkin_update = global_city_itinerary_update_obj[payana_global_city_itinerary_table_checkin_id_quantifier_value]
-activity_update = global_city_itinerary_update_obj[bigtable_constants.payana_global_city_itinerary_table_activities]
+itinerary_update = global_city_itinerary_update_obj[
+    payana_global_city_itinerary_table_itinerary_id_quantifier_value]
+excursion_update = global_city_itinerary_update_obj[
+    payana_global_city_itinerary_table_excursion_id_quantifier_value]
+checkin_update = global_city_itinerary_update_obj[
+    payana_global_city_itinerary_table_checkin_id_quantifier_value]
+activity_update = global_city_itinerary_update_obj[
+    bigtable_constants.payana_global_city_itinerary_table_activities]
 
 for itinerary_id, rating in itinerary_update.items():
     for activity in activity_update:
-        itinerary_activity_column_family_id =  "_".join([activity, bigtable_constants.payana_global_city_itinerary_table_itinerary_id_quantifier_value])
+        itinerary_activity_column_family_id = "_".join(
+            [activity, bigtable_constants.payana_global_city_itinerary_table_itinerary_id_quantifier_value])
 
-        excursion_activity_column_family_id = "_".join([activity, bigtable_constants.payana_global_city_itinerary_table_excursion_id_quantifier_value])
+        excursion_activity_column_family_id = "_".join(
+            [activity, bigtable_constants.payana_global_city_itinerary_table_excursion_id_quantifier_value])
 
-        checkin_activity_column_family_id = "_".join([activity, bigtable_constants.payana_global_city_itinerary_table_checkin_id_quantifier_value])
+        checkin_activity_column_family_id = "_".join(
+            [activity, bigtable_constants.payana_global_city_itinerary_table_checkin_id_quantifier_value])
 
-        payana_global_city_itinerary_table_write_object = bigtable_write_object_wrapper(row_id, itinerary_activity_column_family_id, itinerary_id, rating)
-        payana_global_city_itinerary_read_obj.insert_column(payana_global_city_itinerary_table_write_object)
-        payana_global_city_itinerary_read_row_obj = payana_global_city_itinerary_read_obj.get_row_dict(row_id, include_column_family=True)
-        updated_rating = payana_global_city_itinerary_read_row_obj[row_id][itinerary_activity_column_family_id][itinerary_id]
+        payana_global_city_itinerary_table_write_object = bigtable_write_object_wrapper(
+            row_id, itinerary_activity_column_family_id, itinerary_id, rating)
+        payana_global_city_itinerary_read_obj.insert_column(
+            payana_global_city_itinerary_table_write_object)
+        payana_global_city_itinerary_read_row_obj = payana_global_city_itinerary_read_obj.get_row_dict(
+            row_id, include_column_family=True)
+        updated_rating = payana_global_city_itinerary_read_row_obj[
+            row_id][itinerary_activity_column_family_id][itinerary_id]
 
-        print("Status of itinerary ID activity update: " + str(rating == updated_rating))
-        
+        print("Status of itinerary ID activity update: " +
+              str(rating == updated_rating))
+
 for excursion_id, rating in excursion_update.items():
     for activity in activity_update:
-        itinerary_activity_column_family_id =  "_".join([activity, bigtable_constants.payana_global_city_itinerary_table_itinerary_id_quantifier_value])
+        itinerary_activity_column_family_id = "_".join(
+            [activity, bigtable_constants.payana_global_city_itinerary_table_itinerary_id_quantifier_value])
 
-        excursion_activity_column_family_id = "_".join([activity, bigtable_constants.payana_global_city_itinerary_table_excursion_id_quantifier_value])
+        excursion_activity_column_family_id = "_".join(
+            [activity, bigtable_constants.payana_global_city_itinerary_table_excursion_id_quantifier_value])
 
-        checkin_activity_column_family_id = "_".join([activity, bigtable_constants.payana_global_city_itinerary_table_checkin_id_quantifier_value])
+        checkin_activity_column_family_id = "_".join(
+            [activity, bigtable_constants.payana_global_city_itinerary_table_checkin_id_quantifier_value])
 
-        payana_global_city_excursion_table_write_object = bigtable_write_object_wrapper(row_id, excursion_activity_column_family_id, excursion_id, rating)
-        payana_global_city_itinerary_read_obj.insert_column(payana_global_city_excursion_table_write_object)
-        payana_global_city_excursion_read_row_obj = payana_global_city_itinerary_read_obj.get_row_dict(row_id, include_column_family=True)
-        updated_rating = payana_global_city_excursion_read_row_obj[row_id][excursion_activity_column_family_id][excursion_id]
+        payana_global_city_excursion_table_write_object = bigtable_write_object_wrapper(
+            row_id, excursion_activity_column_family_id, excursion_id, rating)
+        payana_global_city_itinerary_read_obj.insert_column(
+            payana_global_city_excursion_table_write_object)
+        payana_global_city_excursion_read_row_obj = payana_global_city_itinerary_read_obj.get_row_dict(
+            row_id, include_column_family=True)
+        updated_rating = payana_global_city_excursion_read_row_obj[
+            row_id][excursion_activity_column_family_id][excursion_id]
 
-        print("Status of excursion ID activity update: " + str(rating == updated_rating))
-        
+        print("Status of excursion ID activity update: " +
+              str(rating == updated_rating))
+
 for checkin_id, rating in checkin_update.items():
     for activity in activity_update:
-        itinerary_activity_column_family_id =  "_".join([activity, bigtable_constants.payana_global_city_itinerary_table_itinerary_id_quantifier_value])
+        itinerary_activity_column_family_id = "_".join(
+            [activity, bigtable_constants.payana_global_city_itinerary_table_itinerary_id_quantifier_value])
 
-        excursion_activity_column_family_id = "_".join([activity, bigtable_constants.payana_global_city_itinerary_table_excursion_id_quantifier_value])
+        excursion_activity_column_family_id = "_".join(
+            [activity, bigtable_constants.payana_global_city_itinerary_table_excursion_id_quantifier_value])
 
-        checkin_activity_column_family_id = "_".join([activity, bigtable_constants.payana_global_city_itinerary_table_checkin_id_quantifier_value])
+        checkin_activity_column_family_id = "_".join(
+            [activity, bigtable_constants.payana_global_city_itinerary_table_checkin_id_quantifier_value])
 
-        payana_global_city_checkin_table_write_object = bigtable_write_object_wrapper(row_id, checkin_activity_column_family_id, checkin_id, rating)
-        payana_global_city_itinerary_read_obj.insert_column(payana_global_city_checkin_table_write_object)
-        payana_global_city_checkin_read_row_obj = payana_global_city_itinerary_read_obj.get_row_dict(row_id, include_column_family=True)
-        updated_rating = payana_global_city_checkin_read_row_obj[row_id][checkin_activity_column_family_id][checkin_id]
+        payana_global_city_checkin_table_write_object = bigtable_write_object_wrapper(
+            row_id, checkin_activity_column_family_id, checkin_id, rating)
+        payana_global_city_itinerary_read_obj.insert_column(
+            payana_global_city_checkin_table_write_object)
+        payana_global_city_checkin_read_row_obj = payana_global_city_itinerary_read_obj.get_row_dict(
+            row_id, include_column_family=True)
+        updated_rating = payana_global_city_checkin_read_row_obj[
+            row_id][checkin_activity_column_family_id][checkin_id]
 
-        print("Status of checkin ID activity update: " + str(rating == updated_rating))
+        print("Status of checkin ID activity update: " +
+              str(rating == updated_rating))
 
-#Remove an itinerary ID, excursion ID, check ID
+# Remove an itinerary ID, excursion ID, check ID
 for itinerary_id, rating in itinerary_new.items():
-    payana_global_city_itinerary_table_write_object = bigtable_write_object_wrapper(row_id, itinerary_activity_generic_column_family_id, itinerary_id, "")
-    payana_global_city_itinerary_read_obj.delete_bigtable_row_column(payana_global_city_itinerary_table_write_object)
-    payana_global_city_itinerary_read_row_obj = payana_global_city_itinerary_read_obj.get_row_dict(row_id, include_column_family=True)
-    removed_itinerary_row = payana_global_city_itinerary_read_row_obj[row_id][itinerary_activity_generic_column_family_id]
+    payana_global_city_itinerary_table_write_object = bigtable_write_object_wrapper(
+        row_id, itinerary_activity_generic_column_family_id, itinerary_id, "")
+    payana_global_city_itinerary_read_obj.delete_bigtable_row_column(
+        payana_global_city_itinerary_table_write_object)
+    payana_global_city_itinerary_read_row_obj = payana_global_city_itinerary_read_obj.get_row_dict(
+        row_id, include_column_family=True)
+    removed_itinerary_row = payana_global_city_itinerary_read_row_obj[
+        row_id][itinerary_activity_generic_column_family_id]
 
-    print("Status of itinerary ID remove: " + str(itinerary_id not in removed_itinerary_row))
-    
+    print("Status of itinerary ID remove: " +
+          str(itinerary_id not in removed_itinerary_row))
+
 for excursion_id, rating in excursion_new.items():
-    payana_global_city_excursion_table_write_object = bigtable_write_object_wrapper(row_id, excursion_activity_generic_column_family_id, excursion_id, "")
-    payana_global_city_itinerary_read_obj.delete_bigtable_row_column(payana_global_city_excursion_table_write_object)
-    payana_global_city_excursion_read_row_obj = payana_global_city_itinerary_read_obj.get_row_dict(row_id, include_column_family=True)
-    removed_excursion_row = payana_global_city_excursion_read_row_obj[row_id][excursion_activity_generic_column_family_id]
+    payana_global_city_excursion_table_write_object = bigtable_write_object_wrapper(
+        row_id, excursion_activity_generic_column_family_id, excursion_id, "")
+    payana_global_city_itinerary_read_obj.delete_bigtable_row_column(
+        payana_global_city_excursion_table_write_object)
+    payana_global_city_excursion_read_row_obj = payana_global_city_itinerary_read_obj.get_row_dict(
+        row_id, include_column_family=True)
+    removed_excursion_row = payana_global_city_excursion_read_row_obj[
+        row_id][excursion_activity_generic_column_family_id]
 
-    print("Status of excursion ID remove: " + str(excursion_id not in removed_excursion_row))
-    
+    print("Status of excursion ID remove: " +
+          str(excursion_id not in removed_excursion_row))
+
 for checkin_id, rating in checkin_new.items():
-    payana_global_city_checkin_table_write_object = bigtable_write_object_wrapper(row_id, checkin_activity_generic_column_family_id, checkin_id, "")
-    payana_global_city_itinerary_read_obj.delete_bigtable_row_column(payana_global_city_checkin_table_write_object)
-    payana_global_city_checkin_read_row_obj = payana_global_city_itinerary_read_obj.get_row_dict(row_id, include_column_family=True)
-    removed_checkin_row = payana_global_city_checkin_read_row_obj[row_id][checkin_activity_generic_column_family_id]
+    payana_global_city_checkin_table_write_object = bigtable_write_object_wrapper(
+        row_id, checkin_activity_generic_column_family_id, checkin_id, "")
+    payana_global_city_itinerary_read_obj.delete_bigtable_row_column(
+        payana_global_city_checkin_table_write_object)
+    payana_global_city_checkin_read_row_obj = payana_global_city_itinerary_read_obj.get_row_dict(
+        row_id, include_column_family=True)
+    removed_checkin_row = payana_global_city_checkin_read_row_obj[
+        row_id][checkin_activity_generic_column_family_id]
 
-    print("Status of checkin ID remove: " + str(checkin_id not in removed_checkin_row))
+    print("Status of checkin ID remove: " +
+          str(checkin_id not in removed_checkin_row))
 
-#Remove the activity based itinerary ID, excursion ID, checkin ID
+# Remove the activity based itinerary ID, excursion ID, checkin ID
 for itinerary_id, rating in itinerary_update.items():
     for activity in activity_update:
-        itinerary_activity_column_family_id =  "_".join([activity, bigtable_constants.payana_global_city_itinerary_table_itinerary_id_quantifier_value])
+        itinerary_activity_column_family_id = "_".join(
+            [activity, bigtable_constants.payana_global_city_itinerary_table_itinerary_id_quantifier_value])
 
-        excursion_activity_column_family_id = "_".join([activity, bigtable_constants.payana_global_city_itinerary_table_excursion_id_quantifier_value])
+        excursion_activity_column_family_id = "_".join(
+            [activity, bigtable_constants.payana_global_city_itinerary_table_excursion_id_quantifier_value])
 
-        checkin_activity_column_family_id = "_".join([activity, bigtable_constants.payana_global_city_itinerary_table_checkin_id_quantifier_value])
+        checkin_activity_column_family_id = "_".join(
+            [activity, bigtable_constants.payana_global_city_itinerary_table_checkin_id_quantifier_value])
 
-        payana_global_city_itinerary_table_write_object = bigtable_write_object_wrapper(row_id, itinerary_activity_column_family_id, itinerary_id, "")
-        payana_global_city_itinerary_read_obj.delete_bigtable_row_column(payana_global_city_itinerary_table_write_object)
-        payana_global_city_itinerary_read_row_obj = payana_global_city_itinerary_read_obj.get_row_dict(row_id, include_column_family=True)
-        removed_itinerary_row = payana_global_city_itinerary_read_row_obj[row_id][itinerary_activity_column_family_id]
+        payana_global_city_itinerary_table_write_object = bigtable_write_object_wrapper(
+            row_id, itinerary_activity_column_family_id, itinerary_id, "")
+        payana_global_city_itinerary_read_obj.delete_bigtable_row_column(
+            payana_global_city_itinerary_table_write_object)
+        payana_global_city_itinerary_read_row_obj = payana_global_city_itinerary_read_obj.get_row_dict(
+            row_id, include_column_family=True)
+        removed_itinerary_row = payana_global_city_itinerary_read_row_obj[
+            row_id][itinerary_activity_column_family_id]
 
-        print("Status of itinerary ID activity remove: " + str(itinerary_id not in removed_itinerary_row))
-        
+        print("Status of itinerary ID activity remove: " +
+              str(itinerary_id not in removed_itinerary_row))
+
 for excursion_id, rating in excursion_update.items():
     for activity in activity_update:
-        itinerary_activity_column_family_id =  "_".join([activity, bigtable_constants.payana_global_city_itinerary_table_itinerary_id_quantifier_value])
+        itinerary_activity_column_family_id = "_".join(
+            [activity, bigtable_constants.payana_global_city_itinerary_table_itinerary_id_quantifier_value])
 
-        excursion_activity_column_family_id = "_".join([activity, bigtable_constants.payana_global_city_itinerary_table_excursion_id_quantifier_value])
+        excursion_activity_column_family_id = "_".join(
+            [activity, bigtable_constants.payana_global_city_itinerary_table_excursion_id_quantifier_value])
 
-        checkin_activity_column_family_id = "_".join([activity, bigtable_constants.payana_global_city_itinerary_table_checkin_id_quantifier_value])
+        checkin_activity_column_family_id = "_".join(
+            [activity, bigtable_constants.payana_global_city_itinerary_table_checkin_id_quantifier_value])
 
-        payana_global_city_excursion_table_write_object = bigtable_write_object_wrapper(row_id, excursion_activity_column_family_id, excursion_id, "")
-        payana_global_city_itinerary_read_obj.delete_bigtable_row_column(payana_global_city_excursion_table_write_object)
-        payana_global_city_excursion_read_row_obj = payana_global_city_itinerary_read_obj.get_row_dict(row_id, include_column_family=True)
-        removed_excursion_row = payana_global_city_excursion_read_row_obj[row_id][excursion_activity_column_family_id]
+        payana_global_city_excursion_table_write_object = bigtable_write_object_wrapper(
+            row_id, excursion_activity_column_family_id, excursion_id, "")
+        payana_global_city_itinerary_read_obj.delete_bigtable_row_column(
+            payana_global_city_excursion_table_write_object)
+        payana_global_city_excursion_read_row_obj = payana_global_city_itinerary_read_obj.get_row_dict(
+            row_id, include_column_family=True)
+        removed_excursion_row = payana_global_city_excursion_read_row_obj[
+            row_id][excursion_activity_column_family_id]
 
-        print("Status of excursion ID activity remove: " + str(excursion_id not in removed_excursion_row))
-        
+        print("Status of excursion ID activity remove: " +
+              str(excursion_id not in removed_excursion_row))
+
 for checkin_id, rating in checkin_update.items():
     for activity in activity_update:
-        itinerary_activity_column_family_id =  "_".join([activity, bigtable_constants.payana_global_city_itinerary_table_itinerary_id_quantifier_value])
+        itinerary_activity_column_family_id = "_".join(
+            [activity, bigtable_constants.payana_global_city_itinerary_table_itinerary_id_quantifier_value])
 
-        excursion_activity_column_family_id = "_".join([activity, bigtable_constants.payana_global_city_itinerary_table_excursion_id_quantifier_value])
+        excursion_activity_column_family_id = "_".join(
+            [activity, bigtable_constants.payana_global_city_itinerary_table_excursion_id_quantifier_value])
 
-        checkin_activity_column_family_id = "_".join([activity, bigtable_constants.payana_global_city_itinerary_table_checkin_id_quantifier_value])
+        checkin_activity_column_family_id = "_".join(
+            [activity, bigtable_constants.payana_global_city_itinerary_table_checkin_id_quantifier_value])
 
-        payana_global_city_checkin_table_write_object = bigtable_write_object_wrapper(row_id, checkin_activity_column_family_id, checkin_id, "")
-        payana_global_city_itinerary_read_obj.delete_bigtable_row_column(payana_global_city_checkin_table_write_object)
-        payana_global_city_checkin_read_row_obj = payana_global_city_itinerary_read_obj.get_row_dict(row_id, include_column_family=True)
-        removed_checkin_row = payana_global_city_checkin_read_row_obj[row_id][checkin_activity_column_family_id]
+        payana_global_city_checkin_table_write_object = bigtable_write_object_wrapper(
+            row_id, checkin_activity_column_family_id, checkin_id, "")
+        payana_global_city_itinerary_read_obj.delete_bigtable_row_column(
+            payana_global_city_checkin_table_write_object)
+        payana_global_city_checkin_read_row_obj = payana_global_city_itinerary_read_obj.get_row_dict(
+            row_id, include_column_family=True)
+        removed_checkin_row = payana_global_city_checkin_read_row_obj[
+            row_id][checkin_activity_column_family_id]
 
-        print("Status of checkin ID activity remove: " + str(checkin_id not in removed_checkin_row))
+        print("Status of checkin ID activity remove: " +
+              str(checkin_id not in removed_checkin_row))
 
-#Delete the whole row 
-payana_global_city_row_delete_object = bigtable_write_object_wrapper(row_id, "", "", "")
-payana_global_city_itinerary_read_obj.delete_bigtable_row(payana_global_city_row_delete_object)
-payana_global_city_read_row_obj = payana_global_city_itinerary_read_obj.get_row_dict(row_id, include_column_family=True)
+# Delete the whole row
+payana_global_city_row_delete_object = bigtable_write_object_wrapper(
+    row_id, "", "", "")
+payana_global_city_itinerary_read_obj_delete_status = payana_global_city_itinerary_read_obj.delete_bigtable_row(
+    payana_global_city_row_delete_object)
+print("payana_global_city_itinerary_read_obj_delete_status: " +
+      str(payana_global_city_itinerary_read_obj_delete_status))
 
-print("Status of payana_global_city delete row: " + str(len(payana_global_city_read_row_obj) == 0))
+payana_global_city_read_row_obj = payana_global_city_itinerary_read_obj.get_row_dict(
+    row_id, include_column_family=True)
+
+print("Status of payana_global_city delete row: " +
+      str(len(payana_global_city_read_row_obj) == 0))
 
 payana_bigtable_cleanup(client_config_file_path, bigtable_tables_schema_path)

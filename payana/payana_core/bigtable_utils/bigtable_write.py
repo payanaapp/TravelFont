@@ -5,6 +5,7 @@
 
 import argparse
 from payana.payana_core.common_utils.payana_core_exception_handler_utils import payana_boolean_exception_handler
+from payana.payana_core.common_utils.payana_core_bigtable_write_utils import payana_bigtable_write_status_handler
 # [START bigtable_write imports]
 import datetime
 
@@ -37,7 +38,9 @@ def bigtable_write(table, bigtable_write_objects):
 
         rows.append(row)
 
-    table.mutate_rows(rows)
+    table_mutate_response = table.mutate_rows(rows)
+    
+    return payana_bigtable_write_status_handler(table_mutate_response)
 
     # [END bigtable_write]
 

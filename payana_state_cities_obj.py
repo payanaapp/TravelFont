@@ -37,7 +37,9 @@ state_obj = {
 }
 
 payana_state_obj = PayanaStateTable(**state_obj)
-payana_state_obj.update_state_bigtable()
+payana_state_obj_write_status = payana_state_obj.update_state_bigtable()
+print("payana_state_obj_write_status: " + str(payana_state_obj_write_status))
+
 payana_state_table = bigtable_constants.payana_place_state_table
 state = payana_state_obj.state
 payana_state_read_obj = PayanaBigTable(payana_state_table)
@@ -75,7 +77,8 @@ print("Status of payana_state_obj_delete city column: " + str(city_to_delete not
 
 #Delete the whole row
 payana_state_delete_object = bigtable_write_object_wrapper(state, column_family_id, "", "")
-payana_state_read_obj.delete_bigtable_row(payana_state_delete_object)
+payana_state_obj_delete_status = payana_state_read_obj.delete_bigtable_row(payana_state_delete_object)
+print("payana_state_obj_delete_status: " + str(payana_state_obj_delete_status))
 
 payana_state_obj_delete = payana_state_read_obj.get_row_dict(state, include_column_family=True)
 

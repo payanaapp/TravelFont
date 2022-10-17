@@ -33,7 +33,8 @@ class PayanaCheckinTable:
         self.column_family_image_id_list = bigtable_constants.payana_checkin_column_family_image_id_list
         self.column_family_participants_list = bigtable_constants.payana_checkin_column_family_participants_list
         self.column_qualifier_description = bigtable_constants.payana_checkin_column_family_description
-        self.column_qualifier_visit_timestamp = bigtable_constants.payana_checkin_column_family_visit_timestamp
+        self.column_qualifier_create_timestamp = bigtable_constants.payana_checkin_column_family_create_timestamp
+        self.column_qualifier_last_updated_timestamp = bigtable_constants.payana_checkin_column_family_last_updated_timestamp
         self.column_qualifier_checkin_owner_profile_id = bigtable_constants.payana_checkin_column_family_checkin_owner_profile_id
         self.column_family_checkin_metadata = bigtable_constants.payana_checkin_metadata
 
@@ -47,6 +48,10 @@ class PayanaCheckinTable:
         self.column_qualifier_checkin_place_id = bigtable_constants.payana_checkin_place_id
         self.column_qualifier_checkin_transport_mode = bigtable_constants.payana_checkin_transport_mode
         self.column_qualifier_checkin_place_name = bigtable_constants.payana_checkin_place_name
+
+        self.column_qualifier_checkin_city = bigtable_constants.payana_checkin_city
+        self.column_qualifier_checkin_country = bigtable_constants.payana_checkin_country
+        self.column_qualifier_checkin_state = bigtable_constants.payana_checkin_state
 
         self.column_qualifier_checkin_id = bigtable_constants.payana_checkin_id
 
@@ -67,8 +72,15 @@ class PayanaCheckinTable:
             # raise invalid key error or key missing error
             pass
 
-        if self.column_qualifier_visit_timestamp in self.checkin_metadata:
-            self.visit_timestamp = self.checkin_metadata[self.column_qualifier_visit_timestamp]
+        if self.column_qualifier_create_timestamp in self.checkin_metadata:
+            self.create_timestamp = self.checkin_metadata[self.column_qualifier_create_timestamp]
+        else:
+            # raise invalid key error or key missing error
+            pass
+
+        if self.column_qualifier_last_updated_timestamp in self.checkin_metadata:
+            self.last_updated_timestamp = self.checkin_metadata[
+                self.column_qualifier_last_updated_timestamp]
         else:
             # raise invalid key error or key missing error
             pass
@@ -101,6 +113,27 @@ class PayanaCheckinTable:
             # raise invalid key error or key missing error
             pass
 
+        if self.column_qualifier_checkin_city in self.checkin_metadata:
+            self.checkin_city = self.checkin_metadata[
+                self.column_qualifier_checkin_city]
+        else:
+            # raise invalid key error or key missing error
+            pass
+
+        if self.column_qualifier_checkin_country in self.checkin_metadata:
+            self.checkin_country = self.checkin_metadata[
+                self.column_qualifier_checkin_country]
+        else:
+            # raise invalid key error or key missing error
+            pass
+
+        if self.column_qualifier_checkin_state in self.checkin_metadata:
+            self.checkin_state = self.checkin_metadata[
+                self.column_qualifier_checkin_state]
+        else:
+            # raise invalid key error or key missing error
+            pass
+
         if self.column_qualifier_itinerary_id in self.checkin_metadata:
             self.checkin_itinerary_id = self.checkin_metadata[
                 self.column_qualifier_itinerary_id]
@@ -116,19 +149,22 @@ class PayanaCheckinTable:
             pass
 
         if self.payana_checkin_instagram_embed_url in self.instagram_metadata:
-            self.checkin_instagram_embed_url_value = self.instagram_metadata[self.payana_checkin_instagram_embed_url]
+            self.checkin_instagram_embed_url_value = self.instagram_metadata[
+                self.payana_checkin_instagram_embed_url]
         else:
             # raise invalid key error or key missing error
             pass
 
         if self.payana_checkin_instagram_post_id in self.instagram_metadata:
-            self.checkin_instagram_post_id = self.instagram_metadata[self.payana_checkin_instagram_post_id]
+            self.checkin_instagram_post_id = self.instagram_metadata[
+                self.payana_checkin_instagram_post_id]
         else:
             # raise invalid key error or key missing error
             pass
 
         if self.payana_checkin_airbnb_embed_url in self.airbnb_metadata:
-            self.checkin_airbnb_embed_url_value = self.airbnb_metadata[self.payana_checkin_airbnb_embed_url]
+            self.checkin_airbnb_embed_url_value = self.airbnb_metadata[
+                self.payana_checkin_airbnb_embed_url]
         else:
             # raise invalid key error or key missing error
             pass
@@ -174,7 +210,7 @@ class PayanaCheckinTable:
 
         self.create_bigtable_write_objects()
 
-        payana_checkin_table_instance.insert_columns(
+        return payana_checkin_table_instance.insert_columns(
             self.update_bigtable_write_objects)
 
     @payana_generic_exception_handler
@@ -192,12 +228,16 @@ class PayanaCheckinTable:
         self.set_participants_list_write_object()
         self.set_activities_list_write_object()
         self.set_description_write_object()
-        self.set_visit_timestamp_write_object()
+        self.set_create_timestamp_write_object()
+        self.set_last_updated_timestamp_write_object()
         self.set_checkin_owner_profile_id_write_object()
         self.set_checkin_id_write_object()
         self.set_checkin_transport_mode_write_object()
         self.set_checkin_place_name_write_object()
         self.set_checkin_place_id_write_object()
+        self.set_checkin_city_write_object()
+        self.set_checkin_state_write_object()
+        self.set_checkin_country_write_object()
         self.set_checkin_itinerary_id_write_object()
         self.set_checkin_excursion_id_write_object()
         self.set_instagram_metadata_write_object()
@@ -255,11 +295,18 @@ class PayanaCheckinTable:
             self.checkin_id, self.column_family_checkin_metadata, self.column_qualifier_description, self.description))
 
     @payana_generic_exception_handler
-    def set_visit_timestamp_write_object(self):
+    def set_create_timestamp_write_object(self):
 
         # user_name write object
         self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-            self.checkin_id, self.column_family_checkin_metadata, self.column_qualifier_visit_timestamp, self.visit_timestamp))
+            self.checkin_id, self.column_family_checkin_metadata, self.column_qualifier_create_timestamp, self.create_timestamp))
+
+    @payana_generic_exception_handler
+    def set_last_updated_timestamp_write_object(self):
+
+        # user_name write object
+        self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+            self.checkin_id, self.column_family_checkin_metadata, self.column_qualifier_last_updated_timestamp, self.last_updated_timestamp))
 
     @payana_generic_exception_handler
     def set_checkin_owner_profile_id_write_object(self):
@@ -275,20 +322,19 @@ class PayanaCheckinTable:
         self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
             self.checkin_id, self.column_family_checkin_metadata, self.column_qualifier_checkin_id, self.checkin_id))
 
-    @payana_generic_exception_handler 
+    @payana_generic_exception_handler
     def set_checkin_transport_mode_write_object(self):
 
         # user_name write object
         self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
             self.checkin_id, self.column_family_checkin_metadata, self.column_qualifier_checkin_transport_mode, self.checkin_transport_mode))
 
-    @payana_generic_exception_handler 
+    @payana_generic_exception_handler
     def set_checkin_place_name_write_object(self):
 
         # user_name write object
         self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
             self.checkin_id, self.column_family_checkin_metadata, self.column_qualifier_checkin_place_name, self.checkin_place_name))
-
 
     @payana_generic_exception_handler
     def set_checkin_place_id_write_object(self):
@@ -296,6 +342,27 @@ class PayanaCheckinTable:
         # user_name write object
         self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
             self.checkin_id, self.column_family_checkin_metadata, self.column_qualifier_checkin_place_id, self.checkin_place_id))
+
+    @payana_generic_exception_handler
+    def set_checkin_city_write_object(self):
+
+        # user_name write object
+        self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+            self.checkin_id, self.column_family_checkin_metadata, self.column_qualifier_checkin_city, self.checkin_city))
+
+    @payana_generic_exception_handler
+    def set_checkin_state_write_object(self):
+
+        # user_name write object
+        self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+            self.checkin_id, self.column_family_checkin_metadata, self.column_qualifier_checkin_state, self.checkin_state))
+
+    @payana_generic_exception_handler
+    def set_checkin_country_write_object(self):
+
+        # user_name write object
+        self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+            self.checkin_id, self.column_family_checkin_metadata, self.column_qualifier_checkin_country, self.checkin_country))
 
     @payana_generic_exception_handler
     def set_checkin_itinerary_id_write_object(self):

@@ -37,7 +37,9 @@ country_obj = {
 }
 
 payana_country_obj = PayanaCountryTable(**country_obj)
-payana_country_obj.update_country_bigtable()
+payana_country_obj_write_status = payana_country_obj.update_country_bigtable()
+print("payana_country_obj_write_status: " + str(payana_country_obj_write_status))
+
 payana_country_table = bigtable_constants.payana_place_country_table
 country = payana_country_obj.country
 payana_country_read_obj = PayanaBigTable(payana_country_table)
@@ -77,7 +79,8 @@ print("Status of payana_country_obj_delete city column: " + str(city_to_delete n
 
 #Delete the whole row
 payana_country_delete_object = bigtable_write_object_wrapper(country, column_family_id, "", "")
-payana_country_read_obj.delete_bigtable_row(payana_country_delete_object)
+payana_country_obj_delete_status = payana_country_read_obj.delete_bigtable_row(payana_country_delete_object)
+print("payana_country_obj_delete_status: " + str(payana_country_obj_delete_status))
 
 payana_country_obj_delete = payana_country_read_obj.get_row_dict(country, include_column_family=True)
 

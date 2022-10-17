@@ -59,7 +59,7 @@ class PayanaGlobalCityItineraryTable:
 
         self.create_bigtable_write_objects()
 
-        payana_global_city_itinerary_instance.insert_columns(
+        return payana_global_city_itinerary_instance.insert_columns(
             self.update_bigtable_write_objects)
 
     @payana_generic_exception_handler
