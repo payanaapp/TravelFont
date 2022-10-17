@@ -12,7 +12,7 @@ from payana.payana_bl.bigtable_utils.constants import bigtable_constants
 from payana.payana_bl.bigtable_utils.PayanaBigTable import PayanaBigTable
 from payana.payana_bl.bigtable_utils.bigtable_read_write_object_wrapper import bigtable_write_object_wrapper
 from payana.payana_bl.common_utils.payana_exception_handler_utils import payana_generic_exception_handler
-
+from payana.payana_bl.common_utils.payana_bl_generic_utils import payana_generate_id
 
 # google cloud bigtable imports
 from google.cloud.bigtable import column_family
@@ -135,21 +135,8 @@ class PayanaExcursionTable:
 
     @payana_generic_exception_handler
     def generate_excursion_id(self):
-
-        current_timestamp_unix = str(time.time())
-        excursion_id_terms = [current_timestamp_unix,
-                              self.excursion_owner_profile_id]
-
-        rand_num = random.randint(0, 1)
-
-        if rand_num == 1:
-            excursion_id_terms[0], excursion_id_terms[1] = excursion_id_terms[1], excursion_id_terms[0]
-
-        excursion_id_hash = "".join(excursion_id_terms)
-
-        excursion_id_binary = hashlib.sha256(excursion_id_hash.encode())
-
-        self.excursion_id = excursion_id_binary.hexdigest()
+        excursion_id_terms = [self.excursion_owner_profile_id]
+        self.excursion_id = payana_generate_id(excursion_id_terms)
 
     @payana_generic_exception_handler
     def update_excursion_bigtable(self):

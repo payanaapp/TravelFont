@@ -13,7 +13,7 @@ from payana.payana_bl.bigtable_utils.PayanaBigTable import PayanaBigTable
 from payana.payana_bl.bigtable_utils.bigtable_read_write_object_wrapper import bigtable_write_object_wrapper
 from payana.payana_bl.common_utils.payana_exception_handler_utils import payana_generic_exception_handler
 from payana.payana_bl.bigtable_utils.PayanaEntityToCommentsTable import PayanaEntityToCommentsTable
-
+from payana.payana_bl.common_utils.payana_bl_generic_utils import payana_generate_id
 
 # google cloud bigtable imports
 from google.cloud.bigtable import column_family
@@ -40,20 +40,7 @@ class PayanaCommentsTable:
     def generate_comment_id(self):
 
         comment_id_terms = [self.profile_name, self.entity_id]
-
-        rand_num = random.randint(0, 1)
-
-        if rand_num == 1:
-            comment_id_terms[0], comment_id_terms[1] = comment_id_terms[1], comment_id_terms[0]
-
-        current_timestamp_unix = str(time.time())
-        comment_id_terms.append(current_timestamp_unix)
-
-        comment_id_hash = "".join(comment_id_terms)
-
-        comment_id_binary = hashlib.sha256(comment_id_hash.encode())
-
-        self.comment_id = comment_id_binary.hexdigest()
+        self.comment_id = payana_generate_id(comment_id_terms)
 
     @payana_generic_exception_handler
     def update_comment_bigtable(self):

@@ -12,7 +12,7 @@ from payana.payana_bl.bigtable_utils.constants import bigtable_constants
 from payana.payana_bl.bigtable_utils.PayanaBigTable import PayanaBigTable
 from payana.payana_bl.bigtable_utils.bigtable_read_write_object_wrapper import bigtable_write_object_wrapper
 from payana.payana_bl.common_utils.payana_exception_handler_utils import payana_generic_exception_handler
-
+from payana.payana_bl.common_utils.payana_bl_generic_utils import payana_generate_id
 
 # google cloud bigtable imports
 from google.cloud.bigtable import column_family
@@ -88,20 +88,8 @@ class PayanaItineraryTable:
     @payana_generic_exception_handler
     def generate_itinerary_id(self):
 
-        current_timestamp_unix = str(time.time())
-        itinerary_id_terms = [current_timestamp_unix,
-                              self.itinerary_owner_profile_id]
-
-        rand_num = random.randint(0, 1)
-
-        if rand_num == 1:
-            itinerary_id_terms[0], itinerary_id_terms[1] = itinerary_id_terms[1], itinerary_id_terms[0]
-
-        itinerary_id_hash = "".join(itinerary_id_terms)
-
-        itinerary_id_binary = hashlib.sha256(itinerary_id_hash.encode())
-
-        self.itinerary_id = itinerary_id_binary.hexdigest()
+        itinerary_id_terms = [self.itinerary_owner_profile_id]
+        self.itinerary_id = payana_generate_id(itinerary_id_terms)
 
     @payana_generic_exception_handler
     def update_itinerary_bigtable(self):
