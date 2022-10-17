@@ -52,7 +52,7 @@ class PayanaBigTable:
     def insert_columns(self, bigtable_write_objects):
 
         if self.table is not None:
-            bigtable_write(self.table, bigtable_write_objects)
+            return bigtable_write(self.table, bigtable_write_objects)
         else:
             print(payana_big_table_does_not_exist_exception)
             raise Exception(payana_big_table_exception)
@@ -512,8 +512,7 @@ class PayanaBigTable:
 
             row_key = bigtable_delete_row_object.row_key
 
-            bigtable_row_delete(self.table, row_key)
-
+            return bigtable_row_delete(self.table, row_key)
 
         else:
             print(payana_big_table_does_not_exist_exception)
@@ -549,7 +548,7 @@ class PayanaBigTable:
             column_family_id = bigtable_delete_row_object.column_family_id
             column_qualifier_id = bigtable_delete_row_object.column_qualifier_id
 
-            bigtable_row_cell_delete(self.table, row_key, column_family_id, column_qualifier_id)
+            return bigtable_row_cell_delete(self.table, row_key, column_family_id, column_qualifier_id)
 
 
         else:

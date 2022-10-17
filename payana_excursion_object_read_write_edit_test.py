@@ -23,6 +23,7 @@ from payana.payana_bl.bigtable_utils.PayanaPersonalPlaceIdItineraryTable import 
 from payana.payana_bl.bigtable_utils.PayanaPersonalCityItineraryTable import PayanaPersonalCityItineraryTable
 from payana.payana_bl.bigtable_utils.PayanaPersonalStateItineraryTable import PayanaPersonalStateItineraryTable
 from payana.payana_bl.bigtable_utils.PayanaPersonalCountryItineraryTable import PayanaPersonalCountryItineraryTable
+from payana.payana_bl.bigtable_utils.PayanaEntityToCommentsTable import PayanaEntityToCommentsTable
 
 client_config_file_path = bigtable_constants.bigtable_client_config_path
 bigtable_tables_schema_path = bigtable_constants.bigtable_schema_config_file
@@ -55,7 +56,10 @@ excursion_obj = {
 }
 
 payana_excursion_obj = PayanaExcursionTable(**excursion_obj)
-payana_excursion_obj.update_excursion_bigtable()
+payana_excursion_obj_write_status = payana_excursion_obj.update_excursion_bigtable()
+
+print("Payana excursion object write status: " + str(payana_excursion_obj_write_status))
+
 excursion_id = payana_excursion_obj.excursion_id
 payana_excursion_table = bigtable_constants.payana_excursion_table
 payana_excursion_read_obj = PayanaBigTable(payana_excursion_table)
@@ -287,159 +291,15 @@ for column_qualifier_activity, column_value_activity in new_activity.items():
 # Remove the whole excursion row
 excursion_row_delete_object = bigtable_write_object_wrapper(
     excursion_id, "", "", "")
-payana_excursion_read_obj.delete_bigtable_row(excursion_row_delete_object)
+payana_excursion_obj_delete_status = payana_excursion_read_obj.delete_bigtable_row(excursion_row_delete_object)
+
+print("Payana excursion object delete status: " + str(payana_excursion_obj_delete_status))
 
 excursion_obj_read_activity_update = payana_excursion_read_obj.get_row_dict(
     excursion_id, include_column_family=True)
 
 print("Status of excursion obj delete row:" +
       str(len(excursion_obj_read_activity_update) == 0))
-
-# Add a comment
-comment_obj = {
-    "comment_timestamp": "123456789",
-    "profile_id": "abkr",
-    "profile_name": "abkr",
-    "comment": "Beautiful pic!",
-    "likes_count": "11",
-    "comment_id": "",
-    "entity_id": "imagee"
-}
-
-payana_comment_obj = PayanaCommentsTable(**comment_obj)
-payana_comment_obj.update_comment_bigtable()
-entity_id = payana_comment_obj.entity_id
-comment_id = payana_comment_obj.comment_id
-payana_comment_table = bigtable_constants.payana_comments_table
-payana_comment_read_obj = PayanaBigTable(payana_comment_table)
-payana_comment_obj = payana_comment_read_obj.get_row_dict(
-    entity_id, include_column_family=False)
-
-print("Comment added: " + str(payana_comment_obj is not None))
-
-# Edit a comment
-comment_obj = {
-    "comment_timestamp": "678910234",
-    "profile_id": "abkr",
-    "profile_name": "abkr",
-    "comment": "Beautiful pic!",
-    "likes_count": "13",
-    "comment_id": comment_id,
-    "entity_id": "imagee"
-}
-
-payana_comments_table_timestamp = bigtable_constants.payana_comments_table_timestamp
-payana_comments_table_likes_count = bigtable_constants.payana_comments_table_likes_count
-new_timestamp = comment_obj[payana_comments_table_timestamp]
-new_likes_count = comment_obj[payana_comments_table_likes_count]
-
-payana_comment_obj = PayanaCommentsTable(**comment_obj)
-payana_comment_obj.update_comment_bigtable()
-entity_id = payana_comment_obj.entity_id
-comment_id = payana_comment_obj.comment_id
-payana_comment_table = bigtable_constants.payana_comments_table
-payana_comment_read_obj = PayanaBigTable(payana_comment_table)
-payana_comment_obj = payana_comment_read_obj.get_row_dict(
-    entity_id, include_column_family=False)
-payana_comment_obj_edited = payana_comment_obj[entity_id][comment_id]
-
-p = re.compile('(?<!\\\\)\'')
-payana_comment_obj_edited = p.sub('\"', payana_comment_obj_edited)
-
-payana_comment_obj_edited = json.loads(payana_comment_obj_edited)
-print(payana_comment_obj_edited)
-
-print("Comment timestamp edited: " +
-      str(payana_comment_obj_edited[payana_comments_table_timestamp] == new_timestamp))
-print("Comment likes count edited: " +
-      str(payana_comment_obj_edited[payana_comments_table_likes_count] == new_likes_count))
-
-# Add another comment
-comment_obj_dup = {
-    "comment_timestamp": "123456789",
-    "profile_id": "abkr",
-    "profile_name": "abkr",
-    "comment": "Beautiful pic!",
-    "likes_count": "11",
-    "comment_id": "",
-    "entity_id": "imagee"
-}
-
-payana_comment_obj_dup = PayanaCommentsTable(**comment_obj_dup)
-payana_comment_obj_dup.update_comment_bigtable()
-entity_id = payana_comment_obj_dup.entity_id
-comment_id = payana_comment_obj_dup.comment_id
-payana_comment_table = bigtable_constants.payana_comments_table
-payana_comment_read_obj = PayanaBigTable(payana_comment_table)
-payana_comment_obj = payana_comment_read_obj.get_row_dict(
-    entity_id, include_column_family=False)
-
-print("Status of new comment write: " +
-      str(len(payana_comment_obj[entity_id]) == 2))
-
-# Delete one comment in the row
-payana_comments_family_id = bigtable_constants.payana_comments_table_comments_family_id
-payana_comment_bigtable_obj = bigtable_write_object_wrapper(
-    entity_id, payana_comments_family_id, comment_id, "")
-payana_comment_read_obj.delete_bigtable_row_column(payana_comment_bigtable_obj)
-
-comment_obj = payana_comment_read_obj.get_row_dict(
-    entity_id, include_column_family=False)
-
-print("Status of one comment delete operation: " +
-      str(len(comment_obj[entity_id]) == 1))
-
-# Delete the comment row
-payana_comment_bigtable_obj = bigtable_write_object_wrapper(
-    entity_id, "", "", "")
-payana_comment_read_obj.delete_bigtable_row(payana_comment_bigtable_obj)
-
-comment_obj = payana_comment_read_obj.get_row_dict(
-    entity_id, include_column_family=False)
-
-print("Status of comment row delete: " + str(len(comment_obj) == 0))
-
-# Add a like and read a like
-likes_obj = {
-    "payana_likes": {"pf_id_1": "1234567", "pf_id_2": "1234567", "pf_id_3": "1234567"},
-    "entity_id": "12345"
-}
-
-payana_like_column_family = bigtable_constants.payana_likes_table_column_family
-payana_likes_obj = PayanaLikesTable(**likes_obj)
-payana_likes_obj.update_likes_bigtable()
-payana_likes_table = bigtable_constants.payana_likes_table
-like_object_id = payana_likes_obj.entity_id
-payana_likes_read_obj = PayanaBigTable(payana_likes_table)
-likes_obj = payana_likes_read_obj.get_row_dict(
-    like_object_id, include_column_family=True)
-
-participant_delete = "pf_id_1"
-print("Status of like write operation: " +
-      str(participant_delete in likes_obj[like_object_id][payana_like_column_family]))
-
-print("Status of likes count operation: " +
-      str(len(likes_obj[like_object_id][payana_like_column_family]) == 3))
-
-# Remove a specific like
-payana_like_bigtable_obj = bigtable_write_object_wrapper(
-    like_object_id, payana_like_column_family, participant_delete, "")
-payana_likes_read_obj.delete_bigtable_row_column(payana_like_bigtable_obj)
-
-likes_obj = payana_likes_read_obj.get_row_dict(
-    like_object_id, include_column_family=True)
-
-print("Status of like delete operation: " +
-      str(participant_delete not in likes_obj[like_object_id][payana_like_column_family]))
-
-# Remove the whole row
-payana_like_bigtable_obj = bigtable_write_object_wrapper(
-    like_object_id, "", "", "")
-payana_likes_read_obj.delete_bigtable_row(payana_like_bigtable_obj)
-
-likes_obj = payana_likes_read_obj.get_row_dict(
-    like_object_id, include_column_family=False)
-print("Status of like row delete: " + str(len(likes_obj) == 0))
 
 
 payana_bigtable_cleanup(client_config_file_path, bigtable_tables_schema_path)

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-"""Demonstrates how to write ProfileInfo into BigTable
+"""Demonstrates how to write comments into BigTable
 """
 
 import argparse
@@ -18,41 +18,36 @@ from payana.payana_bl.common_utils.payana_exception_handler_utils import payana_
 from google.cloud.bigtable import column_family
 
 
-class PayanaStateTable:
+class PayanaEntityToCommentsTable:
 
     @payana_generic_exception_handler
-    def __init__(self, state, city_list):
+    def __init__(self, entity_id, comment_id_list):
 
-        self.state = state
-        self.city_list = city_list
+        self.comment_id_list = comment_id_list
+        self.entity_id = entity_id
 
+        self.column_family_id = bigtable_constants.payana_entity_to_comments_table_comment_id_list
         self.update_bigtable_write_objects = []
 
-        self.column_family_id = bigtable_constants.payana_state_table_column_family_city_list
-
     @payana_generic_exception_handler
-    def toJSON(self):
-        return self.__dict__
+    def update_entity_to_comments_bigtable(self):
 
-    @payana_generic_exception_handler
-    def update_state_bigtable(self):
-
-        payana_state_table_instance = PayanaBigTable(
-            bigtable_constants.payana_place_state_table)
+        payana_entity_to_comments_table_instance = PayanaBigTable(
+            bigtable_constants.payana_entity_to_comments_table)
 
         self.create_bigtable_write_objects()
 
-        return payana_state_table_instance.insert_columns(
+        return payana_entity_to_comments_table_instance.insert_columns(
             self.update_bigtable_write_objects)
 
     @payana_generic_exception_handler
     def create_bigtable_write_objects(self):
-        self.set_city_write_object()
+        self.set_comment_id_list_write_object()
 
     @payana_generic_exception_handler
-    def set_city_write_object(self):
+    def set_comment_id_list_write_object(self):
 
-        # city list write object
-        for city, score in self.city_list.items():
+        # payana comments write object
+        for comment_id, rating in self.comment_id_list.items():
             self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-                self.state, self.column_family_id, city, score))
+                self.entity_id, self.column_family_id, comment_id, rating))

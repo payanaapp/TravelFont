@@ -12,6 +12,7 @@ from payana.payana_bl.bigtable_utils.constants import bigtable_constants
 from payana.payana_bl.bigtable_utils.PayanaBigTable import PayanaBigTable
 from payana.payana_bl.bigtable_utils.bigtable_read_write_object_wrapper import bigtable_write_object_wrapper
 from payana.payana_bl.common_utils.payana_exception_handler_utils import payana_generic_exception_handler
+from payana.payana_bl.bigtable_utils.PayanaEntityToCommentsTable import PayanaEntityToCommentsTable
 
 
 # google cloud bigtable imports
@@ -60,12 +61,13 @@ class PayanaCommentsTable:
         if self.comment_id is None or self.comment_id == "":
             self.generate_comment_id()
 
+        # Update comments table
         payana_comments_table_instance = PayanaBigTable(
             bigtable_constants.payana_comments_table)
 
         self.create_bigtable_write_objects()
 
-        payana_comments_table_instance.insert_columns(
+        return payana_comments_table_instance.insert_columns(
             self.update_bigtable_write_objects)
 
     @payana_generic_exception_handler
@@ -77,75 +79,52 @@ class PayanaCommentsTable:
         self.set_likes_count_write_object()
         self.set_comment_id_write_object()
         self.set_entity_id_write_object()
-        self.set_bigtable_write_object()
-
-    @payana_generic_exception_handler
-    def set_bigtable_write_object(self):
-
-        # payana comments write object
-        self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-            self.entity_id, self.column_family_id, self.comment_id, str(self.comment_json_obj)))
-        
 
     @payana_generic_exception_handler
     def set_comment_timestamp_write_object(self):
 
         # payana comments write object
-        # self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-        #     self.entity_id, self.column_family_id, bigtable_constants.payana_comments_table_timestamp, self.comment_timestamp))
-
-        self.comment_json_obj[bigtable_constants.payana_comments_table_timestamp] = self.comment_timestamp
+        self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+            self.comment_id, self.column_family_id, bigtable_constants.payana_comments_table_timestamp, self.comment_timestamp))
 
     @payana_generic_exception_handler
     def set_profile_id_write_object(self):
 
         # payana comments write object
-        # self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-        #     self.entity_id, self.column_family_id, bigtable_constants.payana_comments_table_profile_id, self.profile_id))
-
-        self.comment_json_obj[bigtable_constants.payana_comments_table_profile_id] = self.profile_id
+        self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+            self.comment_id, self.column_family_id, bigtable_constants.payana_comments_table_profile_id, self.profile_id))
 
     @payana_generic_exception_handler
     def set_profile_name_write_object(self):
 
         # payana comments write object
-        # self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-        #     self.entity_id, self.column_family_id, bigtable_constants.payana_comments_table_profile_name, self.profile_name))
-
-        self.comment_json_obj[bigtable_constants.payana_comments_table_profile_name] = self.profile_name
+        self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+            self.comment_id, self.column_family_id, bigtable_constants.payana_comments_table_profile_name, self.profile_name))
 
     @payana_generic_exception_handler
     def set_comment_write_object(self):
 
         # payana comments write object
-        # self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-        #     self.entity_id, self.column_family_id, bigtable_constants.payana_comments_table_comment, self.comment))
-
-        self.comment_json_obj[bigtable_constants.payana_comments_table_comment] = self.comment
+        self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+            self.comment_id, self.column_family_id, bigtable_constants.payana_comments_table_comment, self.comment))
 
     @payana_generic_exception_handler
     def set_likes_count_write_object(self):
 
         # payana comments write object
-        # self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-        #     self.entity_id, self.column_family_id, bigtable_constants.payana_comments_table_likes, self.likes))
-
-        self.comment_json_obj[bigtable_constants.payana_comments_table_likes_count] = self.likes_count
+        self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+            self.comment_id, self.column_family_id, bigtable_constants.payana_comments_table_likes_count, self.likes_count))
 
     @payana_generic_exception_handler
     def set_comment_id_write_object(self):
 
         # payana comments write object
-        # self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-        #     self.entity_id, self.column_family_id, bigtable_constants.payana_comments_table_comment_id, self.comment_id))
-
-        self.comment_json_obj[bigtable_constants.payana_comments_table_comment_id] = self.comment_id
+        self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+            self.comment_id, self.column_family_id, bigtable_constants.payana_comments_table_comment_id, self.comment_id))
 
     @payana_generic_exception_handler
     def set_entity_id_write_object(self):
 
         # payana comments write object
-        # self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-        #     self.entity_id, self.column_family_id, bigtable_constants.payana_comments_table_entity_id, self.entity_id))
-
-        self.comment_json_obj[bigtable_constants.payana_comments_table_entity_id] = self.entity_id
+        self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+            self.comment_id, self.column_family_id, bigtable_constants.payana_comments_table_entity_id, self.entity_id))

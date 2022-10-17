@@ -40,6 +40,7 @@ payana_checkin_table = "payana_checkin_table"
 payana_travel_buddy_list_table = "payana_travel_buddy_list_table"
 payana_likes_table = "payana_likes_table"
 payana_comments_table = "payana_comments_table"
+payana_entity_to_comments_table = "payana_entity_to_comments_table"
 payana_place_metadata_table = "payana_place_metadata_table"
 payana_place_state_table = "payana_place_state_table"
 payana_place_country_table = "payana_place_country_table"
@@ -68,7 +69,7 @@ payana_profile_table_gender = "gender"
 payana_profile_table_date_of_birth = "date_of_birth"
 payana_profile_table_top_activities = "top_activities"
 payana_profile_favorite_places_preference = "favorite_places_preference"
-payana_profile_favorite_activities_preference = "favorite_places_preference"
+payana_profile_favorite_activities_preference = "favorite_activities_preference"
 
 # payana_comments_table_field_names
 payana_comments_table_comments_family_id = "payana_comments"
@@ -80,6 +81,9 @@ payana_comments_table_comment = "comment"
 payana_comments_table_likes = "likes"
 payana_comments_table_likes_count = "likes_count"
 payana_comments_table_entity_id = "entity_id"
+
+# payana entity comments table
+payana_entity_to_comments_table_comment_id_list = "payana_comment_id_list"
 
 # GCS photo object constants
 payana_photo_id = "photo_id"

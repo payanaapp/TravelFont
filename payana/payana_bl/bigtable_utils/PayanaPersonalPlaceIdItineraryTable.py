@@ -59,7 +59,7 @@ class PayanaPersonalPlaceIdItineraryTable:
 
         self.create_bigtable_write_objects()
 
-        payana_personal_place_id_itinerary_instance.insert_columns(
+        return payana_personal_place_id_itinerary_instance.insert_columns(
             self.update_bigtable_write_objects)
 
     @payana_generic_exception_handler

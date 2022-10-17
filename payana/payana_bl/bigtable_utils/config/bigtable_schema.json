@@ -64,6 +64,14 @@
         "purpose": "This table will hold the list of all the comments on a picture/excursion/itinerary saved in GCS",
         "max_versions": 1
     },
+    "payana_entity_to_comments_table": {
+        "column_family_id": [
+            "payana_comment_id_list"
+        ],
+        "description": "This table will hold the mapping from entity (picture/excursion/itinerary) ID to the list of all the comments on a picture/excursion/itinerary saved in GCS",
+        "purpose": "This table will hold the list of all the comments on a picture/excursion/itinerary saved in GCS",
+        "max_versions": 1
+    },
     "payana_likes_table": {
         "column_family_id": [
             "payana_likes"
