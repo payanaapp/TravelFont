@@ -35,7 +35,10 @@ place_id_metadata_obj = {
 }
 
 payana_place_id_metadata_obj = PayanaPlaceIdMetadataTable(**place_id_metadata_obj)
-payana_place_id_metadata_obj.update_place_metadata_bigtable()
+payana_place_id_metadata_obj_write_status = payana_place_id_metadata_obj.update_place_metadata_bigtable()
+
+print("payana_place_id_metadata_obj_write_status: " + str(payana_place_id_metadata_obj_write_status))
+
 payana_place_id_metadata_table = bigtable_constants.payana_place_metadata_table
 place_id = payana_place_id_metadata_obj.place_id
 payana_place_id_metadata_read_obj = PayanaBigTable(payana_place_id_metadata_table)
@@ -92,7 +95,9 @@ print("Status of update zipcode: " + str(updated_zipcode == new_zipcode))
 
 #delete a place ID metadata object
 payana_place_id_metadata_row_delete_object = bigtable_write_object_wrapper(place_id, "", "", "")
-payana_place_id_metadata_read_obj.delete_bigtable_row(payana_place_id_metadata_row_delete_object)
+payana_place_id_metadata_obj_delete_status = payana_place_id_metadata_read_obj.delete_bigtable_row(payana_place_id_metadata_row_delete_object)
+
+print("payana_place_id_metadata_obj_delete_status: " + str(payana_place_id_metadata_obj_delete_status))
 
 payana_place_id_metadata_delete = payana_place_id_metadata_read_obj.get_row_dict(place_id, include_column_family=True)
 

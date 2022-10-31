@@ -43,7 +43,7 @@ class PayanaBigTable:
     def insert_column(self, bigtable_write_object):
 
         if self.table is not None:
-            bigtable_write(self.table, [bigtable_write_object])
+            return bigtable_write(self.table, [bigtable_write_object])
         else:
             print(payana_big_table_does_not_exist_exception)
             raise Exception(payana_big_table_exception)

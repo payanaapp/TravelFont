@@ -66,10 +66,12 @@ payana_profile_table_email = "email"
 payana_profile_table_phone = "phone"
 payana_profile_table_private_account = "private_account"
 payana_profile_table_gender = "gender"
+payana_profile_table_doj = "doj" #date of joining
 payana_profile_table_date_of_birth = "date_of_birth"
 payana_profile_table_top_activities = "top_activities"
 payana_profile_favorite_places_preference = "favorite_places_preference"
 payana_profile_favorite_activities_preference = "favorite_activities_preference"
+payana_profile_table_thumbnail_travel_buddies = "thumbnail_travel_buddies"
 
 # payana_comments_table_field_names
 payana_comments_table_comments_family_id = "payana_comments"
@@ -94,11 +96,16 @@ payana_itinerary_column_family_participants_list = "participants_list"
 payana_itinerary_column_family_description = "description"
 payana_itinerary_column_family_visit_timestamp = "visit_timestamp"
 payana_itinerary_column_family_itinerary_owner_profile_id = "itinerary_owner_profile_id"
+payana_itinerary_column_family_last_updated_timestamp = "last_updated_timestamp"
 payana_itinerary_id = "itinerary_id"
 payana_itinerary_metadata = "itinerary_metadata"
 payana_itinerary_activities_list = "activities_list"
 payana_itinerary_place_id = "place_id"
 payana_itinerary_place_name = "place_name"
+payana_itinerary_city = "city"
+payana_itinerary_state = "state"
+payana_itinerary_country = "country"
+payana_itinerary_last_updated_timestamp = "last_updated_timestamp"
 
 # Payana excursion table constants
 payana_excursion_column_family_checkin_id_list = "checkin_id_list"
@@ -203,10 +210,10 @@ payana_big_table_exception = "Interval Server Error : Unable to reach the databa
 payana_big_table_does_not_exist_exception = "BigTable doesn't exist or none instance returned"
 
 # Payana profile page itineraries
-payana_profile_page_itinerary_table_itinerary_id_quantifier_value = "itinerary_id"
-payana_profile_page_itinerary_table_excursion_id_quantifier_value = "excursion_id"
-payana_profile_page_itinerary_table_checkin_id_quantifier_value = "checkin_id"
-payana_profile_page_itinerary_table_activities = "activities"
+payana_profile_page_itinerary_table_saved_itinerary_id_list_quantifier_value = "saved_itinerary_id_list"
+payana_profile_page_itinerary_table_saved_excursion_id_list_quantifier_value = "saved_excursion_id_list"
+payana_profile_page_itinerary_table_created_itinerary_id_list_quantifier_value = "created_itinerary_id_list"
+payana_profile_page_itinerary_table_created_excursion_id_list_quantifier_value = "created_excursion_id_list"
 
 # Payana global place ID itinerary table constants
 payana_global_place_id_itinerary_table_itinerary_id_quantifier_value = "itinerary_id"

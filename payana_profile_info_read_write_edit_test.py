@@ -30,6 +30,7 @@ payana_profile_table_personal_info_column_family = bigtable_constants.payana_pro
 payana_profile_table_top_activities = bigtable_constants.payana_profile_table_top_activities
 payana_profile_favorite_places_preference = bigtable_constants.payana_profile_favorite_places_preference
 payana_profile_favorite_activities_preference = bigtable_constants.payana_profile_favorite_activities_preference
+payana_profile_table_thumbnail_travel_buddies = bigtable_constants.payana_profile_table_thumbnail_travel_buddies
 
 profile_obj = {
     payana_profile_table_personal_info_column_family:
@@ -43,7 +44,8 @@ profile_obj = {
         "phone": "123456789",
         "private_account": "true",
         "gender": "male",
-        "date_of_birth": "11/11/1111"
+        "date_of_birth": "11/11/1111",
+        "doj" : "11/11/1111"
     },
     payana_profile_table_top_activities:
     {
@@ -52,25 +54,37 @@ profile_obj = {
         "fashion": "0.78"
     },
     payana_profile_favorite_places_preference: {
-        "cupertino##california##usa": "city",
-        "california##usa": "state",
-        "usa": "country",
-        "sanfrancisco##california##usa": "city",
-        "oregon##usa": "state",
-        "france": "country"
+        "cupertino##california##usa": "1234578", #place ID
+        "california##usa": "1234578",
+        "usa": "1234578",
+        "sanfrancisco##california##usa": "1234578",
+        "oregon##usa": "1234578",
+        "france": "1234578"
     },
     payana_profile_favorite_activities_preference: {
-        "hiking": "",
-        "ski trips": "",
-        "adventures": "",
-        "spring break" : "",
-        "road trips" : "",
-        "food trips" : ""
+        "hiking": "1",
+        "ski trips": "2",
+        "adventures": "3",
+        "spring break" : "4",
+        "road trips" : "5",
+        "food trips" : "6"
+    },
+    payana_profile_table_thumbnail_travel_buddies : {
+        "123456" : "1",
+        "234567" : "2",
+        "345678" : "3",
+        "456789" : "4",
+        "567890" : "5",
+        "678911" : "6",
+        "678921" : "7",
     }
 }
 
 payana_profile_obj = PayanaProfileTable(**profile_obj)
-payana_profile_obj.update_profile_info_bigtable()
+payana_profile_obj_write_status = payana_profile_obj.update_profile_info_bigtable()
+
+print("payana_profile_obj_write_status: " + str(payana_profile_obj_write_status))
+
 profile_id = payana_profile_obj.profile_id
 payana_profile_table = bigtable_constants.payana_profile_table
 payana_profile_read_obj = PayanaBigTable(payana_profile_table)
@@ -217,6 +231,21 @@ updated_date_of_birth = profile_table_date_of_birth_update[profile_id][
 print("Status of update date_of_birth operation: " +
       str(new_date_of_birth == updated_date_of_birth))
 
+# Change doj
+column_family_profile_table_metadata = bigtable_constants.payana_profile_table_personal_info_column_family
+column_qualifier_profile_table_doj = bigtable_constants.payana_profile_table_doj
+new_doj = "22/22/2222"
+profile_table_doj_write_object = bigtable_write_object_wrapper(
+    profile_id, column_family_profile_table_metadata, column_qualifier_profile_table_doj, new_doj)
+payana_profile_read_obj.insert_column(profile_table_doj_write_object)
+profile_table_doj_update = payana_profile_read_obj.get_row_dict(
+    profile_id, include_column_family=True)
+updated_doj = profile_table_doj_update[profile_id][
+    column_family_profile_table_metadata][column_qualifier_profile_table_doj]
+
+print("Status of update doj operation: " +
+      str(new_doj == updated_doj))
+
 
 # Change activity score
 column_family_top_activities = bigtable_constants.payana_profile_table_top_activities
@@ -249,8 +278,11 @@ print("Status of add road_trip activity score operation: " +
       str(new_road_trip_score == updated_road_trip_score))
 
 # Delete an activity
-payana_profile_read_obj.delete_bigtable_row_column(
+payana_profile_obj_delete_activity_status = payana_profile_read_obj.delete_bigtable_row_column(
     profile_table_road_trip_write_object)
+
+print("payana_profile_obj_delete_activity_status: " + str(payana_profile_obj_delete_activity_status))
+
 profile_table_road_trip_delete = payana_profile_read_obj.get_row_dict(
     profile_id, include_column_family=True)
 
@@ -258,6 +290,140 @@ updated_top_activities = profile_table_road_trip_delete[profile_id][column_famil
 
 print("Status of delete activity operation: " +
       str(activity_name not in updated_top_activities))
+
+# Change favorite place place ID
+column_family_favorite_places_preference = bigtable_constants.payana_profile_favorite_places_preference
+favorite_place = "cupertino##california##usa"
+new_favorite_place_id = "95054"
+profile_table_favorite_place_write_object = bigtable_write_object_wrapper(
+    profile_id, column_family_favorite_places_preference, favorite_place, new_favorite_place_id)
+payana_profile_read_obj.insert_column(profile_table_favorite_place_write_object)
+profile_table_favorite_place_score_update = payana_profile_read_obj.get_row_dict(
+    profile_id, include_column_family=True)
+updated_favorite_place_id = profile_table_favorite_place_score_update[profile_id][
+    column_family_favorite_places_preference][favorite_place]
+
+print("Status of update favorite place score operation: " +
+      str(new_favorite_place_id == updated_favorite_place_id))
+
+# Add a new favorite place
+column_family_favorite_places_preference = bigtable_constants.payana_profile_favorite_places_preference
+new_favorite_place = "mpk##california##usa"
+new_favorite_place_id = "95014"
+profile_table_favorite_place_write_object = bigtable_write_object_wrapper(
+    profile_id, column_family_favorite_places_preference, new_favorite_place, new_favorite_place_id)
+payana_profile_read_obj.insert_column(profile_table_favorite_place_write_object)
+profile_table_favorite_place_score_update = payana_profile_read_obj.get_row_dict(
+    profile_id, include_column_family=True)
+updated_favorite_place_id = profile_table_favorite_place_score_update[profile_id][
+    column_family_favorite_places_preference][new_favorite_place]
+
+print("Status of update favorite place operation: " +
+      str(new_favorite_place_id == updated_favorite_place_id))
+
+# Delete a favorite place
+payana_profile_obj_delete_favorite_place_status = payana_profile_read_obj.delete_bigtable_row_column(
+    profile_table_favorite_place_write_object)
+
+print("payana_profile_obj_delete_favorite_place_status: " + str(payana_profile_obj_delete_favorite_place_status))
+
+profile_table_favorite_place_delete = payana_profile_read_obj.get_row_dict(
+    profile_id, include_column_family=True)
+
+updated_favorite_places = profile_table_favorite_place_delete[profile_id][column_family_favorite_places_preference]
+
+print("Status of delete favorite place operation: " +
+      str(new_favorite_place not in updated_favorite_places))
+
+
+# Change favorite activity score
+payana_profile_favorite_activities_preference = bigtable_constants.payana_profile_favorite_activities_preference
+favorite_activity = "hiking"
+new_favorite_activity_score = "18"
+profile_table_favorite_activity_write_object = bigtable_write_object_wrapper(
+    profile_id, payana_profile_favorite_activities_preference, favorite_activity, new_favorite_activity_score)
+payana_profile_read_obj.insert_column(profile_table_favorite_activity_write_object)
+profile_table_favorite_activity_score_update = payana_profile_read_obj.get_row_dict(
+    profile_id, include_column_family=True)
+updated_favorite_activity_score = profile_table_favorite_activity_score_update[profile_id][
+    payana_profile_favorite_activities_preference][favorite_activity]
+
+print("Status of update favorite activity score operation: " +
+      str(new_favorite_activity_score == updated_favorite_activity_score))
+
+# Add a new favorite activity
+payana_profile_favorite_activities_preference = bigtable_constants.payana_profile_favorite_activities_preference
+new_favorite_activity = "spring_break"
+new_favorite_activity_score = "7"
+profile_table_favorite_activity_write_object = bigtable_write_object_wrapper(
+    profile_id, payana_profile_favorite_activities_preference, new_favorite_activity, new_favorite_activity_score)
+payana_profile_read_obj.insert_column(profile_table_favorite_activity_write_object)
+profile_table_favorite_activity_score_update = payana_profile_read_obj.get_row_dict(
+    profile_id, include_column_family=True)
+updated_favorite_activity_score = profile_table_favorite_activity_score_update[profile_id][
+    payana_profile_favorite_activities_preference][new_favorite_activity]
+
+print("Status of update favorite activity operation: " +
+      str(new_favorite_activity_score == updated_favorite_activity_score))
+
+# Delete a favorite activity
+payana_profile_obj_delete_favorite_activity_status = payana_profile_read_obj.delete_bigtable_row_column(
+    profile_table_favorite_activity_write_object)
+
+print("payana_profile_obj_delete_favorite_activity_status: " + str(payana_profile_obj_delete_favorite_activity_status))
+
+profile_table_favorite_activity_delete = payana_profile_read_obj.get_row_dict(
+    profile_id, include_column_family=True)
+
+updated_favorite_activities = profile_table_favorite_activity_delete[profile_id][payana_profile_favorite_activities_preference]
+
+print("Status of delete favorite activity operation: " +
+      str(new_favorite_activity not in updated_favorite_activities))
+
+
+# Change thumbnail friend rating
+payana_profile_table_thumbnail_travel_buddies = bigtable_constants.payana_profile_table_thumbnail_travel_buddies
+favorite_travel_buddy = "123456"
+new_favorite_travel_buddy_score = "9"
+profile_table_favorite_travel_buddy_write_object = bigtable_write_object_wrapper(
+    profile_id, payana_profile_table_thumbnail_travel_buddies, favorite_travel_buddy, new_favorite_travel_buddy_score)
+payana_profile_read_obj.insert_column(profile_table_favorite_travel_buddy_write_object)
+profile_table_favorite_travel_buddy_score_update = payana_profile_read_obj.get_row_dict(
+    profile_id, include_column_family=True)
+updated_favorite_travel_buddy_score = profile_table_favorite_travel_buddy_score_update[profile_id][
+    payana_profile_table_thumbnail_travel_buddies][favorite_travel_buddy]
+
+print("Status of update favorite travel buddy score operation: " +
+      str(new_favorite_travel_buddy_score == updated_favorite_travel_buddy_score))
+
+# Add a new thumbnail friend
+payana_profile_table_thumbnail_travel_buddies = bigtable_constants.payana_profile_table_thumbnail_travel_buddies
+new_favorite_travel_buddy = "654321"
+new_favorite_travel_buddy_score = "8"
+profile_table_favorite_travel_buddy_write_object = bigtable_write_object_wrapper(
+    profile_id, payana_profile_table_thumbnail_travel_buddies, new_favorite_travel_buddy, new_favorite_travel_buddy_score)
+payana_profile_read_obj.insert_column(profile_table_favorite_travel_buddy_write_object)
+profile_table_favorite_travel_buddy_score_update = payana_profile_read_obj.get_row_dict(
+    profile_id, include_column_family=True)
+updated_favorite_travel_buddy_score = profile_table_favorite_travel_buddy_score_update[profile_id][
+    payana_profile_table_thumbnail_travel_buddies][new_favorite_travel_buddy]
+
+print("Status of update favorite travel buddy score operation: " +
+      str(new_favorite_travel_buddy_score == updated_favorite_travel_buddy_score))
+
+# Delete a thumbnail friend
+payana_profile_obj_delete_favorite_travel_buddy_status = payana_profile_read_obj.delete_bigtable_row_column(
+    profile_table_favorite_travel_buddy_write_object)
+
+print("payana_profile_obj_delete_favorite_travel_buddy_status: " + str(payana_profile_obj_delete_favorite_travel_buddy_status))
+
+profile_table_favorite_travel_buddy_delete = payana_profile_read_obj.get_row_dict(
+    profile_id, include_column_family=True)
+
+updated_favorite_travel_buddies = profile_table_favorite_travel_buddy_delete[profile_id][payana_profile_table_thumbnail_travel_buddies]
+
+print("Status of delete favorite travel buddy operation: " +
+      str(new_favorite_travel_buddy not in updated_favorite_travel_buddies))
 
 # Remove the whole profile ID row
 profile_row_delete_object = bigtable_write_object_wrapper(
