@@ -3,11 +3,9 @@
         "column_family_id": [
             "personal_information",
             "top_activities",
-            "heat_map_place_ids",
             "thumbnail_travel_buddies",
-            "recent_itineraries",
-            "highlighted_itineraries",
-            "saved_itineraries"
+            "favorite_places_preference",
+            "favorite_activities_preference"
         ],
         "description": "This table will hold all the profile details of the user",
         "purpose": "To fetch the details of a profile",
@@ -190,18 +188,22 @@
     },
     "payana_profile_page_itinerary_table": {
         "column_family_id": [
-            "generic_itinerary_id",
-            "hiking_itinerary_id",
-            "romantic_itinerary_id",
-            "exotic_itinerary_id",
-            "generic_excursion_id",
-            "hiking_excursion_id",
-            "romantic_excursion_id",
-            "exotic_excursion_id",
-            "generic_checkin_id",
-            "hiking_checkin_id",
-            "romantic_checkin_id",
-            "exotic_checkin_id"
+            "generic_saved_itinerary_id_list",
+            "hiking_saved_itinerary_id_list",
+            "romantic_saved_itinerary_id_list",
+            "exotic_saved_itinerary_id_list",
+            "generic_created_itinerary_id_list",
+            "hiking_created_itinerary_id_list",
+            "romantic_created_itinerary_id_list",
+            "exotic_created_itinerary_id_list",
+            "generic_saved_excursion_id_list",
+            "hiking_saved_excursion_id_list",
+            "romantic_saved_excursion_id_list",
+            "exotic_saved_excursion_id_list",
+            "generic_created_excursion_id_list",
+            "hiking_created_excursion_id_list",
+            "romantic_created_excursion_id_list",
+            "exotic_created_excursion_id_list"
         ],
         "description": "This table will hold all the neighboring city list for a given city",
         "purpose": "This table will hold all the neighboring city list for a given city",

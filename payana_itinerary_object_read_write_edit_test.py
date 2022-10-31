@@ -34,20 +34,27 @@ itinerary_obj = {
         "2": "23456",
         "3": "34567"
     },
-    "activities_list": {"hiking": "1", "roadtrip": "1"},
-    "participants_list": {"pf_id_1": "1234567", "pf_id_2": "1234567", "pf_id_3": "1234567"},
+    "activities_list": {"hiking": "1.0", "roadtrip": "1.0"},
     "itinerary_metadata": {
-        "description": "Summer trip to Montana",
+        "description": "Abhinandan's SF excursions",
         "visit_timestamp": "123456789",
         "itinerary_id": "",
-        "itinerary_owner_profile_id": "1234567",
+        "itinerary_owner_profile_id": "1234567", 
         "place_id": "123456",
-        "place_name": "SF"
+        "place_name": "Land's End",
+        # Useful when search happens on a specific profile for a given city/state/country
+        "city": "SF##California##USA",
+        "state": "California##USA",
+        "country": "USA",
+        "last_updated_timestamp": "123456789"
     }
 }
 
 payana_itinerary_obj = PayanaItineraryTable(**itinerary_obj)
-payana_itinerary_obj.update_itinerary_bigtable()
+
+payana_itinerary_obj_write_status = payana_itinerary_obj.update_itinerary_bigtable()
+print("payana_itinerary_obj_write_status: " + str(payana_itinerary_obj_write_status))
+
 itinerary_id = payana_itinerary_obj.itinerary_id
 payana_itinerary_table = bigtable_constants.payana_itinerary_table
 payana_itinerary_read_obj = PayanaBigTable(payana_itinerary_table)
@@ -78,6 +85,48 @@ updated_place_name = itinerary_obj_read_place_name_update[itinerary_id][column_f
 
 print("Status of update place name operation: " + str(new_place_name == updated_place_name))
 
+# Change city
+column_family_itinerary_metadata = bigtable_constants.payana_itinerary_metadata
+column_qualifier_itinerary_city = bigtable_constants.payana_itinerary_city
+new_city = "SC"
+itinerary_table_city_write_object = bigtable_write_object_wrapper(itinerary_id, column_family_itinerary_metadata, column_qualifier_itinerary_city, new_city)
+
+itinerary_table_city_write_object_status = payana_itinerary_read_obj.insert_column(itinerary_table_city_write_object)
+print("itinerary_table_city_write_object_status: " + str(itinerary_table_city_write_object_status))
+
+itinerary_obj_read_city_update = payana_itinerary_read_obj.get_row_dict(itinerary_id, include_column_family=True)
+updated_city = itinerary_obj_read_city_update[itinerary_id][column_family_itinerary_metadata][column_qualifier_itinerary_city]
+
+print("Status of update city operation: " + str(new_city == updated_city))
+
+# Change state
+column_family_itinerary_metadata = bigtable_constants.payana_itinerary_metadata
+column_qualifier_itinerary_state = bigtable_constants.payana_itinerary_state
+new_state = "SC"
+itinerary_table_state_write_object = bigtable_write_object_wrapper(itinerary_id, column_family_itinerary_metadata, column_qualifier_itinerary_state, new_state)
+
+itinerary_table_state_write_object_status = payana_itinerary_read_obj.insert_column(itinerary_table_state_write_object)
+print("itinerary_table_state_write_object_status: " + str(itinerary_table_state_write_object_status))
+
+itinerary_obj_read_state_update = payana_itinerary_read_obj.get_row_dict(itinerary_id, include_column_family=True)
+updated_state = itinerary_obj_read_state_update[itinerary_id][column_family_itinerary_metadata][column_qualifier_itinerary_state]
+
+print("Status of update state operation: " + str(new_state == updated_state))
+
+# Change country
+column_family_itinerary_metadata = bigtable_constants.payana_itinerary_metadata
+column_qualifier_itinerary_country = bigtable_constants.payana_itinerary_country
+new_country = "SC"
+itinerary_table_country_write_object = bigtable_write_object_wrapper(itinerary_id, column_family_itinerary_metadata, column_qualifier_itinerary_country, new_country)
+
+itinerary_table_country_write_object_status = payana_itinerary_read_obj.insert_column(itinerary_table_country_write_object)
+print("itinerary_table_country_write_object_status: " + str(itinerary_table_country_write_object_status))
+
+itinerary_obj_read_country_update = payana_itinerary_read_obj.get_row_dict(itinerary_id, include_column_family=True)
+updated_country = itinerary_obj_read_country_update[itinerary_id][column_family_itinerary_metadata][column_qualifier_itinerary_country]
+
+print("Status of update place name operation: " + str(new_country == updated_country))
+
 # Change description
 column_family_itinerary_metadata = bigtable_constants.payana_itinerary_metadata
 column_qualifier_description = bigtable_constants.payana_itinerary_column_family_description
@@ -89,28 +138,29 @@ updated_description = itinerary_obj_read_description_update[itinerary_id][column
 
 print("Status of update description operation: " + str(new_description == updated_description))
 
-# Add a new participant
-column_family_participants_list = bigtable_constants.payana_itinerary_column_family_participants_list
-new_participant = {"pf_id_new" : "1234567"}
+# Change visit_timestamp
+column_family_itinerary_metadata = bigtable_constants.payana_itinerary_metadata
+column_qualifier_visit_timestamp = bigtable_constants.payana_itinerary_column_family_visit_timestamp
+new_visit_timestamp = "678912345"
+itinerary_table_visit_timestamp_write_object = bigtable_write_object_wrapper(itinerary_id, column_family_itinerary_metadata, column_qualifier_visit_timestamp, new_visit_timestamp)
+itinerary_table_visit_timestamp_write_object_status = payana_itinerary_read_obj.insert_column(itinerary_table_visit_timestamp_write_object)
+print("itinerary_table_visit_timestamp_write_object_status: " + str(itinerary_table_visit_timestamp_write_object_status))
 
-for column_qualifier_new_participant, column_value_new_participant in new_participant.items():
+itinerary_obj_read_visit_timestamp_update = payana_itinerary_read_obj.get_row_dict(itinerary_id, include_column_family=True)
+updated_visit_timestamp = itinerary_obj_read_visit_timestamp_update[itinerary_id][column_family_itinerary_metadata][column_qualifier_visit_timestamp]
 
-    itinerary_table_participant_write_object = bigtable_write_object_wrapper(itinerary_id, column_family_participants_list, column_qualifier_new_participant, column_value_new_participant)
-    payana_itinerary_read_obj.insert_column(itinerary_table_participant_write_object)
-    itinerary_obj_read_participant_mode_update = payana_itinerary_read_obj.get_row_dict(itinerary_id, include_column_family=True)
-    updated_participant_list = itinerary_obj_read_participant_mode_update[itinerary_id][column_family_participants_list]
+print("Status of update visit_timestamp operation: " + str(new_visit_timestamp == updated_visit_timestamp))
 
-    print("Status of update participant operation: " + str(column_qualifier_new_participant in updated_participant_list))
-    print("Status of update participant value operation: " + str(column_value_new_participant in updated_participant_list[column_qualifier_new_participant]))
+# Change last_updated_timestamp
+column_family_itinerary_metadata = bigtable_constants.payana_itinerary_metadata
+column_qualifier_last_updated_timestamp = bigtable_constants.payana_itinerary_column_family_last_updated_timestamp
+new_last_updated_timestamp = "1788678912345"
+itinerary_table_last_updated_timestamp_write_object = bigtable_write_object_wrapper(itinerary_id, column_family_itinerary_metadata, column_qualifier_last_updated_timestamp, new_last_updated_timestamp)
+itinerary_table_last_updated_timestamp_write_object_status = payana_itinerary_read_obj.insert_column(itinerary_table_last_updated_timestamp_write_object)
+print("itinerary_table_last_updated_timestamp_write_object_status: " + str(itinerary_table_last_updated_timestamp_write_object_status))
 
-    # Delete the new participant added
-    payana_itinerary_read_obj.delete_bigtable_row_column(itinerary_table_participant_write_object)
-    itinerary_obj_read_participant_mode_update = payana_itinerary_read_obj.get_row_dict(itinerary_id, include_column_family=True)
-
-    updated_participant_list = itinerary_obj_read_participant_mode_update[itinerary_id][column_family_participants_list]
-
-    print("Status of update participant operation: " + str(column_qualifier_new_participant not in updated_participant_list))
-
+itinerary_obj_read_visit_timestamp_update = payana_itinerary_read_obj.get_row_dict(itinerary_id, include_column_family=True)
+updated_visit_timestamp = itinerary_obj_read_visit_timestamp_update[itinerary_id][column_family_itinerary_metadata][column_qualifier_visit_timestamp]
 
 #Add an excursion ID -- no use case to call as an API end point. For debugging or backfilling purpose
 column_family_excursion_id_list = bigtable_constants.payana_itinerary_column_family_excursion_id_list
@@ -164,132 +214,5 @@ payana_itinerary_read_obj.delete_bigtable_row(itinerary_row_delete_object)
 itinerary_obj_read_activity_update = payana_itinerary_read_obj.get_row_dict(itinerary_id, include_column_family=True)
 
 print("Status of itinerary obj delete row:" + str(len(itinerary_obj_read_activity_update) == 0))
-
-#Add a comment
-comment_obj = {
-    "comment_timestamp": "123456789",
-    "profile_id": "abkr",
-    "profile_name": "abkr",
-    "comment": "Beautiful pic!",
-    "likes_count": "11",
-    "comment_id": "",
-    "entity_id": "imagee"
-}
-
-payana_comment_obj = PayanaCommentsTable(**comment_obj)
-payana_comment_obj.update_comment_bigtable()
-entity_id = payana_comment_obj.entity_id
-comment_id = payana_comment_obj.comment_id
-payana_comment_table = bigtable_constants.payana_comments_table
-payana_comment_read_obj = PayanaBigTable(payana_comment_table)
-payana_comment_obj = payana_comment_read_obj.get_row_dict(entity_id, include_column_family=False)
-
-print("Comment added: " + str(payana_comment_obj is not None))
-
-# Edit a comment
-comment_obj = {
-    "comment_timestamp": "678910234",
-    "profile_id": "abkr",
-    "profile_name": "abkr",
-    "comment": "Beautiful pic!",
-    "likes_count": "13",
-    "comment_id": comment_id,
-    "entity_id": "imagee"
-}
-
-payana_comments_table_timestamp = bigtable_constants.payana_comments_table_timestamp
-payana_comments_table_likes_count = bigtable_constants.payana_comments_table_likes_count
-new_timestamp = comment_obj[payana_comments_table_timestamp]
-new_likes_count = comment_obj[payana_comments_table_likes_count]
-
-payana_comment_obj = PayanaCommentsTable(**comment_obj)
-payana_comment_obj.update_comment_bigtable()
-entity_id = payana_comment_obj.entity_id
-comment_id = payana_comment_obj.comment_id
-payana_comment_table = bigtable_constants.payana_comments_table
-payana_comment_read_obj = PayanaBigTable(payana_comment_table)
-payana_comment_obj = payana_comment_read_obj.get_row_dict(entity_id, include_column_family=False)
-payana_comment_obj_edited = payana_comment_obj[entity_id][comment_id]
-
-import re
-p = re.compile('(?<!\\\\)\'')
-payana_comment_obj_edited = p.sub('\"', payana_comment_obj_edited)
-
-payana_comment_obj_edited = json.loads(payana_comment_obj_edited)
-print(payana_comment_obj_edited)
-
-print("Comment timestamp edited: " + str(payana_comment_obj_edited[payana_comments_table_timestamp] == new_timestamp))
-print("Comment likes count edited: " + str(payana_comment_obj_edited[payana_comments_table_likes_count] == new_likes_count))
-
-#Add another comment
-comment_obj_dup = {
-    "comment_timestamp": "123456789",
-    "profile_id": "abkr",
-    "profile_name": "abkr",
-    "comment": "Beautiful pic!",
-    "likes_count": "11",
-    "comment_id": "",
-    "entity_id": "imagee"
-}
-
-payana_comment_obj_dup = PayanaCommentsTable(**comment_obj_dup)
-payana_comment_obj_dup.update_comment_bigtable()
-entity_id = payana_comment_obj_dup.entity_id
-comment_id = payana_comment_obj_dup.comment_id
-payana_comment_table = bigtable_constants.payana_comments_table
-payana_comment_read_obj = PayanaBigTable(payana_comment_table)
-payana_comment_obj = payana_comment_read_obj.get_row_dict(entity_id, include_column_family=False)
-
-print("Status of new comment write: " + str(len(payana_comment_obj[entity_id]) == 2))
-
-# Delete one comment in the row
-payana_comments_family_id = bigtable_constants.payana_comments_table_comments_family_id
-payana_comment_bigtable_obj = bigtable_write_object_wrapper(entity_id, payana_comments_family_id, comment_id, "")
-payana_comment_read_obj.delete_bigtable_row_column(payana_comment_bigtable_obj)
-
-comment_obj = payana_comment_read_obj.get_row_dict(entity_id, include_column_family=False)
-
-print("Status of one comment delete operation: " + str(len(comment_obj[entity_id]) == 1))
-
-# Delete the comment row
-payana_comment_bigtable_obj = bigtable_write_object_wrapper(entity_id, "", "", "")
-payana_comment_read_obj.delete_bigtable_row(payana_comment_bigtable_obj)
-
-comment_obj = payana_comment_read_obj.get_row_dict(entity_id, include_column_family=False)
-
-print("Status of comment row delete: " + str(len(comment_obj) == 0))
-
-#Add a like and read a like
-likes_obj = {
-    "payana_likes": {"pf_id_1": "1234567", "pf_id_2": "1234567", "pf_id_3": "1234567"},
-    "entity_id": "12345"
-}
-
-payana_like_column_family = bigtable_constants.payana_likes_table_column_family
-payana_likes_obj = PayanaLikesTable(**likes_obj)
-payana_likes_obj.update_likes_bigtable()
-payana_likes_table = bigtable_constants.payana_likes_table
-like_object_id = payana_likes_obj.entity_id
-payana_likes_read_obj = PayanaBigTable(payana_likes_table)
-likes_obj = payana_likes_read_obj.get_row_dict(like_object_id, include_column_family=True)
-
-participant_delete = "pf_id_1"
-print("Status of like write operation: " + str(participant_delete in likes_obj[like_object_id][payana_like_column_family]))
-
-# Remove a specific like
-payana_like_bigtable_obj = bigtable_write_object_wrapper(like_object_id, payana_like_column_family, participant_delete, "")
-payana_likes_read_obj.delete_bigtable_row_column(payana_like_bigtable_obj)
-
-likes_obj = payana_likes_read_obj.get_row_dict(like_object_id, include_column_family=True)
-
-print("Status of like delete operation: " + str(participant_delete not in likes_obj[like_object_id][payana_like_column_family]))
-
-#Remove the whole row
-payana_like_bigtable_obj = bigtable_write_object_wrapper(like_object_id, "", "", "")
-payana_likes_read_obj.delete_bigtable_row(payana_like_bigtable_obj)
-
-likes_obj = payana_likes_read_obj.get_row_dict(like_object_id, include_column_family=False)
-print("Status of like row delete: " + str(len(likes_obj) == 0))
-
 
 payana_bigtable_cleanup(client_config_file_path, bigtable_tables_schema_path)

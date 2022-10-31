@@ -36,7 +36,9 @@ neighboring_cities_obj = {
 }
 
 payana_neighboring_cities_obj = PayanaNeighboringCitiesTable(**neighboring_cities_obj)
-payana_neighboring_cities_obj.update_neighboring_city_list_bigtable()
+payana_neighboring_cities_obj_write_status = payana_neighboring_cities_obj.update_neighboring_city_list_bigtable()
+
+print("payana_neighboring_cities_obj_write_status: " + str(payana_neighboring_cities_obj_write_status))
 payana_neighboring_cities_table = bigtable_constants.payana_neighboring_cities_table
 city = payana_neighboring_cities_obj.city
 payana_neighboring_cities_read_obj = PayanaBigTable(payana_neighboring_cities_table)
@@ -68,7 +70,9 @@ print("Status of add new city: " + str((city_to_add in added_city) and added_cit
 
 #delete a neighboring city
 payana_neighboring_city_delete_object = bigtable_write_object_wrapper(row_key, neighboring_city_list_column_family, city_to_add, "")
-payana_neighboring_cities_read_obj.delete_bigtable_row_column(payana_neighboring_city_delete_object)
+payana_neighboring_cities_obj_delete_status = payana_neighboring_cities_read_obj.delete_bigtable_row_column(payana_neighboring_city_delete_object)
+
+print("payana_neighboring_cities_obj_delete_status: " + str(payana_neighboring_cities_obj_delete_status))
 
 payana_neighboring_city_obj_delete = payana_neighboring_cities_read_obj.get_row_dict(row_key, include_column_family=True)
 deleted_city = payana_neighboring_city_obj_delete[row_key][neighboring_city_list_column_family]
@@ -77,7 +81,9 @@ print("Status of payana_neighboring_city_obj_delete column: " + str(city_to_add 
 
 #Delete the whole row
 payana_neighboring_city_delete_object = bigtable_write_object_wrapper(row_key, "", "", "")
-payana_neighboring_cities_read_obj.delete_bigtable_row(payana_neighboring_city_delete_object)
+payana_neighboring_cities_obj_delete_status = payana_neighboring_cities_read_obj.delete_bigtable_row(payana_neighboring_city_delete_object)
+
+print("payana_neighboring_cities_obj_delete_status: " + str(payana_neighboring_cities_obj_delete_status))
 
 payana_neighboring_city_obj_delete = payana_neighboring_cities_read_obj.get_row_dict(row_key, include_column_family=True)
 
