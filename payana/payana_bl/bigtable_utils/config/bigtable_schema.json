@@ -11,6 +11,14 @@
         "purpose": "To fetch the details of a profile",
         "max_versions": 1
     },
+    "payana_travel_footprint_table": {
+        "column_family_id": [
+            "travel_footprint"
+        ],
+        "description": "This table will hold all the travel footprint details of the user",
+        "purpose": "To fetch the travel footprint details of a profile",
+        "max_versions": 1
+    },
     "payana_itinerary_table": {
         "column_family_id": [
             "excursion_id_list",
