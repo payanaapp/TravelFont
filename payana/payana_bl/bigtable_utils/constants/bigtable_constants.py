@@ -238,3 +238,12 @@ payana_global_country_itinerary_table_itinerary_id_quantifier_value = "itinerary
 payana_global_country_itinerary_table_excursion_id_quantifier_value = "excursion_id"
 payana_global_country_itinerary_table_checkin_id_quantifier_value = "checkin_id"
 payana_global_country_itinerary_table_activities = "activities"
+
+# Payana profile page travel footprint constants
+payana_profile_page_travel_footprint_profile_id = "profile_id"
+payana_profile_page_travel_footprint_place_id = "place_id"
+payana_profile_page_travel_footprint_excursion_id = "excursion_id"
+payana_profile_page_travel_footprint_latitude = "latitude"
+payana_profile_page_travel_footprint_longitude = "longitude"
+payana_profile_page_travel_footprint_column_family = "travel_footprint"
+payana_profile_travel_footprint_table = "payana_travel_footprint_table"
