@@ -8,7 +8,7 @@ from payana.payana_core.common_utils.payana_core_exception_handler_utils import 
 def payana_bigtable_write_status_handler(table_mutate_response):
     
     for response in table_mutate_response:
-            
+        
         if response.code != 0: # 0 is success -- 200
             return False
         
