@@ -27,74 +27,164 @@ bigtable_tables_schema_path = bigtable_constants.bigtable_schema_config_file
 
 payana_bigtable_init(client_config_file_path, bigtable_tables_schema_path)
 
+payana_travel_buddy_table_column_family_travel_buddy_list = bigtable_constants.payana_travel_buddy_table_column_family_travel_buddy_list
+payana_travel_buddy_table_column_family_favorite_travel_buddy_list = bigtable_constants.payana_travel_buddy_table_column_family_favorite_travel_buddy_list
+payana_travel_buddy_table_column_family_top_travel_buddy_list = bigtable_constants.payana_travel_buddy_table_column_family_top_travel_buddy_list
+payana_travel_buddy_table_column_family_global_influencers_travel_buddy_list = bigtable_constants.payana_travel_buddy_table_column_family_global_influencers_travel_buddy_list
+payana_travel_buddy_table_column_family_pending_received_requests_travel_buddy_list = bigtable_constants.payana_travel_buddy_table_column_family_pending_received_requests_travel_buddy_list
+payana_travel_buddy_table_column_family_pending_sent_requests_travel_buddy_list = bigtable_constants.payana_travel_buddy_table_column_family_pending_sent_requests_travel_buddy_list
+
+payana_travel_buddy_table_column_family_profile_id = bigtable_constants.payana_travel_buddy_table_column_family_profile_id
+payana_travel_buddy_table_column_family_travel_buddy_profile_id = bigtable_constants.payana_travel_buddy_table_column_family_travel_buddy_profile_id
+payana_travel_buddy_table_column_family_global_influencer = bigtable_constants.payana_travel_buddy_table_column_family_global_influencer
+payana_travel_buddy_table_column_family_favorite = bigtable_constants.payana_travel_buddy_table_column_family_favorite
+payana_travel_buddy_table_column_family_sent_pending_request = bigtable_constants.payana_travel_buddy_table_column_family_sent_pending_request
+payana_travel_buddy_table_column_family_received_pending_request = bigtable_constants.payana_travel_buddy_table_column_family_received_pending_request
+
 travel_buddy_obj = {
     "profile_id": "1234567",
-    "friend_profile_id": "456789"
+    "travel_buddy_profile_id": "456789",
+    "global_influencer": True, # flag for global influencer or not
+    "favorite": True, # a flag to mark a travel buddy favorite
+    "sent_pending_request": True, # adding into your pending approval requests for the requests that you sent
+    "received_pending_request": True, # adding into your received approval requests for the requests that you sent
+    "new_friend_request": True # marking whether a new friend request is sent out or not
 }
 
 #Adding a travel buddy
 payana_travel_buddy_obj = PayanaTravelBuddyTable(**travel_buddy_obj)
-payana_travel_buddy_obj.update_travel_buddy_bigtable()
+
+payana_travel_buddy_obj_write_status = payana_travel_buddy_obj.update_travel_buddy_bigtable()
+print("payana_travel_buddy_obj_write_status: " + str(payana_travel_buddy_obj_write_status))
+
 payana_travel_buddy_table = bigtable_constants.payana_travel_buddy_list_table
 profile_id = payana_travel_buddy_obj.profile_id
-friend_profile_id = payana_travel_buddy_obj.friend_profile_id
+travel_buddy_profile_id = payana_travel_buddy_obj.travel_buddy_profile_id
 payana_travel_buddy_read_obj = PayanaBigTable(payana_travel_buddy_table)
 
-payana_profile_id_travel_buddy_obj = payana_travel_buddy_read_obj.get_row_dict(profile_id, include_column_family=False)
+payana_profile_id_travel_buddy_obj = payana_travel_buddy_read_obj.get_row_dict(profile_id, include_column_family=True)
+print(payana_profile_id_travel_buddy_obj)
+print("Status of adding a profile ID into the travel_buddy profile ID: " + str(travel_buddy_profile_id in payana_profile_id_travel_buddy_obj[profile_id][payana_travel_buddy_table_column_family_travel_buddy_list]))
 
-print("Status of adding a friend profile ID into the profile ID: " + str(friend_profile_id in payana_profile_id_travel_buddy_obj[profile_id]))
+print("Status of marking a global influencer travel_buddy profile ID: " + str(travel_buddy_profile_id in payana_profile_id_travel_buddy_obj[profile_id][payana_travel_buddy_table_column_family_global_influencers_travel_buddy_list]))
 
-payana_friend_profile_id_travel_buddy_obj = payana_travel_buddy_read_obj.get_row_dict(friend_profile_id, include_column_family=False)
+print("Status of marking a favorite travel_buddy profile ID: " + str(travel_buddy_profile_id in payana_profile_id_travel_buddy_obj[profile_id][payana_travel_buddy_table_column_family_favorite_travel_buddy_list]))
 
-print("Status of adding a friend profile ID into the profile ID: " + str(profile_id in payana_friend_profile_id_travel_buddy_obj[friend_profile_id]))
+print("Status of adding travel_buddy into your pending sent requests: " + str(travel_buddy_profile_id in payana_profile_id_travel_buddy_obj[profile_id][payana_travel_buddy_table_column_family_pending_sent_requests_travel_buddy_list]))
+
+payana_friend_profile_id_travel_buddy_obj = payana_travel_buddy_read_obj.get_row_dict(travel_buddy_profile_id, include_column_family=True)
+
+print("Status of adding a travel_buddy_profile_id profile ID into the profile ID: " + str(profile_id in payana_friend_profile_id_travel_buddy_obj[travel_buddy_profile_id][payana_travel_buddy_table_column_family_travel_buddy_list]))
+
+print("Status of adding your request into travel buddy's received pending requests: " + str(profile_id in payana_friend_profile_id_travel_buddy_obj[travel_buddy_profile_id][payana_travel_buddy_table_column_family_pending_received_requests_travel_buddy_list]))
+
 
 #Adding another travel buddy
 travel_buddy_obj_duplicate = {
     "profile_id": "1234567",
-    "friend_profile_id": "67890"
+    "travel_buddy_profile_id": "987654",
+    "global_influencer": False, # flag for global influencer or not
+    "favorite": False, # a flag to mark a travel buddy favorite
+    "sent_pending_request": True, # adding into your pending approval requests for the requests that you sent
+    "received_pending_request": False, # adding into your received approval requests for the requests that you sent
+    "new_friend_request": True # marking whether a new friend request is sent out or not
 }
 
+#Adding another travel buddy
 payana_travel_buddy_obj = PayanaTravelBuddyTable(**travel_buddy_obj_duplicate)
-payana_travel_buddy_obj.update_travel_buddy_bigtable()
+
+payana_travel_buddy_obj_write_status = payana_travel_buddy_obj.update_travel_buddy_bigtable()
+print("payana_travel_buddy_obj_write_status: " + str(payana_travel_buddy_obj_write_status))
+
 payana_travel_buddy_table = bigtable_constants.payana_travel_buddy_list_table
-profile_id = payana_travel_buddy_obj.profile_id
-friend_profile_id = payana_travel_buddy_obj.friend_profile_id
+profile_id_duplicate = payana_travel_buddy_obj.profile_id
+travel_buddy_profile_id_duplicate = payana_travel_buddy_obj.travel_buddy_profile_id
 payana_travel_buddy_read_obj = PayanaBigTable(payana_travel_buddy_table)
 
-payana_profile_id_travel_buddy_obj = payana_travel_buddy_read_obj.get_row_dict(profile_id, include_column_family=False)
+payana_profile_id_travel_buddy_obj = payana_travel_buddy_read_obj.get_row_dict(profile_id_duplicate, include_column_family=True)
 
-print("Status of adding second friend profile ID into the profile ID: " + str(friend_profile_id in payana_profile_id_travel_buddy_obj[profile_id]))
+print("Status of adding a profile ID into the travel_buddy profile ID: " + str(travel_buddy_profile_id_duplicate in payana_profile_id_travel_buddy_obj[profile_id_duplicate][payana_travel_buddy_table_column_family_travel_buddy_list]))
 
-payana_friend_profile_id_travel_buddy_obj = payana_travel_buddy_read_obj.get_row_dict(friend_profile_id, include_column_family=False)
+print("Status of marking a global influencer travel_buddy profile ID: " + str(travel_buddy_profile_id_duplicate not in payana_profile_id_travel_buddy_obj[profile_id_duplicate][payana_travel_buddy_table_column_family_global_influencers_travel_buddy_list]))
 
-print("Status of adding profile ID into second friend's profile ID: " + str(profile_id in payana_friend_profile_id_travel_buddy_obj[friend_profile_id]))
+print("Status of marking a favorite travel_buddy profile ID: " + str(travel_buddy_profile_id_duplicate not in payana_profile_id_travel_buddy_obj[profile_id_duplicate][payana_travel_buddy_table_column_family_favorite_travel_buddy_list]))
 
-#Removing a travel buddy from a profile ID
-travel_buddy_list_column_family_id = bigtable_constants.payana_travel_buddy_table_column_family
-payana_travel_buddy_write_object = bigtable_write_object_wrapper(profile_id, travel_buddy_list_column_family_id, friend_profile_id, "")
-payana_travel_buddy_friend_write_object = bigtable_write_object_wrapper(friend_profile_id, travel_buddy_list_column_family_id, profile_id, "")
+print("Status of adding travel_buddy into your pending sent requests: " + str(travel_buddy_profile_id_duplicate in payana_profile_id_travel_buddy_obj[profile_id_duplicate][payana_travel_buddy_table_column_family_pending_sent_requests_travel_buddy_list]))
 
-payana_travel_buddy_read_obj.delete_bigtable_row_column(payana_travel_buddy_write_object)
-payana_travel_buddy_read_obj.delete_bigtable_row_column(payana_travel_buddy_friend_write_object)
+payana_friend_profile_id_travel_buddy_obj = payana_travel_buddy_read_obj.get_row_dict(travel_buddy_profile_id_duplicate, include_column_family=True)
 
-payana_profile_id_travel_buddy_obj_update = payana_travel_buddy_read_obj.get_row_dict(profile_id, include_column_family=False)
-payana_friend_profile_id_travel_buddy_obj_update = payana_travel_buddy_read_obj.get_row_dict(friend_profile_id, include_column_family=False)
-
-updated_travel_buddy_list = payana_profile_id_travel_buddy_obj_update[profile_id]
-print(payana_profile_id_travel_buddy_obj_update)
-
-print("Status of remove travel buddy operation: " + str(friend_profile_id not in updated_travel_buddy_list))
+print("Status of adding a travel_buddy_profile_id profile ID into the profile ID: " + str(profile_id_duplicate in payana_friend_profile_id_travel_buddy_obj[travel_buddy_profile_id_duplicate][payana_travel_buddy_table_column_family_travel_buddy_list]))
 
 try:
-    updated_friend_profile_travel_buddy_list = payana_friend_profile_id_travel_buddy_obj_update[friend_profile_id]
+    print("Status of adding your request into travel buddy's received pending requests: " + str(profile_id_duplicate not in payana_friend_profile_id_travel_buddy_obj[travel_buddy_profile_id_duplicate][payana_travel_buddy_table_column_family_pending_received_requests_travel_buddy_list]))
+except KeyError as exc:
+    print("Status of remove friend profile travel buddy operation: " + str(True))
+    
+#Removing the duplicate obj travel buddy from a profile ID
+payana_travel_buddy_delete_object = bigtable_write_object_wrapper(profile_id_duplicate, payana_travel_buddy_table_column_family_travel_buddy_list, travel_buddy_profile_id_duplicate, "")
+payana_travel_buddy_friend_delete_object = bigtable_write_object_wrapper(travel_buddy_profile_id_duplicate, payana_travel_buddy_table_column_family_travel_buddy_list, profile_id_duplicate, "")
+
+payana_travel_buddy_delete_object_status = payana_travel_buddy_read_obj.delete_bigtable_row_column(payana_travel_buddy_delete_object)
+print("payana_travel_buddy_delete_object_status: " + str(payana_travel_buddy_delete_object_status))
+
+payana_travel_buddy_friend_delete_object_status = payana_travel_buddy_read_obj.delete_bigtable_row_column(payana_travel_buddy_friend_delete_object)
+print("payana_travel_buddy_friend_delete_object_status: " + str(payana_travel_buddy_friend_delete_object_status))
+
+payana_profile_id_travel_buddy_obj_update = payana_travel_buddy_read_obj.get_row_dict(profile_id_duplicate, include_column_family=True)
+payana_friend_profile_id_travel_buddy_obj_update = payana_travel_buddy_read_obj.get_row_dict(travel_buddy_profile_id_duplicate, include_column_family=True)
+
+updated_travel_buddy_list = payana_profile_id_travel_buddy_obj_update[profile_id_duplicate][payana_travel_buddy_table_column_family_travel_buddy_list]
+
+print("Status of remove travel buddy operation: " + str(travel_buddy_profile_id_duplicate not in updated_travel_buddy_list))
+
+try:
+    updated_friend_profile_travel_buddy_list = payana_friend_profile_id_travel_buddy_obj_update[travel_buddy_profile_id_duplicate][payana_travel_buddy_table_column_family_travel_buddy_list]
 except KeyError as exc:
     print("Status of remove friend profile travel buddy operation: " + str(len(payana_friend_profile_id_travel_buddy_obj_update) == 0))
+    
+# Remove favorite status on a profile ID
+payana_travel_buddy_delete_object = bigtable_write_object_wrapper(profile_id, payana_travel_buddy_table_column_family_favorite_travel_buddy_list, travel_buddy_profile_id, "")
+
+payana_travel_buddy_delete_object_status = payana_travel_buddy_read_obj.delete_bigtable_row_column(payana_travel_buddy_delete_object)
+
+print("payana_travel_buddy_delete_object_favorite_status: " + str(payana_travel_buddy_delete_object_status))
+
+payana_profile_id_travel_buddy_obj_update = payana_travel_buddy_read_obj.get_row_dict(profile_id, include_column_family=True)
+
+try:
+    updated_favorite_travel_buddy_list = payana_profile_id_travel_buddy_obj_update[profile_id][payana_travel_buddy_table_column_family_favorite_travel_buddy_list]
+except KeyError as exc:
+    print("Status of remove favorite travel buddy operation: " + str(True))
+
+
+# Remove profile ID from pending and received requests 
+payana_travel_buddy_delete_object = bigtable_write_object_wrapper(profile_id, payana_travel_buddy_table_column_family_pending_sent_requests_travel_buddy_list, travel_buddy_profile_id, "")
+payana_travel_buddy_friend_delete_object = bigtable_write_object_wrapper(travel_buddy_profile_id, payana_travel_buddy_table_column_family_pending_received_requests_travel_buddy_list, profile_id, "")
+
+payana_travel_buddy_delete_object_status = payana_travel_buddy_read_obj.delete_bigtable_row_column(payana_travel_buddy_delete_object)
+print("payana_travel_buddy_delete_object_status: " + str(payana_travel_buddy_delete_object_status))
+
+payana_travel_buddy_friend_delete_object_status = payana_travel_buddy_read_obj.delete_bigtable_row_column(payana_travel_buddy_friend_delete_object)
+print("payana_travel_buddy_friend_delete_object_status: " + str(payana_travel_buddy_friend_delete_object_status))
+
+payana_profile_id_travel_buddy_obj_update = payana_travel_buddy_read_obj.get_row_dict(profile_id, include_column_family=True)
+payana_friend_profile_id_travel_buddy_obj_update = payana_travel_buddy_read_obj.get_row_dict(travel_buddy_profile_id, include_column_family=True)
+
+updated_travel_buddy_list = payana_profile_id_travel_buddy_obj_update[profile_id][payana_travel_buddy_table_column_family_pending_sent_requests_travel_buddy_list]
+
+print("Status of remove travel buddy pending sent requests operation: " + str(travel_buddy_profile_id not in updated_travel_buddy_list))
+
+try:
+    updated_friend_profile_travel_buddy_list = payana_friend_profile_id_travel_buddy_obj_update[travel_buddy_profile_id]
+except KeyError as exc:
+    print("Status of remove travel buddy pending received requests operation: " + str(len(payana_friend_profile_id_travel_buddy_obj_update) == 0))
+
 
 #Remove the whole row
 payana_travel_buddy_write_object = bigtable_write_object_wrapper(profile_id, "", "", "")
 payana_travel_buddy_read_obj.delete_bigtable_row(payana_travel_buddy_write_object)
 
-payana_profile_id_travel_buddy_obj_update = payana_travel_buddy_read_obj.get_row_dict(profile_id, include_column_family=False)
+payana_profile_id_travel_buddy_obj_update = payana_travel_buddy_read_obj.get_row_dict(profile_id, include_column_family=True)
 
 try:
     updated_profile_travel_buddy_list = payana_profile_id_travel_buddy_obj_update[profile_id]

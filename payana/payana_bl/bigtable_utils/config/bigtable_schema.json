@@ -56,7 +56,12 @@
     },
     "payana_travel_buddy_list_table": {
         "column_family_id": [
-            "payana_travel_buddy_list"
+            "payana_travel_buddy_list",
+            "payana_favorite_buddy_list",
+            "payana_top_buddy_list",
+            "payana_global_influencers_travel_buddy_list",
+            "payana_pending_sent_requests_travel_buddy_list",
+            "payana_pending_received_requests_travel_buddy_list"
         ],
         "description": "This table will hold all the list of friends of an user",
         "purpose": "To fetch the list of all friends. Search friend itineraries from place A to place B or at a place -- stage 1",
