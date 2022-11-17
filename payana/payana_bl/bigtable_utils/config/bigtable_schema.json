@@ -19,6 +19,39 @@
         "purpose": "To fetch the travel footprint details of a profile",
         "max_versions": 1
     },
+    "payana_city_to_influencers_table": {
+        "column_family_id": [
+            "generic_city_global_influencers",
+            "hiking_city_global_influencers",
+            "romantic_city_global_influencers",
+            "exotic_city_global_influencers"
+        ],
+        "description": "This table will hold the city to influencers mapping",
+        "purpose": "To fetch the travel footprint details of a profile",
+        "max_versions": 1
+    },
+    "payana_state_to_influencers_table": {
+        "column_family_id": [
+            "generic_state_global_influencers",
+            "hiking_state_global_influencers",
+            "romantic_state_global_influencers",
+            "exotic_state_global_influencers"
+        ],
+        "description": "This table will hold the state to influencers mapping",
+        "purpose": "To fetch the travel footprint details of a profile",
+        "max_versions": 1
+    },
+    "payana_country_to_influencers_table": {
+        "column_family_id": [
+            "generic_country_global_influencers",
+            "hiking_country_global_influencers",
+            "romantic_country_global_influencers",
+            "exotic_country_global_influencers"
+        ],
+        "description": "This table will hold the country to influencers mapping",
+        "purpose": "To fetch the travel footprint details of a profile",
+        "max_versions": 1
+    },
     "payana_itinerary_table": {
         "column_family_id": [
             "excursion_id_list",
