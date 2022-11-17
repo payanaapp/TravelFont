@@ -54,6 +54,9 @@ payana_global_place_id_itinerary_table = "payana_global_place_id_itinerary_table
 payana_global_city_itinerary_table = "payana_global_city_itinerary_table"
 payana_global_state_itinerary_table = "payana_global_state_itinerary_table"
 payana_global_country_itinerary_table = "payana_global_country_itinerary_table"
+payana_city_to_influencers_table = "payana_city_to_influencers_table"
+payana_state_to_influencers_table = "payana_state_to_influencers_table"
+payana_country_to_influencers_table = "payana_country_to_influencers_table"
 
 # payana_profile_table_field_names
 payana_profile_table_personal_info_column_family = "personal_information"
@@ -190,7 +193,7 @@ payana_neighboring_cities_column_family = "neighboring_city_list"
 
 # Payana activity constants
 payana_generic_activity_column_family = "generic"
-payana_activity_column_family = ["hiking", "romantic", "exotic"]
+payana_activity_column_family = ["generic", "hiking", "romantic", "exotic"]
 
 # Payana personal place ID itinerary table constants
 payana_personal_place_id_itinerary_table_itinerary_id_quantifier_value = "itinerary_id"
@@ -258,3 +261,12 @@ payana_profile_page_travel_footprint_latitude = "latitude"
 payana_profile_page_travel_footprint_longitude = "longitude"
 payana_profile_page_travel_footprint_column_family = "travel_footprint"
 payana_profile_travel_footprint_table = "payana_travel_footprint_table"
+
+# Payana city to influencers constants
+payana_city_to_influencers_table_global_influencers_column_family = "city_global_influencers"
+
+# Payana state to influencers constants
+payana_state_to_influencers_table_global_influencers_column_family = "state_global_influencers"
+
+# Payana country to influencers constants
+payana_country_to_influencers_table_global_influencers_column_family = "country_global_influencers"
