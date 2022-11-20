@@ -57,6 +57,7 @@ payana_global_country_itinerary_table = "payana_global_country_itinerary_table"
 payana_city_to_influencers_table = "payana_city_to_influencers_table"
 payana_state_to_influencers_table = "payana_state_to_influencers_table"
 payana_country_to_influencers_table = "payana_country_to_influencers_table"
+payana_excursion_checkin_permission_table = "payana_excursion_checkin_permission_table"
 
 # payana_profile_table_field_names
 payana_profile_table_personal_info_column_family = "personal_information"
@@ -200,24 +201,34 @@ payana_personal_place_id_itinerary_table_itinerary_id_quantifier_value = "itiner
 payana_personal_place_id_itinerary_table_excursion_id_quantifier_value = "excursion_id"
 payana_personal_place_id_itinerary_table_checkin_id_quantifier_value = "checkin_id"
 payana_personal_place_id_itinerary_table_activities = "activities"
+payana_personal_place_id_itinerary_table_rating_column_family_id = "rating"
+payana_personal_place_id_itinerary_table_timestamp_column_family_id = "timestamp"
 
 # Payana personal city itinerary table constants
 payana_personal_city_itinerary_table_itinerary_id_quantifier_value = "itinerary_id"
 payana_personal_city_itinerary_table_excursion_id_quantifier_value = "excursion_id"
 payana_personal_city_itinerary_table_checkin_id_quantifier_value = "checkin_id"
 payana_personal_city_itinerary_table_activities = "activities"
+payana_personal_city_itinerary_table_rating_column_family_id = "rating"
+payana_personal_city_itinerary_table_timestamp_column_family_id = "timestamp"
 
 # Payana personal state itinerary table constants
 payana_personal_state_itinerary_table_itinerary_id_quantifier_value = "itinerary_id"
 payana_personal_state_itinerary_table_excursion_id_quantifier_value = "excursion_id"
 payana_personal_state_itinerary_table_checkin_id_quantifier_value = "checkin_id"
 payana_personal_state_itinerary_table_activities = "activities"
+payana_personal_city_itinerary_table_activities = "activities"
+payana_personal_state_itinerary_table_rating_column_family_id = "rating"
+payana_personal_state_itinerary_table_timestamp_column_family_id = "timestamp"
 
 # Payana personal country itinerary table constants
 payana_personal_country_itinerary_table_itinerary_id_quantifier_value = "itinerary_id"
 payana_personal_country_itinerary_table_excursion_id_quantifier_value = "excursion_id"
 payana_personal_country_itinerary_table_checkin_id_quantifier_value = "checkin_id"
 payana_personal_country_itinerary_table_activities = "activities"
+payana_personal_city_itinerary_table_activities = "activities"
+payana_personal_country_itinerary_table_rating_column_family_id = "rating"
+payana_personal_country_itinerary_table_timestamp_column_family_id = "timestamp"
 
 # Payana table exception
 payana_big_table_exception = "Interval Server Error : Unable to reach the database"
@@ -234,24 +245,32 @@ payana_global_place_id_itinerary_table_itinerary_id_quantifier_value = "itinerar
 payana_global_place_id_itinerary_table_excursion_id_quantifier_value = "excursion_id"
 payana_global_place_id_itinerary_table_checkin_id_quantifier_value = "checkin_id"
 payana_global_place_id_itinerary_table_activities = "activities"
+payana_global_place_id_itinerary_table_itinerary_id_rating_quantifier_value = "rating"
+payana_global_place_id_itinerary_table_itinerary_id_timestamp_quantifier_value = "timestamp"
 
 # Payana global city itinerary table constants
 payana_global_city_itinerary_table_itinerary_id_quantifier_value = "itinerary_id"
 payana_global_city_itinerary_table_excursion_id_quantifier_value = "excursion_id"
 payana_global_city_itinerary_table_checkin_id_quantifier_value = "checkin_id"
 payana_global_city_itinerary_table_activities = "activities"
+payana_global_city_itinerary_table_itinerary_id_rating_quantifier_value = "rating"
+payana_global_city_itinerary_table_itinerary_id_timestamp_quantifier_value = "timestamp"
 
 # Payana global state itinerary table constants
 payana_global_state_itinerary_table_itinerary_id_quantifier_value = "itinerary_id"
 payana_global_state_itinerary_table_excursion_id_quantifier_value = "excursion_id"
 payana_global_state_itinerary_table_checkin_id_quantifier_value = "checkin_id"
 payana_global_state_itinerary_table_activities = "activities"
+payana_global_state_itinerary_table_itinerary_id_rating_quantifier_value = "rating"
+payana_global_state_itinerary_table_itinerary_id_timestamp_quantifier_value = "timestamp"
 
 # Payana global country itinerary table constants
 payana_global_country_itinerary_table_itinerary_id_quantifier_value = "itinerary_id"
 payana_global_country_itinerary_table_excursion_id_quantifier_value = "excursion_id"
 payana_global_country_itinerary_table_checkin_id_quantifier_value = "checkin_id"
 payana_global_country_itinerary_table_activities = "activities"
+payana_global_country_itinerary_table_itinerary_id_rating_quantifier_value = "rating"
+payana_global_country_itinerary_table_itinerary_id_timestamp_quantifier_value = "timestamp"
 
 # Payana profile page travel footprint constants
 payana_profile_page_travel_footprint_profile_id = "profile_id"
@@ -270,3 +289,7 @@ payana_state_to_influencers_table_global_influencers_column_family = "state_glob
 
 # Payana country to influencers constants
 payana_country_to_influencers_table_global_influencers_column_family = "country_global_influencers"
+
+# payana_excursion_checkin_permission_table constants
+payana_excursion_checkin_permission_participants_column_family = "participants_list"
+payana_excursion_checkin_permission_table_admin_column_family = "admin"

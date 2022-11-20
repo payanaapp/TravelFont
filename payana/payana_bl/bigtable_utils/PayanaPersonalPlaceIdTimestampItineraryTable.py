@@ -19,15 +19,15 @@ from payana.payana_bl.common_utils.payana_exception_handler_utils import payana_
 from google.cloud.bigtable import column_family
 
 
-class PayanaPersonalStateItineraryTable:
+class PayanaPersonalPlaceIdTimestampItineraryTable:
 
     @payana_generic_exception_handler
-    def __init__(self, profile_id, state,
+    def __init__(self, profile_id, place_id,
                  itinerary_id, excursion_id, checkin_id,
                  activities):
 
         self.profile_id = profile_id
-        self.state = state
+        self.place_id = place_id
         self.itinerary_id = itinerary_id
         self.excursion_id = excursion_id
         self.checkin_id = checkin_id
@@ -37,6 +37,7 @@ class PayanaPersonalStateItineraryTable:
         self.update_bigtable_write_objects = []
 
         self.activity_generic_column_family_id = bigtable_constants.payana_generic_activity_column_family
+        self.payana_personal_place_id_itinerary_table_timestamp_column_family_id = bigtable_constants.payana_personal_place_id_itinerary_table_timestamp_column_family_id
 
         self.current_year = str(datetime.now().year)
 
@@ -47,20 +48,20 @@ class PayanaPersonalStateItineraryTable:
     @payana_generic_exception_handler
     def generate_row_id(self):
 
-        self.row_id = self.profile_id + "##" + self.state + "##" + self.current_year
+        self.row_id = self.profile_id + "##" + self.place_id + "##" + self.current_year
 
     @payana_generic_exception_handler
-    def update_personal_state_itinerary_bigtable(self):
+    def update_personal_place_id_itinerary_bigtable(self):
 
         if self.row_id is None:
             self.generate_row_id()
 
-        payana_personal_state_itinerary_instance = PayanaBigTable(
-            bigtable_constants.payana_personal_state_itinerary_table)
+        payana_personal_place_id_itinerary_instance = PayanaBigTable(
+            bigtable_constants.payana_personal_place_id_itinerary_table)
 
         self.create_bigtable_write_objects()
 
-        return payana_personal_state_itinerary_instance.insert_columns(
+        return payana_personal_place_id_itinerary_instance.insert_columns(
             self.update_bigtable_write_objects)
 
     @payana_generic_exception_handler
@@ -73,28 +74,28 @@ class PayanaPersonalStateItineraryTable:
 
         # generic activity write objects
         itinerary_activity_generic_column_family_id = "_".join(
-            [self.activity_generic_column_family_id, bigtable_constants.payana_personal_state_itinerary_table_itinerary_id_quantifier_value])
+            [self.activity_generic_column_family_id, self.payana_personal_place_id_itinerary_table_timestamp_column_family_id, bigtable_constants.payana_personal_place_id_itinerary_table_itinerary_id_quantifier_value])
 
         excursion_activity_generic_column_family_id = "_".join(
-            [self.activity_generic_column_family_id, bigtable_constants.payana_personal_state_itinerary_table_excursion_id_quantifier_value])
+            [self.activity_generic_column_family_id, self.payana_personal_place_id_itinerary_table_timestamp_column_family_id, bigtable_constants.payana_personal_place_id_itinerary_table_excursion_id_quantifier_value])
 
         checkin_activity_generic_column_family_id = "_".join(
-            [self.activity_generic_column_family_id, bigtable_constants.payana_personal_state_itinerary_table_checkin_id_quantifier_value])
+            [self.activity_generic_column_family_id, self.payana_personal_place_id_itinerary_table_timestamp_column_family_id, bigtable_constants.payana_personal_place_id_itinerary_table_checkin_id_quantifier_value])
 
-        for itinerary, rating in self.itinerary_id.items():
+        for timestamp, itinerary in self.itinerary_id.items():
             # itinerary id write object
             self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-                self.row_id, itinerary_activity_generic_column_family_id, itinerary, rating))
+                self.row_id, itinerary_activity_generic_column_family_id, timestamp, itinerary))
 
-        for excursion, rating in self.excursion_id.items():
+        for timestamp, excursion in self.excursion_id.items():
             # excursion id write object
             self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-                self.row_id, excursion_activity_generic_column_family_id, excursion, rating))
+                self.row_id, excursion_activity_generic_column_family_id, timestamp, excursion))
 
-        for checkin, rating in self.checkin_id.items():
+        for timestamp, checkin in self.checkin_id.items():
             # checkin id write object
             self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-                self.row_id, checkin_activity_generic_column_family_id, checkin, rating))
+                self.row_id, checkin_activity_generic_column_family_id, timestamp, checkin))
 
     @payana_generic_exception_handler
     def set_activities_write_object(self):
@@ -104,29 +105,29 @@ class PayanaPersonalStateItineraryTable:
         for activity in self.activities:
             if activity in bigtable_constants.payana_activity_column_family:
 
-                itinerary_activity_column_family_id = "_".join(
-                    [activity, bigtable_constants.payana_personal_state_itinerary_table_itinerary_id_quantifier_value])
+                itinerary_activity_column_family_id = "_".join([activity, self.payana_personal_place_id_itinerary_table_timestamp_column_family_id,
+                                                               bigtable_constants.payana_personal_place_id_itinerary_table_itinerary_id_quantifier_value])
 
-                excursion_activity_column_family_id = "_".join(
-                    [activity, bigtable_constants.payana_personal_state_itinerary_table_excursion_id_quantifier_value])
+                excursion_activity_column_family_id = "_".join([activity, self.payana_personal_place_id_itinerary_table_timestamp_column_family_id,
+                                                               bigtable_constants.payana_personal_place_id_itinerary_table_excursion_id_quantifier_value])
 
-                checkin_activity_column_family_id = "_".join(
-                    [activity, bigtable_constants.payana_personal_state_itinerary_table_checkin_id_quantifier_value])
+                checkin_activity_column_family_id = "_".join([activity, self.payana_personal_place_id_itinerary_table_timestamp_column_family_id,
+                                                             bigtable_constants.payana_personal_place_id_itinerary_table_checkin_id_quantifier_value])
 
-                for itinerary, rating in self.itinerary_id.items():
+                for timestamp, itinerary in self.itinerary_id.items():
                     # itinerary id write object
                     self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-                        self.row_id, itinerary_activity_column_family_id, itinerary, rating))
+                        self.row_id, itinerary_activity_column_family_id, timestamp, itinerary))
 
-                for excursion, rating in self.excursion_id.items():
+                for timestamp, excursion in self.excursion_id.items():
                     # excursion id write object
                     self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-                        self.row_id, excursion_activity_column_family_id, excursion, rating))
+                        self.row_id, excursion_activity_column_family_id, timestamp, excursion))
 
-                for checkin, rating in self.checkin_id.items():
+                for timestamp, checkin in self.checkin_id.items():
                     # checkin id write object
                     self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-                        self.row_id, checkin_activity_column_family_id, checkin, rating))
+                        self.row_id, checkin_activity_column_family_id, timestamp, checkin))
 
             else:
                 # to-do : raise exception that it is an invalid activity

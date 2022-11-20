@@ -18,24 +18,25 @@ from payana.payana_bl.common_utils.payana_exception_handler_utils import payana_
 # google cloud bigtable imports
 from google.cloud.bigtable import column_family
 
-class PayanaPersonalPlaceIdItineraryTable:
+
+class PayanaGlobalCountryRatingItineraryTable:
 
     @payana_generic_exception_handler
-    def __init__(self, profile_id, place_id,
+    def __init__(self, country,
                  itinerary_id, excursion_id, checkin_id,
                  activities):
 
-        self.profile_id = profile_id
-        self.place_id = place_id
+        self.country = country
         self.itinerary_id = itinerary_id
         self.excursion_id = excursion_id
         self.checkin_id = checkin_id
         self.activities = activities
         self.row_id = None
-        
+
         self.update_bigtable_write_objects = []
 
         self.activity_generic_column_family_id = bigtable_constants.payana_generic_activity_column_family
+        self.payana_global_country_itinerary_table_itinerary_id_rating_quantifier_value = bigtable_constants.payana_global_country_itinerary_table_itinerary_id_rating_quantifier_value
 
         self.current_year = str(datetime.now().year)
 
@@ -46,20 +47,20 @@ class PayanaPersonalPlaceIdItineraryTable:
     @payana_generic_exception_handler
     def generate_row_id(self):
 
-        self.row_id = self.profile_id + "##" + self.place_id + "##" + self.current_year
+        self.row_id = self.country + "##" + self.current_year
 
     @payana_generic_exception_handler
-    def update_personal_place_id_itinerary_bigtable(self):
+    def update_global_country_itinerary_bigtable(self):
 
         if self.row_id is None:
             self.generate_row_id()
 
-        payana_personal_place_id_itinerary_instance = PayanaBigTable(
-            bigtable_constants.payana_personal_place_id_itinerary_table)
+        payana_global_country_itinerary_instance = PayanaBigTable(
+            bigtable_constants.payana_global_country_itinerary_table)
 
         self.create_bigtable_write_objects()
 
-        return payana_personal_place_id_itinerary_instance.insert_columns(
+        return payana_global_country_itinerary_instance.insert_columns(
             self.update_bigtable_write_objects)
 
     @payana_generic_exception_handler
@@ -71,11 +72,14 @@ class PayanaPersonalPlaceIdItineraryTable:
     def set_generic_activity_write_object(self):
 
         # generic activity write objects
-        itinerary_activity_generic_column_family_id = "_".join([self.activity_generic_column_family_id, bigtable_constants.payana_personal_place_id_itinerary_table_itinerary_id_quantifier_value])
+        itinerary_activity_generic_column_family_id = "_".join(
+            [self.activity_generic_column_family_id, self.payana_global_country_itinerary_table_itinerary_id_rating_quantifier_value, bigtable_constants.payana_global_country_itinerary_table_itinerary_id_quantifier_value])
 
-        excursion_activity_generic_column_family_id = "_".join([self.activity_generic_column_family_id, bigtable_constants.payana_personal_place_id_itinerary_table_excursion_id_quantifier_value])
+        excursion_activity_generic_column_family_id = "_".join(
+            [self.activity_generic_column_family_id, self.payana_global_country_itinerary_table_itinerary_id_rating_quantifier_value, bigtable_constants.payana_global_country_itinerary_table_excursion_id_quantifier_value])
 
-        checkin_activity_generic_column_family_id = "_".join([self.activity_generic_column_family_id, bigtable_constants.payana_personal_place_id_itinerary_table_checkin_id_quantifier_value])
+        checkin_activity_generic_column_family_id = "_".join(
+            [self.activity_generic_column_family_id, self.payana_global_country_itinerary_table_itinerary_id_rating_quantifier_value, bigtable_constants.payana_global_country_itinerary_table_checkin_id_quantifier_value])
 
         for itinerary, rating in self.itinerary_id.items():
             # itinerary id write object
@@ -100,11 +104,14 @@ class PayanaPersonalPlaceIdItineraryTable:
         for activity in self.activities:
             if activity in bigtable_constants.payana_activity_column_family:
 
-                itinerary_activity_column_family_id =  "_".join([activity, bigtable_constants.payana_personal_place_id_itinerary_table_itinerary_id_quantifier_value])
+                itinerary_activity_column_family_id = "_".join(
+                    [activity, self.payana_global_country_itinerary_table_itinerary_id_rating_quantifier_value, bigtable_constants.payana_global_country_itinerary_table_itinerary_id_quantifier_value])
 
-                excursion_activity_column_family_id = "_".join([activity, bigtable_constants.payana_personal_place_id_itinerary_table_excursion_id_quantifier_value])
+                excursion_activity_column_family_id = "_".join(
+                    [activity, self.payana_global_country_itinerary_table_itinerary_id_rating_quantifier_value, bigtable_constants.payana_global_country_itinerary_table_excursion_id_quantifier_value])
 
-                checkin_activity_column_family_id = "_".join([activity, bigtable_constants.payana_personal_place_id_itinerary_table_checkin_id_quantifier_value])
+                checkin_activity_column_family_id = "_".join(
+                    [activity, self.payana_global_country_itinerary_table_itinerary_id_rating_quantifier_value, bigtable_constants.payana_global_country_itinerary_table_checkin_id_quantifier_value])
 
                 for itinerary, rating in self.itinerary_id.items():
                     # itinerary id write object
@@ -120,7 +127,7 @@ class PayanaPersonalPlaceIdItineraryTable:
                     # checkin id write object
                     self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
                         self.row_id, checkin_activity_column_family_id, checkin, rating))
-            
+
             else:
                 # to-do : raise exception that it is an invalid activity
                 print("Invalid activity")

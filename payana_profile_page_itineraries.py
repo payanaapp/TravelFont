@@ -51,6 +51,8 @@ payana_profile_page_itinerary_read_obj = PayanaBigTable(
 payana_profile_page_itinerary_read_row_obj = payana_profile_page_itinerary_read_obj.get_row_dict(
     row_id, include_column_family=True)
 
+print(payana_profile_page_itinerary_read_row_obj)
+
 print("Status of add payana_profile_page itinerary: " +
       str(payana_profile_page_itinerary_read_row_obj is not None))
 
