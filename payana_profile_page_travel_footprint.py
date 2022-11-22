@@ -16,11 +16,8 @@ from payana.payana_bl.bigtable_utils.PayanaPlaceIdMetadataTable import PayanaPla
 from payana.payana_bl.bigtable_utils.PayanaNeighboringCitiesTable import PayanaNeighboringCitiesTable
 from payana.payana_bl.bigtable_utils.PayanaStateTable import PayanaStateTable
 from payana.payana_bl.bigtable_utils.PayanaCountryTable import PayanaCountryTable
-from payana.payana_bl.bigtable_utils.PayanaPersonalPlaceIdItineraryTable import PayanaPersonalPlaceIdItineraryTable
-from payana.payana_bl.bigtable_utils.PayanaPersonalCityItineraryTable import PayanaPersonalCityItineraryTable
-from payana.payana_bl.bigtable_utils.PayanaPersonalStateItineraryTable import PayanaPersonalStateItineraryTable
-from payana.payana_bl.bigtable_utils.PayanaPersonalCountryItineraryTable import PayanaPersonalCountryItineraryTable
-from payana.payana_bl.bigtable_utils.PayanaProfileTravelFootPrint import PayanaProfileTravelFootPrint
+from payana.payana_bl.bigtable_utils.PayanaProfileTravelFootPrintTable import PayanaProfileTravelFootPrintTable
+
 client_config_file_path = bigtable_constants.bigtable_client_config_path
 bigtable_tables_schema_path = bigtable_constants.bigtable_schema_config_file
 
@@ -41,7 +38,7 @@ profile_travel_footprint_obj = {
     "longitude": "2.3456"
 }
 
-payana_profile_travel_footprint_obj = PayanaProfileTravelFootPrint(
+payana_profile_travel_footprint_obj = PayanaProfileTravelFootPrintTable(
     **profile_travel_footprint_obj)
 payana_profile_travel_footprint_obj_write_status = payana_profile_travel_footprint_obj.update_profile_travel_footprint_bigtable()
 

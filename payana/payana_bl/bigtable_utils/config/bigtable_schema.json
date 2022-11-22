@@ -435,5 +435,61 @@
         "description": "This table will hold all the global itineraries for a given country",
         "purpose": "This table will hold all the global itineraries for a given country",
         "max_versions": 1
+    },
+    "payana_global_influencer_feed_search_cache_table": {
+        "column_family_id": [
+            "generic_rating_excursion_id",
+            "hiking_rating_excursion_id",
+            "romantic_rating_excursion_id",
+            "exotic_rating_excursion_id",
+            "generic_timestamp_excursion_id",
+            "hiking_timestamp_excursion_id",
+            "romantic_timestamp_excursion_id",
+            "exotic_timestamp_excursion_id"
+        ],
+        "description": "This table will hold all the global itineraries feed/searched results for a given user",
+        "purpose": "This table will hold all the global itineraries feed/searched results for a given user",
+        "max_versions": 1
+    },
+    "payana_personal_influencer_feed_search_cache_table": {
+        "column_family_id": [
+            "generic_rating_excursion_id",
+            "hiking_rating_excursion_id",
+            "romantic_rating_excursion_id",
+            "exotic_rating_excursion_id",
+            "generic_timestamp_excursion_id",
+            "hiking_timestamp_excursion_id",
+            "romantic_timestamp_excursion_id",
+            "exotic_timestamp_excursion_id"
+        ],
+        "description": "This table will hold all the personal influencer itineraries feed/searched results for a given user",
+        "purpose": "This table will hold all the personal influencer itineraries feed/searched results for a given user",
+        "max_versions": 1
+    },
+    "payana_travel_buddy_feed_search_cache_table": {
+        "column_family_id": [
+            "generic_rating_excursion_id",
+            "hiking_rating_excursion_id",
+            "romantic_rating_excursion_id",
+            "exotic_rating_excursion_id",
+            "generic_timestamp_excursion_id",
+            "hiking_timestamp_excursion_id",
+            "romantic_timestamp_excursion_id",
+            "exotic_timestamp_excursion_id"
+        ],
+        "description": "This table will hold all the personal travel buddy itineraries feed/searched results for a given user",
+        "purpose": "This table will hold all the personal travel buddy itineraries feed/searched results for a given user",
+        "max_versions": 1
+    },
+    "payana_profile_to_search_places_activities_table": {
+        "column_family_id": [
+            "searched_cities_activities",
+            "searched_state_activities",
+            "searched_place_id_activities",
+            "searched_country_activities"
+        ],
+        "description": "This table will hold all the cities and activities searched by a given user",
+        "purpose": "This table will hold all the cities and activities searched by a given user",
+        "max_versions": 1
     }
 }
