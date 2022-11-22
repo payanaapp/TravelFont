@@ -18,7 +18,7 @@ from payana.payana_bl.bigtable_utils.constants import bigtable_constants
 from google.cloud.bigtable import column_family
 
 
-class PayanaProfileTravelFootPrint:
+class PayanaProfileTravelFootPrintTable:
 
     @payana_generic_exception_handler
     def __init__(self, profile_id, place_id, excursion_id, latitude, longitude):
