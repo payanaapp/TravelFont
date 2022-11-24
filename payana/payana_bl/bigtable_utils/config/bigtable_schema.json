@@ -2,7 +2,7 @@
     "payana_profile_table": {
         "column_family_id": [
             "personal_information",
-            "top_activities",
+            "top_activities_tracker_rating",
             "thumbnail_travel_buddies",
             "favorite_places_preference",
             "favorite_activities_preference"

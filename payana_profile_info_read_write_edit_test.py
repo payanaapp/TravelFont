@@ -23,10 +23,10 @@ bigtable_tables_schema_path = bigtable_constants.bigtable_schema_config_file
 payana_bigtable_init(client_config_file_path, bigtable_tables_schema_path)
 
 payana_profile_table_personal_info_column_family = bigtable_constants.payana_profile_table_personal_info_column_family
-payana_profile_table_top_activities = bigtable_constants.payana_profile_table_top_activities
 payana_profile_favorite_places_preference = bigtable_constants.payana_profile_favorite_places_preference
 payana_profile_favorite_activities_preference = bigtable_constants.payana_profile_favorite_activities_preference
 payana_profile_table_thumbnail_travel_buddies = bigtable_constants.payana_profile_table_thumbnail_travel_buddies
+payana_profile_table_top_activities_tracker_rating = bigtable_constants.payana_profile_table_top_activities_tracker_rating
 
 profile_obj = {
     payana_profile_table_personal_info_column_family:
@@ -43,7 +43,7 @@ profile_obj = {
         "date_of_birth": "11/11/1111",
         "doj" : "11/11/1111"
     },
-    payana_profile_table_top_activities:
+    payana_profile_table_top_activities_tracker_rating:
     {
         "hiking": "0.67",
         "adventure": "0.4",
@@ -243,37 +243,37 @@ print("Status of update doj operation: " +
       str(new_doj == updated_doj))
 
 
-# Change activity score
-column_family_top_activities = bigtable_constants.payana_profile_table_top_activities
+# Change top activity tracker score
+column_family_top_activities = bigtable_constants.payana_profile_table_top_activities_tracker_rating
 activity_name = "hiking"
 new_hiking_score = "1.23"
 profile_table_hiking_write_object = bigtable_write_object_wrapper(
-    profile_id, column_family_profile_table_metadata, activity_name, new_hiking_score)
+    profile_id, column_family_top_activities, activity_name, new_hiking_score)
 payana_profile_read_obj.insert_column(profile_table_hiking_write_object)
 profile_table_hiking_update = payana_profile_read_obj.get_row_dict(
     profile_id, include_column_family=True)
 updated_hiking_score = profile_table_hiking_update[profile_id][
-    column_family_profile_table_metadata][activity_name]
+    column_family_top_activities][activity_name]
 
-print("Status of update hiking activity score operation: " +
+print("Status of update tracker hiking activity score operation: " +
       str(new_hiking_score == updated_hiking_score))
 
-# Add an activity
-column_family_top_activities = bigtable_constants.payana_profile_table_top_activities
+# Add an activity into top activity tracker section
+column_family_top_activities = bigtable_constants.payana_profile_table_top_activities_tracker_rating
 activity_name = "road_trip"
 new_road_trip_score = "0.87"
 profile_table_road_trip_write_object = bigtable_write_object_wrapper(
-    profile_id, column_family_profile_table_metadata, activity_name, new_road_trip_score)
+    profile_id, column_family_top_activities, activity_name, new_road_trip_score)
 payana_profile_read_obj.insert_column(profile_table_road_trip_write_object)
 profile_table_road_trip_update = payana_profile_read_obj.get_row_dict(
     profile_id, include_column_family=True)
 updated_road_trip_score = profile_table_road_trip_update[
-    profile_id][column_family_profile_table_metadata][activity_name]
+    profile_id][column_family_top_activities][activity_name]
 
-print("Status of add road_trip activity score operation: " +
+print("Status of add road_trip activity score operation into favorite activity preference section: " +
       str(new_road_trip_score == updated_road_trip_score))
 
-# Delete an activity
+# Delete an activity from top activity tracker section
 payana_profile_obj_delete_activity_status = payana_profile_read_obj.delete_bigtable_row_column(
     profile_table_road_trip_write_object)
 
