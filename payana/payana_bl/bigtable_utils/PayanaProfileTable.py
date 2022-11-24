@@ -21,7 +21,7 @@ from google.cloud.bigtable import column_family
 class PayanaProfileTable:
 
     @payana_generic_exception_handler
-    def __init__(self, personal_information, top_activities, favorite_places_preference, favorite_activities_preference, thumbnail_travel_buddies):
+    def __init__(self, personal_information, favorite_places_preference, favorite_activities_preference, thumbnail_travel_buddies, top_activities_tracker_rating):
 
         self.payana_profile_table_profile_name = bigtable_constants.payana_profile_table_profile_name
         self.payana_profile_table_user_name = bigtable_constants.payana_profile_table_user_name
@@ -34,6 +34,7 @@ class PayanaProfileTable:
         self.payana_profile_table_gender = bigtable_constants.payana_profile_table_gender
         self.payana_profile_table_date_of_birth = bigtable_constants.payana_profile_table_date_of_birth
         self.payana_profile_table_doj = bigtable_constants.payana_profile_table_doj
+        self.top_activities_tracker_rating = top_activities_tracker_rating
 
         if self.payana_profile_table_profile_name in personal_information:
             self.profile_name = personal_information[self.payana_profile_table_profile_name]
@@ -90,7 +91,6 @@ class PayanaProfileTable:
         else:
             pass
 
-        self.top_activities = top_activities
         self.favorite_places_preference = favorite_places_preference
         self.favorite_activities_preference = favorite_activities_preference
         self.thumbnail_travel_buddies = thumbnail_travel_buddies
@@ -98,7 +98,7 @@ class PayanaProfileTable:
         self.update_bigtable_write_objects = []
         
         self.column_family_id = bigtable_constants.payana_profile_table_personal_info_column_family
-        self.top_activities_column_family_id = bigtable_constants.payana_profile_table_top_activities
+        self.top_activities_column_family_id = bigtable_constants.payana_profile_table_top_activities_tracker_rating
         self.payana_profile_favorite_places_preference_column_family_id = bigtable_constants.payana_profile_favorite_places_preference
         self.payana_profile_favorite_activities_preference_column_family_id = bigtable_constants.payana_profile_favorite_activities_preference
         self.payana_profile_table_thumbnail_travel_buddies_column_family_id = bigtable_constants.payana_profile_table_thumbnail_travel_buddies
@@ -156,7 +156,6 @@ class PayanaProfileTable:
         self.set_favorite_activities_preference_write_object()
         self.set_thumbnail_travel_buddies_write_object()
         
-
     @payana_generic_exception_handler
     def set_profile_name_write_object(self):
 
@@ -238,7 +237,7 @@ class PayanaProfileTable:
     def set_top_activities_write_object(self):
 
         # top_activities write object
-        for activity, score in self.top_activities.items():
+        for activity, score in self.top_activities_tracker_rating.items():
 
             self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
                 self.profile_id, self.top_activities_column_family_id, activity, score))
