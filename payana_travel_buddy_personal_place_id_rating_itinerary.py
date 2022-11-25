@@ -30,8 +30,9 @@ personal_place_id_itinerary_obj = {
     "place_id": "cupertino##california##usa",
     "itinerary_id": {"0.48": "12345"},
     "excursion_id": {"0.48": "12345"},
+    "activity_guide_id": {"0.48": "12345"},
     "checkin_id": {"0.48": "12345"},
-    "activities": ["hiking", "romantic", "exotic"]
+    "activities": ["generic", "hiking", "romantic", "exotic"]
 }
 
 payana_personal_place_id_itinerary_obj = PayanaPersonalPlaceIdRatingItineraryTable(

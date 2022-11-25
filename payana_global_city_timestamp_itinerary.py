@@ -28,7 +28,8 @@ global_city_itinerary_obj = {
     "itinerary_id": {"1" : "12345"},
     "excursion_id": {"1" : "12345"},
     "checkin_id": {"1" : "12345"},
-    "activities": ["hiking", "romantic", "exotic"]
+    "activity_guide_id": {"1" : "12345"},
+    "activities": ["generic", "hiking", "romantic", "exotic"]
 }
 
 payana_global_city_itinerary_table_itinerary_id_timestamp_quantifier_value = bigtable_constants.payana_global_city_itinerary_table_itinerary_id_timestamp_quantifier_value

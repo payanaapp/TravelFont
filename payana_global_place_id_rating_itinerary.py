@@ -29,8 +29,9 @@ global_place_id_itinerary_obj = {
     "place_id": "12345",
     "itinerary_id": {"1": "12345"},
     "excursion_id": {"1": "12345"},
+    "activity_guide_id": {"1" : "12345"},
     "checkin_id": {"1": "12345"},
-    "activities": ["hiking", "romantic", "exotic"]
+    "activities": ["generic", "hiking", "romantic", "exotic"]
 }
 
 payana_global_place_id_itinerary_obj = PayanaGlobalPlaceIdRatingItineraryTable(

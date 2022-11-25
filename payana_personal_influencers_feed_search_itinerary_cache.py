@@ -27,6 +27,7 @@ payana_personal_city_itinerary_table_rating_column_family_id = bigtable_constant
 feed_search_itinerary_cache_obj = {
     "profile_id": "12345",
     "excursion_id": {"cupertino##california##usa": ["123456789", "234567891", "345678901"]},
+    "activity_guide_id": {"cupertino##california##usa": ["123456789", "234567891", "345678901"]},
     "activities": ["generic", "hiking", "romantic", "exotic"],
     "category": ["rating", "timestamp"]
 }
