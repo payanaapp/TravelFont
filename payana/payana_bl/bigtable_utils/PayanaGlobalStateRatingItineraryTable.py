@@ -22,7 +22,7 @@ from google.cloud.bigtable import column_family
 class PayanaGlobalStateRatingItineraryTable:
 
     @payana_generic_exception_handler
-    def __init__(self, state,
+    def __init__(self, state, activity_guide_id,
                  itinerary_id, excursion_id, checkin_id,
                  activities):
 
@@ -31,6 +31,7 @@ class PayanaGlobalStateRatingItineraryTable:
         self.excursion_id = excursion_id
         self.checkin_id = checkin_id
         self.activities = activities
+        self.activity_guide_id = activity_guide_id
         self.row_id = None
 
         self.update_bigtable_write_objects = []
@@ -65,36 +66,7 @@ class PayanaGlobalStateRatingItineraryTable:
 
     @payana_generic_exception_handler
     def create_bigtable_write_objects(self):
-        self.set_generic_activity_write_object()
         self.set_activities_write_object()
-
-    @payana_generic_exception_handler
-    def set_generic_activity_write_object(self):
-
-        # generic activity write objects
-        itinerary_activity_generic_column_family_id = "_".join(
-            [self.activity_generic_column_family_id, self.payana_global_state_itinerary_table_itinerary_id_rating_quantifier_value, bigtable_constants.payana_global_state_itinerary_table_itinerary_id_quantifier_value])
-
-        excursion_activity_generic_column_family_id = "_".join(
-            [self.activity_generic_column_family_id, self.payana_global_state_itinerary_table_itinerary_id_rating_quantifier_value, bigtable_constants.payana_global_state_itinerary_table_excursion_id_quantifier_value])
-
-        checkin_activity_generic_column_family_id = "_".join(
-            [self.activity_generic_column_family_id, self.payana_global_state_itinerary_table_itinerary_id_rating_quantifier_value, bigtable_constants.payana_global_state_itinerary_table_checkin_id_quantifier_value])
-
-        for rating, itinerary in self.itinerary_id.items():
-            # itinerary id write object
-            self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-                self.row_id, itinerary_activity_generic_column_family_id, rating, itinerary))
-
-        for rating, excursion in self.excursion_id.items():
-            # excursion id write object
-            self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-                self.row_id, excursion_activity_generic_column_family_id, rating, excursion))
-
-        for rating, checkin in self.checkin_id.items():
-            # checkin id write object
-            self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-                self.row_id, checkin_activity_generic_column_family_id, rating, checkin))
 
     @payana_generic_exception_handler
     def set_activities_write_object(self):
@@ -112,6 +84,9 @@ class PayanaGlobalStateRatingItineraryTable:
 
                 checkin_activity_column_family_id = "_".join(
                     [activity, self.payana_global_state_itinerary_table_itinerary_id_rating_quantifier_value, bigtable_constants.payana_global_state_itinerary_table_checkin_id_quantifier_value])
+                
+                activity_guide_activity_column_family_id = "_".join(
+                    [activity, self.payana_global_state_itinerary_table_itinerary_id_rating_quantifier_value, bigtable_constants.payana_global_state_itinerary_table_activity_guide_id_quantifier_value])
 
                 for rating, itinerary in self.itinerary_id.items():
                     # itinerary id write object
@@ -127,6 +102,11 @@ class PayanaGlobalStateRatingItineraryTable:
                     # checkin id write object
                     self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
                         self.row_id, checkin_activity_column_family_id, rating, checkin))
+                    
+                for rating, activity_guide in self.activity_guide_id.items():
+                    # checkin id write object
+                    self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+                        self.row_id, activity_guide_activity_column_family_id, rating, activity_guide))
 
             else:
                 # to-do : raise exception that it is an invalid activity

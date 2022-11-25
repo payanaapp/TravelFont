@@ -132,6 +132,7 @@ payana_excursion_itinerary_id = "itinerary_id"
 payana_excursion_city = "city"
 payana_excursion_state = "state"
 payana_excursion_country = "country"
+payana_excursion_activity_guide = "activity_guide"
 
 # Payana check in table constants
 payana_checkin_column_family_image_id_list = "image_id_list"
@@ -203,6 +204,7 @@ payana_activity_column_family = ["generic", "hiking", "romantic", "exotic"]
 # Payana personal place ID itinerary table constants
 payana_personal_place_id_itinerary_table_itinerary_id_quantifier_value = "itinerary_id"
 payana_personal_place_id_itinerary_table_excursion_id_quantifier_value = "excursion_id"
+payana_personal_place_id_itinerary_table_activity_guide_id_quantifier_value = "activity_guide_id"
 payana_personal_place_id_itinerary_table_checkin_id_quantifier_value = "checkin_id"
 payana_personal_place_id_itinerary_table_activities = "activities"
 payana_personal_place_id_itinerary_table_rating_column_family_id = "rating"
@@ -211,6 +213,7 @@ payana_personal_place_id_itinerary_table_timestamp_column_family_id = "timestamp
 # Payana personal city itinerary table constants
 payana_personal_city_itinerary_table_itinerary_id_quantifier_value = "itinerary_id"
 payana_personal_city_itinerary_table_excursion_id_quantifier_value = "excursion_id"
+payana_personal_city_itinerary_table_activity_guide_id_quantifier_value = "activity_guide_id"
 payana_personal_city_itinerary_table_checkin_id_quantifier_value = "checkin_id"
 payana_personal_city_itinerary_table_activities = "activities"
 payana_personal_city_itinerary_table_rating_column_family_id = "rating"
@@ -219,6 +222,7 @@ payana_personal_city_itinerary_table_timestamp_column_family_id = "timestamp"
 # Payana personal state itinerary table constants
 payana_personal_state_itinerary_table_itinerary_id_quantifier_value = "itinerary_id"
 payana_personal_state_itinerary_table_excursion_id_quantifier_value = "excursion_id"
+payana_personal_state_itinerary_table_activity_guide_id_quantifier_value = "activity_guide_id"
 payana_personal_state_itinerary_table_checkin_id_quantifier_value = "checkin_id"
 payana_personal_state_itinerary_table_activities = "activities"
 payana_personal_city_itinerary_table_activities = "activities"
@@ -228,6 +232,7 @@ payana_personal_state_itinerary_table_timestamp_column_family_id = "timestamp"
 # Payana personal country itinerary table constants
 payana_personal_country_itinerary_table_itinerary_id_quantifier_value = "itinerary_id"
 payana_personal_country_itinerary_table_excursion_id_quantifier_value = "excursion_id"
+payana_personal_country_itinerary_table_activity_guide_id_quantifier_value = "activity_guide_id"
 payana_personal_country_itinerary_table_checkin_id_quantifier_value = "checkin_id"
 payana_personal_country_itinerary_table_activities = "activities"
 payana_personal_city_itinerary_table_activities = "activities"
@@ -241,12 +246,15 @@ payana_big_table_does_not_exist_exception = "BigTable doesn't exist or none inst
 # Payana profile page itineraries
 payana_profile_page_itinerary_table_saved_itinerary_id_list_quantifier_value = "saved_itinerary_id_list"
 payana_profile_page_itinerary_table_saved_excursion_id_list_quantifier_value = "saved_excursion_id_list"
+payana_profile_page_itinerary_table_saved_activity_guide_id_list_quantifier_value = "saved_activity_guide_id_list"
 payana_profile_page_itinerary_table_created_itinerary_id_list_quantifier_value = "created_itinerary_id_list"
 payana_profile_page_itinerary_table_created_excursion_id_list_quantifier_value = "created_excursion_id_list"
+payana_profile_page_itinerary_table_created_activity_guide_id_list_quantifier_value = "created_activity_guide_id_list"
 
 # Payana global place ID itinerary table constants
 payana_global_place_id_itinerary_table_itinerary_id_quantifier_value = "itinerary_id"
 payana_global_place_id_itinerary_table_excursion_id_quantifier_value = "excursion_id"
+payana_global_place_id_itinerary_table_activity_guide_id_quantifier_value = "activity_guide_id"
 payana_global_place_id_itinerary_table_checkin_id_quantifier_value = "checkin_id"
 payana_global_place_id_itinerary_table_activities = "activities"
 payana_global_place_id_itinerary_table_itinerary_id_rating_quantifier_value = "rating"
@@ -255,6 +263,7 @@ payana_global_place_id_itinerary_table_itinerary_id_timestamp_quantifier_value =
 # Payana global city itinerary table constants
 payana_global_city_itinerary_table_itinerary_id_quantifier_value = "itinerary_id"
 payana_global_city_itinerary_table_excursion_id_quantifier_value = "excursion_id"
+payana_global_city_itinerary_table_activity_guide_id_quantifier_value = "activity_guide_id"
 payana_global_city_itinerary_table_checkin_id_quantifier_value = "checkin_id"
 payana_global_city_itinerary_table_activities = "activities"
 payana_global_city_itinerary_table_itinerary_id_rating_quantifier_value = "rating"
@@ -263,6 +272,7 @@ payana_global_city_itinerary_table_itinerary_id_timestamp_quantifier_value = "ti
 # Payana global state itinerary table constants
 payana_global_state_itinerary_table_itinerary_id_quantifier_value = "itinerary_id"
 payana_global_state_itinerary_table_excursion_id_quantifier_value = "excursion_id"
+payana_global_state_itinerary_table_activity_guide_id_quantifier_value = "activity_guide_id"
 payana_global_state_itinerary_table_checkin_id_quantifier_value = "checkin_id"
 payana_global_state_itinerary_table_activities = "activities"
 payana_global_state_itinerary_table_itinerary_id_rating_quantifier_value = "rating"
@@ -271,6 +281,7 @@ payana_global_state_itinerary_table_itinerary_id_timestamp_quantifier_value = "t
 # Payana global country itinerary table constants
 payana_global_country_itinerary_table_itinerary_id_quantifier_value = "itinerary_id"
 payana_global_country_itinerary_table_excursion_id_quantifier_value = "excursion_id"
+payana_global_country_itinerary_table_activity_guide_id_quantifier_value = "activity_guide_id"
 payana_global_country_itinerary_table_checkin_id_quantifier_value = "checkin_id"
 payana_global_country_itinerary_table_activities = "activities"
 payana_global_country_itinerary_table_itinerary_id_rating_quantifier_value = "rating"
@@ -300,6 +311,7 @@ payana_excursion_checkin_permission_table_admin_column_family = "admin"
 
 # payana_feed_search_itinerary_cache_table constants
 payana_feed_search_itinerary_cache_excursion_id_column_family = "excursion_id"
+payana_feed_search_itinerary_cache_activity_guide_id_column_family = "activity_guide_id"
 payana_feed_search_itinerary_cache_rating_column_family = "rating"
 payana_feed_search_itinerary_cache_timestamp_column_family = "timestamp"
 

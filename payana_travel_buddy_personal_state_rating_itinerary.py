@@ -32,7 +32,8 @@ personal_state_itinerary_obj = {
     "itinerary_id": {"0.48": "12345"},
     "excursion_id": {"0.48": "12345"},
     "checkin_id": {"0.48": "12345"},
-    "activities": ["hiking", "romantic", "exotic"]
+    "activity_guide_id": {"0.48": "12345"},
+    "activities": ["generic", "hiking", "romantic", "exotic"]
 }
 
 payana_personal_state_itinerary_obj = PayanaPersonalStateRatingItineraryTable(

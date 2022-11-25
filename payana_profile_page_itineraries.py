@@ -27,9 +27,11 @@ profile_page_itinerary_obj = {
     "profile_id": "12345",
     "saved_itinerary_id_list": ["12345"],
     "saved_excursion_id_list": ["12345"],
+    "saved_activity_guide_id_list": ["12345"],
     "created_itinerary_id_list": ["12345"],
+    "created_activity_guide_id_list": ["12345"],
     "created_excursion_id_list": ["12345"],
-    "activities": ["hiking", "romantic", "exotic"]
+    "activities": ["generic", "hiking", "romantic", "exotic"]
 }
 
 payana_profile_page_itinerary_obj = PayanaProfilePageItineraryTable(

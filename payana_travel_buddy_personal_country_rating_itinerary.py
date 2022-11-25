@@ -29,9 +29,10 @@ personal_country_itinerary_obj = {
     "profile_id": "12345",
     "country": "usa",
     "itinerary_id": {"0.48": "12345"},
+    "activity_guide_id": {"0.48": "12345"},
     "excursion_id": {"0.48": "12345"},
     "checkin_id": {"0.48": "12345"},
-    "activities": ["hiking", "romantic", "exotic"]
+    "activities": ["generic", "hiking", "romantic", "exotic"]
 }
 
 payana_personal_country_itinerary_obj = PayanaPersonalCountryRatingItineraryTable(

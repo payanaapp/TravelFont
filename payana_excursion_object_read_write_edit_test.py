@@ -36,6 +36,7 @@ excursion_obj = {
     "activities_list": {"hiking": "4", "roadtrip": "6"},
     "excursion_metadata": {
         "excursion_id": "",
+        "activity_guide": "False",
         "transport_mode": "drive",
         "place_id": "1234567",
         "excursion_owner_profile_id": "1234567",

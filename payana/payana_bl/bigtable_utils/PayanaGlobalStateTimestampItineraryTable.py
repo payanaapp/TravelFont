@@ -22,7 +22,7 @@ from google.cloud.bigtable import column_family
 class PayanaGlobalStateTimestampItineraryTable:
 
     @payana_generic_exception_handler
-    def __init__(self, state,
+    def __init__(self, state, activity_guide_id,
                  itinerary_id, excursion_id, checkin_id,
                  activities):
 
@@ -31,6 +31,7 @@ class PayanaGlobalStateTimestampItineraryTable:
         self.excursion_id = excursion_id
         self.checkin_id = checkin_id
         self.activities = activities
+        self.activity_guide_id = activity_guide_id
         self.row_id = None
 
         self.update_bigtable_write_objects = []
@@ -112,6 +113,9 @@ class PayanaGlobalStateTimestampItineraryTable:
 
                 checkin_activity_column_family_id = "_".join(
                     [activity, self.payana_global_state_itinerary_table_itinerary_id_timestamp_quantifier_value, bigtable_constants.payana_global_state_itinerary_table_checkin_id_quantifier_value])
+                
+                activity_guide_activity_column_family_id = "_".join(
+                    [activity, self.payana_global_state_itinerary_table_itinerary_id_timestamp_quantifier_value, bigtable_constants.payana_global_state_itinerary_table_activity_guide_id_quantifier_value])
 
                 for timestamp, itinerary in self.itinerary_id.items():
                     # itinerary id write object
@@ -127,6 +131,11 @@ class PayanaGlobalStateTimestampItineraryTable:
                     # checkin id write object
                     self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
                         self.row_id, checkin_activity_column_family_id, timestamp, checkin))
+                    
+                for timestamp, activity_guide in self.activity_guide_id.items():
+                    # checkin id write object
+                    self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+                        self.row_id, activity_guide_activity_column_family_id, timestamp, activity_guide))
 
             else:
                 # to-do : raise exception that it is an invalid activity

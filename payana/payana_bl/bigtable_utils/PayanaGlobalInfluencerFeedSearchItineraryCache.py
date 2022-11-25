@@ -22,13 +22,14 @@ from google.cloud.bigtable import column_family
 class PayanaGlobalInfluencerFeedSearchItineraryCache:
 
     @payana_generic_exception_handler
-    def __init__(self, profile_id, excursion_id,
+    def __init__(self, profile_id, excursion_id, activity_guide_id,
                  activities, category):
 
         self.profile_id = profile_id
         self.excursion_id = excursion_id
         self.activities = activities
         self.category = category
+        self.activity_guide_id = activity_guide_id
         self.row_id = None
 
         self.update_bigtable_write_objects = []
@@ -36,6 +37,7 @@ class PayanaGlobalInfluencerFeedSearchItineraryCache:
         self.payana_feed_search_itinerary_cache_excursion_id_column_family = bigtable_constants.payana_feed_search_itinerary_cache_excursion_id_column_family
         self.payana_feed_search_itinerary_cache_rating_column_family = bigtable_constants.payana_feed_search_itinerary_cache_rating_column_family
         self.payana_feed_search_itinerary_cache_timestamp_column_family = bigtable_constants.payana_feed_search_itinerary_cache_timestamp_column_family
+        self.payana_feed_search_itinerary_cache_activity_guide_id_column_family = bigtable_constants.payana_feed_search_itinerary_cache_activity_guide_id_column_family
 
         self.current_year = str(datetime.now().year)
 
@@ -83,6 +85,14 @@ class PayanaGlobalInfluencerFeedSearchItineraryCache:
                             # excursion id write object
                             self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
                                 self.row_id, excursion_activity_column_family_id, city, "##".join(excursion_id_list)))
+                            
+                        activity_guide_activity_column_family_id = "_".join(
+                            [activity, category, self.payana_feed_search_itinerary_cache_activity_guide_id_column_family])
+
+                        for city, activity_guide_id_list in self.activity_guide_id.items():
+                            # excursion id write object
+                            self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+                                self.row_id, activity_guide_activity_column_family_id, city, "##".join(activity_guide_id_list)))
 
             else:
                 # to-do : raise exception that it is an invalid activity

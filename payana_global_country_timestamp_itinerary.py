@@ -27,8 +27,9 @@ global_country_itinerary_obj = {
     "country": "usa",
     "itinerary_id": {"1" : "12345"},
     "excursion_id": {"1" : "12345"},
+    "activity_guide_id": {"1" : "12345"},
     "checkin_id": {"1" : "12345"},
-    "activities": ["hiking", "romantic", "exotic"]
+    "activities": ["generic", "hiking", "romantic", "exotic"]
 }
 
 payana_global_country_itinerary_table_itinerary_id_timestamp_quantifier_value = bigtable_constants.payana_global_country_itinerary_table_itinerary_id_timestamp_quantifier_value

@@ -28,10 +28,11 @@ payana_personal_place_id_itinerary_table_timestamp_column_family_id = bigtable_c
 personal_place_id_itinerary_obj = {
     "profile_id": "12345",
     "place_id": "cupertino##california##usa",
-    "itinerary_id": {"0.48": "12345"},
-    "excursion_id": {"0.48": "12345"},
-    "checkin_id": {"0.48": "12345"},
-    "activities": ["hiking", "romantic", "exotic"]
+    "itinerary_id": {"12345678": "12345"},
+    "excursion_id": {"12345678": "12345"},
+    "activity_guide_id": {"12345678": "12345"},
+    "checkin_id": {"12345678": "12345"},
+    "activities": ["generic", "hiking", "romantic", "exotic"]
 }
 
 payana_personal_place_id_itinerary_obj = PayanaPersonalPlaceIdTimestampItineraryTable(

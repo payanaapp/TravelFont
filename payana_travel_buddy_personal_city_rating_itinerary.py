@@ -29,8 +29,9 @@ personal_city_itinerary_obj = {
     "city": "cupertino##california##usa",
     "itinerary_id": {"0.48": "12345"},
     "excursion_id": {"0.48": "12345"},
+    "activity_guide_id": {"0.48": "12345"},
     "checkin_id": {"0.48": "12345"},
-    "activities": ["hiking", "romantic", "exotic"]
+    "activities": ["generic", "hiking", "romantic", "exotic"]
 }
 
 payana_personal_city_itinerary_obj = PayanaPersonalCityRatingItineraryTable(
