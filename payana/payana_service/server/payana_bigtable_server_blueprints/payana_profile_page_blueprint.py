@@ -4,7 +4,7 @@ from payana.payana_service.server import service_settings
 from payana.payana_service.controller.payana_bigtable_controller.payana_profile_table_controller import profile_table_name_space
 
 payana_profile_table_api_blueprint = Blueprint(
-    'payana_profile_table_api_blueprint', __name__, url_prefix='/bigtable')
+    'payana_profile_table_api_blueprint', __name__, url_prefix='/profile')
 
 payana_profile_table_api = Api(payana_profile_table_api_blueprint, version="1.0",
                                title="Payana BigTable APIs",
