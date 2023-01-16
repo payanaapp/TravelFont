@@ -4,7 +4,7 @@
 """
 
 import argparse
-from payana.payana_core.common_utils.payana_core_exception_handler_utils import payana_boolean_exception_handler
+from payana.payana_core.common_utils.payana_core_exception_handler_utils import payana_generic_exception_handler
 from payana.payana_core.common_utils.payana_core_bigtable_write_utils import payana_bigtable_write_status_handler
 # [START bigtable_write imports]
 import datetime
@@ -15,7 +15,7 @@ from google.cloud.bigtable import row_filters
 # [END bigtable_write imports]
 
 
-@payana_boolean_exception_handler
+@payana_generic_exception_handler
 def bigtable_write(table, bigtable_write_objects):
 
     # [START bigtable_write]

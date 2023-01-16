@@ -82,6 +82,7 @@ payana_profile_obj_write_status = payana_profile_obj.update_profile_info_bigtabl
 print("payana_profile_obj_write_status: " + str(payana_profile_obj_write_status))
 
 profile_id = payana_profile_obj.profile_id
+print(profile_id)
 payana_profile_table = bigtable_constants.payana_profile_table
 payana_profile_read_obj = PayanaBigTable(payana_profile_table)
 payana_profile_obj_read = payana_profile_read_obj.get_row_dict(
