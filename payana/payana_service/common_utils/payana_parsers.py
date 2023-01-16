@@ -17,3 +17,9 @@ def payana_profile_id_header_parser():
     profile_id = args[payana_profile_id_header]
 
     return profile_id
+
+def get_profile_id_header(request):
+    
+    profile_id = request.headers.get('profile_id')
+    
+    return profile_id.strip()
