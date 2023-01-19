@@ -1,7 +1,7 @@
 from flask import Flask, request, Blueprint
 from flask_restx import Api, Resource, fields, Namespace
 from payana.payana_service.server import service_settings
-from payana.payana_service.controller.payana_bigtable_controller.payana_profile_table_controller import profile_table_name_space
+from payana.payana_service.controller.payana_bigtable_controller.payana_profile_page_controller import profile_table_name_space
 
 payana_home_api_blueprint = Blueprint(
     'payana_home_api_blueprint', __name__, url_prefix='/home')

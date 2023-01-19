@@ -4,7 +4,7 @@
 """
 
 import argparse
-from payana.payana_core.common_utils.payana_core_exception_handler_utils import payana_boolean_exception_handler
+from payana.payana_core.common_utils.payana_core_exception_handler_utils import payana_generic_exception_handler
 from payana.payana_core.common_utils.payana_core_bigtable_write_utils import payana_bigtable_write_status_handler, payana_bigtable_delete_status_handler
 # [START bigtable_table_read_imports]
 import datetime
@@ -15,11 +15,10 @@ from google.cloud.bigtable import row_filters
 # [END bigtable_table_read_imports]
 
 
-@payana_boolean_exception_handler
+@payana_generic_exception_handler
 def bigtable_row_delete(table, row_key):
 
     # [START bigtable_row_delete]
-
     bigtable_row_obj = table.row(row_key)
 
     bigtable_row_obj.delete()
@@ -29,7 +28,7 @@ def bigtable_row_delete(table, row_key):
     # [END bigtable_row_delete]
 
 
-@payana_boolean_exception_handler
+@payana_generic_exception_handler
 def bigtable_rows_delete(table, row_keys):
 
     # [START bigtable_rows_delete]
@@ -40,7 +39,7 @@ def bigtable_rows_delete(table, row_keys):
     # [END bigtable_rows_delete]
 
 
-@payana_boolean_exception_handler
+@payana_generic_exception_handler
 def bigtable_row_cell_delete(table, row_key, column_family_id, column_name):
 
     # [START bigtable_row_cell_delete]
@@ -54,7 +53,7 @@ def bigtable_row_cell_delete(table, row_key, column_family_id, column_name):
     # [END bigtable_row_cell_delete]
 
 
-@payana_boolean_exception_handler
+@payana_generic_exception_handler
 def bigtable_row_cells_delete(table, row_key, column_family_id, column_names):
 
     # [START bigtable_row_cells_delete]
@@ -62,7 +61,9 @@ def bigtable_row_cells_delete(table, row_key, column_family_id, column_names):
     bigtable_row_obj = table.row(row_key)
 
     bigtable_row_obj.delete_cells(column_family_id, column_names)
-    bigtable_row_obj.commit()
+    delete_status = bigtable_row_obj.commit()
+    
+    return payana_bigtable_delete_status_handler(delete_status)
     # [END bigtable_row_cells_delete]
 
 

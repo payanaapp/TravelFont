@@ -26,24 +26,14 @@ bigtable_tables_schema_path = bigtable_constants.bigtable_schema_config_file
 
 payana_bigtable_init(client_config_file_path, bigtable_tables_schema_path)
 
-payana_profile_table_personal_info_column_family = bigtable_constants.payana_profile_table_personal_info_column_family
-payana_profile_favorite_places_preference = bigtable_constants.payana_profile_favorite_places_preference
-payana_profile_favorite_activities_preference = bigtable_constants.payana_profile_favorite_activities_preference
-payana_profile_table_thumbnail_travel_buddies = bigtable_constants.payana_profile_table_thumbnail_travel_buddies
-payana_profile_table_top_activities_tracker_rating = bigtable_constants.payana_profile_table_top_activities_tracker_rating
-
-
-payana_profile_table_profile_name = bigtable_constants.payana_profile_table_profile_name
-payana_profile_table_user_name = bigtable_constants.payana_profile_table_user_name
-payana_profile_table_blog_url = bigtable_constants.payana_profile_table_blog_url
-payana_profile_table_profile_description = bigtable_constants.payana_profile_table_profile_description
-payana_profile_table_profile_id = bigtable_constants.payana_profile_table_profile_id
-payana_profile_table_email = bigtable_constants.payana_profile_table_email
-payana_profile_table_phone = bigtable_constants.payana_profile_table_phone
-payana_profile_table_private_account = bigtable_constants.payana_profile_table_private_account
-payana_profile_table_gender = bigtable_constants.payana_profile_table_gender
-payana_profile_table_date_of_birth = bigtable_constants.payana_profile_table_date_of_birth
-payana_profile_table_doj = bigtable_constants.payana_profile_table_doj
+payana_profile_page_itinerary_table_saved_itinerary_id_list_quantifier_value = bigtable_constants.payana_profile_page_itinerary_table_saved_itinerary_id_list_quantifier_value
+payana_profile_page_itinerary_table_saved_excursion_id_list_quantifier_value = bigtable_constants.payana_profile_page_itinerary_table_saved_excursion_id_list_quantifier_value
+payana_profile_page_itinerary_table_saved_activity_guide_id_list_quantifier_value = bigtable_constants.payana_profile_page_itinerary_table_saved_activity_guide_id_list_quantifier_value
+payana_profile_page_itinerary_table_created_itinerary_id_list_quantifier_value = bigtable_constants.payana_profile_page_itinerary_table_created_itinerary_id_list_quantifier_value
+payana_profile_page_itinerary_table_created_excursion_id_list_quantifier_value = bigtable_constants.payana_profile_page_itinerary_table_created_excursion_id_list_quantifier_value
+payana_profile_page_itinerary_table_created_activity_guide_id_list_quantifier_value = bigtable_constants.payana_profile_page_itinerary_table_created_activity_guide_id_list_quantifier_value
+activity_generic_column_family_id = bigtable_constants.payana_generic_activity_column_family
+payana_profile_page_itinerary_table_activities = bigtable_constants.payana_profile_page_itinerary_table_activities
 
 # POST profile info
 # CURL request
@@ -150,6 +140,8 @@ profile_info_json = {
 }
 
 headers = {'Content-Type': 'application/json'}
+
+print("Creating a profile!")
 
 response = requests.post(url, data=json.dumps(
     profile_info_json), headers=headers)
@@ -277,8 +269,7 @@ headers = {'Content-Type': 'application/json', 'profile_id': profile_id}
 response = requests.put(url, data=json.dumps(
     profile_info_top_activities_tracker_rating_json), headers=headers)
 
-print("Profile activities tracker update status: " +
-      str(response.status_code == 200))
+print("Profile activities tracker update status: " + str(response.status_code == 200))
 
 # GET profile info
 # CURL request
@@ -292,8 +283,7 @@ headers = {'profile_id': profile_id}
 
 response = requests.get(url, headers=headers)
 
-print("Profile info top_activities_tracker_rating update read status: " +
-      str(response.status_code == 200))
+print("Profile info top_activities_tracker_rating update read status: " + str(response.status_code == 200))
 
 profile_info_top_activities_tracker_rating_update_response = response.json()
 
@@ -333,8 +323,7 @@ headers = {'Content-Type': 'application/json', 'profile_id': profile_id}
 response = requests.put(url, data=json.dumps(
     profile_info_favorite_places_preference_json), headers=headers)
 
-print("Profile favorite places preference update status: " +
-      str(response.status_code == 200))
+print("Profile favorite places preference update status: " + str(response.status_code == 200))
 
 
 # GET profile info
@@ -349,8 +338,7 @@ headers = {'profile_id': profile_id}
 
 response = requests.get(url, headers=headers)
 
-print("Profile info favorite_places_preference update read status: " +
-      str(response.status_code == 200))
+print("Profile info favorite_places_preference update read status: " + str(response.status_code == 200))
 
 profile_info_favorite_places_preference_update_response = response.json()
 print("Profile info favorite_places_preference update read verification status: " +
@@ -389,8 +377,7 @@ headers = {'Content-Type': 'application/json', 'profile_id': profile_id}
 response = requests.put(url, data=json.dumps(
     profile_info_favorite_activities_preference_json), headers=headers)
 
-print("Profile favorite activities update status: " +
-      str(response.status_code == 200))
+print("Profile favorite activities update status: " + str(response.status_code == 200))
 
 
 # GET profile info
@@ -405,8 +392,7 @@ headers = {'profile_id': profile_id}
 
 response = requests.get(url, headers=headers)
 
-print("Profile info favorite_activities_preference update read status: " +
-      str(response.status_code == 200))
+print("Profile info favorite_activities_preference update read status: " + str(response.status_code == 200))
 
 profile_info_favorite_activities_preference_update_response = response.json()
 print("Profile info favorite_activities_preference update read verification status: " +
@@ -447,8 +433,7 @@ headers = {'Content-Type': 'application/json', 'profile_id': profile_id}
 response = requests.put(url, data=json.dumps(
     profile_info_thumbnail_travel_buddies_json), headers=headers)
 
-print("Profile thumbnail travel buddies update status: " +
-      str(response.status_code == 200))
+print("Profile thumbnail travel buddies update status: " + str(response.status_code == 200))
 
 
 # GET profile info
@@ -463,100 +448,11 @@ headers = {'profile_id': profile_id}
 
 response = requests.get(url, headers=headers)
 
-print("Profile info thumbnail_travel_buddies update read status: " +
-      str(response.status_code == 200))
+print("Profile info thumbnail_travel_buddies update read status: " + str(response.status_code == 200))
 
 profile_info_thumbnail_travel_buddies_update_response = response.json()
 print("Profile info thumbnail_travel_buddies update read verification status: " +
       str(profile_info_thumbnail_travel_buddies_update_response[profile_id][payana_profile_table_thumbnail_travel_buddies]["123456"] == profile_info_thumbnail_travel_buddies_json[payana_profile_table_thumbnail_travel_buddies]["123456"]))
 
-
-# Delete profile info
-"""
-curl --location --request POST 'http://localhost:8888/profile/info/delete/' \
---header 'profile_id: d6b088551f82508ae569668ce146db6f56a90a762c11eb0901cbe87e9bede637' \
---header 'Content-Type: application/json' \
---data-raw '{
-    "thumbnail_travel_buddies" : {
-        "123456" : "1",
-        "234567" : "2",
-        "345678" : "3",
-        "456789" : "4",
-        "567890" : "5",
-        "678911" : "6",
-        "678921" : "7"
-    }
-}'
-"""
-url = "http://localhost:8888/profile/info/delete/"
-headers = {'profile_id': profile_id, 'Content-Type': 'application/json'}
-
-profile_info_thumbnail_travel_buddies_json = {
-    payana_profile_table_thumbnail_travel_buddies:
-    {
-        "123456": "98",
-        "234567": "2",
-        "345678": "3",
-        "456789": "4",
-        "567890": "5",
-        "678911": "6",
-        "678921": "7"
-    }
-}
-
-response = requests.post(url, data=json.dumps(
-    profile_info_thumbnail_travel_buddies_json), headers=headers)
-
-print("Profile info contents delete status: " +
-      str(response.status_code == 200))
-
-
-# GET profile info
-# CURL request
-"""
-curl --location --request GET 'http://localhost:8888/profile/info/' \
---header 'profile_id: 6ab6a9d059ab8f9a9e26cb51e27151e62b0e90f3f72b96789b095b8373ff7a2f'
-"""
-
-url = "http://localhost:8888/profile/info/"
-headers = {'profile_id': profile_id}
-
-response = requests.get(url, headers=headers)
-
-print("Profile info contents delete read status: " +
-      str(response.status_code == 200))
-
-profile_info_thumbnail_travel_buddies_delete_response = response.json()
-
-print("Profile info contents delete verification status: " +
-      str(payana_profile_table_thumbnail_travel_buddies not in profile_info_thumbnail_travel_buddies_delete_response[profile_id]))
-
-
-# Delete profile info
-"""
-curl --location --request DELETE 'http://localhost:8888/profile/info/' \
---header 'profile_id: da8fcdcf7ee10d71961fe4251de602e8f42d2a39fd77758176552f229ad32859'
-"""
-url = "http://localhost:8888/profile/info/"
-headers = {'profile_id': profile_id}
-
-response = requests.delete(url, headers=headers)
-
-print("Profile info delete status: " + str(response.status_code == 200))
-
-
-# GET profile info
-# CURL request
-"""
-curl --location --request GET 'http://localhost:8888/profile/info/' \
---header 'profile_id: 6ab6a9d059ab8f9a9e26cb51e27151e62b0e90f3f72b96789b095b8373ff7a2f'
-"""
-
-url = "http://localhost:8888/profile/info/"
-headers = {'profile_id': profile_id}
-
-response = requests.get(url, headers=headers)
-
-print("Profile info delete status: " + str(response.status_code == 500))
 
 payana_bigtable_cleanup(client_config_file_path, bigtable_tables_schema_path)
