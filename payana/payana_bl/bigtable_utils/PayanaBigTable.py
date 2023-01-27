@@ -12,7 +12,7 @@ from payana.payana_core.bigtable_utils.bigtable_table_create import bigtable_tab
 from payana.payana_core.bigtable_utils.bigtable_write import bigtable_write
 from payana.payana_bl.bigtable_utils.bigtable_read_write_object_wrapper import bigtable_write_object_wrapper, bigtable_read_row_key_wrapper
 from payana.payana_core.bigtable_utils.bigtable_read import bigtable_row_read, bigtable_rows_read, bigtable_cells_read_column_filter, bigtable_row_column_filter_read
-from payana.payana_core.bigtable_utils.bigtable_row_delete import bigtable_row_delete, bigtable_rows_delete, bigtable_row_cells_delete, bigtable_row_cell_delete
+from payana.payana_core.bigtable_utils.bigtable_row_delete import bigtable_row_delete, bigtable_rows_delete, bigtable_row_cells_delete, bigtable_row_cell_delete, bigtable_column_family_cells_delete
 from payana.payana_bl.common_utils.payana_exception_handler_utils import payana_generic_exception_handler, payana_service_layer_return_exception_handler
 from payana.payana_bl.common_utils.big_table_read_utils import convert_big_table_rows_to_dict
 from payana.payana_bl.common_utils.bigtable_filter_read_utils import bigtable_cells_column_family_read_filter, bigtable_cells_column_qualifier_read_filter, bigtable_cells_column_range_read_filter, bigtable_cells_value_range_read_filter, bigtable_cells_timestamp_range_read_filter, bigtable_cells_read_column_filter_chain, bigtable_row_regex_read_filter, bigtable_cells_per_column_limit, bigtable_cells_per_row_limit, bigtable_cells_read_value_regex, bigtable_cells_read_column_interleave_filter, bigtable_cells_label_filter, bigtable_cells_value_strip_filter
@@ -639,6 +639,36 @@ class PayanaBigTable:
             column_qualifier_id = bigtable_delete_row_object.column_qualifier_id
 
             return bigtable_row_cell_delete(self.table, row_key, column_family_id, column_qualifier_id)
+
+        else:
+            print(payana_big_table_does_not_exist_exception)
+            raise Exception(payana_big_table_exception)
+        
+    @payana_generic_exception_handler
+    def delete_bigtable_row_column_family_object(self, bigtable_delete_row_objects):
+
+        if self.table is not None:
+            
+            for bigtable_delete_row_object in bigtable_delete_row_objects:
+
+                if not self.delete_bigtable_row_column_family_cells(bigtable_delete_row_object):
+                    return False
+                
+            return True
+
+        else:
+            print(payana_big_table_does_not_exist_exception)
+            raise Exception(payana_big_table_exception)
+        
+    @payana_generic_exception_handler
+    def delete_bigtable_row_column_family_cells(self, bigtable_delete_row_object):
+
+        if self.table is not None:
+
+            row_key = bigtable_delete_row_object.row_key
+            column_family_id = bigtable_delete_row_object.column_family_id
+
+            return bigtable_column_family_cells_delete(self.table, row_key, column_family_id)
 
         else:
             print(payana_big_table_does_not_exist_exception)
