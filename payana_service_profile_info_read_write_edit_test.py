@@ -472,7 +472,7 @@ print("Profile info thumbnail_travel_buddies update read verification status: " 
 
 # Delete specific column family and column values
 """
-curl --location --request POST 'http://localhost:8888/profile/info/delete/' \
+curl --location --request POST 'http://localhost:8888/profile/info/delete/values/' \
 --header 'profile_id: d6b088551f82508ae569668ce146db6f56a90a762c11eb0901cbe87e9bede637' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -487,7 +487,7 @@ curl --location --request POST 'http://localhost:8888/profile/info/delete/' \
     }
 }'
 """
-url = "http://localhost:8888/profile/info/delete/"
+url = "http://localhost:8888/profile/info/delete/values/"
 headers = {'profile_id': profile_id, 'Content-Type': 'application/json'}
 
 profile_info_thumbnail_travel_buddies_json = {
@@ -526,7 +526,7 @@ print("Profile info contents delete verification status: " +
 
 # Delete thumbnail_travel_buddies - entire column family
 """
-curl --location --request POST 'http://localhost:8888/profile/info/delete/' \
+curl --location --request POST 'http://localhost:8888/profile/info/delete/cf/' \
 --header 'profile_id: d6b088551f82508ae569668ce146db6f56a90a762c11eb0901cbe87e9bede637' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -541,7 +541,7 @@ curl --location --request POST 'http://localhost:8888/profile/info/delete/' \
     }
 }'
 """
-url = "http://localhost:8888/profile/info/delete/"
+url = "http://localhost:8888/profile/info/delete/cf/"
 headers = {'profile_id': profile_id, 'Content-Type': 'application/json'}
 
 profile_info_thumbnail_travel_buddies_json = {
@@ -582,10 +582,10 @@ print("Profile info contents delete verification status: " +
 
 # Delete profile info
 """
-curl --location --request DELETE 'http://localhost:8888/profile/info/' \
+curl --location --request DELETE 'http://localhost:8888/profile/info/delete/' \
 --header 'profile_id: da8fcdcf7ee10d71961fe4251de602e8f42d2a39fd77758176552f229ad32859'
 """
-url = "http://localhost:8888/profile/info/"
+url = "http://localhost:8888/profile/info/delete/"
 headers = {'profile_id': profile_id}
 
 response = requests.delete(url, headers=headers)
