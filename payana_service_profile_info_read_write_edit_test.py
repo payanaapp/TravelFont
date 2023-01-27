@@ -470,10 +470,9 @@ profile_info_thumbnail_travel_buddies_update_response = response.json()
 print("Profile info thumbnail_travel_buddies update read verification status: " +
       str(profile_info_thumbnail_travel_buddies_update_response[profile_id][payana_profile_table_thumbnail_travel_buddies]["123456"] == profile_info_thumbnail_travel_buddies_json[payana_profile_table_thumbnail_travel_buddies]["123456"]))
 
-
-# Delete profile info
+# Delete specific column family and column values
 """
-curl --location --request POST 'http://localhost:8888/profile/info/delete/' \
+curl --location --request POST 'http://localhost:8888/profile/info/delete/values/' \
 --header 'profile_id: d6b088551f82508ae569668ce146db6f56a90a762c11eb0901cbe87e9bede637' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -488,19 +487,68 @@ curl --location --request POST 'http://localhost:8888/profile/info/delete/' \
     }
 }'
 """
-url = "http://localhost:8888/profile/info/delete/"
+url = "http://localhost:8888/profile/info/delete/values/"
 headers = {'profile_id': profile_id, 'Content-Type': 'application/json'}
 
 profile_info_thumbnail_travel_buddies_json = {
     payana_profile_table_thumbnail_travel_buddies:
     {
         "123456": "98",
-        "234567": "2",
-        "345678": "3",
-        "456789": "4",
-        "567890": "5",
-        "678911": "6",
         "678921": "7"
+    }
+}
+
+response = requests.post(url, data=json.dumps(
+    profile_info_thumbnail_travel_buddies_json), headers=headers)
+
+print("Profile info contents delete status: " +
+      str(response.status_code == 200))
+
+
+# GET profile info
+# CURL request
+"""
+curl --location --request GET 'http://localhost:8888/profile/info/' \
+--header 'profile_id: 6ab6a9d059ab8f9a9e26cb51e27151e62b0e90f3f72b96789b095b8373ff7a2f'
+"""
+
+url = "http://localhost:8888/profile/info/"
+headers = {'profile_id': profile_id}
+
+response = requests.get(url, headers=headers)
+
+print("Profile info contents delete read status: " +
+      str(response.status_code == 200))
+
+
+profile_info_thumbnail_travel_buddies_delete_response = response.json()
+
+print("Profile info contents delete verification status: " +
+      str("678921" not in profile_info_thumbnail_travel_buddies_delete_response[profile_id][payana_profile_table_thumbnail_travel_buddies] and "123456" not in profile_info_thumbnail_travel_buddies_delete_response[profile_id][payana_profile_table_thumbnail_travel_buddies] and "234567" in profile_info_thumbnail_travel_buddies_delete_response[profile_id][payana_profile_table_thumbnail_travel_buddies]))
+
+# Delete thumbnail_travel_buddies - entire column family
+"""
+curl --location --request POST 'http://localhost:8888/profile/info/delete/cf/' \
+--header 'profile_id: d6b088551f82508ae569668ce146db6f56a90a762c11eb0901cbe87e9bede637' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "thumbnail_travel_buddies" : {
+        "123456" : "1",
+        "234567" : "2",
+        "345678" : "3",
+        "456789" : "4",
+        "567890" : "5",
+        "678911" : "6",
+        "678921" : "7"
+    }
+}'
+"""
+url = "http://localhost:8888/profile/info/delete/cf/"
+headers = {'profile_id': profile_id, 'Content-Type': 'application/json'}
+
+profile_info_thumbnail_travel_buddies_json = {
+    payana_profile_table_thumbnail_travel_buddies:
+    {
     }
 }
 
@@ -534,10 +582,10 @@ print("Profile info contents delete verification status: " +
 
 # Delete profile info
 """
-curl --location --request DELETE 'http://localhost:8888/profile/info/' \
+curl --location --request DELETE 'http://localhost:8888/profile/info/delete/' \
 --header 'profile_id: da8fcdcf7ee10d71961fe4251de602e8f42d2a39fd77758176552f229ad32859'
 """
-url = "http://localhost:8888/profile/info/"
+url = "http://localhost:8888/profile/info/delete/"
 headers = {'profile_id': profile_id}
 
 response = requests.delete(url, headers=headers)

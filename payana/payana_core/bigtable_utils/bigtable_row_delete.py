@@ -67,6 +67,20 @@ def bigtable_row_cells_delete(table, row_key, column_family_id, column_names):
     # [END bigtable_row_cells_delete]
 
 
+@payana_generic_exception_handler
+def bigtable_column_family_cells_delete(table, row_key, column_family_id):
+
+    # [START bigtable_row_cells_delete]
+
+    bigtable_row_obj = table.row(row_key)
+
+    bigtable_row_obj.delete_cells(column_family_id, columns=bigtable_row_obj.ALL_COLUMNS)
+    delete_status = bigtable_row_obj.commit()
+    
+    return payana_bigtable_delete_status_handler(delete_status)
+    # [END bigtable_row_cells_delete]
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description=__doc__,
