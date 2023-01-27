@@ -126,6 +126,7 @@ class PayanaProfileTableEndPoint(Resource):
             status_code: payana_200
         }, payana_200
 
+
 @profile_table_name_space.route("/delete/")
 class PayanaProfileTableRowDeleteEndPoint(Resource):
     @profile_table_name_space.doc(responses={200: payana_200_response, 400: payana_400_response, 500: payana_500_response})
@@ -153,43 +154,43 @@ class PayanaProfileTableRowDeleteEndPoint(Resource):
             status_code: payana_200
         }, payana_200
 
+
 @profile_table_name_space.route("/delete/values/")
 class PayanaProfileTableColumnValuesDeleteEndPoint(Resource):
 
     @profile_table_name_space.doc(responses={200: payana_200_response, 400: payana_400_response, 500: payana_500_response})
     @payana_service_generic_exception_handler
     def post(self):
-        
+
         profile_id = get_profile_id_header(request)
 
         if profile_id is None or len(profile_id) == 0:
             raise KeyError(payana_missing_profile_id_header_exception)
 
         profile_table_object = request.json
-        
+
         if profile_table_object is None:
             raise KeyError(payana_missing_profile_object)
-        
+
         payana_profile_read_obj = PayanaBigTable(payana_profile_table)
         
+        payana_profile_table_delete_wrappers = []
+
         for column_family, column_family_dict in profile_table_object.items():
-            
-            if len(column_family_dict) == 0: # Delete the whole column family
-                payana_profile_table_delete_wrapper = bigtable_write_object_wrapper(profile_id, column_family, "", "")
+
+            # Delete specific column family and column values
+            for column_quantifier, column_value in column_family_dict.items():
+                payana_profile_table_delete_wrapper = bigtable_write_object_wrapper(
+                    profile_id, column_family, column_quantifier, column_value)
                 
-                payana_profile_obj_delete_status = payana_profile_read_obj.delete_bigtable_row_column_family_cells(
-                payana_profile_table_delete_wrapper)
-                
-            else:            
-                for column_quantifier, column_value in column_family_dict.items(): # Delete specific column family and column values
-                    payana_profile_table_delete_wrapper = bigtable_write_object_wrapper(profile_id, column_family, column_quantifier, column_value)
-                
-                    payana_profile_obj_delete_status = payana_profile_read_obj.delete_bigtable_row_columns(
-                    payana_profile_table_delete_wrapper)
-                    
+                payana_profile_table_delete_wrappers.append(payana_profile_table_delete_wrapper)
+
+            payana_profile_obj_delete_status = payana_profile_read_obj.delete_bigtable_row_columns(
+                payana_profile_table_delete_wrappers)
+
             if not payana_profile_obj_delete_status:
                 raise Exception(
-                payana_profile_table_objects_delete_failure_message, profile_table_name_space)
+                    payana_profile_table_objects_delete_failure_message, profile_table_name_space)
 
         return {
             status: payana_200_response,
@@ -197,43 +198,37 @@ class PayanaProfileTableColumnValuesDeleteEndPoint(Resource):
             message: payana_profile_table_objects_delete_success_message,
             status_code: payana_200
         }, payana_200
- 
+
+
 @profile_table_name_space.route("/delete/cf/")
-class PayanaProfileTableColumnFamilyDeleteEndPoint(Resource):        
+class PayanaProfileTableColumnFamilyDeleteEndPoint(Resource):
     @profile_table_name_space.doc(responses={200: payana_200_response, 400: payana_400_response, 500: payana_500_response})
     @payana_service_generic_exception_handler
     def post(self):
-        
+
         profile_id = get_profile_id_header(request)
 
         if profile_id is None or len(profile_id) == 0:
             raise KeyError(payana_missing_profile_id_header_exception)
 
         profile_table_object = request.json
-        
+
         if profile_table_object is None:
             raise KeyError(payana_missing_profile_object)
-        
+
         payana_profile_read_obj = PayanaBigTable(payana_profile_table)
-        
-        for column_family, column_family_dict in profile_table_object.items():
-            
-            if len(column_family_dict) == 0: # Delete the whole column family
-                payana_profile_table_delete_wrapper = bigtable_write_object_wrapper(profile_id, column_family, "", "")
-                
-                payana_profile_obj_delete_status = payana_profile_read_obj.delete_bigtable_row_column_family_cells(
+
+        for column_family, _ in profile_table_object.items():
+
+            payana_profile_table_delete_wrapper = bigtable_write_object_wrapper(
+                profile_id, column_family, "", "")
+
+            payana_profile_obj_delete_status = payana_profile_read_obj.delete_bigtable_row_column_family_cells(
                 payana_profile_table_delete_wrapper)
-                
-            else:            
-                for column_quantifier, column_value in column_family_dict.items(): # Delete specific column family and column values
-                    payana_profile_table_delete_wrapper = bigtable_write_object_wrapper(profile_id, column_family, column_quantifier, column_value)
-                
-                    payana_profile_obj_delete_status = payana_profile_read_obj.delete_bigtable_row_columns(
-                    payana_profile_table_delete_wrapper)
-                    
+
             if not payana_profile_obj_delete_status:
                 raise Exception(
-                payana_profile_table_objects_delete_failure_message, profile_table_name_space)
+                    payana_profile_table_objects_delete_failure_message, profile_table_name_space)
 
         return {
             status: payana_200_response,

@@ -493,7 +493,8 @@ headers = {'profile_id': profile_id, 'Content-Type': 'application/json'}
 profile_info_thumbnail_travel_buddies_json = {
     payana_profile_table_thumbnail_travel_buddies:
     {
-        "123456": "1"
+        "123456": "98",
+        "678921": "7"
     }
 }
 
@@ -519,10 +520,11 @@ response = requests.get(url, headers=headers)
 print("Profile info contents delete read status: " +
       str(response.status_code == 200))
 
+
 profile_info_thumbnail_travel_buddies_delete_response = response.json()
 
 print("Profile info contents delete verification status: " +
-      str("123456" not in profile_info_thumbnail_travel_buddies_delete_response[profile_id][payana_profile_table_thumbnail_travel_buddies]) and str("234567" in profile_info_thumbnail_travel_buddies_delete_response[profile_id][payana_profile_table_thumbnail_travel_buddies]))
+      str("678921" not in profile_info_thumbnail_travel_buddies_delete_response[profile_id][payana_profile_table_thumbnail_travel_buddies] and "123456" not in profile_info_thumbnail_travel_buddies_delete_response[profile_id][payana_profile_table_thumbnail_travel_buddies] and "234567" in profile_info_thumbnail_travel_buddies_delete_response[profile_id][payana_profile_table_thumbnail_travel_buddies]))
 
 # Delete thumbnail_travel_buddies - entire column family
 """
@@ -573,8 +575,6 @@ print("Profile info contents delete read status: " +
       str(response.status_code == 200))
 
 profile_info_thumbnail_travel_buddies_delete_response = response.json()
-
-print(profile_info_thumbnail_travel_buddies_delete_response)
 
 print("Profile info contents delete verification status: " +
       str(payana_profile_table_thumbnail_travel_buddies not in profile_info_thumbnail_travel_buddies_delete_response[profile_id]))
