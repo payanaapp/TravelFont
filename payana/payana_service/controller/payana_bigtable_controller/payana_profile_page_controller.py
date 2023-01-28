@@ -72,7 +72,7 @@ class PayanaProfileTableEndPoint(Resource):
             row_key, include_column_family=True)
 
         if len(payana_profile_read_obj_dict) == 0:
-            raise Exception(payana_empty_row_read_exception,
+            raise KeyError(payana_empty_row_read_exception,
                             profile_table_name_space)
 
         return payana_profile_read_obj_dict, payana_200
@@ -173,7 +173,7 @@ class PayanaProfileTableColumnValuesDeleteEndPoint(Resource):
             raise KeyError(payana_missing_profile_object)
 
         payana_profile_read_obj = PayanaBigTable(payana_profile_table)
-        
+
         payana_profile_table_delete_wrappers = []
 
         for column_family, column_family_dict in profile_table_object.items():
@@ -182,8 +182,9 @@ class PayanaProfileTableColumnValuesDeleteEndPoint(Resource):
             for column_quantifier, column_value in column_family_dict.items():
                 payana_profile_table_delete_wrapper = bigtable_write_object_wrapper(
                     profile_id, column_family, column_quantifier, column_value)
-                
-                payana_profile_table_delete_wrappers.append(payana_profile_table_delete_wrapper)
+
+                payana_profile_table_delete_wrappers.append(
+                    payana_profile_table_delete_wrapper)
 
             payana_profile_obj_delete_status = payana_profile_read_obj.delete_bigtable_row_columns(
                 payana_profile_table_delete_wrappers)

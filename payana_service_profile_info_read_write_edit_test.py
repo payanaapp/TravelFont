@@ -605,6 +605,6 @@ headers = {'profile_id': profile_id}
 
 response = requests.get(url, headers=headers)
 
-print("Profile info delete status: " + str(response.status_code == 500))
+print("Profile info delete status: " + str(response.status_code == 400))
 
 payana_bigtable_cleanup(client_config_file_path, bigtable_tables_schema_path)

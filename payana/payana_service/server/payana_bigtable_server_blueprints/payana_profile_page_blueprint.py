@@ -2,6 +2,8 @@ from flask import Flask, request, Blueprint
 from flask_restx import Api, Resource, fields, Namespace
 from payana.payana_service.server import service_settings
 from payana.payana_service.controller.payana_bigtable_controller.payana_profile_page_controller import profile_table_name_space
+from payana.payana_service.controller.payana_bigtable_controller.payana_profile_page_itineraries_controller import profile_page_itineraries_name_space
+
 
 payana_profile_table_api_blueprint = Blueprint(
     'payana_profile_table_api_blueprint', __name__, url_prefix='/profile')
@@ -11,6 +13,7 @@ payana_profile_table_api = Api(payana_profile_table_api_blueprint, version="1.0"
                                description="Manage endpoints of payana bigtable APIs")
 
 payana_profile_table_api.add_namespace(profile_table_name_space)
+payana_profile_table_api.add_namespace(profile_page_itineraries_name_space)
 
 
 @payana_profile_table_api.errorhandler
