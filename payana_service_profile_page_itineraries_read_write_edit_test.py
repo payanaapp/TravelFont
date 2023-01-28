@@ -26,527 +26,282 @@ bigtable_tables_schema_path = bigtable_constants.bigtable_schema_config_file
 
 payana_bigtable_init(client_config_file_path, bigtable_tables_schema_path)
 
+activity_generic_column_family_id = bigtable_constants.payana_generic_activity_column_family
+
+# generic activity write objects
 payana_profile_page_itinerary_table_saved_itinerary_id_list_quantifier_value = bigtable_constants.payana_profile_page_itinerary_table_saved_itinerary_id_list_quantifier_value
 payana_profile_page_itinerary_table_saved_excursion_id_list_quantifier_value = bigtable_constants.payana_profile_page_itinerary_table_saved_excursion_id_list_quantifier_value
-payana_profile_page_itinerary_table_saved_activity_guide_id_list_quantifier_value = bigtable_constants.payana_profile_page_itinerary_table_saved_activity_guide_id_list_quantifier_value
 payana_profile_page_itinerary_table_created_itinerary_id_list_quantifier_value = bigtable_constants.payana_profile_page_itinerary_table_created_itinerary_id_list_quantifier_value
 payana_profile_page_itinerary_table_created_excursion_id_list_quantifier_value = bigtable_constants.payana_profile_page_itinerary_table_created_excursion_id_list_quantifier_value
+payana_profile_page_itinerary_table_saved_activity_guide_id_list_quantifier_value = bigtable_constants.payana_profile_page_itinerary_table_saved_activity_guide_id_list_quantifier_value
 payana_profile_page_itinerary_table_created_activity_guide_id_list_quantifier_value = bigtable_constants.payana_profile_page_itinerary_table_created_activity_guide_id_list_quantifier_value
-activity_generic_column_family_id = bigtable_constants.payana_generic_activity_column_family
 payana_profile_page_itinerary_table_activities = bigtable_constants.payana_profile_page_itinerary_table_activities
+payana_profile_table_profile_id = bigtable_constants.payana_profile_table_profile_id
+
+
+saved_itinerary_id_list_activity_generic_column_family_id = "_".join(
+    [activity_generic_column_family_id, payana_profile_page_itinerary_table_saved_itinerary_id_list_quantifier_value])
+
+saved_excursion_id_list_activity_generic_column_family_id = "_".join(
+    [activity_generic_column_family_id, payana_profile_page_itinerary_table_saved_excursion_id_list_quantifier_value])
+
+created_itinerary_id_list_activity_generic_column_family_id = "_".join(
+    [activity_generic_column_family_id, payana_profile_page_itinerary_table_created_itinerary_id_list_quantifier_value])
+
+created_excursion_id_list_activity_generic_column_family_id = "_".join(
+    [activity_generic_column_family_id, payana_profile_page_itinerary_table_created_excursion_id_list_quantifier_value])
+
+created_activity_guide_id_list_activity_generic_column_family_id = "_".join(
+    [activity_generic_column_family_id, payana_profile_page_itinerary_table_created_activity_guide_id_list_quantifier_value])
+
+created_activity_guide_id_list_activity_generic_column_family_id = "_".join(
+    [activity_generic_column_family_id, payana_profile_page_itinerary_table_saved_activity_guide_id_list_quantifier_value])
 
 # POST profile info
 # CURL request
 """
-curl --location --request POST 'http://localhost:8888/profile/info/' \
+curl --location --request POST 'http://localhost:8888/profile/itineraries/' \
+--header 'profile_id: 123456' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-    "personal_information":
-    {
-        "profile_name": "abkr",
-        "user_name": "abkr",
-        "blog_url": "abkr.com",
-        "profile_description": "abkr's profile",
-        "profile_id": "",
-        "email": "abkr@gmail.com",
-        "phone": "123456789",
-        "private_account": "true",
-        "gender": "male",
-        "date_of_birth": "11/11/1111",
-        "doj" : "11/11/1111"
-    },
-    "top_activities_tracker_rating":
-    {
-        "hiking": "0.67",
-        "adventure": "0.4",
-        "fashion": "0.78"
-    },
-    "favorite_places_preference": {
-        "cupertino##california##usa": "1234578",
-        "california##usa": "1234578",
-        "usa": "1234578",
-        "sanfrancisco##california##usa": "1234578",
-        "oregon##usa": "1234578",
-        "france": "1234578"
-    },
-    "favorite_activities_preference": {
-        "hiking": "1",
-        "ski trips": "2",
-        "adventures": "3",
-        "spring break" : "4",
-        "road trips" : "5",
-        "food trips" : "6"
-    },
-    "thumbnail_travel_buddies" : {
-        "123456" : "1",
-        "234567" : "2",
-        "345678" : "3",
-        "456789" : "4",
-        "567890" : "5",
-        "678911" : "6",
-        "678921" : "7"
-    }
+    "profile_id": "123456",
+    "saved_itinerary_id_list": ["12345"],
+    "saved_excursion_id_list": ["12345"],
+    "saved_activity_guide_id_list": ["12345"],
+    "created_itinerary_id_list": ["12345"],
+    "created_activity_guide_id_list": ["12345"],
+    "created_excursion_id_list": ["12345"],
+    "activities": ["generic", "hiking", "romantic", "exotic"]
 }'
 """
 
-url = "http://localhost:8888/profile/info/"
+url = "http://localhost:8888/profile/itineraries/"
 
-profile_info_json = {
-    payana_profile_table_personal_info_column_family:
-    {
-        "profile_name": "abkr",
-        "user_name": "abkr",
-        "blog_url": "abkr.com",
-        "profile_description": "abkr's profile",
-        "profile_id": "",
-        "email": "abkr@gmail.com",
-        "phone": "123456789",
-        "private_account": "true",
-        "gender": "male",
-        "date_of_birth": "11/11/1111",
-        "doj": "11/11/1111"
-    },
-    payana_profile_table_top_activities_tracker_rating:
-    {
-        "hiking": "0.67",
-        "adventure": "0.4",
-        "fashion": "0.78"
-    },
-    payana_profile_favorite_places_preference: {
-        "cupertino##california##usa": "1234578",  # place ID
-        "california##usa": "1234578",
-        "usa": "1234578",
-        "sanfrancisco##california##usa": "1234578",
-        "oregon##usa": "1234578",
-        "france": "1234578"
-    },
-    payana_profile_favorite_activities_preference: {
-        "hiking": "1",
-        "ski trips": "2",
-        "adventures": "3",
-        "spring break": "4",
-        "road trips": "5",
-        "food trips": "6"
-    },
-    payana_profile_table_thumbnail_travel_buddies: {
-        "123456": "1",
-        "234567": "2",
-        "345678": "3",
-        "456789": "4",
-        "567890": "5",
-        "678911": "6",
-        "678921": "7",
-    }
+profile_page_itinerary_json = {
+    payana_profile_table_profile_id: "123456",
+    payana_profile_page_itinerary_table_saved_itinerary_id_list_quantifier_value: ["12345"],
+    payana_profile_page_itinerary_table_saved_excursion_id_list_quantifier_value: ["12345"],
+    payana_profile_page_itinerary_table_saved_activity_guide_id_list_quantifier_value: ["12345"],
+    payana_profile_page_itinerary_table_created_itinerary_id_list_quantifier_value: ["12345"],
+    payana_profile_page_itinerary_table_created_activity_guide_id_list_quantifier_value: ["12345"],
+    payana_profile_page_itinerary_table_created_excursion_id_list_quantifier_value: ["12345"],
+    payana_profile_page_itinerary_table_activities: [
+        "generic", "hiking", "romantic", "exotic"]
 }
 
-headers = {'Content-Type': 'application/json'}
+
+headers = {'Content-Type': 'application/json',
+           payana_profile_table_profile_id: profile_page_itinerary_json[payana_profile_table_profile_id]}
 
 response = requests.post(url, data=json.dumps(
-    profile_info_json), headers=headers)
+    profile_page_itinerary_json), headers=headers)
 
 
-print("Profile creation status: " + str(response.status_code == 201))
+print("Profile Page Itinerary Object creation status: " +
+      str(response.status_code == 201))
 
-profile_info_response_json = response.json()
+profile_page_itinerary_response_json = response.json()
 
-profile_id = profile_info_response_json['profile_id']
+profile_id = profile_page_itinerary_response_json['profile_id']
 
-print("Profile creation verification status: " +
+print("Profile Page Itinerary creation verification status: " +
       str(profile_id is not None and len(profile_id) > 0))
 
-# GET profile info
+# GET profile page itinerary
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/profile/info/' \
---header 'profile_id: 6ab6a9d059ab8f9a9e26cb51e27151e62b0e90f3f72b96789b095b8373ff7a2f'
+curl --location --request GET 'http://localhost:8888/profile/itineraries/' \
+--header 'profile_id: 123456'
 """
 
-url = "http://localhost:8888/profile/info/"
+url = "http://localhost:8888/profile/itineraries/"
 headers = {'profile_id': profile_id}
 
 response = requests.get(url, headers=headers)
 
 print("Profile read status: " + str(response.status_code == 200))
 
-profile_info_response = response.json()
-print("Profile creation verification status: " +
-      str(profile_info_response[profile_id][payana_profile_table_personal_info_column_family][payana_profile_table_profile_name] == profile_info_json[payana_profile_table_personal_info_column_family][payana_profile_table_profile_name]))
+profile_page_itinerary_response = response.json()
+print("Profile Page Itinerary creation verification status: " +
+      str(len(profile_page_itinerary_response[profile_id]
+          [created_activity_guide_id_list_activity_generic_column_family_id]) == 1))
 
 
-# Edit personal information
+# Edit itinerary id list -- add a new one
 """
-curl --location --request POST 'http://localhost:8888/profile/info/' \
+curl --location --request PUT 'http://localhost:8888/profile/itineraries/' \
 --header 'profile_id: 123456' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-    "personal_information":
-    {
-        "profile_name": "abkr",
-        "user_name": "abkr",
-        "blog_url": "abkr.com",
-        "profile_description": "abkr's profile",
-        "profile_id": "",
-        "email": "abkr@gmail.com",
-        "phone": "123456789",
-        "private_account": "true",
-        "gender": "male",
-        "date_of_birth": "11/11/1111",
-        "doj" : "11/11/1111"
-    }
+    "profile_id": "123456",
+    "saved_itinerary_id_list": ["123456"],
+    "saved_excursion_id_list": ["123456"],
+    "saved_activity_guide_id_list": ["123456"],
+    "created_itinerary_id_list": ["123456"],
+    "created_activity_guide_id_list": ["123456"],
+    "created_excursion_id_list": ["123456"],
+    "activities": ["generic", "hiking", "romantic", "exotic"]
 }'
 """
-profile_info_personal_information_json = {
-    payana_profile_table_personal_info_column_family:
-    {
-        "profile_name": "abkr1",
-        "user_name": "abkr",
-        "blog_url": "abkr.com",
-        "profile_description": "abkr's profile",
-        "profile_id": "",
-        "email": "abkr@gmail.com",
-        "phone": "123456789",
-        "private_account": "true",
-        "gender": "male",
-        "date_of_birth": "11/11/1111",
-        "doj": "11/11/1111"
-    }
+profile_page_itinerary_json = {
+    payana_profile_table_profile_id: "123456",
+    payana_profile_page_itinerary_table_saved_itinerary_id_list_quantifier_value: ["123456"],
+    payana_profile_page_itinerary_table_saved_excursion_id_list_quantifier_value: ["123456"],
+    payana_profile_page_itinerary_table_saved_activity_guide_id_list_quantifier_value: ["123456"],
+    payana_profile_page_itinerary_table_created_itinerary_id_list_quantifier_value: ["123456"],
+    payana_profile_page_itinerary_table_created_activity_guide_id_list_quantifier_value: ["123456"],
+    payana_profile_page_itinerary_table_created_excursion_id_list_quantifier_value: ["123456"],
+    payana_profile_page_itinerary_table_activities: [
+        "generic", "hiking", "romantic", "exotic"]
 }
+
 
 headers = {'Content-Type': 'application/json', 'profile_id': profile_id}
 
 response = requests.put(url, data=json.dumps(
-    profile_info_personal_information_json), headers=headers)
+    profile_page_itinerary_json), headers=headers)
 
-print("Profile info update status: " + str(response.status_code == 200))
+print("Profile Page Itinerary update status: " +
+      str(response.status_code == 200))
 
 
-# GET profile info
+# GET profile page itinerary
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/profile/info/' \
---header 'profile_id: 6ab6a9d059ab8f9a9e26cb51e27151e62b0e90f3f72b96789b095b8373ff7a2f'
+curl --location --request GET 'http://localhost:8888/profile/itineraries/' \
+--header 'profile_id: 123456'
 """
 
-url = "http://localhost:8888/profile/info/"
+url = "http://localhost:8888/profile/itineraries/"
 headers = {'profile_id': profile_id}
 
 response = requests.get(url, headers=headers)
 
-print("Profile info update read status: " + str(response.status_code == 200))
+print("Profile read status: " + str(response.status_code == 200))
 
-profile_info_update_response = response.json()
-print("Profile info update read verification status: " +
-      str(profile_info_update_response[profile_id][payana_profile_table_personal_info_column_family][payana_profile_table_profile_name] == profile_info_personal_information_json[payana_profile_table_personal_info_column_family][payana_profile_table_profile_name]))
+profile_page_itinerary_response = response.json()
+print("Profile Page Itinerary update verification status: " +
+      str(len(profile_page_itinerary_response[profile_id]
+          [created_activity_guide_id_list_activity_generic_column_family_id]) == 2))
 
-
-# Edit top activities tracker rating
+# Delete specific column family and column values
 """
-curl --location --request POST 'http://localhost:8888/profile/info/' \
+curl --location --request POST 'http://localhost:8888/profile/itineraries/delete/values/' \
 --header 'profile_id: 123456' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-    "top_activities_tracker_rating":
-    {
-        "hiking": "0.67",
-        "adventure": "0.4",
-        "fashion": "0.78"
-    }
+    "exotic_created_activity_guide_id_list": {
+            "1674896220": "12345"
+        }
 }'
 """
-profile_info_top_activities_tracker_rating_json = {
-    payana_profile_table_top_activities_tracker_rating:
-    {
-        "hiking": "0.88",
-        "adventure": "0.78",
-        "fashion": "0.98"
-    }
-}
 
-headers = {'Content-Type': 'application/json', 'profile_id': profile_id}
-
-response = requests.put(url, data=json.dumps(
-    profile_info_top_activities_tracker_rating_json), headers=headers)
-
-print("Profile activities tracker update status: " +
-      str(response.status_code == 200))
-
-# GET profile info
-# CURL request
-"""
-curl --location --request GET 'http://localhost:8888/profile/info/' \
---header 'profile_id: 6ab6a9d059ab8f9a9e26cb51e27151e62b0e90f3f72b96789b095b8373ff7a2f'
-"""
-
-url = "http://localhost:8888/profile/info/"
-headers = {'profile_id': profile_id}
-
-response = requests.get(url, headers=headers)
-
-print("Profile info top_activities_tracker_rating update read status: " +
-      str(response.status_code == 200))
-
-profile_info_top_activities_tracker_rating_update_response = response.json()
-
-print("Profile info top_activities_tracker_rating update read verification status: " +
-      str(profile_info_top_activities_tracker_rating_update_response[profile_id][payana_profile_table_top_activities_tracker_rating]["hiking"] == profile_info_top_activities_tracker_rating_json[payana_profile_table_top_activities_tracker_rating]["hiking"]))
-
-# Edit favorite_places_preference
-"""
-curl --location --request POST 'http://localhost:8888/profile/info/' \
---header 'profile_id: 123456' \
---header 'Content-Type: application/json' \
---data-raw '{
-    "favorite_places_preference": {
-        "cupertino##california##usa": "1234578",
-        "california##usa": "1234578",
-        "usa": "95014",
-        "sanfrancisco##california##usa": "1234578",
-        "oregon##usa": "1234578",
-        "france": "1234578"
-    }
-}'
-"""
-profile_info_favorite_places_preference_json = {
-    payana_profile_favorite_places_preference:
-    {
-        "cupertino##california##usa": "1234578",
-        "california##usa": "1234578",
-        "usa": "1234578",
-        "sanfrancisco##california##usa": "1234578",
-        "oregon##usa": "1234578",
-        "france": "1234578"
-    }
-}
-
-headers = {'Content-Type': 'application/json', 'profile_id': profile_id}
-
-response = requests.put(url, data=json.dumps(
-    profile_info_favorite_places_preference_json), headers=headers)
-
-print("Profile favorite places preference update status: " +
-      str(response.status_code == 200))
-
-
-# GET profile info
-# CURL request
-"""
-curl --location --request GET 'http://localhost:8888/profile/info/' \
---header 'profile_id: 6ab6a9d059ab8f9a9e26cb51e27151e62b0e90f3f72b96789b095b8373ff7a2f'
-"""
-
-url = "http://localhost:8888/profile/info/"
-headers = {'profile_id': profile_id}
-
-response = requests.get(url, headers=headers)
-
-print("Profile info favorite_places_preference update read status: " +
-      str(response.status_code == 200))
-
-profile_info_favorite_places_preference_update_response = response.json()
-print("Profile info favorite_places_preference update read verification status: " +
-      str(profile_info_favorite_places_preference_update_response[profile_id][payana_profile_favorite_places_preference]["usa"] == profile_info_favorite_places_preference_json[payana_profile_favorite_places_preference]["usa"]))
-
-# Edit favorite_activities_preference
-"""
-curl --location --request POST 'http://localhost:8888/profile/info/' \
---header 'profile_id: 123456' \
---header 'Content-Type: application/json' \
---data-raw '{
-    "favorite_activities_preference": {
-        "hiking": "1",
-        "ski trips": "2",
-        "adventures": "3",
-        "spring break" : "4",
-        "road trips" : "5",
-        "food trips" : "6"
-    }
-}'
-"""
-profile_info_favorite_activities_preference_json = {
-    payana_profile_favorite_activities_preference:
-    {
-        "hiking": "12",
-        "ski trips": "2",
-        "adventures": "3",
-        "spring break": "4",
-        "road trips": "5",
-        "food trips": "6"
-    }
-}
-
-headers = {'Content-Type': 'application/json', 'profile_id': profile_id}
-
-response = requests.put(url, data=json.dumps(
-    profile_info_favorite_activities_preference_json), headers=headers)
-
-print("Profile favorite activities update status: " +
-      str(response.status_code == 200))
-
-
-# GET profile info
-# CURL request
-"""
-curl --location --request GET 'http://localhost:8888/profile/info/' \
---header 'profile_id: 6ab6a9d059ab8f9a9e26cb51e27151e62b0e90f3f72b96789b095b8373ff7a2f'
-"""
-
-url = "http://localhost:8888/profile/info/"
-headers = {'profile_id': profile_id}
-
-response = requests.get(url, headers=headers)
-
-print("Profile info favorite_activities_preference update read status: " +
-      str(response.status_code == 200))
-
-profile_info_favorite_activities_preference_update_response = response.json()
-print("Profile info favorite_activities_preference update read verification status: " +
-      str(profile_info_favorite_activities_preference_update_response[profile_id][payana_profile_favorite_activities_preference]["hiking"] == profile_info_favorite_activities_preference_json[payana_profile_favorite_activities_preference]["hiking"]))
-
-# Edit thumbnail_travel_buddies
-"""
-curl --location --request POST 'http://localhost:8888/profile/info/' \
---header 'profile_id: 123456' \
---header 'Content-Type: application/json' \
---data-raw '{
-    "thumbnail_travel_buddies" : {
-        "123456" : "1",
-        "234567" : "2",
-        "345678" : "3",
-        "456789" : "4",
-        "567890" : "5",
-        "678911" : "6",
-        "678921" : "7"
-    }
-}'
-"""
-profile_info_thumbnail_travel_buddies_json = {
-    payana_profile_table_thumbnail_travel_buddies:
-    {
-        "123456": "98",
-        "234567": "2",
-        "345678": "3",
-        "456789": "4",
-        "567890": "5",
-        "678911": "6",
-        "678921": "7"
-    }
-}
-
-headers = {'Content-Type': 'application/json', 'profile_id': profile_id}
-
-response = requests.put(url, data=json.dumps(
-    profile_info_thumbnail_travel_buddies_json), headers=headers)
-
-print("Profile thumbnail travel buddies update status: " +
-      str(response.status_code == 200))
-
-
-# GET profile info
-# CURL request
-"""
-curl --location --request GET 'http://localhost:8888/profile/info/' \
---header 'profile_id: 6ab6a9d059ab8f9a9e26cb51e27151e62b0e90f3f72b96789b095b8373ff7a2f'
-"""
-
-url = "http://localhost:8888/profile/info/"
-headers = {'profile_id': profile_id}
-
-response = requests.get(url, headers=headers)
-
-print("Profile info thumbnail_travel_buddies update read status: " +
-      str(response.status_code == 200))
-
-profile_info_thumbnail_travel_buddies_update_response = response.json()
-print("Profile info thumbnail_travel_buddies update read verification status: " +
-      str(profile_info_thumbnail_travel_buddies_update_response[profile_id][payana_profile_table_thumbnail_travel_buddies]["123456"] == profile_info_thumbnail_travel_buddies_json[payana_profile_table_thumbnail_travel_buddies]["123456"]))
-
-
-# Delete profile info
-"""
-curl --location --request POST 'http://localhost:8888/profile/info/delete/' \
---header 'profile_id: d6b088551f82508ae569668ce146db6f56a90a762c11eb0901cbe87e9bede637' \
---header 'Content-Type: application/json' \
---data-raw '{
-    "thumbnail_travel_buddies" : {
-        "123456" : "1",
-        "234567" : "2",
-        "345678" : "3",
-        "456789" : "4",
-        "567890" : "5",
-        "678911" : "6",
-        "678921" : "7"
-    }
-}'
-"""
-url = "http://localhost:8888/profile/info/delete/"
+url = "http://localhost:8888/profile/itineraries/delete/values/"
 headers = {'profile_id': profile_id, 'Content-Type': 'application/json'}
 
-profile_info_thumbnail_travel_buddies_json = {
-    payana_profile_table_thumbnail_travel_buddies:
-    {
-        "123456": "98",
-        "234567": "2",
-        "345678": "3",
-        "456789": "4",
-        "567890": "5",
-        "678911": "6",
-        "678921": "7"
-    }
+key, value = list(profile_page_itinerary_response[profile_id]
+                  [created_activity_guide_id_list_activity_generic_column_family_id].items())[0]
+
+profile_page_itineraries_column_value_delete_json = {
+    created_activity_guide_id_list_activity_generic_column_family_id: {key: value}}
+
+response = requests.post(url, data=json.dumps(
+    profile_page_itineraries_column_value_delete_json), headers=headers)
+
+print("Profile page itineraries contents column values delete status: " +
+      str(response.status_code == 200))
+
+
+# GET profile page itinerary
+# CURL request
+"""
+curl --location --request GET 'http://localhost:8888/profile/itineraries/' \
+--header 'profile_id: 123456'
+"""
+
+url = "http://localhost:8888/profile/itineraries/"
+headers = {'profile_id': profile_id}
+
+response = requests.get(url, headers=headers)
+
+print("Profile read status: " + str(response.status_code == 200))
+
+profile_page_itinerary_response = response.json()
+print("Profile Page Itinerary deletion column values verification status: " +
+      str(len(profile_page_itinerary_response[profile_id]
+          [created_activity_guide_id_list_activity_generic_column_family_id]) == 1))
+
+# Delete created_activity_guide_id_list_activity_generic_column_family_id - entire column family
+"""
+curl --location --request POST 'http://localhost:8888/profile/itineraries/delete/cf/' \
+--header 'profile_id: 123456' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "exotic_created_activity_guide_id_list": "",
+    "exotic_created_excursion_id_list": ""
+}'
+"""
+url = "http://localhost:8888/profile/itineraries/delete/cf/"
+headers = {'profile_id': profile_id, 'Content-Type': 'application/json'}
+
+profile_page_itinerary_delete_cf_json = {
+    created_itinerary_id_list_activity_generic_column_family_id: "",
+    created_excursion_id_list_activity_generic_column_family_id: ""
 }
 
 response = requests.post(url, data=json.dumps(
-    profile_info_thumbnail_travel_buddies_json), headers=headers)
+    profile_page_itinerary_delete_cf_json), headers=headers)
 
-print("Profile info contents delete status: " +
+print("Profile page itinerary contents column family delete status: " +
       str(response.status_code == 200))
 
 
-# GET profile info
+# GET profile page itinerary
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/profile/info/' \
---header 'profile_id: 6ab6a9d059ab8f9a9e26cb51e27151e62b0e90f3f72b96789b095b8373ff7a2f'
+curl --location --request GET 'http://localhost:8888/profile/itineraries/' \
+--header 'profile_id: 123456'
 """
 
-url = "http://localhost:8888/profile/info/"
+url = "http://localhost:8888/profile/itineraries/"
 headers = {'profile_id': profile_id}
 
 response = requests.get(url, headers=headers)
 
-print("Profile info contents delete read status: " +
-      str(response.status_code == 200))
+print("Profile read status: " + str(response.status_code == 200))
 
-profile_info_thumbnail_travel_buddies_delete_response = response.json()
-
-print("Profile info contents delete verification status: " +
-      str(payana_profile_table_thumbnail_travel_buddies not in profile_info_thumbnail_travel_buddies_delete_response[profile_id]))
+profile_page_itinerary_response = response.json()
+print("Profile Page Itinerary column family deletion verification status: " +
+      str(saved_excursion_id_list_activity_generic_column_family_id in profile_page_itinerary_response[profile_id] and created_itinerary_id_list_activity_generic_column_family_id not in profile_page_itinerary_response[profile_id] and created_excursion_id_list_activity_generic_column_family_id not in profile_page_itinerary_response[profile_id]))
 
 
 # Delete profile info
 """
-curl --location --request DELETE 'http://localhost:8888/profile/info/' \
---header 'profile_id: da8fcdcf7ee10d71961fe4251de602e8f42d2a39fd77758176552f229ad32859'
+curl --location --request DELETE 'http://localhost:8888/profile/itineraries/delete/' \
+--header 'profile_id: 123456'
 """
-url = "http://localhost:8888/profile/info/"
+url = "http://localhost:8888/profile/itineraries/delete/"
 headers = {'profile_id': profile_id}
 
 response = requests.delete(url, headers=headers)
 
-print("Profile info delete status: " + str(response.status_code == 200))
+print("Profile page itineraries row delete status: " +
+      str(response.status_code == 200))
 
 
-# GET profile info
+# GET profile page itinerary
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/profile/info/' \
---header 'profile_id: 6ab6a9d059ab8f9a9e26cb51e27151e62b0e90f3f72b96789b095b8373ff7a2f'
+curl --location --request GET 'http://localhost:8888/profile/itineraries/' \
+--header 'profile_id: 123456'
 """
 
-url = "http://localhost:8888/profile/info/"
+url = "http://localhost:8888/profile/itineraries/"
 headers = {'profile_id': profile_id}
 
 response = requests.get(url, headers=headers)
 
-print("Profile info delete status: " + str(response.status_code == 500))
+print("Profile Page Itinerary row delete status: " +
+      str(response.status_code == 400))
 
 payana_bigtable_cleanup(client_config_file_path, bigtable_tables_schema_path)
