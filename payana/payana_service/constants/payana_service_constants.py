@@ -19,9 +19,20 @@ payana_profile_table_delete_success_message = "Profile successfully deleted!"
 payana_profile_table_create_failure_message_post = "Failed to create the profile"
 payana_profile_table_delete_failure_message = "Failed to delete the profile"
 payana_profile_table_write_failure_message_post = "Failed to update the profile"
-payana_missing_profile_object = "Missing profile object in the request body"
 payana_profile_table_objects_delete_failure_message = "Failed to delete the profile objects"
 payana_profile_table_objects_delete_success_message = "Profile content successfully deleted!"
+payana_missing_profile_object = "Missing profile info object in the request body"
+
+# Payana Travel footprint controller constants
+payana_profile_page_travelfont_write_success_message_post = "Travel Footprint successfully created!"
+payana_profile_page_travelfont_write_success_message_put = "Travel Footprint successfully updated!"
+payana_profile_page_travelfont_delete_success_message = "Travel Footprint successfully deleted!"
+payana_profile_page_travelfont_create_failure_message_post = "Failed to create the Travel Footprint"
+payana_profile_page_travelfont_delete_failure_message = "Failed to delete the Travel Footprint"
+payana_profile_page_travelfont_write_failure_message_post = "Failed to update the Travel Footprint"
+payana_profile_page_travelfont_objects_delete_failure_message = "Failed to delete the Travel Footprint objects"
+payana_profile_page_travelfont_objects_delete_success_message = "Travel Footprint content successfully deleted!"
+payana_missing_profile_page_travelfont_object = "Missing profile page travel footprint object in the request body"
 
 #Payana Profile Itinerary Table Controller constants
 payana_profile_page_itineraries_write_success_message_post = "Profile Page Itinerary/Excursion/Activity Guide Object successfully created!"

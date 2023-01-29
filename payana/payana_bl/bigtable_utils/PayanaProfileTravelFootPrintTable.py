@@ -21,7 +21,7 @@ from google.cloud.bigtable import column_family
 class PayanaProfileTravelFootPrintTable:
 
     @payana_generic_exception_handler
-    def __init__(self, profile_id, place_id, excursion_id, latitude, longitude):
+    def __init__(self, profile_id, travelfont_obj_list):
 
         self.payana_profile_page_travel_footprint_profile_id = bigtable_constants.payana_profile_page_travel_footprint_profile_id
         self.payana_profile_page_travel_footprint_place_id = bigtable_constants.payana_profile_page_travel_footprint_place_id
@@ -35,10 +35,7 @@ class PayanaProfileTravelFootPrintTable:
         self.payana_profile_page_travel_footprint_column_value = ""
 
         self.profile_id = profile_id
-        self.place_id = place_id
-        self.excursion_id = excursion_id
-        self.latitude = latitude
-        self.longitude = longitude
+        self.travelfont_obj_list = travelfont_obj_list
 
         self.update_bigtable_write_objects = []
 
@@ -47,21 +44,10 @@ class PayanaProfileTravelFootPrintTable:
         return self.__dict__
 
     @payana_generic_exception_handler
-    def generate_travel_footprint_column_qualifier(self):
-
-        self.payana_profile_page_travel_footprint_column_qualifier = "##".join(
-            [str(self.place_id), str(self.excursion_id)])
-
-        self.payana_profile_page_travel_footprint_column_value = "##".join(
-            [str(self.latitude), str(self.longitude)])
-
-    @payana_generic_exception_handler
     def update_profile_travel_footprint_bigtable(self):
 
         payana_profile_table_instance = PayanaBigTable(
             bigtable_constants.payana_profile_travel_footprint_table)
-        
-        self.generate_travel_footprint_column_qualifier()
         
         self.create_bigtable_write_objects()
 
@@ -74,7 +60,20 @@ class PayanaProfileTravelFootPrintTable:
 
     @payana_generic_exception_handler
     def set_profile_travel_footprint_write_object(self):
+        
+        for travelfont_obj in self.travelfont_obj_list:
+            
+            place_id = travelfont_obj[self.payana_profile_page_travel_footprint_place_id]
+            excursion_id = travelfont_obj[self.payana_profile_page_travel_footprint_excursion_id]
+            latitude = travelfont_obj[self.payana_profile_page_travel_footprint_latitude]
+            longitude = travelfont_obj[self.payana_profile_page_travel_footprint_longitude]
+            
+            payana_profile_page_travel_footprint_column_qualifier = "##".join(
+                [str(place_id), str(excursion_id)])
 
-        # profile_name write object
-        self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-            self.profile_id, self.payana_profile_page_travel_footprint_column_family, self.payana_profile_page_travel_footprint_column_qualifier, self.payana_profile_page_travel_footprint_column_value))
+            payana_profile_page_travel_footprint_column_value = "##".join(
+                [str(latitude), str(longitude)])
+            
+            # profile_name write object
+            self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+                self.profile_id, self.payana_profile_page_travel_footprint_column_family, payana_profile_page_travel_footprint_column_qualifier, payana_profile_page_travel_footprint_column_value))
