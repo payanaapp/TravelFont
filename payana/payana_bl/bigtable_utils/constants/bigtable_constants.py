@@ -296,6 +296,7 @@ payana_profile_page_travel_footprint_latitude = "latitude"
 payana_profile_page_travel_footprint_longitude = "longitude"
 payana_profile_page_travel_footprint_column_family = "travel_footprint"
 payana_profile_travel_footprint_table = "payana_travel_footprint_table"
+payana_profile_travel_footprint_obj_list = "travelfont_obj_list"
 
 # Payana city to influencers constants
 payana_city_to_influencers_table_global_influencers_column_family = "city_global_influencers"

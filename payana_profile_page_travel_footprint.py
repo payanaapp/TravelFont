@@ -29,13 +29,18 @@ payana_profile_page_travel_footprint_excursion_id = bigtable_constants.payana_pr
 payana_profile_page_travel_footprint_latitude = bigtable_constants.payana_profile_page_travel_footprint_latitude
 payana_profile_page_travel_footprint_longitude = bigtable_constants.payana_profile_page_travel_footprint_longitude
 payana_profile_page_travel_footprint_column_family = bigtable_constants.payana_profile_page_travel_footprint_column_family
+payana_profile_travel_footprint_obj_list = bigtable_constants.payana_profile_travel_footprint_obj_list
 
 profile_travel_footprint_obj = {
     "profile_id": "123456789",
-    "place_id": "12345",
-    "excursion_id": "678910",
-    "latitude": "1.234",
-    "longitude": "2.3456"
+    "travelfont_obj_list": [
+        {
+            "excursion_id": "678910",
+            "latitude": "1.234",
+            "longitude": "2.3456",
+            "place_id": "12345"
+        }
+    ]
 }
 
 payana_profile_travel_footprint_obj = PayanaProfileTravelFootPrintTable(
@@ -59,10 +64,10 @@ print("Addition of a new travel footprint profile object: " +
 # Change latitude
 new_latitude = "56789.870"
 
-place_id = profile_travel_footprint_obj["place_id"]
-excursion_id = profile_travel_footprint_obj["excursion_id"]
-latitude = profile_travel_footprint_obj["latitude"]
-longitude = profile_travel_footprint_obj["longitude"]
+place_id = profile_travel_footprint_obj[payana_profile_travel_footprint_obj_list][0]["place_id"]
+excursion_id = profile_travel_footprint_obj[payana_profile_travel_footprint_obj_list][0]["excursion_id"]
+latitude = profile_travel_footprint_obj[payana_profile_travel_footprint_obj_list][0]["latitude"]
+longitude = profile_travel_footprint_obj[payana_profile_travel_footprint_obj_list][0]["longitude"]
 
 payana_profile_page_travel_footprint_column_qualifier = "##".join(
     [str(place_id), str(excursion_id)])
