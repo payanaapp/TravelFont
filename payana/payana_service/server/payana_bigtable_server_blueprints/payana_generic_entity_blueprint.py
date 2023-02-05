@@ -1,0 +1,21 @@
+from flask import Flask, request, Blueprint
+from flask_restx import Api, Resource, fields, Namespace
+from payana.payana_service.server import service_settings
+from payana.payana_service.controller.payana_bigtable_controller.payana_likes_controller import payana_likes_name_space
+
+payana_entity_api_blueprint = Blueprint(
+    'payana_entity_api_blueprint', __name__, url_prefix='/entity')
+
+payana_entity_table_api = Api(payana_entity_api_blueprint, version="1.0",
+                               title="Payana Likes BigTable EndPoint APIs",
+                               description="Manage endpoints of payana likes bigtable APIs")
+
+payana_entity_table_api.add_namespace(payana_likes_name_space)
+
+
+@payana_entity_table_api.errorhandler
+def default_error_handler(e):
+    message = 'An unhandled exception occurred.'
+
+    if not service_settings.FLASK_DEBUG:
+        return {'message': message}, 500

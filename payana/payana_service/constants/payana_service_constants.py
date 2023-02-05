@@ -34,6 +34,18 @@ payana_profile_page_travelfont_objects_delete_failure_message = "Failed to delet
 payana_profile_page_travelfont_objects_delete_success_message = "Travel Footprint content successfully deleted!"
 payana_missing_profile_page_travelfont_object = "Missing profile page travel footprint object in the request body"
 
+# Payana Likes controller constants
+payana_likes_write_success_message_post = "Payana likes object successfully created!"
+payana_likes_write_success_message_put = "Payana likes object successfully updated!"
+payana_likes_delete_success_message = "Payana likes object successfully deleted!"
+payana_likes_create_failure_message_post = "Failed to create the Payana likes object"
+payana_likes_delete_failure_message = "Failed to delete the Payana likes object"
+payana_likes_write_failure_message_post = "Failed to update the Payana likes object"
+payana_likes_objects_delete_failure_message = "Failed to delete the Payana likes object objects"
+payana_likes_objects_delete_success_message = "Payana likes object content successfully deleted!"
+payana_missing_likes_object = "Missing Payana likes object in the request body"
+payana_entity_id_header = "entity_id"
+
 #Payana Profile Itinerary Table Controller constants
 payana_profile_page_itineraries_write_success_message_post = "Profile Page Itinerary/Excursion/Activity Guide Object successfully created!"
 payana_profile_page_itineraries_write_success_message_put = "Profile Page Itinerary/Excursion/Activity Guide successfully updated!"
@@ -58,3 +70,4 @@ payana_500 = 500
 
 #Payana exception messages for service layer
 payana_missing_profile_id_header_exception = "Missing Profile ID in the headers"
+payana_missing_entity_id_header_exception = "Missing Entity ID in the headers"

@@ -41,6 +41,8 @@ payana_likes_read_obj = PayanaBigTable(payana_likes_table)
 likes_obj = payana_likes_read_obj.get_row_dict(
     like_object_id, include_column_family=True)
 
+print(likes_obj)
+
 participant_delete = "pf_id_1"
 print("Status of like write operation: " +
       str(participant_delete in likes_obj[like_object_id][payana_like_column_family]))

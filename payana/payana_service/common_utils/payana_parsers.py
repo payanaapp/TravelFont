@@ -23,3 +23,9 @@ def get_profile_id_header(request):
     profile_id = request.headers.get('profile_id')
     
     return profile_id.strip()
+
+def get_entity_id_header(request):
+    
+    entity_id = request.headers.get('entity_id')
+    
+    return entity_id.strip()
