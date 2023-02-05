@@ -38,7 +38,7 @@ class PayanaLikesTable:
 
         self.create_bigtable_write_objects()
 
-        payana_likes_table_instance.insert_columns(
+        return payana_likes_table_instance.insert_columns(
             self.update_bigtable_write_objects)
 
     @payana_generic_exception_handler
@@ -50,5 +50,6 @@ class PayanaLikesTable:
 
         # participants_list write object
         for participant, timestamp in self.payana_likes.items():
+            print(timestamp)
             self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
                 self.entity_id, self.likes_column_family, participant, timestamp))

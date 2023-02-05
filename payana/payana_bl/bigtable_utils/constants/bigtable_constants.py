@@ -163,6 +163,7 @@ payana_checkin_country = "country"
 payana_likes_table_column_family = "payana_likes"
 payana_likes_table_like_object_id_qualifier = "like_object_id"
 payana_likes_table_metadata_column_family = "likes_metadata"
+payana_likes_table_entity_id = "entity_id"
 
 # Payana travel buddy table constants
 payana_travel_buddy_table_column_family_travel_buddy_list = "payana_travel_buddy_list"
