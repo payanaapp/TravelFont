@@ -623,7 +623,7 @@ class PayanaBigTable:
             # column_family_id = bigtable_read_column_value_object.column_family_id
             # column_qualifier_id = bigtable_read_column_value_object.column_qualifier_id
 
-                bigtable_rows_delete(self.table, row_keys)
+            return bigtable_rows_delete(self.table, row_keys)
 
         else:
             print(payana_big_table_does_not_exist_exception)

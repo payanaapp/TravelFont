@@ -29,3 +29,9 @@ def get_entity_id_header(request):
     entity_id = request.headers.get('entity_id')
     
     return entity_id.strip()
+
+def get_comment_id_header(request):
+    
+    comment_id = request.headers.get('comment_id')
+    
+    return comment_id.strip()
