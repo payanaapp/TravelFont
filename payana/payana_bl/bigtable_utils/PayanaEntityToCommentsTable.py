@@ -21,9 +21,9 @@ from google.cloud.bigtable import column_family
 class PayanaEntityToCommentsTable:
 
     @payana_generic_exception_handler
-    def __init__(self, entity_id, comment_id_list):
+    def __init__(self, entity_id, payana_comment_id_list):
 
-        self.comment_id_list = comment_id_list
+        self.comment_id_list = payana_comment_id_list
         self.entity_id = entity_id
 
         self.column_family_id = bigtable_constants.payana_entity_to_comments_table_comment_id_list
@@ -48,6 +48,6 @@ class PayanaEntityToCommentsTable:
     def set_comment_id_list_write_object(self):
 
         # payana comments write object
-        for comment_id, rating in self.comment_id_list.items():
+        for comment_id, timestamp in self.comment_id_list.items():
             self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-                self.entity_id, self.column_family_id, comment_id, rating))
+                self.entity_id, self.column_family_id, comment_id, timestamp))

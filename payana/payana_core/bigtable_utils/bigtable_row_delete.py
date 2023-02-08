@@ -34,7 +34,12 @@ def bigtable_rows_delete(table, row_keys):
     # [START bigtable_rows_delete]
 
     for row_key in row_keys:
-        bigtable_row_delete(table, row_key)
+        bigtable_row_delete_ststaus = bigtable_row_delete(table, row_key)
+        
+        if not bigtable_row_delete_ststaus:
+            return False
+        
+    return True
 
     # [END bigtable_rows_delete]
 

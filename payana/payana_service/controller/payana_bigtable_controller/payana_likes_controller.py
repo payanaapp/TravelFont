@@ -22,7 +22,7 @@ payana_likes_write_success_message_put = payana_service_constants.payana_likes_w
 payana_likes_write_failure_message_post = payana_service_constants.payana_likes_write_failure_message_post
 payana_likes_create_failure_message_post = payana_service_constants.payana_likes_create_failure_message_post
 payana_likes_delete_failure_message = payana_service_constants.payana_likes_delete_failure_message
-payana_likes_objects_delete_success_message = payana_service_constants.payana_likes_objects_delete_success_message
+payana_likes_delete_success_message = payana_service_constants.payana_likes_delete_success_message
 payana_likes_objects_delete_failure_message = payana_service_constants.payana_likes_objects_delete_failure_message
 payana_likes_objects_delete_success_message = payana_service_constants.payana_likes_objects_delete_success_message
 
@@ -84,7 +84,6 @@ class PayanaLikesEndPoint(Resource):
             raise KeyError(payana_missing_entity_id_header_exception)
 
         profile_likes_read_obj = request.json
-        print(profile_likes_read_obj)
 
         payana_likes_object = PayanaLikesTable(
             **profile_likes_read_obj)
@@ -152,7 +151,7 @@ class PayanaLikesRowDeleteEndPoint(Resource):
         return {
             status: payana_200_response,
             payana_entity_id_header: entity_id,
-            message: payana_likes_objects_delete_success_message,
+            message: payana_likes_delete_success_message,
             status_code: payana_200
         }, payana_200
 

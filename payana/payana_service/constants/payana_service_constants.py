@@ -46,6 +46,32 @@ payana_likes_objects_delete_success_message = "Payana likes object content succe
 payana_missing_likes_object = "Missing Payana likes object in the request body"
 payana_entity_id_header = "entity_id"
 
+# Payana Comments controller constants
+payana_comments_write_success_message_post = "Payana comments object successfully created!"
+payana_comments_write_success_message_put = "Payana comments object successfully updated!"
+payana_comments_delete_success_message = "Payana comments object successfully deleted!"
+payana_comments_create_failure_message_post = "Failed to create the Payana comments object"
+payana_comments_delete_failure_message = "Failed to delete the Payana comments object"
+payana_comments_write_failure_message_post = "Failed to update the Payana comments object"
+payana_comments_objects_delete_failure_message = "Failed to delete the Payana comments object objects"
+payana_comments_objects_delete_success_message = "Payana comments object content successfully deleted!"
+payana_missing_comments_object = "Missing Payana comments object in the request body"
+payana_comment_id_header = "comment_id"
+payana_comment_id_list_header = "comment_id_list"
+payana_comment_id_missing_exception_message = "Payana comment ID missing"
+
+# Payana Comments controller constants
+payana_entity_comments_write_success_message_post = "Payana entity comments object successfully created!"
+payana_entity_comments_write_success_message_put = "Payana entity comments object successfully updated!"
+payana_entity_comments_delete_success_message = "Payana entity comments object successfully deleted!"
+payana_entity_comments_create_failure_message_post = "Failed to create the Payana entity comments object"
+payana_entity_comments_delete_failure_message = "Failed to delete the Payana entity comments object"
+payana_entity_comments_write_failure_message_post = "Failed to update the Payana entity comments object"
+payana_entity_comments_objects_delete_failure_message = "Failed to delete the Payana entity comments object objects"
+payana_entity_comments_objects_delete_success_message = "Payana entity comments object content successfully deleted!"
+payana_missing_entity_comments_object = "Missing Payana entity comments object in the request body"
+payana_missing_entity_comment_id_list_object = "Missing Payana entity comment ID list object in the request body"
+
 #Payana Profile Itinerary Table Controller constants
 payana_profile_page_itineraries_write_success_message_post = "Profile Page Itinerary/Excursion/Activity Guide Object successfully created!"
 payana_profile_page_itineraries_write_success_message_put = "Profile Page Itinerary/Excursion/Activity Guide successfully updated!"
@@ -71,3 +97,4 @@ payana_500 = 500
 #Payana exception messages for service layer
 payana_missing_profile_id_header_exception = "Missing Profile ID in the headers"
 payana_missing_entity_id_header_exception = "Missing Entity ID in the headers"
+payana_missing_comment_id_header_exception = "Missing comment ID in the headers"

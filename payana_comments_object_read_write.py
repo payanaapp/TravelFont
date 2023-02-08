@@ -26,6 +26,9 @@ bigtable_tables_schema_path = bigtable_constants.bigtable_schema_config_file
 
 payana_bigtable_init(client_config_file_path, bigtable_tables_schema_path)
 
+payana_comments_table_entity_id = bigtable_constants.payana_comments_table_entity_id
+payana_entity_to_comments_table_comment_id_list = bigtable_constants.payana_entity_to_comments_table_comment_id_list
+
 # Add a comment
 comment_obj = {
     "comment_timestamp": "123456789",
@@ -60,8 +63,8 @@ print("Comment added: " +
 # Part 2 - Update entity to comments table - only if above operation into comments table succeeds, else revert
 if payana_comment_obj_write_status: # If comments table write operation above succeeds
     payana_entity_comments_table_comment_obj = {
-        "entity_id": entity_id,
-        "comment_id_list": {comment_id: "0.01"}}
+        payana_comments_table_entity_id: entity_id,
+        payana_entity_to_comments_table_comment_id_list: {comment_id: "1234567"}}
 
     payana_entity_to_comment_id_list_obj = PayanaEntityToCommentsTable(
         **payana_entity_comments_table_comment_obj)
@@ -150,8 +153,8 @@ print("Status of new comment write: " +
 # Part 2 - Update entity to comments table - only if above operation into comments table succeeds, else revert
 if payana_new_comment_obj_write_status: # If comments table write operation above succeeds
     payana_entity_comments_table_comment_obj = {
-        "entity_id": entity_id,
-        "comment_id_list": {comment_id: "0.01"}}
+        payana_comments_table_entity_id: entity_id,
+        payana_entity_to_comments_table_comment_id_list: {comment_id: "1234567"}}
 
     payana_entity_to_comment_id_list_obj = PayanaEntityToCommentsTable(
         **payana_entity_comments_table_comment_obj)
