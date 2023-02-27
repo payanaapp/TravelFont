@@ -60,7 +60,7 @@ payana_comment_id_header = "comment_id"
 payana_comment_id_list_header = "comment_id_list"
 payana_comment_id_missing_exception_message = "Payana comment ID missing"
 
-# Payana Comments controller constants
+# Payana Entity Comments controller constants
 payana_entity_comments_write_success_message_post = "Payana entity comments object successfully created!"
 payana_entity_comments_write_success_message_put = "Payana entity comments object successfully updated!"
 payana_entity_comments_delete_success_message = "Payana entity comments object successfully deleted!"
@@ -71,6 +71,20 @@ payana_entity_comments_objects_delete_failure_message = "Failed to delete the Pa
 payana_entity_comments_objects_delete_success_message = "Payana entity comments object content successfully deleted!"
 payana_missing_entity_comments_object = "Missing Payana entity comments object in the request body"
 payana_missing_entity_comment_id_list_object = "Missing Payana entity comment ID list object in the request body"
+
+# Payana check in objects controller constants
+payana_check_in_write_success_message_post = "Payana check in object successfully created!"
+payana_check_in_write_success_message_put = "Payana check in object successfully updated!"
+payana_check_in_delete_success_message = "Payana check in object successfully deleted!"
+payana_check_in_create_failure_message_post = "Failed to create the Payana check in object"
+payana_check_in_delete_failure_message = "Failed to delete the Payana check in object"
+payana_check_in_write_failure_message_post = "Failed to update the Payana check in object"
+payana_check_in_objects_delete_failure_message = "Failed to delete the Payana check in object objects"
+payana_check_in_objects_delete_success_message = "Payana check in object content successfully deleted!"
+payana_missing_check_in_object = "Missing Payana check in object in the request body"
+payana_check_in_id_header = "checkin_id"
+payana_check_in_id_missing_exception_message = "Payana check in ID missing in the headers"
+payana_check_in_id_empty_exception_message = "Payana check in ID is empty"
 
 #Payana Profile Itinerary Table Controller constants
 payana_profile_page_itineraries_write_success_message_post = "Profile Page Itinerary/Excursion/Activity Guide Object successfully created!"

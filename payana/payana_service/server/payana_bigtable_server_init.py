@@ -21,7 +21,7 @@ def register_payana_blueprints(flask_app):
     
     flask_app.register_blueprint(
         payana_entity_api_blueprint)
-
+    
 
 def initialize_app():
     configure_app(payana_flask_app)

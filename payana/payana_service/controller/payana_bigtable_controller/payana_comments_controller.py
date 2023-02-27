@@ -76,7 +76,8 @@ class PayanaCommentDetailsEndPoint(Resource):
         comment_id = get_comment_id_header(request)
 
         if comment_id is None or len(comment_id) == 0:
-            raise KeyError(payana_missing_comment_id_header_exception)
+            raise KeyError(
+                payana_missing_comment_id_header_exception, payana_comments_name_space)
 
         payana_comments_read_obj = PayanaBigTable(
             payana_comments_table)
@@ -103,7 +104,8 @@ class PayanaCommentsEndPoint(Resource):
         entity_id = get_entity_id_header(request)
 
         if entity_id is None or len(entity_id) == 0:
-            raise KeyError(payana_missing_entity_id_header_exception)
+            raise KeyError(payana_missing_entity_id_header_exception,
+                           payana_comments_name_space)
 
         payana_entity_comments_read_obj = PayanaBigTable(
             payana_entity_to_comments_table)
@@ -126,7 +128,8 @@ class PayanaCommentsEndPoint(Resource):
         entity_id = get_entity_id_header(request)
 
         if entity_id is None or len(entity_id) == 0:
-            raise KeyError(payana_missing_entity_id_header_exception)
+            raise KeyError(payana_missing_entity_id_header_exception,
+                           payana_comments_name_space)
 
         profile_comments_read_obj = request.json
 
@@ -171,7 +174,8 @@ class PayanaCommentsEndPoint(Resource):
         entity_id = get_entity_id_header(request)
 
         if entity_id is None or len(entity_id) == 0:
-            raise KeyError(payana_missing_entity_id_header_exception)
+            raise KeyError(payana_missing_entity_id_header_exception,
+                           payana_comments_name_space)
 
         profile_comments_read_obj = request.json
 
@@ -207,7 +211,8 @@ class PayanaEntityCommentsRowDeleteEndPoint(Resource):
         entity_id = get_entity_id_header(request)
 
         if entity_id is None or len(entity_id) == 0:
-            raise KeyError(payana_missing_entity_id_header_exception)
+            raise KeyError(payana_missing_entity_id_header_exception,
+                           payana_comments_name_space)
 
         payana_entity_comments_read_obj = PayanaBigTable(
             payana_entity_to_comments_table)
@@ -258,41 +263,36 @@ class PayanaEntityCommentsRowDeleteEndPoint(Resource):
         entity_id = get_entity_id_header(request)
 
         if entity_id is None or len(entity_id) == 0:
-            raise KeyError(payana_missing_entity_id_header_exception)
+            raise KeyError(payana_missing_entity_id_header_exception,
+                           payana_comments_name_space)
 
         payana_entity_comments_id_list_object = request.json
 
         if payana_entity_comments_id_list_object is None:
-            raise KeyError(payana_missing_entity_comment_id_list_object)
+            raise KeyError(
+                payana_missing_entity_comment_id_list_object, payana_comments_name_space)
 
         payana_entity_comment_obj = PayanaBigTable(
             payana_entity_to_comments_table)
 
-        payana_entity_comments_table_delete_wrappers = []
-        payana_comments_table_delete_wrappers = []
-
-        for column_family, comment_id_list in payana_entity_comments_id_list_object.items():
-
-            # Delete specific column family and column values
-            for comment_id in comment_id_list:
-                payana_entity_comments_table_delete_wrapper = bigtable_write_object_wrapper(
-                    entity_id, column_family, comment_id, "")
-
-                payana_comments_table_delete_wrapper = bigtable_write_object_wrapper(
-                    comment_id, "", "", "")
-
-                payana_entity_comments_table_delete_wrappers.append(
-                    payana_entity_comments_table_delete_wrapper)
-
-                payana_comments_table_delete_wrappers.append(
-                    payana_comments_table_delete_wrapper)
-
-        payana_entity_comment_obj_delete_status = payana_entity_comment_obj.delete_bigtable_row_columns(
-            payana_entity_comments_table_delete_wrappers)
+        payana_entity_comment_obj_delete_status = payana_entity_comment_obj.delete_bigtable_row_column_list(
+            entity_id, payana_entity_comments_id_list_object)
 
         if not payana_entity_comment_obj_delete_status:
             raise Exception(
                 payana_entity_comments_objects_delete_failure_message, payana_comments_name_space)
+            
+        payana_comments_table_delete_wrappers = []
+
+        for _, comment_id_list in payana_entity_comments_id_list_object.items():
+
+            # Delete specific column family and column values
+            for comment_id in comment_id_list:
+                payana_comments_table_delete_wrapper = bigtable_write_object_wrapper(
+                    comment_id, "", "", "")
+
+                payana_comments_table_delete_wrappers.append(
+                    payana_comments_table_delete_wrapper)
 
         payana_comment_obj = PayanaBigTable(
             payana_comments_table)

@@ -48,6 +48,7 @@ payana_missing_likes_object = payana_service_constants.payana_missing_likes_obje
 
 payana_likes_table = bigtable_constants.payana_likes_table
 
+
 @payana_likes_name_space.route("/")
 class PayanaLikesEndPoint(Resource):
 
@@ -58,7 +59,8 @@ class PayanaLikesEndPoint(Resource):
         entity_id = get_entity_id_header(request)
 
         if entity_id is None or len(entity_id) == 0:
-            raise KeyError(payana_missing_entity_id_header_exception)
+            raise KeyError(
+                payana_missing_entity_id_header_exception, payana_likes_name_space)
 
         payana_likes_read_obj = PayanaBigTable(
             payana_likes_table)
@@ -81,7 +83,8 @@ class PayanaLikesEndPoint(Resource):
         entity_id = get_entity_id_header(request)
 
         if entity_id is None or len(entity_id) == 0:
-            raise KeyError(payana_missing_entity_id_header_exception)
+            raise KeyError(
+                payana_missing_entity_id_header_exception, payana_likes_name_space)
 
         profile_likes_read_obj = request.json
 
@@ -107,13 +110,14 @@ class PayanaLikesEndPoint(Resource):
         entity_id = get_entity_id_header(request)
 
         if entity_id is None or len(entity_id) == 0:
-            raise KeyError(payana_missing_entity_id_header_exception)
+            raise KeyError(
+                payana_missing_entity_id_header_exception, payana_likes_name_space)
 
         profile_likes_read_obj = request.json
 
-        payana_likes_object = PayanaLikesTable(
-            **profile_likes_read_obj)
-        payana_likes_obj_write_status = payana_likes_object.update_likes_bigtable()
+        payana_likes_object = PayanaBigTable(payana_likes_table)
+        payana_likes_obj_write_status = payana_likes_object.insert_columns_column_family(
+            entity_id, profile_likes_read_obj)
 
         if not payana_likes_obj_write_status:
             raise Exception(
@@ -136,7 +140,8 @@ class PayanaLikesRowDeleteEndPoint(Resource):
         entity_id = get_entity_id_header(request)
 
         if entity_id is None or len(entity_id) == 0:
-            raise KeyError(payana_missing_entity_id_header_exception)
+            raise KeyError(
+                payana_missing_entity_id_header_exception, payana_likes_name_space)
 
         payana_likes_read_obj = PayanaBigTable(
             payana_likes_table)
@@ -166,34 +171,24 @@ class PayanaLikesColumnValuesDeleteEndPoint(Resource):
         entity_id = get_entity_id_header(request)
 
         if entity_id is None or len(entity_id) == 0:
-            raise KeyError(payana_missing_entity_id_header_exception)
+            raise KeyError(
+                payana_missing_entity_id_header_exception, payana_likes_name_space)
 
         profile_likes_object = request.json
 
         if profile_likes_object is None:
-            raise KeyError(payana_missing_likes_object)
+            raise KeyError(payana_missing_likes_object,
+                           payana_likes_name_space)
 
         payana_likes_read_obj = PayanaBigTable(
             payana_likes_table)
 
-        payana_likes_table_delete_wrappers = []
+        payana_likes_obj_delete_status = payana_likes_read_obj.delete_bigtable_row_column_list(
+            entity_id, profile_likes_object)
 
-        for column_family, column_family_dict in profile_likes_object.items():
-
-            # Delete specific column family and column values
-            for column_quantifier, column_value in column_family_dict.items():
-                payana_likes_table_delete_wrapper = bigtable_write_object_wrapper(
-                    entity_id, column_family, column_quantifier, column_value)
-
-                payana_likes_table_delete_wrappers.append(
-                    payana_likes_table_delete_wrapper)
-
-            payana_likes_obj_delete_status = payana_likes_read_obj.delete_bigtable_row_columns(
-                payana_likes_table_delete_wrappers)
-
-            if not payana_likes_obj_delete_status:
-                raise Exception(
-                    payana_likes_objects_delete_failure_message, payana_likes_name_space)
+        if not payana_likes_obj_delete_status:
+            raise Exception(
+                payana_likes_objects_delete_failure_message, payana_likes_name_space)
 
         return {
             status: payana_200_response,
@@ -212,11 +207,12 @@ class PayanaLikesColumnFamilyDeleteEndPoint(Resource):
         entity_id = get_entity_id_header(request)
 
         if entity_id is None or len(entity_id) == 0:
-            raise KeyError(payana_missing_entity_id_header_exception)
+            raise KeyError(
+                payana_missing_entity_id_header_exception, payana_likes_name_space)
 
         payana_likes_read_obj = PayanaBigTable(
             payana_likes_table)
-        
+
         payana_like_column_family = bigtable_constants.payana_likes_table_column_family
 
         payana_likes_delete_wrapper = bigtable_write_object_wrapper(

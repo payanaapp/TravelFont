@@ -254,7 +254,10 @@ curl --location --request POST 'http://localhost:8888/entity/comments/delete/' \
 --header 'Content-Type: application/json' \
 --header 'entity_id: imagee' \
 --data-raw '{
-    "payana_comment_id_list": ["a1a9d3748bbdf7d5c95e6620da0a07bcccd02c191d53a84ceb4ec57ecf9762f7"]
+    "payana_comment_id_list": [
+        "3bab4fd65d2fbe673fd8a561ea6ebe08d359540abdc069a6b7f457285b72ceee",
+        "643387f3de6403facc25ee81cdcd0fb0eb42e29f515d48d9ebcb26e2053e85c7"
+    ]
 }'
 """
 

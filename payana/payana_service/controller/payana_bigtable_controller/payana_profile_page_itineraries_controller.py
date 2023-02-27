@@ -59,7 +59,8 @@ class PayanaProfilePageItinerariesEndPoint(Resource):
         profile_id = get_profile_id_header(request)
 
         if profile_id is None or len(profile_id) == 0:
-            raise KeyError(payana_missing_profile_id_header_exception)
+            raise KeyError(payana_missing_profile_id_header_exception,
+                           profile_page_itineraries_name_space)
 
         payana_profile_page_itinerary_read_obj = PayanaBigTable(
             payana_profile_page_itinerary_table)
@@ -71,7 +72,7 @@ class PayanaProfilePageItinerariesEndPoint(Resource):
 
         if len(payana_profile_page_itinerary_read_obj_dict) == 0:
             raise KeyError(payana_empty_row_read_exception,
-                            profile_page_itineraries_name_space)
+                           profile_page_itineraries_name_space)
 
         return payana_profile_page_itinerary_read_obj_dict, payana_200
 
@@ -83,7 +84,8 @@ class PayanaProfilePageItinerariesEndPoint(Resource):
         profile_id = get_profile_id_header(request)
 
         if profile_id is None or len(profile_id) == 0:
-            raise KeyError(payana_missing_profile_id_header_exception)
+            raise KeyError(payana_missing_profile_id_header_exception,
+                           profile_page_itineraries_name_space)
 
         profile_page_itinerary_read_obj = request.json
 
@@ -109,7 +111,8 @@ class PayanaProfilePageItinerariesEndPoint(Resource):
         profile_id = get_profile_id_header(request)
 
         if profile_id is None or len(profile_id) == 0:
-            raise KeyError(payana_missing_profile_id_header_exception)
+            raise KeyError(payana_missing_profile_id_header_exception,
+                           profile_page_itineraries_name_space)
 
         profile_page_itinerary_read_obj = request.json
 
@@ -138,7 +141,8 @@ class PayanaProfilePageItinerariesRowDeleteEndPoint(Resource):
         profile_id = get_profile_id_header(request)
 
         if profile_id is None or len(profile_id) == 0:
-            raise KeyError(payana_missing_profile_id_header_exception)
+            raise KeyError(payana_missing_profile_id_header_exception,
+                           profile_page_itineraries_name_space)
 
         payana_profile_page_itinerary_read_obj = PayanaBigTable(
             payana_profile_page_itinerary_table)
@@ -168,12 +172,14 @@ class PayanaProfilePageItinerariesColumnValuesDeleteEndPoint(Resource):
         profile_id = get_profile_id_header(request)
 
         if profile_id is None or len(profile_id) == 0:
-            raise KeyError(payana_missing_profile_id_header_exception)
+            raise KeyError(payana_missing_profile_id_header_exception,
+                           profile_page_itineraries_name_space)
 
         profile_page_itinerary_object = request.json
 
         if profile_page_itinerary_object is None:
-            raise KeyError(payana_missing_profile_page_itinerary_object)
+            raise KeyError(payana_missing_profile_page_itinerary_object,
+                           profile_page_itineraries_name_space)
 
         payana_profile_page_itinerary_read_obj = PayanaBigTable(
             payana_profile_page_itinerary_table)
@@ -214,12 +220,14 @@ class PayanaProfileTableColumnFamilyDeleteEndPoint(Resource):
         profile_id = get_profile_id_header(request)
 
         if profile_id is None or len(profile_id) == 0:
-            raise KeyError(payana_missing_profile_id_header_exception)
+            raise KeyError(payana_missing_profile_id_header_exception,
+                           profile_page_itineraries_name_space)
 
         profile_page_itinerary_object = request.json
 
         if profile_page_itinerary_object is None:
-            raise KeyError(payana_missing_profile_page_itinerary_object)
+            raise KeyError(payana_missing_profile_page_itinerary_object,
+                           profile_page_itineraries_name_space)
 
         payana_profile_page_itinerary_read_obj = PayanaBigTable(
             payana_profile_page_itinerary_table)
