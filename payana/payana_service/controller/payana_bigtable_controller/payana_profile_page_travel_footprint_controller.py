@@ -59,7 +59,8 @@ class PayanaProfilePageTravelFontEndPoint(Resource):
         profile_id = get_profile_id_header(request)
 
         if profile_id is None or len(profile_id) == 0:
-            raise KeyError(payana_missing_profile_id_header_exception)
+            raise KeyError(payana_missing_profile_id_header_exception,
+                           profile_page_travelfont_name_space)
 
         payana_profile_page_travel_footprint_read_obj = PayanaBigTable(
             payana_profile_travel_footprint_table)
@@ -83,7 +84,8 @@ class PayanaProfilePageTravelFontEndPoint(Resource):
         profile_id = get_profile_id_header(request)
 
         if profile_id is None or len(profile_id) == 0:
-            raise KeyError(payana_missing_profile_id_header_exception)
+            raise KeyError(payana_missing_profile_id_header_exception,
+                           profile_page_travelfont_name_space)
 
         profile_page_travel_footprint_read_obj = request.json
 
@@ -109,7 +111,8 @@ class PayanaProfilePageTravelFontEndPoint(Resource):
         profile_id = get_profile_id_header(request)
 
         if profile_id is None or len(profile_id) == 0:
-            raise KeyError(payana_missing_profile_id_header_exception)
+            raise KeyError(payana_missing_profile_id_header_exception,
+                           profile_page_travelfont_name_space)
 
         profile_page_travel_footprint_read_obj = request.json
 
@@ -138,7 +141,8 @@ class PayanaProfilePageTravelFontRowDeleteEndPoint(Resource):
         profile_id = get_profile_id_header(request)
 
         if profile_id is None or len(profile_id) == 0:
-            raise KeyError(payana_missing_profile_id_header_exception)
+            raise KeyError(payana_missing_profile_id_header_exception,
+                           profile_page_travelfont_name_space)
 
         payana_profile_page_travel_footprint_read_obj = PayanaBigTable(
             payana_profile_travel_footprint_table)
@@ -168,14 +172,17 @@ class PayanaProfilePageTravelFontColumnValuesDeleteEndPoint(Resource):
         profile_id = get_profile_id_header(request)
 
         if profile_id is None or len(profile_id) == 0:
-            raise KeyError(payana_missing_profile_id_header_exception)
+            raise KeyError(payana_missing_profile_id_header_exception,
+                           profile_page_travelfont_name_space)
 
         profile_page_travel_footprint_object = request.json
-        
-        profile_page_travel_footprint_object = payana_profile_page_travel_footprint_delete_parser(profile_page_travel_footprint_object)
+
+        profile_page_travel_footprint_object = payana_profile_page_travel_footprint_delete_parser(
+            profile_page_travel_footprint_object)
 
         if profile_page_travel_footprint_object is None:
-            raise KeyError(payana_missing_profile_page_travelfont_object)
+            raise KeyError(payana_missing_profile_page_travelfont_object,
+                           profile_page_travelfont_name_space)
 
         payana_profile_page_travel_footprint_read_obj = PayanaBigTable(
             payana_profile_travel_footprint_table)
@@ -216,11 +223,12 @@ class PayanaProfilePageTravelFontColumnFamilyDeleteEndPoint(Resource):
         profile_id = get_profile_id_header(request)
 
         if profile_id is None or len(profile_id) == 0:
-            raise KeyError(payana_missing_profile_id_header_exception)
+            raise KeyError(payana_missing_profile_id_header_exception,
+                           profile_page_travelfont_name_space)
 
         payana_profile_page_travel_footprint_read_obj = PayanaBigTable(
             payana_profile_travel_footprint_table)
-        
+
         payana_profile_page_travel_footprint_column_family = bigtable_constants.payana_profile_page_travel_footprint_column_family
 
         payana_profile_page_travel_footprint_delete_wrapper = bigtable_write_object_wrapper(

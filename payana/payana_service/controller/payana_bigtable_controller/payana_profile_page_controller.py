@@ -62,7 +62,8 @@ class PayanaProfileTableEndPoint(Resource):
         profile_id = get_profile_id_header(request)
 
         if profile_id is None or len(profile_id) == 0:
-            raise KeyError(payana_missing_profile_id_header_exception)
+            raise KeyError(
+                payana_missing_profile_id_header_exception, profile_table_name_space)
 
         payana_profile_read_obj = PayanaBigTable(payana_profile_table)
 
@@ -73,7 +74,7 @@ class PayanaProfileTableEndPoint(Resource):
 
         if len(payana_profile_read_obj_dict) == 0:
             raise KeyError(payana_empty_row_read_exception,
-                            profile_table_name_space)
+                           profile_table_name_space)
 
         return payana_profile_read_obj_dict, payana_200
 
@@ -105,7 +106,8 @@ class PayanaProfileTableEndPoint(Resource):
         profile_id = get_profile_id_header(request)
 
         if profile_id is None or len(profile_id) == 0:
-            raise KeyError(payana_missing_profile_id_header_exception)
+            raise KeyError(
+                payana_missing_profile_id_header_exception, profile_table_name_space)
 
         profile_table_object = request.json
         # profile_table_object = json.loads(profile_table_object_json)
@@ -136,7 +138,8 @@ class PayanaProfileTableRowDeleteEndPoint(Resource):
         profile_id = get_profile_id_header(request)
 
         if profile_id is None or len(profile_id) == 0:
-            raise KeyError(payana_missing_profile_id_header_exception)
+            raise KeyError(
+                payana_missing_profile_id_header_exception, profile_table_name_space)
 
         payana_profile_read_obj = PayanaBigTable(payana_profile_table)
 
@@ -165,12 +168,14 @@ class PayanaProfileTableColumnValuesDeleteEndPoint(Resource):
         profile_id = get_profile_id_header(request)
 
         if profile_id is None or len(profile_id) == 0:
-            raise KeyError(payana_missing_profile_id_header_exception)
+            raise KeyError(
+                payana_missing_profile_id_header_exception, profile_table_name_space)
 
         profile_table_object = request.json
 
         if profile_table_object is None:
-            raise KeyError(payana_missing_profile_object)
+            raise KeyError(payana_missing_profile_object,
+                           profile_table_name_space)
 
         payana_profile_read_obj = PayanaBigTable(payana_profile_table)
 
@@ -210,12 +215,14 @@ class PayanaProfileTableColumnFamilyDeleteEndPoint(Resource):
         profile_id = get_profile_id_header(request)
 
         if profile_id is None or len(profile_id) == 0:
-            raise KeyError(payana_missing_profile_id_header_exception)
+            raise KeyError(
+                payana_missing_profile_id_header_exception, profile_table_name_space)
 
         profile_table_object = request.json
 
         if profile_table_object is None:
-            raise KeyError(payana_missing_profile_object)
+            raise KeyError(payana_missing_profile_object,
+                           profile_table_name_space)
 
         payana_profile_read_obj = PayanaBigTable(payana_profile_table)
 

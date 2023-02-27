@@ -59,13 +59,15 @@ profile_likes_json = {
 
 entity_id = profile_likes_json[payana_likes_table_entity_id]
 
-headers = {payana_likes_table_entity_id: entity_id, 'Content-Type': 'application/json'}
+headers = {payana_likes_table_entity_id: entity_id,
+           'Content-Type': 'application/json'}
 
 response = requests.post(url, data=json.dumps(
     profile_likes_json), headers=headers)
 
 
-print("Profile likes object creation status: " + str(response.status_code == 201))
+print("Profile likes object creation status: " +
+      str(response.status_code == 201))
 
 # GET payana likes
 # CURL request
@@ -76,7 +78,8 @@ curl --location --request GET 'http://localhost:8888/entity/likes/' \
 """
 
 url = "http://localhost:8888/entity/likes/"
-headers = {payana_likes_table_entity_id: entity_id, 'Content-Type': 'application/json'}
+headers = {payana_likes_table_entity_id: entity_id,
+           'Content-Type': 'application/json'}
 
 response = requests.get(url, headers=headers)
 
@@ -107,11 +110,11 @@ profile_likes_json = {
         "pf_id_1": "12345679",
         "pf_id_2": "1234567",
         "pf_id_3": "1234567"
-    },
-    payana_likes_table_entity_id: "12345"
+    }
 }
 
-headers = {'Content-Type': 'application/json', payana_likes_table_entity_id: entity_id}
+headers = {'Content-Type': 'application/json',
+           payana_likes_table_entity_id: entity_id}
 
 response = requests.put(url, data=json.dumps(
     profile_likes_json), headers=headers)
@@ -128,7 +131,8 @@ curl --location --request GET 'http://localhost:8888/entity/likes/' \
 """
 
 url = "http://localhost:8888/entity/likes/"
-headers = {payana_likes_table_entity_id: entity_id, 'Content-Type': 'application/json'}
+headers = {payana_likes_table_entity_id: entity_id,
+           'Content-Type': 'application/json'}
 
 response = requests.get(url, headers=headers)
 
@@ -145,18 +149,15 @@ curl --location --request POST 'http://localhost:8888/entity/likes/delete/values
 --header 'Content-Type: application/json' \
 --header 'entity_id: 12345' \
 --data-raw '{
-    "payana_likes": {
-        "pf_id_1": "12345679"
-    }
+    "payana_likes": ["pf_id_1", "pf_id_2"]
 }'
 """
 url = "http://localhost:8888/entity/likes/delete/values/"
-headers = {payana_likes_table_entity_id: entity_id, 'Content-Type': 'application/json'}
+headers = {payana_likes_table_entity_id: entity_id,
+           'Content-Type': 'application/json'}
 
 profile_likes_delete_cv_json = {
-    payana_like_column_family: {
-        "pf_id_1": "12345679"
-    }
+    payana_like_column_family: ["pf_id_1"]
 }
 
 response = requests.post(url, data=json.dumps(
@@ -175,7 +176,8 @@ curl --location --request GET 'http://localhost:8888/entity/likes/' \
 """
 
 url = "http://localhost:8888/entity/likes/"
-headers = {payana_likes_table_entity_id: entity_id, 'Content-Type': 'application/json'}
+headers = {payana_likes_table_entity_id: entity_id,
+           'Content-Type': 'application/json'}
 
 response = requests.get(url, headers=headers)
 
@@ -194,7 +196,8 @@ curl --location --request POST 'http://localhost:8888/profile/travelfont/delete/
 """
 
 url = "http://localhost:8888/entity/likes/delete/cf/"
-headers = {payana_likes_table_entity_id: entity_id, 'Content-Type': 'application/json'}
+headers = {payana_likes_table_entity_id: entity_id,
+           'Content-Type': 'application/json'}
 
 response = requests.post(url, headers=headers)
 
@@ -211,7 +214,8 @@ curl --location --request GET 'http://localhost:8888/entity/likes/' \
 """
 
 url = "http://localhost:8888/entity/likes/"
-headers = {payana_likes_table_entity_id: entity_id, 'Content-Type': 'application/json'}
+headers = {payana_likes_table_entity_id: entity_id,
+           'Content-Type': 'application/json'}
 
 response = requests.get(url, headers=headers)
 
@@ -246,13 +250,15 @@ profile_likes_json = {
 
 entity_id = profile_likes_json[payana_likes_table_entity_id]
 
-headers = {payana_likes_table_entity_id: entity_id, 'Content-Type': 'application/json'}
+headers = {payana_likes_table_entity_id: entity_id,
+           'Content-Type': 'application/json'}
 
 response = requests.post(url, data=json.dumps(
     profile_likes_json), headers=headers)
 
 
-print("Profile likes object creation status: " + str(response.status_code == 201))
+print("Profile likes object creation status: " +
+      str(response.status_code == 201))
 
 # GET payana likes
 # CURL request
@@ -263,7 +269,8 @@ curl --location --request GET 'http://localhost:8888/entity/likes/' \
 """
 
 url = "http://localhost:8888/entity/likes/"
-headers = {payana_likes_table_entity_id: entity_id, 'Content-Type': 'application/json'}
+headers = {payana_likes_table_entity_id: entity_id,
+           'Content-Type': 'application/json'}
 
 response = requests.get(url, headers=headers)
 
@@ -282,7 +289,8 @@ curl --location --request DELETE 'http://localhost:8888/entity/likes/delete/' \
 """
 
 url = "http://localhost:8888/entity/likes/delete/"
-headers = {payana_likes_table_entity_id: entity_id, 'Content-Type': 'application/json'}
+headers = {payana_likes_table_entity_id: entity_id,
+           'Content-Type': 'application/json'}
 
 response = requests.delete(url, headers=headers)
 
@@ -298,7 +306,8 @@ curl --location --request GET 'http://localhost:8888/entity/likes/' \
 """
 
 url = "http://localhost:8888/entity/likes/"
-headers = {payana_likes_table_entity_id: entity_id, 'Content-Type': 'application/json'}
+headers = {payana_likes_table_entity_id: entity_id,
+           'Content-Type': 'application/json'}
 
 response = requests.get(url, headers=headers)
 

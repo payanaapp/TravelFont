@@ -77,6 +77,28 @@ class PayanaBigTable:
         else:
             print(payana_big_table_does_not_exist_exception)
             raise Exception(payana_big_table_exception)
+        
+    @payana_generic_exception_handler
+    def insert_columns_list_column_family(self, entity_id, column_family_obj):
+
+        bigtable_write_objects = []
+
+        for column_family_key, column_family_value_list in column_family_obj.items():
+            
+            for _, column_family_value_obj in enumerate(column_family_value_list):
+            
+                for column_quantifier_key, column_quantifier_value in column_family_value_obj.items():            
+
+                    bigtable_write_object = bigtable_write_object_wrapper(
+                        entity_id, column_family_key, column_quantifier_key, column_quantifier_value)
+
+                    bigtable_write_objects.append(bigtable_write_object)
+
+        if self.table is not None:
+            return bigtable_write(self.table, bigtable_write_objects)
+        else:
+            print(payana_big_table_does_not_exist_exception)
+            raise Exception(payana_big_table_exception)
 
     @payana_generic_exception_handler
     def get_row_dict(self, row_key, include_column_family=True):
@@ -679,23 +701,43 @@ class PayanaBigTable:
 
         if self.table is not None:
 
-            column_qualifier_ids = []
-            row_key = None
-            column_family_id = None
-
             for bigtable_delete_row_object in bigtable_delete_row_objects:
+                
+                column_qualifier_ids = []
 
-                if row_key is None:
-                    row_key = bigtable_delete_row_object.row_key
+                row_key = bigtable_delete_row_object.row_key
 
-                if column_family_id is None:
-                    column_family_id = bigtable_delete_row_object.column_family_id
+                column_family_id = bigtable_delete_row_object.column_family_id
 
                 column_qualifier_id = bigtable_delete_row_object.column_qualifier_id
                 column_qualifier_ids.append(column_qualifier_id)
 
-            return bigtable_row_cells_delete(
-                self.table, row_key, column_family_id, column_qualifier_ids)
+                bigtable_row_cells_delete_status = bigtable_row_cells_delete(
+                    self.table, row_key, column_family_id, column_qualifier_ids)
+                
+                if not bigtable_row_cells_delete_status:
+                    return bigtable_row_cells_delete_status
+                
+            return bigtable_row_cells_delete_status
+
+        else:
+            print(payana_big_table_does_not_exist_exception)
+            raise Exception(payana_big_table_exception)
+
+    @payana_generic_exception_handler
+    def delete_bigtable_row_column_list(self, row_key, bigtable_delete_row_objects_dict):
+
+        if self.table is not None:
+
+            for column_family_id, column_qualifier_id_list in bigtable_delete_row_objects_dict.items():
+
+                bigtable_row_cells_delete_status = bigtable_row_cells_delete(
+                    self.table, row_key, column_family_id, column_qualifier_id_list)
+                
+                if not bigtable_row_cells_delete_status:
+                    return bigtable_row_cells_delete_status
+                
+            return bigtable_row_cells_delete_status
 
         else:
             print(payana_big_table_does_not_exist_exception)
