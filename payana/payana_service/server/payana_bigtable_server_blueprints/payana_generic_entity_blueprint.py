@@ -4,6 +4,7 @@ from payana.payana_service.server import service_settings
 from payana.payana_service.controller.payana_bigtable_controller.payana_likes_controller import payana_likes_name_space
 from payana.payana_service.controller.payana_bigtable_controller.payana_comments_controller import payana_comments_name_space
 from payana.payana_service.controller.payana_bigtable_controller.payana_checkin_objects_controller import payana_checkin_name_space
+from payana.payana_service.controller.payana_bigtable_controller.payana_city_influencers_controller import payana_city_influencer_name_space
 
 payana_entity_api_blueprint = Blueprint(
     'payana_entity_api_blueprint', __name__, url_prefix='/entity')
@@ -15,6 +16,7 @@ payana_entity_table_api = Api(payana_entity_api_blueprint, version="1.0",
 payana_entity_table_api.add_namespace(payana_likes_name_space)
 payana_entity_table_api.add_namespace(payana_comments_name_space)
 payana_entity_table_api.add_namespace(payana_checkin_name_space)
+payana_entity_table_api.add_namespace(payana_city_influencer_name_space)
 
 
 @payana_entity_table_api.errorhandler
