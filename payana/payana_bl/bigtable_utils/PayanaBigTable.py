@@ -695,6 +695,20 @@ class PayanaBigTable:
         else:
             print(payana_big_table_does_not_exist_exception)
             raise Exception(payana_big_table_exception)
+        
+    @payana_generic_exception_handler
+    def delete_bigtable_row_column_family_list(self, bigtable_delete_row_objects):
+
+        if self.table is not None:
+
+            row_key = bigtable_delete_row_object.row_key
+            column_family_id = bigtable_delete_row_object.column_family_id
+
+            return bigtable_column_family_cells_delete(self.table, row_key, column_family_id)
+
+        else:
+            print(payana_big_table_does_not_exist_exception)
+            raise Exception(payana_big_table_exception)
 
     @payana_generic_exception_handler
     def delete_bigtable_row_columns(self, bigtable_delete_row_objects):

@@ -41,10 +41,22 @@ payana_likes_delete_success_message = "Payana likes object successfully deleted!
 payana_likes_create_failure_message_post = "Failed to create the Payana likes object"
 payana_likes_delete_failure_message = "Failed to delete the Payana likes object"
 payana_likes_write_failure_message_post = "Failed to update the Payana likes object"
-payana_likes_objects_delete_failure_message = "Failed to delete the Payana likes object objects"
+payana_likes_objects_delete_failure_message = "Failed to delete the Payana likes object contents"
 payana_likes_objects_delete_success_message = "Payana likes object content successfully deleted!"
 payana_missing_likes_object = "Missing Payana likes object in the request body"
 payana_entity_id_header = "entity_id"
+
+# Payana City Influencer controller constants
+payana_city_influencers_write_success_message_post = "Payana city influencers object successfully created!"
+payana_city_influencers_write_success_message_put = "Payana city influencers object successfully updated!"
+payana_city_influencers_delete_success_message = "Payana city influencers object successfully deleted!"
+payana_city_influencers_create_failure_message_post = "Failed to create the Payana city influencers object"
+payana_city_influencers_delete_failure_message = "Failed to delete the Payana city influencers object"
+payana_city_influencers_write_failure_message_post = "Failed to update the Payana city influencers object"
+payana_city_influencers_objects_delete_failure_message = "Failed to delete the Payana city influencers object contents"
+payana_city_influencers_objects_delete_success_message = "Payana city influencers object content successfully deleted!"
+payana_missing_city_influencers_object = "Missing Payana city influencers object in the request body"
+payana_city_header = "city"
 
 # Payana Comments controller constants
 payana_comments_write_success_message_post = "Payana comments object successfully created!"
@@ -53,7 +65,7 @@ payana_comments_delete_success_message = "Payana comments object successfully de
 payana_comments_create_failure_message_post = "Failed to create the Payana comments object"
 payana_comments_delete_failure_message = "Failed to delete the Payana comments object"
 payana_comments_write_failure_message_post = "Failed to update the Payana comments object"
-payana_comments_objects_delete_failure_message = "Failed to delete the Payana comments object objects"
+payana_comments_objects_delete_failure_message = "Failed to delete the Payana comments object contents"
 payana_comments_objects_delete_success_message = "Payana comments object content successfully deleted!"
 payana_missing_comments_object = "Missing Payana comments object in the request body"
 payana_comment_id_header = "comment_id"
@@ -112,3 +124,4 @@ payana_500 = 500
 payana_missing_profile_id_header_exception = "Missing Profile ID in the headers"
 payana_missing_entity_id_header_exception = "Missing Entity ID in the headers"
 payana_missing_comment_id_header_exception = "Missing comment ID in the headers"
+payana_missing_city_header_exception = "Missing city in the headers"

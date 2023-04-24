@@ -30,6 +30,13 @@ def get_profile_id_header(request):
 
     return None if profile_id is None else profile_id.strip()
 
+@payana_service_generic_exception_handler
+def get_city_header(request):
+
+    city = request.headers.get('city')
+
+    return None if city is None else city.strip()
+
 
 @payana_service_generic_exception_handler
 def get_entity_id_header(request):
