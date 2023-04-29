@@ -58,6 +58,19 @@ payana_city_influencers_objects_delete_success_message = "Payana city influencer
 payana_missing_city_influencers_object = "Missing Payana city influencers object in the request body"
 payana_city_header = "city"
 
+# Payana country cities controller constants
+payana_country_cities_write_success_message_post = "Payana country cities object successfully created!"
+payana_country_cities_write_success_message_put = "Payana country cities object successfully updated!"
+payana_country_cities_delete_success_message = "Payana country cities object successfully deleted!"
+payana_country_cities_create_failure_message_post = "Failed to create the Payana country cities object"
+payana_country_cities_delete_failure_message = "Failed to delete the Payana country cities object"
+payana_country_cities_write_failure_message_post = "Failed to update the Payana country cities object"
+payana_country_cities_objects_delete_failure_message = "Failed to delete the Payana country cities object contents"
+payana_country_cities_objects_delete_success_message = "Payana country cities object content successfully deleted!"
+payana_missing_country_cities_object = "Missing Payana country cities object in the request body"
+payana_country_header = "country"
+payana_missing_country_header_exception = "Missing Payana country header in the request body"
+
 # Payana Comments controller constants
 payana_comments_write_success_message_post = "Payana comments object successfully created!"
 payana_comments_write_success_message_put = "Payana comments object successfully updated!"

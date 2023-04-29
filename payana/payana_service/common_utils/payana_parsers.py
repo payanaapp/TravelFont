@@ -8,6 +8,11 @@ from payana.payana_service.constants import payana_service_constants
 from payana.payana_service.common_utils.payana_service_exception_handlers import payana_service_generic_exception_handler
 
 payana_profile_id_header = payana_service_constants.payana_profile_id_header
+payana_entity_id_header = payana_service_constants.payana_entity_id_header
+payana_city_header = payana_service_constants.payana_city_header
+payana_country_header = payana_service_constants.payana_country_header
+payana_comment_id_header = payana_service_constants.payana_comment_id_header
+payana_check_in_id_header = payana_service_constants.payana_check_in_id_header
 
 
 @payana_service_generic_exception_handler
@@ -26,22 +31,30 @@ def payana_profile_id_header_parser():
 @payana_service_generic_exception_handler
 def get_profile_id_header(request):
 
-    profile_id = request.headers.get('profile_id')
+    profile_id = request.headers.get(payana_profile_id_header)
 
     return None if profile_id is None else profile_id.strip()
 
 @payana_service_generic_exception_handler
 def get_city_header(request):
 
-    city = request.headers.get('city')
+    city = request.headers.get(payana_city_header)
 
     return None if city is None else city.strip()
 
 
 @payana_service_generic_exception_handler
+def get_country_header(request):
+
+    country = request.headers.get(payana_country_header)
+
+    return None if country is None else country.strip()
+
+
+@payana_service_generic_exception_handler
 def get_entity_id_header(request):
 
-    entity_id = request.headers.get('entity_id')
+    entity_id = request.headers.get(payana_entity_id_header)
 
     return None if entity_id is None else entity_id.strip()
 
@@ -49,7 +62,7 @@ def get_entity_id_header(request):
 @payana_service_generic_exception_handler
 def get_comment_id_header(request):
 
-    comment_id = request.headers.get('comment_id')
+    comment_id = request.headers.get(payana_comment_id_header)
 
     return None if comment_id is None else comment_id.strip()
 
@@ -57,6 +70,6 @@ def get_comment_id_header(request):
 @payana_service_generic_exception_handler
 def get_checkin_id_header(request):
 
-    checkin_id = request.headers.get('checkin_id')
+    checkin_id = request.headers.get(payana_check_in_id_header)
 
     return None if checkin_id is None else checkin_id.strip()

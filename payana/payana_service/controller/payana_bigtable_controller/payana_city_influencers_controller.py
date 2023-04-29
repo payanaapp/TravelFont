@@ -132,7 +132,7 @@ class PayanaCityInfluencersEndPoint(Resource):
 
 
 @payana_city_influencer_name_space.route("/delete/")
-class PayanaLikesRowDeleteEndPoint(Resource):
+class PayanaCityInfluencersRowDeleteEndPoint(Resource):
     @payana_city_influencer_name_space.doc(responses={200: payana_200_response, 400: payana_400_response, 500: payana_500_response})
     @payana_service_generic_exception_handler
     def delete(self):
@@ -162,7 +162,7 @@ class PayanaLikesRowDeleteEndPoint(Resource):
 
 
 @payana_city_influencer_name_space.route("/delete/values/")
-class PayanaLikesColumnValuesDeleteEndPoint(Resource):
+class PayanaCityInfluencersColumnValuesDeleteEndPoint(Resource):
 
     @payana_city_influencer_name_space.doc(responses={200: payana_200_response, 400: payana_400_response, 500: payana_500_response})
     @payana_service_generic_exception_handler
@@ -199,7 +199,7 @@ class PayanaLikesColumnValuesDeleteEndPoint(Resource):
 
 
 @payana_city_influencer_name_space.route("/delete/cf/")
-class PayanaLikesColumnFamilyDeleteEndPoint(Resource):
+class PayanaCityInfluencersColumnFamilyDeleteEndPoint(Resource):
     @payana_city_influencer_name_space.doc(responses={200: payana_200_response, 400: payana_400_response, 500: payana_500_response})
     @payana_service_generic_exception_handler
     def post(self):
