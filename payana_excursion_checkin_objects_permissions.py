@@ -27,8 +27,9 @@ bigtable_tables_schema_path = bigtable_constants.bigtable_schema_config_file
 payana_bigtable_init(client_config_file_path, bigtable_tables_schema_path)
 
 excursion_permission_obj = {
-    "excursion_id": "123456789",
+    "entity_id": "123456789",
     "participants_list": {"pf_id_1": "1234567", "pf_id_2": "1234567", "pf_id_3": "1234567"},
+    "edit_participants_list": {"pf_id_2": "1234567", "pf_id_3": "1234567"},
     "admin": {"pf_id_1": "1234567"}
 }
 
@@ -37,7 +38,7 @@ payana_excursion_checkin_permission_obj_write_status = payana_excursion_checkin_
 
 print("Payana excursion checkin permission object write status: " + str(payana_excursion_checkin_permission_obj_write_status))
 
-excursion_id = payana_excursion_checkin_permission_obj.excursion_id
+excursion_id = payana_excursion_checkin_permission_obj.entity_id
 payana_excursion_checkin_permission_table = bigtable_constants.payana_excursion_checkin_permission_table
 payana_excursion_checkin_permission_read_obj = PayanaBigTable(payana_excursion_checkin_permission_table)
 excursion_checkin_permission_obj_read = payana_excursion_checkin_permission_read_obj.get_row_dict(

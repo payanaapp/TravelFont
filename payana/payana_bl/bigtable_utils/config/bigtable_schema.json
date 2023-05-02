@@ -22,6 +22,7 @@
     "payana_excursion_checkin_permission_table": {
         "column_family_id": [
             "participants_list",
+            "edit_participants_list",
             "admin"
         ],
         "description": "This table will hold permissions for the excursion/check in objects",
