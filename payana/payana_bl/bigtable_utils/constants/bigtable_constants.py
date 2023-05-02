@@ -310,6 +310,7 @@ payana_country_to_influencers_table_global_influencers_column_family = "country_
 
 # payana_excursion_checkin_permission_table constants
 payana_excursion_checkin_permission_participants_column_family = "participants_list"
+payana_excursion_checkin_permission_edit_participants_column_family = "edit_participants_list"
 payana_excursion_checkin_permission_table_admin_column_family = "admin"
 
 # payana_feed_search_itinerary_cache_table constants

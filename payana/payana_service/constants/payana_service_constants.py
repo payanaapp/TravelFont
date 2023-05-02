@@ -71,6 +71,18 @@ payana_missing_country_cities_object = "Missing Payana country cities object in 
 payana_country_header = "country"
 payana_missing_country_header_exception = "Missing Payana country header in the request body"
 
+# Payana excursion chekc in objects controller constants
+payana_excursion_checkin_objects_permission_write_success_message_post = "Payana excursion checkin permission object successfully created!"
+payana_checkin_objects_permission_write_success_message_put = "Payana excursion checkin permission object successfully updated!"
+payana_checkin_objects_permission_delete_success_message = "Payana excursion checkin permission object successfully deleted!"
+payana_checkin_objects_permission_create_failure_message_post = "Failed to create the Payana excursion checkin permission object"
+payana_checkin_objects_permission_delete_failure_message = "Failed to delete the Payana excursion checkin permission object"
+payana_checkin_objects_permission_write_failure_message_post = "Failed to update the Payana excursion checkin permission object"
+payana_checkin_objects_permission_objects_delete_failure_message = "Failed to delete the Payana excursion checkin permission object contents"
+payana_checkin_objects_permission_objects_delete_success_message = "Payana excursion checkin permission object content successfully deleted!"
+payana_missing_checkin_objects_permission_object = "Missing Payana excursion checkin permission object in the request body"
+payana_missing_checkin_objects_permission_header_exception = "Missing Payana excursion checkin permission header in the request body"
+
 # Payana Comments controller constants
 payana_comments_write_success_message_post = "Payana comments object successfully created!"
 payana_comments_write_success_message_put = "Payana comments object successfully updated!"

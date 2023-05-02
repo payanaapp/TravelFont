@@ -21,15 +21,16 @@ from google.cloud.bigtable import column_family
 class PayanaExcursionCheckinPermissionTable:
 
     @payana_generic_exception_handler
-    def __init__(self, excursion_id, participants_list, admin):
+    def __init__(self, entity_id, participants_list, edit_participants_list, admin):
 
-        self.excursion_id = excursion_id
+        self.entity_id = entity_id
         self.participants_list = participants_list
+        self.edit_participants_list = edit_participants_list
         self.admin = admin
 
         self.payana_excursion_checkin_permission_participants_column_family = bigtable_constants.payana_excursion_checkin_permission_participants_column_family
         self.payana_excursion_checkin_permission_table_admin_column_family = bigtable_constants.payana_excursion_checkin_permission_table_admin_column_family
-
+        self.payana_excursion_checkin_permission_edit_participants_column_family = bigtable_constants.payana_excursion_checkin_permission_edit_participants_column_family
         self.update_bigtable_write_objects = []
 
     @payana_generic_exception_handler
@@ -51,6 +52,7 @@ class PayanaExcursionCheckinPermissionTable:
     def create_bigtable_write_objects(self):
         self.set_admin_write_object()
         self.set_participants_list_write_object()
+        self.set_edit_participants_list_write_object()
 
     @payana_generic_exception_handler
     def set_admin_write_object(self):
@@ -58,7 +60,7 @@ class PayanaExcursionCheckinPermissionTable:
         # excursion_id_list write object
         for admin, timestamp in self.admin.items():
             self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-                self.excursion_id, self.payana_excursion_checkin_permission_table_admin_column_family, admin, timestamp))
+                self.entity_id, self.payana_excursion_checkin_permission_table_admin_column_family, admin, timestamp))
 
     @payana_generic_exception_handler
     def set_participants_list_write_object(self):
@@ -66,4 +68,12 @@ class PayanaExcursionCheckinPermissionTable:
         # participants_list write object
         for participant, timestamp in self.participants_list.items():
             self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-                self.excursion_id, self.payana_excursion_checkin_permission_participants_column_family, participant, timestamp))
+                self.entity_id, self.payana_excursion_checkin_permission_participants_column_family, participant, timestamp))
+
+    @payana_generic_exception_handler
+    def set_edit_participants_list_write_object(self):
+
+        # participants_list write object
+        for edit_participant, timestamp in self.edit_participants_list.items():
+            self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+                self.entity_id, self.payana_excursion_checkin_permission_edit_participants_column_family, edit_participant, timestamp))
