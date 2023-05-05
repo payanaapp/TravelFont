@@ -73,15 +73,28 @@ payana_missing_country_header_exception = "Missing Payana country header in the 
 
 # Payana excursion chekc in objects controller constants
 payana_excursion_checkin_objects_permission_write_success_message_post = "Payana excursion checkin permission object successfully created!"
-payana_checkin_objects_permission_write_success_message_put = "Payana excursion checkin permission object successfully updated!"
-payana_checkin_objects_permission_delete_success_message = "Payana excursion checkin permission object successfully deleted!"
-payana_checkin_objects_permission_create_failure_message_post = "Failed to create the Payana excursion checkin permission object"
-payana_checkin_objects_permission_delete_failure_message = "Failed to delete the Payana excursion checkin permission object"
-payana_checkin_objects_permission_write_failure_message_post = "Failed to update the Payana excursion checkin permission object"
-payana_checkin_objects_permission_objects_delete_failure_message = "Failed to delete the Payana excursion checkin permission object contents"
-payana_checkin_objects_permission_objects_delete_success_message = "Payana excursion checkin permission object content successfully deleted!"
-payana_missing_checkin_objects_permission_object = "Missing Payana excursion checkin permission object in the request body"
-payana_missing_checkin_objects_permission_header_exception = "Missing Payana excursion checkin permission header in the request body"
+payana_excursion_checkin_objects_permission_write_success_message_put = "Payana excursion checkin permission object successfully updated!"
+payana_excursion_checkin_objects_permission_delete_success_message = "Payana excursion checkin permission object successfully deleted!"
+payana_excursion_checkin_objects_permission_create_failure_message_post = "Failed to create the Payana excursion checkin permission object"
+payana_excursion_checkin_objects_permission_delete_failure_message = "Failed to delete the Payana excursion checkin permission object"
+payana_excursion_checkin_objects_permission_write_failure_message_post = "Failed to update the Payana excursion checkin permission object"
+payana_excursion_checkin_objects_permission_objects_delete_failure_message = "Failed to delete the Payana excursion checkin permission object contents"
+payana_excursion_checkin_objects_permission_objects_delete_success_message = "Payana excursion checkin permission object content successfully deleted!"
+payana_missing_excursion_checkin_objects_permission_object = "Missing Payana excursion checkin permission object in the request body"
+payana_missing_excursion_checkin_objects_permission_header_exception = "Missing Payana excursion checkin permission header in the request body"
+
+# Payana excursion objects controller constants
+payana_excursion_objects_write_success_message_post = "Payana excursion checkin permission object successfully created!"
+payana_excursion_objects_write_success_message_put = "Payana excursion checkin permission object successfully updated!"
+payana_excursion_objects_delete_success_message = "Payana excursion checkin permission object successfully deleted!"
+payana_excursion_objects_create_failure_message_post = "Failed to create the Payana excursion checkin permission object"
+payana_excursion_objects_delete_failure_message = "Failed to delete the Payana excursion checkin permission object"
+payana_excursion_objects_write_failure_message_post = "Failed to update the Payana excursion checkin permission object"
+payana_excursion_objects_values_delete_failure_message = "Failed to delete the Payana excursion checkin permission object contents"
+payana_excursion_objects_values_delete_success_message = "Payana excursion checkin permission object content successfully deleted!"
+payana_missing_excursion_object = "Missing Payana excursion checkin permission object in the request body"
+payana_missing_excursion_objects_header_exception = "Missing Payana excursion checkin permission header in the request body"
+payana_excursion_id_header = "excursion_id"
 
 # Payana Comments controller constants
 payana_comments_write_success_message_post = "Payana comments object successfully created!"

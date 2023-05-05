@@ -18,13 +18,13 @@ payana_excursion_checkin_objects_permission_name_space = Namespace(
     'edit/permission', description='Manage the edit permissions of the excursion guide participants')
 
 payana_excursion_checkin_objects_permission_write_success_message_post = payana_service_constants.payana_excursion_checkin_objects_permission_write_success_message_post
-payana_checkin_objects_permission_write_success_message_put = payana_service_constants.payana_checkin_objects_permission_write_success_message_put
-payana_checkin_objects_permission_write_failure_message_post = payana_service_constants.payana_checkin_objects_permission_write_failure_message_post
-payana_checkin_objects_permission_create_failure_message_post = payana_service_constants.payana_checkin_objects_permission_create_failure_message_post
-payana_checkin_objects_permission_delete_failure_message = payana_service_constants.payana_checkin_objects_permission_delete_failure_message
-payana_checkin_objects_permission_objects_delete_success_message = payana_service_constants.payana_checkin_objects_permission_objects_delete_success_message
-payana_checkin_objects_permission_objects_delete_failure_message = payana_service_constants.payana_checkin_objects_permission_objects_delete_failure_message
-payana_checkin_objects_permission_delete_success_message = payana_service_constants.payana_checkin_objects_permission_delete_success_message
+payana_excursion_checkin_objects_permission_write_success_message_put = payana_service_constants.payana_excursion_checkin_objects_permission_write_success_message_put
+payana_excursion_checkin_objects_permission_write_failure_message_post = payana_service_constants.payana_excursion_checkin_objects_permission_write_failure_message_post
+payana_excursion_checkin_objects_permission_create_failure_message_post = payana_service_constants.payana_excursion_checkin_objects_permission_create_failure_message_post
+payana_excursion_checkin_objects_permission_delete_failure_message = payana_service_constants.payana_excursion_checkin_objects_permission_delete_failure_message
+payana_excursion_checkin_objects_permission_delete_success_message = payana_service_constants.payana_excursion_checkin_objects_permission_delete_success_message
+payana_excursion_checkin_objects_permission_objects_delete_failure_message = payana_service_constants.payana_excursion_checkin_objects_permission_objects_delete_failure_message
+payana_excursion_checkin_objects_permission_objects_delete_success_message = payana_service_constants.payana_excursion_checkin_objects_permission_objects_delete_success_message
 
 status = payana_service_constants.status
 message = payana_service_constants.message
@@ -43,8 +43,8 @@ payana_201 = payana_service_constants.payana_201
 payana_400 = payana_service_constants.payana_400
 payana_500 = payana_service_constants.payana_500
 
-payana_missing_checkin_objects_permission_header_exception = payana_service_constants.payana_missing_checkin_objects_permission_header_exception
-payana_missing_checkin_objects_permission_object = payana_service_constants.payana_missing_checkin_objects_permission_object
+payana_missing_excursion_checkin_objects_permission_header_exception = payana_service_constants.payana_missing_excursion_checkin_objects_permission_header_exception
+payana_missing_excursion_checkin_objects_permission_object = payana_service_constants.payana_missing_excursion_checkin_objects_permission_object
 payana_excursion_checkin_permission_table = bigtable_constants.payana_excursion_checkin_permission_table
 
 
@@ -59,7 +59,7 @@ class PayanaExcursionObjectPermissionEndPoint(Resource):
 
         if entity_id is None or len(entity_id) == 0:
             raise KeyError(
-                payana_missing_checkin_objects_permission_header_exception, payana_excursion_checkin_objects_permission_name_space)
+                payana_missing_excursion_checkin_objects_permission_header_exception, payana_excursion_checkin_objects_permission_name_space)
 
         payana_excursion_checkin_permission_read_obj = PayanaBigTable(
             payana_excursion_checkin_permission_table)
@@ -83,7 +83,7 @@ class PayanaExcursionObjectPermissionEndPoint(Resource):
 
         if entity_id is None or len(entity_id) == 0:
             raise KeyError(
-                payana_missing_checkin_objects_permission_header_exception, payana_excursion_checkin_objects_permission_name_space)
+                payana_missing_excursion_checkin_objects_permission_header_exception, payana_excursion_checkin_objects_permission_name_space)
 
         profile_excursion_checkin_permission_read_obj = request.json
 
@@ -93,7 +93,7 @@ class PayanaExcursionObjectPermissionEndPoint(Resource):
 
         if not payana_excursion_checkin_permission_obj_write_status:
             raise Exception(
-                payana_checkin_objects_permission_create_failure_message_post, payana_excursion_checkin_objects_permission_name_space)
+                payana_excursion_checkin_objects_permission_create_failure_message_post, payana_excursion_checkin_objects_permission_name_space)
 
         return {
             status: payana_201_response,
@@ -110,7 +110,7 @@ class PayanaExcursionObjectPermissionEndPoint(Resource):
 
         if entity_id is None or len(entity_id) == 0:
             raise KeyError(
-                payana_missing_checkin_objects_permission_header_exception, payana_excursion_checkin_objects_permission_name_space)
+                payana_missing_excursion_checkin_objects_permission_header_exception, payana_excursion_checkin_objects_permission_name_space)
 
         profile_excursion_checkin_permission_read_obj = request.json
 
@@ -120,12 +120,12 @@ class PayanaExcursionObjectPermissionEndPoint(Resource):
 
         if not payana_excursion_checkin_permission_obj_write_status:
             raise Exception(
-                payana_checkin_objects_permission_create_failure_message_post, payana_excursion_checkin_objects_permission_name_space)
+                payana_excursion_checkin_objects_permission_create_failure_message_post, payana_excursion_checkin_objects_permission_name_space)
 
         return {
             status: payana_200_response,
             payana_entity_id_header: entity_id,
-            message: payana_checkin_objects_permission_write_success_message_put,
+            message: payana_excursion_checkin_objects_permission_write_success_message_put,
             status_code: payana_200
         }, payana_200
 
@@ -140,7 +140,7 @@ class PayanaExcursionObjectPermissionRowDeleteEndPoint(Resource):
 
         if entity_id is None or len(entity_id) == 0:
             raise KeyError(
-                payana_missing_checkin_objects_permission_header_exception, payana_excursion_checkin_objects_permission_name_space)
+                payana_missing_excursion_checkin_objects_permission_header_exception, payana_excursion_checkin_objects_permission_name_space)
 
         profile_excursion_checkin_permission_read_obj = PayanaBigTable(
             payana_excursion_checkin_permission_table)
@@ -150,12 +150,12 @@ class PayanaExcursionObjectPermissionRowDeleteEndPoint(Resource):
 
         if not payana_excursion_checkin_permission_obj_delete_status:
             raise Exception(
-                payana_checkin_objects_permission_delete_failure_message, payana_excursion_checkin_objects_permission_name_space)
+                payana_excursion_checkin_objects_permission_delete_failure_message, payana_excursion_checkin_objects_permission_name_space)
 
         return {
             status: payana_200_response,
             payana_entity_id_header: entity_id,
-            message: payana_checkin_objects_permission_objects_delete_success_message,
+            message: payana_excursion_checkin_objects_permission_delete_success_message,
             status_code: payana_200
         }, payana_200
 
@@ -171,28 +171,28 @@ class PayanaExcursionObjectPermissionColumnValuesDeleteEndPoint(Resource):
 
         if entity_id is None or len(entity_id) == 0:
             raise KeyError(
-                payana_missing_checkin_objects_permission_header_exception, payana_excursion_checkin_objects_permission_name_space)
+                payana_missing_excursion_checkin_objects_permission_header_exception, payana_excursion_checkin_objects_permission_name_space)
 
         payana_excursion_checkin_permission_object = request.json
 
         if payana_excursion_checkin_permission_object is None:
-            raise KeyError(payana_missing_checkin_objects_permission_object,
+            raise KeyError(payana_missing_excursion_checkin_objects_permission_object,
                            payana_excursion_checkin_objects_permission_name_space)
 
-        payana_country_city_read_obj = PayanaBigTable(
+        payana_excursion_checkin_permission_read_obj = PayanaBigTable(
             payana_excursion_checkin_permission_table)
         
-        payana_excursion_checkin_permission_obj_delete_status = payana_country_city_read_obj.delete_bigtable_row_column_list(
+        payana_excursion_checkin_permission_obj_delete_status = payana_excursion_checkin_permission_read_obj.delete_bigtable_row_column_list(
             entity_id, payana_excursion_checkin_permission_object)
 
         if not payana_excursion_checkin_permission_obj_delete_status:
             raise Exception(
-                payana_checkin_objects_permission_objects_delete_failure_message, payana_excursion_checkin_objects_permission_name_space)
+                payana_excursion_checkin_objects_permission_objects_delete_failure_message, payana_excursion_checkin_objects_permission_name_space)
 
         return {
             status: payana_200_response,
             payana_entity_id_header: entity_id,
-            message: payana_checkin_objects_permission_delete_success_message,
+            message: payana_excursion_checkin_objects_permission_objects_delete_success_message,
             status_code: payana_200
         }, payana_200
 
@@ -207,12 +207,12 @@ class PayanaExcursionObjectPermissionColumnFamilyDeleteEndPoint(Resource):
 
         if entity_id is None or len(entity_id) == 0:
             raise KeyError(
-                payana_missing_checkin_objects_permission_header_exception, payana_excursion_checkin_objects_permission_name_space)
+                payana_missing_excursion_checkin_objects_permission_header_exception, payana_excursion_checkin_objects_permission_name_space)
             
         payana_excursion_checkin_permission_object = request.json
 
         if payana_excursion_checkin_permission_object is None:
-            raise KeyError(payana_missing_checkin_objects_permission_object,
+            raise KeyError(payana_missing_excursion_checkin_objects_permission_object,
                            payana_excursion_checkin_objects_permission_name_space)
 
         payana_excursion_checkin_permission_read_obj = PayanaBigTable(
@@ -228,11 +228,11 @@ class PayanaExcursionObjectPermissionColumnFamilyDeleteEndPoint(Resource):
 
             if not payana_excursion_checkin_permission_obj_delete_status:
                 raise Exception(
-                    payana_checkin_objects_permission_objects_delete_failure_message, payana_excursion_checkin_objects_permission_name_space)
+                    payana_excursion_checkin_objects_permission_objects_delete_failure_message, payana_excursion_checkin_objects_permission_name_space)
 
         return {
             status: payana_200_response,
             payana_entity_id_header: entity_id,
-            message: payana_checkin_objects_permission_delete_success_message,
+            message: payana_excursion_checkin_objects_permission_objects_delete_success_message,
             status_code: payana_200
         }, payana_200
