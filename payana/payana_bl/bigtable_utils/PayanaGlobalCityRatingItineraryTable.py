@@ -47,7 +47,8 @@ class PayanaGlobalCityRatingItineraryTable:
     @payana_generic_exception_handler
     def generate_row_id(self):
 
-        self.row_id = self.city + "##" + self.current_year
+        # self.row_id = self.city + "##" + self.current_year
+        self.row_id = self.city
 
     @payana_generic_exception_handler
     def update_global_city_itinerary_bigtable(self):
