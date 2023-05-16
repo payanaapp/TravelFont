@@ -318,6 +318,7 @@ payana_feed_search_itinerary_cache_excursion_id_column_family = "excursion_id"
 payana_feed_search_itinerary_cache_activity_guide_id_column_family = "activity_guide_id"
 payana_feed_search_itinerary_cache_rating_column_family = "rating"
 payana_feed_search_itinerary_cache_timestamp_column_family = "timestamp"
+payana_feed_search_itinerary_cache_profile_id = "profile_id"
 
 # payana_profile_to_search_cities_activities_table constants
 payana_profile_to_search_places_activities_searched_cities_activities = "searched_cities_activities"
