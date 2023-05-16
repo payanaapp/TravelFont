@@ -40,13 +40,11 @@ def payana_service_generic_exception_handler(func):
             
             name_space.abort(
                 400, exc_message, status=payana_400_response, statusCode="400")
+            
         except Exception as exc:
             exc_log_message = f"{func.__name__} : " + str(exc)
             print(exc_log_message)
             
-            return {'message': str(exc)}, payana_500
-            
-            # name_space.abort(
-            #     500, exc_message, status=payana_500_response, statusCode="500")          
+            return {'message': str(exc)}, payana_500        
 
     return inner_function

@@ -217,7 +217,7 @@ class PayanaGlobalCityRatingItineraryObjectColumnFamilyDeleteEndPoint(Resource):
             raise KeyError(payana_missing_global_city_rating_itinerary_object,
                            payana_global_city_itinerary_rating_name_space)
 
-        payana_global_city_rating_itinerary_checkin_permission_read_obj = PayanaBigTable(
+        payana_global_city_rating_itinerary_read_obj = PayanaBigTable(
             payana_global_city_itinerary_table)
 
         for column_family, _ in payana_global_city_rating_itinerary_object.items():
@@ -225,7 +225,7 @@ class PayanaGlobalCityRatingItineraryObjectColumnFamilyDeleteEndPoint(Resource):
             payana_global_city_rating_itinerary_delete_wrapper = bigtable_write_object_wrapper(
                 city, column_family, "", "")
 
-            payana_global_city_rating_itinerary_obj_delete_status = payana_global_city_rating_itinerary_checkin_permission_read_obj.delete_bigtable_row_column_family_cells(
+            payana_global_city_rating_itinerary_obj_delete_status = payana_global_city_rating_itinerary_read_obj.delete_bigtable_row_column_family_cells(
                 payana_global_city_rating_itinerary_delete_wrapper)
 
             if not payana_global_city_rating_itinerary_obj_delete_status:

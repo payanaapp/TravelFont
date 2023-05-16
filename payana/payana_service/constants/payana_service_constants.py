@@ -109,6 +109,19 @@ payana_missing_global_city_rating_itinerary_object = "Missing Payana global city
 payana_missing_global_city_rating_itinerary_objects_header_exception = "Missing Payana global city itinerary rating header in the request body"
 payana_global_city_rating_itinerary_id_header = "city"
 
+# Payana global influencer feed search itinerary cache controller constants
+payana_global_influencers_feed_search_itinerary_cache_objects_write_success_message_post = "Payana global influencers feed search itinerary cache object successfully created!"
+payana_global_influencers_feed_search_itinerary_cache_objects_write_success_message_put = "Payana global influencers feed search itinerary cache object successfully updated!"
+payana_global_influencers_feed_search_itinerary_cache_objects_delete_success_message = "Payana influencers feed search itinerary cache object successfully deleted!"
+payana_global_influencers_feed_search_itinerary_cache_objects_create_failure_message_post = "Failed to create the Payana influencers feed search itinerary cache object"
+payana_global_influencers_feed_search_itinerary_cache_objects_delete_failure_message = "Failed to delete the Payana influencers feed search itinerary cache object"
+payana_global_influencers_feed_search_itinerary_cache_objects_write_failure_message_post = "Failed to update the Payana influencers feed search itinerary cache object"
+payana_global_influencers_feed_search_itinerary_cache_objects_values_delete_failure_message = "Failed to delete the Payana influencers feed search itinerary cache object contents"
+payana_global_influencers_feed_search_itinerary_cache_objects_values_delete_success_message = "Payana influencers feed search itinerary cache content successfully deleted!"
+payana_missing_influencers_feed_search_itinerary_cache_itinerary_object = "Missing Payana influencers feed search itinerary cache object in the request body"
+payana_missing_influencers_feed_search_itinerary_cache_objects_header_exception = "Missing Payana influencers feed search itinerary cache header in the request body"
+payana_influencers_feed_search_itinerary_profile_id_header = "profile_id"
+
 # Payana Comments controller constants
 payana_comments_write_success_message_post = "Payana comments object successfully created!"
 payana_comments_write_success_message_put = "Payana comments object successfully updated!"
