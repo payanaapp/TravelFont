@@ -71,6 +71,19 @@ payana_missing_country_cities_object = "Missing Payana country cities object in 
 payana_country_header = "country"
 payana_missing_country_header_exception = "Missing Payana country header in the request body"
 
+# Payana neighboring cities controller constants
+payana_neighboring_cities_write_success_message_post = "Payana neighboring cities object successfully created!"
+payana_neighboring_cities_write_success_message_put = "Payana neighboring cities object successfully updated!"
+payana_neighboring_cities_delete_success_message = "Payana neighboring cities object successfully deleted!"
+payana_neighboring_cities_create_failure_message_post = "Failed to create the Payana neighboring cities object"
+payana_neighboring_cities_delete_failure_message = "Failed to delete the Payana neighboring cities object"
+payana_neighboring_cities_write_failure_message_post = "Failed to update the Payana neighboring cities object"
+payana_neighboring_cities_objects_delete_failure_message = "Failed to delete the Payana neighboring cities object contents"
+payana_neighboring_cities_objects_delete_success_message = "Payana neighboring cities object content successfully deleted!"
+payana_neighboring_cities_missing_object = "Missing Payana neighboring cities object in the request body"
+payana_neighboring_city_header = "city"
+payana_neighboring_country_header_exception = "Missing Payana neighboring cities header in the request body"
+
 # Payana excursion chekc in objects controller constants
 payana_excursion_checkin_objects_permission_write_success_message_post = "Payana excursion checkin permission object successfully created!"
 payana_excursion_checkin_objects_permission_write_success_message_put = "Payana excursion checkin permission object successfully updated!"
