@@ -46,6 +46,18 @@ payana_likes_objects_delete_success_message = "Payana likes object content succe
 payana_missing_likes_object = "Missing Payana likes object in the request body"
 payana_entity_id_header = "entity_id"
 
+# Payana Travel Buddy controller constants
+payana_travel_buddy_write_success_message_post = "Payana travel buddy object successfully created!"
+payana_travel_buddy_write_success_message_put = "Payana travel buddy object successfully updated!"
+payana_travel_buddy_delete_success_message = "Payana travel buddy object successfully deleted!"
+payana_travel_buddy_create_failure_message_post = "Failed to create the Payana travel buddy object"
+payana_travel_buddy_delete_failure_message = "Failed to delete the Payana travel buddy object"
+payana_travel_buddy_write_failure_message_post = "Failed to update the Payana travel buddy object"
+payana_travel_buddy_objects_delete_failure_message = "Failed to delete the Payana travel buddy object contents"
+payana_travel_buddy_objects_delete_success_message = "Payana travel buddy object content successfully deleted!"
+payana_missing_travel_buddy_object = "Missing Payana travel buddy object in the request body"
+payana_missing_travel_buddy_profile_id_header_exception = "Missing Payana travel buddy object header in the request body"
+
 # Payana City Influencer controller constants
 payana_city_influencers_write_success_message_post = "Payana city influencers object successfully created!"
 payana_city_influencers_write_success_message_put = "Payana city influencers object successfully updated!"
@@ -82,7 +94,7 @@ payana_neighboring_cities_objects_delete_failure_message = "Failed to delete the
 payana_neighboring_cities_objects_delete_success_message = "Payana neighboring cities object content successfully deleted!"
 payana_neighboring_cities_missing_object = "Missing Payana neighboring cities object in the request body"
 payana_neighboring_city_header = "city"
-payana_neighboring_country_header_exception = "Missing Payana neighboring cities header in the request body"
+payana_missing_neighboring_cities_header_exception = "Missing Payana neighboring cities header in the request body"
 
 # Payana excursion chekc in objects controller constants
 payana_excursion_checkin_objects_permission_write_success_message_post = "Payana excursion checkin permission object successfully created!"
