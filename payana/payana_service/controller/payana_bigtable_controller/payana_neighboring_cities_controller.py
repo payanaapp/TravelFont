@@ -43,7 +43,7 @@ payana_201 = payana_service_constants.payana_201
 payana_400 = payana_service_constants.payana_400
 payana_500 = payana_service_constants.payana_500
 
-payana_neighboring_country_header_exception = payana_service_constants.payana_neighboring_country_header_exception
+payana_missing_neighboring_cities_header_exception = payana_service_constants.payana_missing_neighboring_cities_header_exception
 payana_neighboring_cities_missing_object = payana_service_constants.payana_neighboring_cities_missing_object
 payana_neighboring_cities_table = bigtable_constants.payana_neighboring_cities_table
 
@@ -59,7 +59,7 @@ class PayanaNeighboringCityEndPoint(Resource):
 
         if city is None or len(city) == 0:
             raise KeyError(
-                payana_neighboring_country_header_exception, payana_neighboring_cities_name_space)
+                payana_missing_neighboring_cities_header_exception, payana_neighboring_cities_name_space)
 
         payana_neighboring_city_read_obj = PayanaBigTable(
             payana_neighboring_cities_table)
@@ -83,7 +83,7 @@ class PayanaNeighboringCityEndPoint(Resource):
 
         if city is None or len(city) == 0:
             raise KeyError(
-                payana_neighboring_country_header_exception, payana_neighboring_cities_name_space)
+                payana_missing_neighboring_cities_header_exception, payana_neighboring_cities_name_space)
 
         profile_neighboring_city_read_obj = request.json
 
@@ -110,7 +110,7 @@ class PayanaNeighboringCityEndPoint(Resource):
 
         if city is None or len(city) == 0:
             raise KeyError(
-                payana_neighboring_country_header_exception, payana_neighboring_cities_name_space)
+                payana_missing_neighboring_cities_header_exception, payana_neighboring_cities_name_space)
 
         profile_neighboring_city_read_obj = request.json
 
@@ -140,7 +140,7 @@ class PayanaNeighboringCityRowDeleteEndPoint(Resource):
 
         if city is None or len(city) == 0:
             raise KeyError(
-                payana_neighboring_country_header_exception, payana_neighboring_cities_name_space)
+                payana_missing_neighboring_cities_header_exception, payana_neighboring_cities_name_space)
 
         profile_neighboring_city_read_obj = PayanaBigTable(
             payana_neighboring_cities_table)
@@ -171,7 +171,7 @@ class PayanaNeighboringCityColumnValuesDeleteEndPoint(Resource):
 
         if city is None or len(city) == 0:
             raise KeyError(
-                payana_neighboring_country_header_exception, payana_neighboring_cities_name_space)
+                payana_missing_neighboring_cities_header_exception, payana_neighboring_cities_name_space)
 
         payana_neighboring_city_object = request.json
 
@@ -207,7 +207,7 @@ class PayanaLNeighboringCityColumnFamilyDeleteEndPoint(Resource):
 
         if city is None or len(city) == 0:
             raise KeyError(
-                payana_neighboring_country_header_exception, payana_neighboring_cities_name_space)
+                payana_missing_neighboring_cities_header_exception, payana_neighboring_cities_name_space)
             
         payana_neighboring_city_object = request.json
 
