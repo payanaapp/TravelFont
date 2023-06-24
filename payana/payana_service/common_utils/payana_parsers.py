@@ -15,7 +15,7 @@ payana_country_header = payana_service_constants.payana_country_header
 payana_comment_id_header = payana_service_constants.payana_comment_id_header
 payana_check_in_id_header = payana_service_constants.payana_check_in_id_header
 payana_excursion_id_header = payana_service_constants.payana_excursion_id_header
-
+payana_friend_id_header = payana_service_constants.payana_friend_id_header
 
 @payana_service_generic_exception_handler
 def payana_profile_id_header_parser():
@@ -36,6 +36,13 @@ def get_profile_id_header(request):
     profile_id = request.headers.get(payana_profile_id_header)
 
     return None if profile_id is None else profile_id.strip()
+
+@payana_service_generic_exception_handler
+def get_friend_id_header(request):
+
+    friend_id = request.headers.get(payana_friend_id_header)
+
+    return None if friend_id is None else friend_id.strip()
 
 @payana_service_generic_exception_handler
 def get_city_header(request):

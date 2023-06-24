@@ -57,6 +57,7 @@ payana_travel_buddy_objects_delete_failure_message = "Failed to delete the Payan
 payana_travel_buddy_objects_delete_success_message = "Payana travel buddy object content successfully deleted!"
 payana_missing_travel_buddy_object = "Missing Payana travel buddy object in the request body"
 payana_missing_travel_buddy_profile_id_header_exception = "Missing Payana travel buddy object header in the request body"
+payana_friend_id_header = "friend_id"
 
 # Payana City Influencer controller constants
 payana_city_influencers_write_success_message_post = "Payana city influencers object successfully created!"
