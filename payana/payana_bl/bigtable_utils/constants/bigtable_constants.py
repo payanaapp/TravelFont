@@ -180,6 +180,7 @@ payana_travel_buddy_table_column_family_global_influencer = "global_influencer"
 payana_travel_buddy_table_column_family_favorite = "favorite"
 payana_travel_buddy_table_column_family_sent_pending_request = "sent_pending_request"
 payana_travel_buddy_table_column_family_received_pending_request = "received_pending_request"
+payana_travel_buddy_table_friend_id = "friend_id"
 
 # Payana Metadata Table constants
 payana_quantifier_place_id = "place_id"

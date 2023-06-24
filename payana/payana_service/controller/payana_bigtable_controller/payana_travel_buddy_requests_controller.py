@@ -5,7 +5,7 @@ import json
 from payana.payana_service.server import service_settings
 from payana.payana_bl.bigtable_utils.bigtable_read_write_object_wrapper import bigtable_write_object_wrapper
 from payana.payana_service.constants import payana_service_constants
-from payana.payana_service.common_utils.payana_parsers import payana_profile_id_header_parser, get_profile_id_header
+from payana.payana_service.common_utils.payana_parsers import payana_profile_id_header_parser, get_profile_id_header, get_friend_id_header
 from payana.payana_service.common_utils.payana_service_exception_handlers import payana_service_generic_exception_handler
 from payana.payana_bl.bigtable_utils.bigtable_read_write_object_wrapper import bigtable_read_row_key_wrapper
 from payana.payana_bl.bigtable_utils.PayanaTravelBuddyTable import PayanaTravelBuddyTable
@@ -49,6 +49,7 @@ payana_missing_travel_buddy_profile_id_header_exception = payana_service_constan
 payana_missing_travel_buddy_object = payana_service_constants.payana_missing_travel_buddy_object
 
 payana_travel_buddy_list_table = bigtable_constants.payana_travel_buddy_list_table
+payana_travel_buddy_table_column_family_travel_buddy_list = bigtable_constants.payana_travel_buddy_table_column_family_travel_buddy_list
 
 
 @profile_travel_buddy_name_space.route("/")
@@ -247,3 +248,35 @@ class PayanaTravelBuddyTableColumnFamilyDeleteEndPoint(Resource):
             message: payana_travel_buddy_objects_delete_success_message,
             status_code: payana_200
         }, payana_200
+
+@profile_travel_buddy_name_space.route("/tag/")
+class PayanaTravelBuddyTableColumnFamilyDeleteEndPoint(Resource):
+    @profile_travel_buddy_name_space.doc(responses={200: payana_200_response, 400: payana_400_response, 500: payana_500_response})
+    @payana_service_generic_exception_handler
+    def get(self):
+
+        profile_id = get_profile_id_header(request)
+        friend_id = get_friend_id_header(request)
+        
+        if profile_id is None or len(profile_id) == 0:
+            raise KeyError(
+                payana_missing_travel_buddy_profile_id_header_exception, profile_travel_buddy_name_space)
+            
+        if friend_id is None or len(friend_id) == 0:
+            raise KeyError(
+                payana_missing_travel_buddy_profile_id_header_exception, profile_travel_buddy_name_space)
+
+        payana_travel_buddy_read_obj = PayanaBigTable(
+            payana_travel_buddy_list_table)
+
+        row_key = str(profile_id)
+        buddy_regex = str(friend_id)
+        
+        payana_travel_buddy_read_obj_dict = payana_travel_buddy_read_obj.get_row_cells_column_qualifier(
+            row_key, buddy_regex, include_column_family=True)
+
+        if len(payana_travel_buddy_read_obj_dict) == 0:
+            raise KeyError(payana_empty_row_read_exception,
+                           profile_travel_buddy_name_space)
+
+        return payana_travel_buddy_read_obj_dict[profile_id][payana_travel_buddy_table_column_family_travel_buddy_list], payana_200

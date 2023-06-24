@@ -35,6 +35,7 @@ payana_travel_buddy_table_column_family_pending_received_requests_travel_buddy_l
 payana_travel_buddy_table_column_family_pending_sent_requests_travel_buddy_list = bigtable_constants.payana_travel_buddy_table_column_family_pending_sent_requests_travel_buddy_list
 
 payana_travel_buddy_table_column_family_profile_id = bigtable_constants.payana_travel_buddy_table_column_family_profile_id
+payana_travel_buddy_table_friend_id = bigtable_constants.payana_travel_buddy_table_friend_id
 payana_travel_buddy_table_column_family_travel_buddy_profile_id = bigtable_constants.payana_travel_buddy_table_column_family_travel_buddy_profile_id
 payana_travel_buddy_table_column_family_global_influencer = bigtable_constants.payana_travel_buddy_table_column_family_global_influencer
 payana_travel_buddy_table_column_family_favorite = bigtable_constants.payana_travel_buddy_table_column_family_favorite
@@ -108,6 +109,33 @@ profile_travel_buddy_response = response.json()
 print("Profile travel buddy creation verification status: " +
       str(travel_buddy_profile_id in profile_travel_buddy_response[profile_id][payana_travel_buddy_table_column_family_travel_buddy_list]))
 
+# GET friend tag
+# CURL request
+"""
+curl --location 'http://localhost:8888/profile/travelbuddy/tag/' \
+--header 'Content-Type: application/json' \
+--header 'profile_id: 1234567' \
+--header 'friend_id: 456.*'
+"""
+friend_id = "456.*"
+travel_buddy_profile_id = "456789"
+
+url = "http://localhost:8888/profile/travelbuddy/tag/"
+
+headers = {payana_travel_buddy_table_column_family_profile_id: profile_id,
+           payana_travel_buddy_table_friend_id: friend_id,
+           'Content-Type': 'application/json'}
+
+response = requests.get(url, headers=headers)
+
+print("Profile travel buddy read regex friend comments tag status: " +
+      str(response.status_code == 200))
+
+profile_travel_buddy_response = response.json()
+
+print("Profile travel buddy regex friend comments tag verification status: " +
+      str(travel_buddy_profile_id in profile_travel_buddy_response))
+
 
 # Edit travel buddy object
 """
@@ -135,12 +163,14 @@ profile_travel_buddy_json = {
 }
 
 new_travel_buddy_profile_id = "456789123"
+url = "http://localhost:8888/profile/travelbuddy/"
 
-headers = {'Content-Type': 'application/json', 'profile_id': profile_id}
+headers = {'Content-Type': 'application/json', payana_travel_buddy_table_column_family_profile_id: profile_id}
 
 response = requests.put(url, data=json.dumps(
     profile_travel_buddy_json), headers=headers)
 
+print(response.status_code)
 print("Profile travel buddy update status: " + str(response.status_code == 200))
 
 
@@ -158,7 +188,8 @@ headers = {payana_travel_buddy_table_column_family_profile_id: profile_id,
 
 response = requests.get(url, headers=headers)
 
-print("Profile travel buddy update read status: " + str(response.status_code == 200))
+print("Profile travel buddy update read status: " +
+      str(response.status_code == 200))
 
 profile_travel_buddy_response = response.json()
 
