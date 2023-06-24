@@ -96,6 +96,32 @@ payana_neighboring_cities_missing_object = "Missing Payana neighboring cities ob
 payana_neighboring_city_header = "city"
 payana_missing_neighboring_cities_header_exception = "Missing Payana neighboring cities header in the request body"
 
+# Payana autocomplete cities controller constants
+payana_autocomplete_cities_write_success_message_post = "Payana autocomplete cities object successfully created!"
+payana_autocomplete_cities_write_success_message_put = "Payana autocomplete cities object successfully updated!"
+payana_autocomplete_cities_delete_success_message = "Payana autocomplete cities object successfully deleted!"
+payana_autocomplete_cities_create_failure_message_post = "Failed to create the Payana autocomplete cities object"
+payana_autocomplete_cities_delete_failure_message = "Failed to delete the Payana autocomplete cities object"
+payana_autocomplete_cities_write_failure_message_post = "Failed to update the Payana autocomplete cities object"
+payana_autocomplete_cities_objects_delete_failure_message = "Failed to delete the Payana autocomplete cities object contents"
+payana_autocomplete_cities_objects_delete_success_message = "Payana autocomplete cities object content successfully deleted!"
+payana_autocomplete_cities_missing_object = "Missing Payana autocomplete cities object in the request body"
+payana_autocomplete_city_header = "city"
+payana_missing_autocomplete_cities_header_exception = "Missing Payana autocomplete cities header in the request body"
+
+# Payana autocomplete users controller constants
+payana_autocomplete_users_write_success_message_post = "Payana autocomplete users object successfully created!"
+payana_autocomplete_users_write_success_message_put = "Payana autocomplete users object successfully updated!"
+payana_autocomplete_users_delete_success_message = "Payana autocomplete users object successfully deleted!"
+payana_autocomplete_users_create_failure_message_post = "Failed to create the Payana autocomplete users object"
+payana_autocomplete_users_delete_failure_message = "Failed to delete the Payana autocomplete users object"
+payana_autocomplete_users_write_failure_message_post = "Failed to update the Payana autocomplete users object"
+payana_autocomplete_users_objects_delete_failure_message = "Failed to delete the Payana autocomplete users object contents"
+payana_autocomplete_users_objects_delete_success_message = "Payana autocomplete users object content successfully deleted!"
+payana_autocomplete_users_missing_object = "Missing Payana autocomplete users object in the request body"
+payana_autocomplete_users_header = "user"
+payana_missing_autocomplete_users_header_exception = "Missing Payana autocomplete users header in the request body"
+
 # Payana excursion chekc in objects controller constants
 payana_excursion_checkin_objects_permission_write_success_message_post = "Payana excursion checkin permission object successfully created!"
 payana_excursion_checkin_objects_permission_write_success_message_put = "Payana excursion checkin permission object successfully updated!"
