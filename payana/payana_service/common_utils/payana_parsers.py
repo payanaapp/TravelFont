@@ -10,10 +10,12 @@ from payana.payana_service.common_utils.payana_service_exception_handlers import
 payana_profile_id_header = payana_service_constants.payana_profile_id_header
 payana_entity_id_header = payana_service_constants.payana_entity_id_header
 payana_city_header = payana_service_constants.payana_city_header
+payana_user_header = payana_service_constants.payana_autocomplete_users_header
 payana_country_header = payana_service_constants.payana_country_header
 payana_comment_id_header = payana_service_constants.payana_comment_id_header
 payana_check_in_id_header = payana_service_constants.payana_check_in_id_header
 payana_excursion_id_header = payana_service_constants.payana_excursion_id_header
+
 
 @payana_service_generic_exception_handler
 def payana_profile_id_header_parser():
@@ -41,6 +43,13 @@ def get_city_header(request):
     city = request.headers.get(payana_city_header)
 
     return None if city is None else city.strip()
+
+@payana_service_generic_exception_handler
+def get_user_header(request):
+
+    user = request.headers.get(payana_user_header)
+
+    return None if user is None else user.strip()
 
 
 @payana_service_generic_exception_handler

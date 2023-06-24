@@ -19,5 +19,5 @@ def payana_bigtable_delete_status_handler(response):
             
     if response.code != 0: # 0 is success -- 200
         return False
-        
+    
     return True

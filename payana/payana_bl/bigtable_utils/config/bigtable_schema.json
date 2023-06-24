@@ -588,5 +588,21 @@
         "description": "This table will hold all the cities and activities searched by a given user",
         "purpose": "This table will hold all the cities and activities searched by a given user",
         "max_versions": 1
+    },
+    "payana_city_autocomplete_table": {
+        "column_family_id": [
+            "payana_autocomplete_cities_list"
+        ],
+        "description": "This table will hold all the cities for autocomplete indexing",
+        "purpose": "This table will hold all the cities for autocomplete indexing",
+        "max_versions": 1
+    },
+    "payana_users_autocomplete_table": {
+        "column_family_id": [
+            "payana_autocomplete_users_list"
+        ],
+        "description": "This table will hold all the users indexed by cities for autocomplete indexing",
+        "purpose": "This table will hold all the users indexed by cities for autocomplete indexing",
+        "max_versions": 1
     }
 }
