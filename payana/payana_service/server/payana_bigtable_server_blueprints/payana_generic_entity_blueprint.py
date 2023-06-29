@@ -12,7 +12,7 @@ from payana.payana_service.controller.payana_bigtable_controller.payana_global_c
 from payana.payana_service.controller.payana_bigtable_controller.payana_neighboring_cities_controller import payana_neighboring_cities_name_space
 from payana.payana_service.controller.payana_bigtable_controller.payana_autocomplete_cities_controller import payana_autocomplete_cities_name_space
 from payana.payana_service.controller.payana_bigtable_controller.payana_autocomplete_users_controller import payana_autocomplete_users_name_space
-
+from payana.payana_service.controller.payana_bigtable_controller.payana_sign_up_mail_notification_controller import payana_mail_id_sign_up_notification_name_space
 
 payana_entity_api_blueprint = Blueprint(
     'payana_entity_api_blueprint', __name__, url_prefix='/entity')
@@ -32,7 +32,8 @@ payana_entity_table_api.add_namespace(payana_global_city_itinerary_rating_name_s
 payana_entity_table_api.add_namespace(payana_neighboring_cities_name_space)
 payana_entity_table_api.add_namespace(payana_autocomplete_users_name_space)
 payana_entity_table_api.add_namespace(payana_autocomplete_cities_name_space)
-
+payana_entity_table_api.add_namespace(payana_mail_id_sign_up_notification_name_space)
+    
 @payana_entity_table_api.errorhandler
 def default_error_handler(e):
     message = 'An unhandled exception occurred.'

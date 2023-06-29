@@ -109,7 +109,7 @@ profile_travel_buddy_response = response.json()
 print("Profile travel buddy creation verification status: " +
       str(travel_buddy_profile_id in profile_travel_buddy_response[profile_id][payana_travel_buddy_table_column_family_travel_buddy_list]))
 
-# GET friend tag
+# GET friend tag autocomplete
 # CURL request
 """
 curl --location 'http://localhost:8888/profile/travelbuddy/tag/' \
@@ -170,7 +170,6 @@ headers = {'Content-Type': 'application/json', payana_travel_buddy_table_column_
 response = requests.put(url, data=json.dumps(
     profile_travel_buddy_json), headers=headers)
 
-print(response.status_code)
 print("Profile travel buddy update status: " + str(response.status_code == 200))
 
 
