@@ -64,6 +64,7 @@ payana_personal_travel_buddy_feed_search_itinerary_cache_table = "payana_travel_
 payana_profile_to_search_places_activities_table = "payana_profile_to_search_places_activities_table"
 payana_city_autocomplete_table = "payana_city_autocomplete_table"
 payana_users_autocomplete_table = "payana_users_autocomplete_table"
+payana_mail_sign_up_notification_table = "payana_mail_sign_up_notification_table"
 
 # payana_profile_table_field_names
 payana_profile_table_personal_info_column_family = "personal_information"
@@ -335,3 +336,7 @@ payana_users_autocomplete_column_family = "payana_autocomplete_users_list"
 # payana_city_autocomplete_table constants
 payana_city_autocomplete_column_family = "payana_autocomplete_cities_list"
 payana_city_autocomplete_row_key = "city"
+
+# payana_mail_sign_up_notification_table
+payana_sign_up_mail_id_list_column_family = "sign_up_mail_id_list"
+payana_sign_up_mail_id_list_profile_id = "profile_id"

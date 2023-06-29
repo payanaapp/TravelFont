@@ -110,6 +110,19 @@ payana_autocomplete_cities_missing_object = "Missing Payana autocomplete cities 
 payana_autocomplete_city_header = "city"
 payana_missing_autocomplete_cities_header_exception = "Missing Payana autocomplete cities header in the request body"
 
+# Payana mail sign up notification controller constants
+payana_mail_id_sign_up_notification_write_success_message_post = "Payana mail id sign up notification object successfully created!"
+payana_mail_id_sign_up_notification_write_success_message_put = "Payana mail id sign up notification object successfully updated!"
+payana_mail_id_sign_up_notification_delete_success_message = "Payana mail id sign up notification object successfully deleted!"
+payana_mail_id_sign_up_notification_create_failure_message_post = "Failed to create the Payana mail id sign up notification object"
+payana_mail_id_sign_up_notification_delete_failure_message = "Failed to delete the Payana mail id sign up notification object"
+payana_mail_id_sign_up_notification_write_failure_message_post = "Failed to update the Payana mail id sign up notification object"
+payana_mail_id_sign_up_notification_objects_delete_failure_message = "Failed to delete the Payana mail id sign up notification object contents"
+payana_mail_id_sign_up_notification_objects_delete_success_message = "Payana mail id sign up notification object content successfully deleted!"
+payana_mail_id_sign_up_notification_missing_object = "Missing Payana mail id sign up notification object in the request body"
+payana_mail_id_sign_up_notification_profile_id_header = "profile_id"
+payana_missing_mail_id_sign_up_notification_header_exception = "Missing Payana mail id sign up notification header in the request body"
+
 # Payana autocomplete users controller constants
 payana_autocomplete_users_write_success_message_post = "Payana autocomplete users object successfully created!"
 payana_autocomplete_users_write_success_message_put = "Payana autocomplete users object successfully updated!"

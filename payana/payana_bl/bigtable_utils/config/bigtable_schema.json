@@ -604,5 +604,13 @@
         "description": "This table will hold all the users indexed by cities for autocomplete indexing",
         "purpose": "This table will hold all the users indexed by cities for autocomplete indexing",
         "max_versions": 1
+    },
+    "payana_mail_sign_up_notification_table": {
+        "column_family_id": [
+            "sign_up_mail_id_list"
+        ],
+        "description": "This table will hold all the users indexed by cities for autocomplete indexing",
+        "purpose": "This table will hold all the users indexed by cities for autocomplete indexing",
+        "max_versions": 1
     }
 }
