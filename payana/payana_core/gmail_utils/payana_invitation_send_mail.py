@@ -1,0 +1,175 @@
+from __future__ import print_function
+
+import base64
+
+import google.auth
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
+
+import os.path
+
+from google.auth.transport.requests import Request
+from google.oauth2.credentials import Credentials
+from google_auth_oauthlib.flow import InstalledAppFlow
+from google.oauth2 import service_account
+
+import mimetypes
+import os
+from email.message import EmailMessage
+from email.mime.audio import MIMEAudio
+from email.mime.base import MIMEBase
+from email.mime.image import MIMEImage
+from email.mime.text import MIMEText
+
+import google.auth
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
+
+from payana.payana_bl.common_utils.payana_exception_handler_utils import payana_generic_exception_handler
+
+# If modifying these scopes, delete the file token.json.
+SCOPES = ['https://www.googleapis.com/auth/gmail.readonly',
+          'https://www.googleapis.com/auth/gmail.send']
+
+@payana_generic_exception_handler
+def gmail_send_message_service_account(credentials_file, profile_name, itinerary_id, itinerary_name, mail_id):
+    """Create and send an email message
+    Print the returned  message id
+    Returns: Message object, including message id
+
+    Load pre-authorized user credentials from the environment.
+    TODO(developer) - See https://developers.google.com/identity
+    for guides on implementing OAuth2 for the application.
+    """
+
+    try:
+        service = gmail_authorize_service_account(credentials_file)
+
+        message = gmail_set_content(profile_name, itinerary_id, itinerary_name)
+        # message = gmail_set_payload(message, attachment_file)
+
+        message['To'] = mail_id
+        message['From'] = 'travelfont@travelfont.com'
+        message['Subject'] = 'TravelFont Invitation'
+
+        # encoded message
+        encoded_message = base64.urlsafe_b64encode(message.as_bytes()) \
+            .decode()
+
+        create_message = {
+            'raw': encoded_message
+        }
+
+        # pylint: disable=E1101
+        send_message = (service.users().messages().send
+                        (userId="me", body=create_message).execute())
+        print(F'Message Id: {send_message["id"]}')
+    except HttpError as error:
+        print(F'An error occurred: {error}')
+        send_message = None
+
+    print(send_message)
+    
+    return send_message
+
+@payana_generic_exception_handler
+def gmail_authorize_service_account(credentials_file):
+
+    try:
+        creds = service_account.Credentials.from_service_account_file(
+            credentials_file,
+            scopes=['https://www.googleapis.com/auth/gmail.send'])
+
+        impersonate = 'travelfont_admin@travelfont.com'
+
+        creds = creds.with_subject(impersonate)
+        service = build('gmail', 'v1', credentials=creds)
+    except HttpError as error:
+        print(F'An error occurred: {error}')
+    except Exception as exc:
+        print(str(exc))
+
+    return service
+
+@payana_generic_exception_handler
+def gmail_set_content(profile_name, itinerary_id, itinerary_name):
+
+    message = EmailMessage()
+
+    text_one = "Welcome to TravelFont! {profile_name} has invited you to edit {itinerary_name}".format(
+        profile_name=profile_name, itinerary_name=itinerary_name)
+    
+    text_two = "Please click {itinerary_id} to view the itinerary".format(
+        itinerary_id=itinerary_id)
+
+    message.set_content("\n".join([text_one, text_two]))
+
+    # message = gmail_set_payload(message, attachment_file)
+
+    return message
+
+@payana_generic_exception_handler
+def gmail_set_payload(message, attachment_file):
+
+    # guessing the MIME type
+    type_subtype, _ = mimetypes.guess_type(attachment_file)
+    maintype, subtype = type_subtype.split('/')
+
+    with open(attachment_file, 'rb') as fp:
+        attachment_data = fp.read()
+
+    message.add_attachment(attachment_data, maintype, subtype)
+    message.add_header('Content-Disposition', 'attachment',
+                       filename=attachment_file)
+
+    return message
+
+@payana_generic_exception_handler
+def gmail_set_mime_payload(message, attachment_file):
+    """Creates a MIME part for a file.
+
+    Args:
+      file: The path to the file to be attached.
+
+    Returns:
+      A MIME part that can be attached to a message.
+    """
+    content_type, encoding = mimetypes.guess_type(attachment_file)
+
+    if content_type is None or encoding is not None:
+        content_type = 'application/octet-stream'
+    main_type, sub_type = content_type.split('/', 1)
+    if main_type == 'text':
+        with open(attachment_file, 'rb'):
+            msg = MIMEText('r', _subtype=sub_type)
+    elif main_type == 'image':
+        print('image')
+        with open(attachment_file, 'rb'):
+            msg = MIMEImage('r', _subtype=sub_type)
+    elif main_type == 'audio':
+        with open(attachment_file, 'rb'):
+            msg = MIMEAudio('r', _subtype=sub_type)
+    else:
+        with open(attachment_file, 'rb'):
+            msg = MIMEBase(main_type, sub_type)
+            msg.set_payload(attachment_file.read())
+    attachment_filename = os.path.basename(attachment_file)
+    msg.add_header('Content-Disposition', 'attachment',
+                   filename=attachment_filename)
+
+    # message.add_attachment(msg, main_type, sub_type)
+
+    return msg
+
+
+service_credentials_path = "/Users/abhinandankelgereramesh/Documents/project-payana-service-mail.json"
+attachment_file = "/Users/abhinandankelgereramesh/Documents/gmail_attch.jpg"
+
+@payana_generic_exception_handler
+def payana_send_invitation_mail(profile_name, itinerary_id, itinerary_name, mail_id):
+    return gmail_send_message_service_account(service_credentials_path, profile_name, itinerary_id, itinerary_name, mail_id)
+
+
+if __name__ == '__main__':
+    gmail_send_message_service_account(
+        service_credentials_path, attachment_file)
