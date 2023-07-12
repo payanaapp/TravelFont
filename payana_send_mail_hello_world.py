@@ -165,6 +165,7 @@ def gmail_send_message_service_account(credentials_file, attachment_file):
     except HttpError as error:
         print(F'An error occurred: {error}')
         send_message = None
+        
     return send_message
 
 
