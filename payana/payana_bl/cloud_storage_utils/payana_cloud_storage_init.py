@@ -15,10 +15,8 @@ from google.cloud import storage
 @payana_generic_exception_handler
 def payana_cloud_storage_init(payana_bucket_creation_config_file):
 
-    print(__name__)
-
     # creates gcs buckets
-    payana_create_gcs_bucket(payana_bucket_creation_config_file)
+    return payana_create_gcs_bucket(payana_bucket_creation_config_file)
 
 
 if __name__ == '__main__':

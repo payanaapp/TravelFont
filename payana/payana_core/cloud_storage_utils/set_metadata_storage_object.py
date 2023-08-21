@@ -17,10 +17,7 @@ def set_metadata_storage_object(bucket_name, blob_name, blob_metadata):
     bucket = storage_client.bucket(bucket_name)
     blob = bucket.get_blob(blob_name)
     blob.metadata = blob_metadata
-    blob.patch()
-
-    print("The metadata for the blob {} is {}".format(blob.name, blob.metadata))
-
+    return blob.patch()
 
 if __name__ == '__main__':
 

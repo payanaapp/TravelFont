@@ -15,7 +15,7 @@ from payana.payana_bl.cloud_storage_utils.constants import gcs_constants
 def payana_set_cors_policy_storage_bucket(bucket_name, payana_cors_policy=gcs_constants.payana_cors_policy):
     """Set a bucket's CORS policies configuration."""
 
-    core_set_cors_policy_storage_bucket(bucket_name, payana_cors_policy)
+    return core_set_cors_policy_storage_bucket(bucket_name, payana_cors_policy)
 
 
 if __name__ == '__main__':

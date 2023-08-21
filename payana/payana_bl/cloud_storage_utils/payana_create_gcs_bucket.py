@@ -18,8 +18,6 @@ from google.cloud import storage
 @payana_generic_exception_handler
 def payana_create_gcs_bucket(payana_bucket_creation_config_file):
 
-    print(__name__)
-
     # creates gcs buckets
     # read the bucket names and column families
     with open(payana_bucket_creation_config_file) as json_data_file:
@@ -37,6 +35,8 @@ def payana_create_gcs_bucket(payana_bucket_creation_config_file):
 
             create_storage_bucket(bucket_name, location, storage_class)
             payana_set_cors_policy_storage_bucket(bucket_name)
+            
+    return True
 
 
 if __name__ == '__main__':

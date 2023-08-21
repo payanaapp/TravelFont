@@ -17,9 +17,7 @@ def delete_storage_object(bucket_name, blob_name):
     bucket = storage_client.bucket(bucket_name)
     blob = bucket.blob(blob_name)
 
-    blob.delete()
-
-    print("Blob {} deleted.".format(blob_name))
+    return blob.delete()
 
 
 if __name__ == '__main__':

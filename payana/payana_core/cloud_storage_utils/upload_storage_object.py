@@ -17,13 +17,9 @@ def upload_storage_object(bucket_name, source_file_name, destination_blob_name):
     bucket = storage_client.bucket(bucket_name)
     blob = bucket.blob(destination_blob_name)
 
-    blob.upload_from_filename(source_file_name)
-
-    print(
-        "File {} uploaded to {}.".format(
-            source_file_name, destination_blob_name
-        )
-    )
+    gcs_bucket_upload_response = blob.upload_from_filename(source_file_name)
+    
+    return gcs_bucket_upload_response
 
 
 if __name__ == '__main__':

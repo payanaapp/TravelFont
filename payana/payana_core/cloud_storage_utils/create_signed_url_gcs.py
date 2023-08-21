@@ -31,13 +31,6 @@ def create_upload_signed_url(bucket_name, blob_name, expiration_time):
         content_type="application/octet-stream",
     )
 
-    print("Generated PUT signed URL:")
-    print(url)
-    print("You can use this URL with any user agent, for example:")
-    print(
-        "curl -X PUT -H 'Content-Type: application/octet-stream' "
-        "--upload-file my-file '{}'".format(url)
-    )
     return url
 
 
@@ -63,13 +56,6 @@ def create_upload_resumable_signed_url(bucket_name, blob_name, expiration_time):
         content_type="application/octet-stream",
     )
 
-    print("Generated RESUMABLE signed URL:")
-    print(url)
-    print("You can use this URL with any user agent, for example:")
-    print(
-        "curl -X PUT -H 'Content-Type: application/octet-stream' "
-        "--upload-file my-file '{}'".format(url)
-    )
     return url
 
 
@@ -94,10 +80,6 @@ def create_download_signed_url(bucket_name, blob_name, expiration_time):
         method="GET"
     )
 
-    print("Generated GET signed URL:")
-    print(url)
-    print("You can use this URL with any user agent, for example:")
-    print("curl '{}'".format(url))
     return url
 
 
