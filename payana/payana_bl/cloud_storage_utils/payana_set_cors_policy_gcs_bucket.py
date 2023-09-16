@@ -8,6 +8,7 @@ from google.cloud import storage
 import argparse
 from payana.payana_bl.common_utils.payana_exception_handler_utils import payana_generic_exception_handler
 from payana.payana_core.cloud_storage_utils.set_cors_policy_storage_bucket import set_cors_policy_storage_bucket as core_set_cors_policy_storage_bucket
+from payana.payana_core.cloud_storage_utils.get_cors_policy_storage_bucket import get_cors_policy_storage_bucket as core_get_cors_policy_storage_bucket
 from payana.payana_bl.cloud_storage_utils.constants import gcs_constants
 
 
@@ -16,6 +17,12 @@ def payana_set_cors_policy_storage_bucket(bucket_name, payana_cors_policy=gcs_co
     """Set a bucket's CORS policies configuration."""
 
     return core_set_cors_policy_storage_bucket(bucket_name, payana_cors_policy)
+
+@payana_generic_exception_handler
+def payana_get_cors_policy_storage_bucket(bucket_name):
+    """Get a bucket's CORS policies configuration."""
+
+    return core_get_cors_policy_storage_bucket(bucket_name)
 
 
 if __name__ == '__main__':
