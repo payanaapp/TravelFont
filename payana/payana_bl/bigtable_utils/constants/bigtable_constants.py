@@ -14,6 +14,7 @@ travelfont_home = os.environ.get("travelfont_home")
 
 # client_config.yaml constants
 bigtable_client_config_path = os.path.join(travelfont_home, "payana/payana_bl/bigtable_utils/config/client_config.yaml")
+gcs_client_config_path = os.path.join(travelfont_home, "payana/payana_bl/cloud_storage_utils/config/gcs_bucket_schema.json")
 bigtable_instance_id = "instance_id"
 bigtable_project_id = "project_id"
 bigtable_cluster_id = "cluster_id"
@@ -84,6 +85,7 @@ payana_profile_table_top_activities_tracker_rating = "top_activities_tracker_rat
 payana_profile_favorite_places_preference = "favorite_places_preference"
 payana_profile_favorite_activities_preference = "favorite_activities_preference"
 payana_profile_table_thumbnail_travel_buddies = "thumbnail_travel_buddies"
+payana_profile_table_profile_pictures = "payana_profile_pictures"
 
 # payana_comments_table_field_names
 payana_comments_table_comments_family_id = "payana_comments"

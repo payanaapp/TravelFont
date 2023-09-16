@@ -10,30 +10,11 @@ from payana.payana_bl.common_utils.payana_exception_handler_utils import payana_
 from payana.payana_bl.cloud_storage_utils.constants import gcs_constants
 from payana.payana_core.cloud_storage_utils.download_storage_object import download_storage_object as core_download_storage_object
 
-
-@payana_generic_exception_handler
-def payana_profile_picture_download_storage_object(blob_name, destination_file_name):
-    """Downloads a file to the bucket."""
-
-    bucket_name = gcs_constants.payana_bucket_profile_pictures
-    payana_download_storage_object(
-        bucket_name, blob_name, destination_file_name)
-
-
-@payana_generic_exception_handler
-def payana_itinerary_picture_download_storage_object(blob_name, destination_file_name):
-    """Downloads a file to the bucket."""
-
-    bucket_name = gcs_constants.payana_bucket_itinerary_pictures
-    payana_download_storage_object(
-        bucket_name, blob_name, destination_file_name)
-
-
 @payana_generic_exception_handler
 def payana_download_storage_object(bucket_name, blob_name, destination_file_name):
     """Downloads a file to the bucket."""
 
-    core_download_storage_object(
+    return core_download_storage_object(
         bucket_name, blob_name, destination_file_name)
 
 

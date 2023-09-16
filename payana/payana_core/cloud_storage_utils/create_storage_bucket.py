@@ -13,19 +13,12 @@ from payana.payana_core.common_utils.payana_core_exception_handler_utils import 
 def create_storage_bucket(bucket_name, location, storage_class):
     """Create a new bucket in specific location with storage class"""
     # bucket_name = "your-new-bucket-name"
-
-    print(__name__)
     storage_client = storage.Client()
 
     bucket = storage_client.bucket(bucket_name)
     bucket.storage_class = storage_class
     new_bucket = storage_client.create_bucket(bucket, location=location)
 
-    print(
-        "Created bucket {} in {} with storage class {}".format(
-            new_bucket.name, new_bucket.location, new_bucket.storage_class
-        )
-    )
     return new_bucket
 
 

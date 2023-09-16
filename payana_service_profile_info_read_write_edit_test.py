@@ -46,7 +46,7 @@ payana_profile_table_date_of_birth = bigtable_constants.payana_profile_table_dat
 payana_profile_table_doj = bigtable_constants.payana_profile_table_doj
 
 # POST profile info
-# CURL request
+# CURL request 
 """
 curl --location --request POST 'http://localhost:8888/profile/info/' \
 --header 'Content-Type: application/json' \

@@ -17,7 +17,6 @@ def get_metadata_storage_object(bucket_name, blob_name):
     bucket = storage_client.bucket(bucket_name)
     blob = bucket.get_blob(blob_name)
 
-    print("The metadata for the blob {} is {}".format(blob.name, blob.metadata))
     return blob
 
 

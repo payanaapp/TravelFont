@@ -18,11 +18,6 @@ def delete_storage_bucket(bucket_name):
     bucket = storage_client.get_bucket(bucket_name)
     bucket.delete()
 
-    print(
-        "Deleted bucket  {}".format(
-            bucket.name
-        )
-    )
     return bucket
 
 

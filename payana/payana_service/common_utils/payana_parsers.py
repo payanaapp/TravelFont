@@ -16,6 +16,8 @@ payana_comment_id_header = payana_service_constants.payana_comment_id_header
 payana_check_in_id_header = payana_service_constants.payana_check_in_id_header
 payana_excursion_id_header = payana_service_constants.payana_excursion_id_header
 payana_friend_id_header = payana_service_constants.payana_friend_id_header
+payana_signed_url_storage_bucket_header = payana_service_constants.payana_signed_url_storage_bucket_header
+payana_signed_url_storage_object_header = payana_service_constants.payana_signed_url_storage_object_header
 
 @payana_service_generic_exception_handler
 def payana_profile_id_header_parser():
@@ -96,3 +98,17 @@ def get_excursion_id_header(request):
     excursion_id = request.headers.get(payana_excursion_id_header)
 
     return None if excursion_id is None else excursion_id.strip()
+
+@payana_service_generic_exception_handler
+def get_gcs_object_id_header(request):
+
+    storage_object_id = request.headers.get(payana_signed_url_storage_object_header)
+
+    return None if storage_object_id is None else storage_object_id.strip()
+
+@payana_service_generic_exception_handler
+def get_gcs_bucket_id_header(request):
+
+    storage_bucket_id = request.headers.get(payana_signed_url_storage_bucket_header)
+
+    return None if storage_bucket_id is None else storage_bucket_id.strip()

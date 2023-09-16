@@ -19,11 +19,7 @@ def download_storage_object(bucket_name, blob_name, destination_file_name):
 
     blob.download_to_filename(destination_file_name)
 
-    print(
-        "Blob {} downloaded to {}.".format(
-            blob_name, destination_file_name
-        )
-    )
+    return True
 
 
 if __name__ == '__main__':

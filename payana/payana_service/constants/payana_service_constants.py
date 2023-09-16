@@ -46,6 +46,31 @@ payana_likes_objects_delete_success_message = "Payana likes object content succe
 payana_missing_likes_object = "Missing Payana likes object in the request body"
 payana_entity_id_header = "entity_id"
 
+# Payana signed URL controller constants
+payana_signed_url_success_message_get = "Payana Signed URL successfully fetched!"
+payana_signed_url_storage_bucket_header = "payana_storage_bucket"
+payana_signed_url_storage_object_header = "payana_storage_object"
+payana_signed_url_storage_bucket_header_missing_exception = "Payana storage bucket entity header missing"
+payana_signed_url_storage_object_header_missing_exception  = "Payana storage object entity header missing"
+
+# Payana GCS object controller constants
+payana_gcs_object_success_message_delete = "Payana GCS object successfully deleted!"
+payana_gcs_object_failure_message_delete = "Failed to delete Payana GCS object"
+payana_gcs_object_metadata_success_message_update = "Payana GCS metadata successfully updated!"
+payana_gcs_object_metadata_failure_message_update = "Failed to update Payana GCS metadata"
+payana_gcs_object_cors_policy_success_message_update = "Payana GCS object CORS policy successfully updated!"
+payana_gcs_object_cors_policy_failure_message_update = "Failed to update Payana GCS object CORS policy"
+payana_gcs_object_metadata_success_message_get = "Payana GCS metadata successfully fetched!"
+payana_gcs_object_metadata_failure_message_get = "Failed to fetch Payana GCS metadata"
+payana_gcs_bucket_header = "payana_storage_bucket"
+payana_gcs_object_header = "payana_storage_object"
+payana_gcs_object_metadata_header = "payana_storage_object_metadata"
+payana_gcs_cors_header = "payana_cors_metadata"
+payana_gcs_object_header_missing_exception = "Payana storage object entity header missing"
+payana_gcs_bucket_header_missing_exception  = "Payana storage bucket entity header missing"
+payana_gcs_metadata_header_missing_exception  = "Payana storage object metadata header missing"
+payana_gcs_cors_metadata_missing_exception  = "Payana CORS metadata object missing"
+
 # Payana Travel Buddy controller constants
 payana_travel_buddy_write_success_message_post = "Payana travel buddy object successfully created!"
 payana_travel_buddy_write_success_message_put = "Payana travel buddy object successfully updated!"

@@ -17,7 +17,7 @@ def payana_profile_picture_delete_storage_object(blob_name):
 
     bucket_name = gcs_constants.payana_bucket_profile_pictures
 
-    payana_delete_storage_object(
+    return payana_delete_storage_object(
         bucket_name, blob_name)
 
 
@@ -26,7 +26,7 @@ def payana_itinerary_picture_delete_storage_object(blob_name):
     """Deletes a file to the bucket."""
 
     bucket_name = gcs_constants.payana_bucket_itinerary_pictures
-    payana_delete_storage_object(
+    return payana_delete_storage_object(
         bucket_name, blob_name)
 
 
@@ -34,7 +34,7 @@ def payana_itinerary_picture_delete_storage_object(blob_name):
 def payana_delete_storage_object(bucket_name, blob_name):
     """Deletes a file in the bucket."""
 
-    core_delete_storage_object(bucket_name, blob_name)
+    return core_delete_storage_object(bucket_name, blob_name)
 
 
 if __name__ == '__main__':

@@ -1,4 +1,4 @@
-from TravelFont.payana.payana_bl.bigtable_utils.constants import bigtable_constants
+from payana.payana_bl.bigtable_utils.constants import bigtable_constants
 
 import os
 

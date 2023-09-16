@@ -17,9 +17,9 @@ def set_cors_policy_storage_bucket(bucket_name, cors_policy):
     storage_client = storage.Client()
     bucket = storage_client.get_bucket(bucket_name)
     bucket.cors = cors_policy
-    bucket.patch()
-
-    print("Set CORS policies for bucket {} is {}".format(bucket.name, bucket.cors))
+    cors_policy_status = bucket.patch()
+    
+    return cors_policy_status
 
 
 if __name__ == '__main__':

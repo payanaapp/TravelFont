@@ -10,70 +10,9 @@ from payana.payana_bl.common_utils.payana_exception_handler_utils import payana_
 from payana.payana_core.cloud_storage_utils.create_signed_url_gcs import create_upload_signed_url, create_download_signed_url, create_upload_resumable_signed_url
 from payana.payana_bl.cloud_storage_utils.constants import gcs_constants
 
-
-@payana_generic_exception_handler
-def payana_profile_picture_upload_signed_url(blob_name):
-    """Deletes a file to the bucket."""
-
-    bucket_name = gcs_constants.payana_bucket_profile_pictures
-
-    return payana_generate_upload_signed_url(
-        bucket_name, blob_name)
-
-
-@payana_generic_exception_handler
-def payana_itinerary_picture_upload_signed_url(blob_name):
-    """Deletes a file to the bucket."""
-
-    bucket_name = gcs_constants.payana_bucket_itinerary_pictures
-
-    return payana_generate_upload_signed_url(
-        bucket_name, blob_name)
-
-
-@payana_generic_exception_handler
-def payana_profile_picture_resumable_upload_signed_url(blob_name):
-    """Deletes a file to the bucket."""
-
-    bucket_name = gcs_constants.payana_bucket_profile_pictures
-
-    return payana_generate_upload_resumable_signed_url(
-        bucket_name, blob_name)
-
-
-@payana_generic_exception_handler
-def payana_itinerary_picture_resumable_upload_signed_url(blob_name):
-    """Deletes a file to the bucket."""
-
-    bucket_name = gcs_constants.payana_bucket_itinerary_pictures
-
-    return payana_generate_upload_resumable_signed_url(
-        bucket_name, blob_name)
-
-
-@payana_generic_exception_handler
-def payana_profile_picture_download_signed_url(blob_name):
-    """Deletes a file to the bucket."""
-
-    bucket_name = gcs_constants.payana_bucket_profile_pictures
-
-    return payana_generate_download_signed_url(
-        bucket_name, blob_name)
-
-
-@payana_generic_exception_handler
-def payana_itinerary_picture_download_signed_url(blob_name):
-    """Deletes a file to the bucket."""
-
-    bucket_name = gcs_constants.payana_bucket_itinerary_pictures
-
-    return payana_generate_download_signed_url(
-        bucket_name, blob_name)
-
-
 @ payana_generic_exception_handler
 def payana_generate_upload_signed_url(bucket_name, blob_name):
-    """Deletes a file in the bucket."""
+    
 
     payana_upload_signed_url_expiration_time = gcs_constants.payana_upload_signed_url_expiration_time
 
@@ -83,7 +22,7 @@ def payana_generate_upload_signed_url(bucket_name, blob_name):
 
 @ payana_generic_exception_handler
 def payana_generate_upload_resumable_signed_url(bucket_name, blob_name):
-    """Deletes a file in the bucket."""
+    
 
     payana_upload_signed_url_expiration_time = gcs_constants.payana_upload_signed_url_expiration_time
 
@@ -93,7 +32,7 @@ def payana_generate_upload_resumable_signed_url(bucket_name, blob_name):
 
 @ payana_generic_exception_handler
 def payana_generate_download_signed_url(bucket_name, blob_name):
-    """Deletes a file in the bucket."""
+    
 
     payana_download_signed_url_expiration_time = gcs_constants.payana_download_signed_url_expiration_time
 

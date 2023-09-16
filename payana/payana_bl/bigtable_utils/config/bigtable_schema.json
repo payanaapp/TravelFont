@@ -5,7 +5,8 @@
             "top_activities_tracker_rating",
             "thumbnail_travel_buddies",
             "favorite_places_preference",
-            "favorite_activities_preference"
+            "favorite_activities_preference",
+            "payana_profile_pictures"
         ],
         "description": "This table will hold all the profile details of the user",
         "purpose": "To fetch the details of a profile",
@@ -604,5 +605,5 @@
         "description": "This table will hold all the users indexed by cities for autocomplete indexing",
         "purpose": "This table will hold all the users indexed by cities for autocomplete indexing",
         "max_versions": 1
-    }
+    } 
 }
