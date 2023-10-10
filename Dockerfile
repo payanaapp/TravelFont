@@ -1,5 +1,5 @@
-FROM ubuntu:22.04
-# FROM ubuntu:latest
+# FROM ubuntu:22.04
+FROM ubuntu:latest
 
 RUN DEBIAN_FRONTEND=noninteractive \
   apt-get update \
@@ -24,3 +24,20 @@ RUN echo "$ssh_prv_key" > /root/.ssh/id_ed25519 && \
     ssh-keyscan github.com >> /root/.ssh/known_hosts && \
     git clone git@github.com:payanaapp/TravelFont.git && \
     rm /root/.ssh/id_ed25519*
+
+# install PIP and virtualenv
+RUN apt-get update && apt-get install -y python3-pip
+
+# Change to TravelFont home path
+RUN cd TravelFont
+
+# Set TravelFont home variable
+ARG travelfont_home_arg_value=default_value
+ENV travelfont_home=$travelfont_home_arg_value
+
+# Execute starter scripts
+RUN pip3 install -r $travelfont_home/payana/payana_bl/requirements.txt
+RUN pip3 install -r $travelfont_home/payana/payana_service/requirements.txt
+RUN pip3 install -r $travelfont_home/payana/payana_core/requirements.txt
+# install the below package separately as it fails if installed from requirements.xt
+RUN pip3 install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
