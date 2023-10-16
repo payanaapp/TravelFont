@@ -41,3 +41,6 @@ RUN pip3 install -r $travelfont_home/payana/payana_service/requirements.txt
 RUN pip3 install -r $travelfont_home/payana/payana_core/requirements.txt
 # install the below package separately as it fails if installed from requirements.xt
 RUN pip3 install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib
+
+RUN python3 $travelfont_home/setup.py build 
+RUN python3 $travelfont_home/setup.py install
