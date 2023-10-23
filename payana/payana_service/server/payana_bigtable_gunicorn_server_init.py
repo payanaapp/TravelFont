@@ -21,10 +21,10 @@ class StandaloneApplication(gunicorn.app.base.BaseApplication):
     def load(self):
         return self.application
 
-def gunicorn_init_app(port, workers, payana_flask_app):
+def gunicorn_init_app(port, server, workers, payana_flask_app):
     
     options = {
-        'bind': '%s:%s' % ('127.0.0.1', port),
+        'bind': '%s:%s' % (server, port),
         'workers': workers,
     }
     gunicorn_payana = StandaloneApplication(payana_flask_app, options)

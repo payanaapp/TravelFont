@@ -58,5 +58,5 @@ RUN python3 $travelfont_home/setup.py build && python3 $travelfont_home/setup.py
 
 # payana bigtable init -  one time run
 # payana_cloud_storage_init GCS - one time run
-
+EXPOSE 8888
 ENTRYPOINT [ "python3", "payana_service_start.py"]
