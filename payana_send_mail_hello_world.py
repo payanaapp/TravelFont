@@ -25,6 +25,8 @@ import google.auth
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
+from payana.payana_bl.bigtable_utils.constants import bigtable_constants
+
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly',
           'https://www.googleapis.com/auth/gmail.send']
@@ -165,7 +167,7 @@ def gmail_send_message_service_account(credentials_file, attachment_file):
     except HttpError as error:
         print(F'An error occurred: {error}')
         send_message = None
-        
+
     return send_message
 
 
@@ -209,8 +211,8 @@ def gmail_set_payload(message, attachment_file):
 
     message.add_attachment(attachment_data, maintype, subtype)
     message.add_header('Content-Disposition', 'attachment',
-                   filename=attachment_file)
-    
+                       filename=attachment_file)
+
     return message
 
 
@@ -255,7 +257,9 @@ if __name__ == '__main__':
     # credentials_path = "/Users/abhinandankelgereramesh/Documents/payana_mail.json"
     # authorize_gmail_client(credentials_path)
     # gmail_send_message(credentials_path)
-    service_credentials_path = "/Users/abhinandankelgereramesh/Documents/project-payana-service-mail.json"
-    attachment_file = "/Users/abhinandankelgereramesh/Documents/gmail_attch.jpg"
+    service_credentials_path = os.path.join(
+        bigtable_constants.travelfont_home, "google_mail_service_credentials.json")
+    attachment_file = os.path.join(
+        bigtable_constants.travelfont_home, "gmail_attch.jpg")
     gmail_send_message_service_account(
         service_credentials_path, attachment_file)
