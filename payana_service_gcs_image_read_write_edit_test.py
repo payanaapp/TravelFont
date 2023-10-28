@@ -11,7 +11,9 @@ from payana.payana_bl.cloud_storage_utils.payana_get_metadata_gcs_object import 
 
 from PIL import Image
 
-import os, io, base64
+import os
+import io
+import base64
 
 from urllib import response
 import requests
@@ -65,11 +67,11 @@ curl --location --request PUT 'https://storage.googleapis.com/payana_profile_pic
 
 url = payana_signed_url
 
-image_path = "/Users/abhinandankelgereramesh/Documents/payana-github/TravelFont/image.jpg"
+image_path = os.path.join(bigtable_constants.travelfont_home, "image.jpg")
 
 with open(image_path, "rb") as f:
     im_bytes = f.read()
-            
+
 im_b64 = base64.b64encode(im_bytes).decode("utf8")
 
 payload = json.dumps({"image": im_b64})
@@ -164,7 +166,7 @@ curl --location --request POST 'https://storage.googleapis.com/payana_profile_pi
 
 url = str(payana_resumable_signed_url)
 
-image_path = "/Users/abhinandankelgereramesh/Documents/payana-github/TravelFont/image.jpg"
+image_path = os.path.join(bigtable_constants.travelfont_home, "image.jpg")
 
 headers = {'Content-Type': 'application/octet-stream',
            'x-goog-resumable': 'start'}
@@ -186,13 +188,13 @@ curl --location --request PUT 'https://storage.googleapis.com/payana_profile_pic
 
 url = payana_resumable_signed_url
 
-image_path = "/Users/abhinandankelgereramesh/Documents/payana-github/TravelFont/image.jpg"
+image_path = os.path.join(bigtable_constants.travelfont_home, "image.jpg")
 
 headers = {'Content-Type': 'image/jpeg', 'Content-Length': '4081428'}
 
 with open(image_path, "rb") as f:
     im_bytes = f.read()
-            
+
 im_b64 = base64.b64encode(im_bytes).decode("utf8")
 
 payload = json.dumps({"image": im_b64})
@@ -203,7 +205,7 @@ response = requests.put(url, headers=headers, data=payload)
 #     url, data={'upload': open(image_path, 'rb')})
 
 response = requests.put(url, headers=headers, files={
-                         'image': open(image_path, 'rb')})
+    'image': open(image_path, 'rb')})
 
 print("Profile image resumable upload signed URL PUT status: " +
       str(response.status_code == 200))
@@ -219,7 +221,7 @@ curl --location --request PUT 'https://storage.googleapis.com/payana_profile_pic
 
 url = payana_resumable_signed_url
 
-image_path = "/Users/abhinandankelgereramesh/Documents/payana-github/TravelFont/image.jpg"
+image_path = os.path.join(bigtable_constants.travelfont_home, "image.jpg")
 
 headers = {'Content-Type': 'application/json',
            'Content-Range': 'bytes */*', 'Content-Length': '0'}
