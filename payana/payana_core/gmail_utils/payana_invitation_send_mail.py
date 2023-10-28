@@ -26,6 +26,7 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 
 from payana.payana_bl.common_utils.payana_exception_handler_utils import payana_generic_exception_handler
+from payana.payana_bl.bigtable_utils.constants import bigtable_constants
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly',
