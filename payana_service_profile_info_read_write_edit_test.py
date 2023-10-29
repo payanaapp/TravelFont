@@ -44,9 +44,10 @@ payana_profile_table_private_account = bigtable_constants.payana_profile_table_p
 payana_profile_table_gender = bigtable_constants.payana_profile_table_gender
 payana_profile_table_date_of_birth = bigtable_constants.payana_profile_table_date_of_birth
 payana_profile_table_doj = bigtable_constants.payana_profile_table_doj
+payana_profile_table_profile_pictures = bigtable_constants.payana_profile_table_profile_pictures
 
 # POST profile info
-# CURL request 
+# CURL request
 """
 curl --location --request POST 'http://localhost:8888/profile/info/' \
 --header 'Content-Type: application/json' \
@@ -146,6 +147,9 @@ profile_info_json = {
         "567890": "5",
         "678911": "6",
         "678921": "7",
+    },
+    payana_profile_table_profile_pictures: {
+        "123456789": "profile_picture_id_1"
     }
 }
 
