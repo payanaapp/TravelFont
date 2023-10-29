@@ -18,7 +18,7 @@ print("Payana Cloud Storage Init Status: " +
       str(payana_cloud_storage_init_status))
 
 payana_gcs_image_upload_path = os.path.join(
-    bigtable_constants.travelfont_home, "G0011163.JPG")
+    bigtable_constants.travelfont_home, "G0011163.jpg")
 payana_gcs_video_upload_path = os.path.join(
     bigtable_constants.travelfont_home, "butterfly_flower_insect_nature_515.mp4")
 payana_gcs_image_download_path = "downloaded_gcs_image.jpg"

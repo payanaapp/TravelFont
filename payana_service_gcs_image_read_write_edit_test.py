@@ -9,8 +9,6 @@ from payana.payana_bl.cloud_storage_utils.payana_generate_gcs_signed_url import 
 from payana.payana_bl.cloud_storage_utils.payana_set_metadata_gcs_object import payana_set_metadata_gcs_object
 from payana.payana_bl.cloud_storage_utils.payana_get_metadata_gcs_object import payana_get_metadata_gcs_object
 
-from PIL import Image
-
 import os
 import io
 import base64
@@ -23,7 +21,7 @@ payana_cloud_storage_init_status = payana_cloud_storage_init(
     bigtable_constants.gcs_client_config_path)
 
 payana_gcs_image_upload_path = os.path.join(
-    bigtable_constants.travelfont_home, "G0011163.JPG")
+    bigtable_constants.travelfont_home, "G0011163.jpg")
 payana_gcs_video_upload_path = os.path.join(
     bigtable_constants.travelfont_home, "butterfly_flower_insect_nature_515.mp4")
 payana_gcs_image_download_path = "downloaded_gcs_image.jpg"
@@ -128,7 +126,7 @@ print("Profile image download check: " +
 payana_image = response.content
 
 payana_gcs_image_download_path = os.path.join(
-    bigtable_constants.travelfont_home, "payana_curl_image_response.JPG")
+    bigtable_constants.travelfont_home, "payana_curl_image_response.jpg")
 
 with open(payana_gcs_image_download_path, 'wb') as f:
     f.write(payana_image)
@@ -270,7 +268,7 @@ print("Profile image download check resumable URL: " +
 payana_image = response.content
 
 payana_gcs_image_download_path = os.path.join(
-    bigtable_constants.travelfont_home, "payana_curl_image_response_resumable.JPG")
+    bigtable_constants.travelfont_home, "payana_curl_image_response_resumable.jpg")
 
 with open(payana_gcs_image_download_path, 'wb') as f:
     f.write(payana_image)
