@@ -10,16 +10,16 @@ import multiprocessing
 
 payana_flask_app = Flask(__name__)
 port = '8888'
-server = '0.0.0.0' #for Docker 
-# server = 'localhost'
+# server = '0.0.0.0' #for Docker 
+server = 'localhost'
 
 def number_of_gunicorn_workers():
     return (multiprocessing.cpu_count() * 2) + 1
 
 
 def configure_app(flask_app):
-    # flask_app.config['SERVER_NAME'] = service_settings.FLASK_SERVER_NAME
-    flask_app.config['SERVER_NAME'] = ':'.join([server, port])
+    flask_app.config['SERVER_NAME'] = service_settings.FLASK_SERVER_NAME
+    # flask_app.config['SERVER_NAME'] = ':'.join([server, port])
 
 def register_payana_blueprints(flask_app):
     flask_app.register_blueprint(
