@@ -10,8 +10,8 @@ import multiprocessing
 
 payana_flask_app = Flask(__name__)
 port = '8888'
-# server = '0.0.0.0' #for Docker 
-server = 'localhost'
+server = '0.0.0.0' #for Docker 
+# server = 'localhost'
 
 def number_of_gunicorn_workers():
     return (multiprocessing.cpu_count() * 2) + 1
