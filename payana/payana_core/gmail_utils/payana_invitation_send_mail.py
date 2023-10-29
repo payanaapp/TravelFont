@@ -164,7 +164,7 @@ def gmail_set_mime_payload(message, attachment_file):
 
 
 service_credentials_path = os.path.join(bigtable_constants.travelfont_home, "project-payana-service-mail.json")
-attachment_file = os.path.join(bigtable_constants.travelfont_home,"gmail_attch.jpg")
+attachment_file = os.path.join(bigtable_constants.travelfont_home,"gmail_attach.jpg")
 
 @payana_generic_exception_handler
 def payana_send_invitation_mail(profile_name, itinerary_id, itinerary_name, mail_id):
