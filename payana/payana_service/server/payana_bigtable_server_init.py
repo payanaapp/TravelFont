@@ -18,8 +18,8 @@ def number_of_gunicorn_workers():
 
 
 def configure_app(flask_app):
-    flask_app.config['SERVER_NAME'] = service_settings.FLASK_SERVER_NAME
-    # flask_app.config['SERVER_NAME'] = ':'.join([server, port])
+    # flask_app.config['SERVER_NAME'] = service_settings.FLASK_SERVER_NAME
+    flask_app.config['SERVER_NAME'] = ':'.join(['localhost', port])
 
 def register_payana_blueprints(flask_app):
     flask_app.register_blueprint(
