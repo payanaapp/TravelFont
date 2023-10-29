@@ -260,6 +260,6 @@ if __name__ == '__main__':
     service_credentials_path = os.path.join(
         bigtable_constants.travelfont_home, "google_mail_service_credentials.json")
     attachment_file = os.path.join(
-        bigtable_constants.travelfont_home, "gmail_attch.jpg")
+        bigtable_constants.travelfont_home, "gmail_attach.jpg")
     gmail_send_message_service_account(
         service_credentials_path, attachment_file)

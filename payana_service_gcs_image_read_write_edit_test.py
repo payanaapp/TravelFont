@@ -21,7 +21,7 @@ payana_cloud_storage_init_status = payana_cloud_storage_init(
     bigtable_constants.gcs_client_config_path)
 
 payana_gcs_image_upload_path = os.path.join(
-    bigtable_constants.travelfont_home, "G0011163.jpg")
+    bigtable_constants.travelfont_home, "gcs_upload.jpg")
 payana_gcs_video_upload_path = os.path.join(
     bigtable_constants.travelfont_home, "butterfly_flower_insect_nature_515.mp4")
 payana_gcs_image_download_path = "downloaded_gcs_image.jpg"
