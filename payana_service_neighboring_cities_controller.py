@@ -34,7 +34,7 @@ payana_neighboring_city_header = payana_service_constants.payana_neighboring_cit
 # POST write
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/neighbors/city/' \
+curl --location 'http://127.0.0.1:8888/entity/neighbors/city/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa' \
 --data '{
@@ -46,7 +46,7 @@ curl --location 'http://localhost:8888/entity/neighbors/city/' \
 }'
 """
 
-url = "http://localhost:8888/entity/neighbors/city/"
+url = "http://127.0.0.1:8888/entity/neighbors/city/"
 
 payana_neighboring_city_json = {
     "city": "cupertino##california##usa",
@@ -72,12 +72,12 @@ payana_neighboring_cities_response_json = response.json()
 # GET read
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/neighbors/city/' \
+curl --location 'http://127.0.0.1:8888/entity/neighbors/city/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa'
 """
 
-url = "http://localhost:8888/entity/neighbors/city/"
+url = "http://127.0.0.1:8888/entity/neighbors/city/"
 headers = {payana_neighboring_city_header: city, 'Content-Type': 'application/json'}
 
 response = requests.get(url, headers=headers)
@@ -92,7 +92,7 @@ print("Payana neighboring city creation verification status: " +
 
 # Edit PUT
 """
-curl --location --request PUT 'http://localhost:8888/entity/neighbors/city/' \
+curl --location --request PUT 'http://127.0.0.1:8888/entity/neighbors/city/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa' \
 --data '{
@@ -127,12 +127,12 @@ print("Payana neighboring city update status: " + str(response.status_code == 20
 # GET read
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/neighbors/city/' \
+curl --location 'http://127.0.0.1:8888/entity/neighbors/city/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa'
 """
 
-url = "http://localhost:8888/entity/neighbors/city/"
+url = "http://127.0.0.1:8888/entity/neighbors/city/"
 headers = {payana_neighboring_city_header: city, 'Content-Type': 'application/json'}
 
 response = requests.get(url, headers=headers)
@@ -146,7 +146,7 @@ print("Payana neighboring city update verification status: " +
 
 # Delete specific column family and column values
 """
-curl --location 'http://localhost:8888/entity/neighbors/city/delete/values/' \
+curl --location 'http://127.0.0.1:8888/entity/neighbors/city/delete/values/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa' \
 --data '{
@@ -156,7 +156,7 @@ curl --location 'http://localhost:8888/entity/neighbors/city/delete/values/' \
     }
 }'
 """
-url = "http://localhost:8888/entity/neighbors/city/delete/values/"
+url = "http://127.0.0.1:8888/entity/neighbors/city/delete/values/"
 headers = {payana_neighboring_city_header: city, 'Content-Type': 'application/json'}
 
 payana_neighboring_city_delete_cv_json = {
@@ -177,12 +177,12 @@ print("Payana neighboring city contents column values delete status: " +
 # GET read
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/neighbors/city/' \
+curl --location 'http://127.0.0.1:8888/entity/neighbors/city/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa'
 """
 
-url = "http://localhost:8888/entity/neighbors/city/"
+url = "http://127.0.0.1:8888/entity/neighbors/city/"
 headers = {payana_neighboring_city_header: city, 'Content-Type': 'application/json'}
 
 response = requests.get(url, headers=headers)
@@ -196,7 +196,7 @@ print("Payana neighboring city delete value verification status: " +
 
 # Delete entire column family
 """
-curl --location 'http://localhost:8888/entity/neighbors/city/delete/cf/' \
+curl --location 'http://127.0.0.1:8888/entity/neighbors/city/delete/cf/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa' \
 --data '{
@@ -204,7 +204,7 @@ curl --location 'http://localhost:8888/entity/neighbors/city/delete/cf/' \
 }'
 """
 
-url = "http://localhost:8888/entity/neighbors/city/delete/cf/"
+url = "http://127.0.0.1:8888/entity/neighbors/city/delete/cf/"
 headers = {payana_neighboring_city_header: city, 'Content-Type': 'application/json'}
 
 payana_neighboring_city_delete_cf_json = {
@@ -220,12 +220,12 @@ print("Payana neighboring city column family delete CF status: " +
 # GET read
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/neighbors/city/' \
+curl --location 'http://127.0.0.1:8888/entity/neighbors/city/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa'
 """
 
-url = "http://localhost:8888/entity/neighbors/city/"
+url = "http://127.0.0.1:8888/entity/neighbors/city/"
 headers = {payana_neighboring_city_header: city, 'Content-Type': 'application/json'}
 
 response = requests.get(url, headers=headers)
@@ -236,7 +236,7 @@ print("Payana neighboring city row delete CF status: " +
 # POST write
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/neighbors/city/' \
+curl --location 'http://127.0.0.1:8888/entity/neighbors/city/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa' \
 --data '{
@@ -248,7 +248,7 @@ curl --location 'http://localhost:8888/entity/neighbors/city/' \
 }'
 """
 
-url = "http://localhost:8888/entity/neighbors/city/"
+url = "http://127.0.0.1:8888/entity/neighbors/city/"
 
 payana_neighboring_city_json = {
     "city": "cupertino##california##usa",
@@ -274,12 +274,12 @@ payana_neighboring_cities_response_json = response.json()
 # GET read
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/neighbors/city/' \
+curl --location 'http://127.0.0.1:8888/entity/neighbors/city/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa'
 """
 
-url = "http://localhost:8888/entity/neighbors/city/"
+url = "http://127.0.0.1:8888/entity/neighbors/city/"
 headers = {payana_neighboring_city_header: city, 'Content-Type': 'application/json'}
 
 response = requests.get(url, headers=headers)
@@ -293,13 +293,13 @@ print("Payana neighboring city creation verification status: " +
 
 # Delete payana country city row
 """
-curl --location --request DELETE 'http://localhost:8888/entity/neighbors/city/delete/' \
+curl --location --request DELETE 'http://127.0.0.1:8888/entity/neighbors/city/delete/' \
 --header 'Content-Type: application/json' \
 --header 'country: usa' \
 --data ''
 """
 
-url = "http://localhost:8888/entity/neighbors/city/delete/"
+url = "http://127.0.0.1:8888/entity/neighbors/city/delete/"
 headers = {payana_neighboring_city_header: city, 'Content-Type': 'application/json'}
 
 response = requests.delete(url, headers=headers)
@@ -310,13 +310,13 @@ print("Payana country city row delete status: " +
 # GET 
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/entity/neighbors/city/' \
+curl --location --request GET 'http://127.0.0.1:8888/entity/neighbors/city/' \
 --header 'Content-Type: application/json' \
 --header 'country: usa' \
 --data ''
 """
 
-url = "http://localhost:8888/entity/neighbors/city/"
+url = "http://127.0.0.1:8888/entity/neighbors/city/"
 headers = {payana_neighboring_city_header: city, 'Content-Type': 'application/json'}
 
 response = requests.get(url, headers=headers)

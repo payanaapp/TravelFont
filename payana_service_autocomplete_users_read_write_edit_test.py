@@ -36,7 +36,7 @@ payana_autocomplete_users_header = payana_service_constants.payana_autocomplete_
 # POST write
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/autocomplete/users/' \
+curl --location 'http://127.0.0.1:8888/entity/autocomplete/users/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa' \
 --data '{
@@ -50,7 +50,7 @@ curl --location 'http://localhost:8888/entity/autocomplete/users/' \
 }'
 """
 
-url = "http://localhost:8888/entity/autocomplete/users/"
+url = "http://127.0.0.1:8888/entity/autocomplete/users/"
 
 payana_autocomplete_users_obj_json = {
     "city": "cupertino##california##usa",
@@ -79,13 +79,13 @@ payana_autocomplete_users_response_json = response.json()
 # GET read
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/autocomplete/users/' \
+curl --location 'http://127.0.0.1:8888/entity/autocomplete/users/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa' \
 --header 'user: user.*'
 """
 
-url = "http://localhost:8888/entity/autocomplete/users/"
+url = "http://127.0.0.1:8888/entity/autocomplete/users/"
 autocomplete_user_string = "user.*"
 full_user_name = "user_1"
 score = "156"
@@ -107,7 +107,7 @@ print("Payana autocomplete user creation verification status: " +
 
 # Edit PUT
 """
-curl --location --request PUT 'http://localhost:8888/entity/autocomplete/users/' \
+curl --location --request PUT 'http://127.0.0.1:8888/entity/autocomplete/users/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa' \
 --data '{
@@ -148,13 +148,13 @@ print("Payana autocomplete user update status: " +
 # GET read
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/autocomplete/users/' \
+curl --location 'http://127.0.0.1:8888/entity/autocomplete/users/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa' \
 --header 'user: user.*'
 """
 
-url = "http://localhost:8888/entity/autocomplete/users/"
+url = "http://127.0.0.1:8888/entity/autocomplete/users/"
 
 headers = {payana_autocomplete_city_header: city,
            payana_autocomplete_users_header: autocomplete_user_string,
@@ -172,7 +172,7 @@ print("Payana autocomplete user creation verification status: " +
 
 # Delete specific column family and column values
 """
-curl --location 'http://localhost:8888/entity/autocomplete/users/delete/values/' \
+curl --location 'http://127.0.0.1:8888/entity/autocomplete/users/delete/values/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa' \
 --data '{
@@ -182,7 +182,7 @@ curl --location 'http://localhost:8888/entity/autocomplete/users/delete/values/'
     }
 }'
 """
-url = "http://localhost:8888/entity/autocomplete/users/delete/values/"
+url = "http://127.0.0.1:8888/entity/autocomplete/users/delete/values/"
 
 headers = {payana_autocomplete_city_header: city,
            payana_autocomplete_users_header: autocomplete_user_string,
@@ -206,13 +206,13 @@ print("Payana autocomplete users contents column values delete status: " +
 # GET read
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/autocomplete/users/' \
+curl --location 'http://127.0.0.1:8888/entity/autocomplete/users/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa' \
 --header 'user: user.*'
 """
 
-url = "http://localhost:8888/entity/autocomplete/users/"
+url = "http://127.0.0.1:8888/entity/autocomplete/users/"
 
 headers = {payana_autocomplete_city_header: city,
            payana_autocomplete_users_header: autocomplete_user_string,
@@ -230,12 +230,12 @@ print("Payana autocomplete user creation verification status: " +
 
 # Delete payana country city row
 """
-curl --location --request DELETE 'http://localhost:8888/entity/autocomplete/users/delete/' \
+curl --location --request DELETE 'http://127.0.0.1:8888/entity/autocomplete/users/delete/' \
 --header 'Content-Type: application/json' \
 --header 'city: city'
 """
 
-url = "http://localhost:8888/entity/autocomplete/users/delete/"
+url = "http://127.0.0.1:8888/entity/autocomplete/users/delete/"
 headers = {payana_autocomplete_city_header: city,
            'Content-Type': 'application/json'}
 
@@ -247,12 +247,12 @@ print("Payana country city row delete status: " +
 # GET
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/autocomplete/users/' \
+curl --location 'http://127.0.0.1:8888/entity/autocomplete/users/' \
 --header 'Content-Type: application/json' \
 --header 'city: seatt.*'
 """
 
-url = "http://localhost:8888/entity/autocomplete/users/"
+url = "http://127.0.0.1:8888/entity/autocomplete/users/"
 
 headers = {payana_autocomplete_city_header: city,
            payana_autocomplete_users_header: autocomplete_user_string,

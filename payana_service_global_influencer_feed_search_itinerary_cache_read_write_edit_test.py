@@ -33,7 +33,7 @@ payana_feed_search_itinerary_cache_profile_id = bigtable_constants.payana_feed_s
 # POST
 # CURL request
 """
-curl --location 'http://localhost:8888/home/feed/search/' \
+curl --location 'http://127.0.0.1:8888/home/feed/search/' \
 --header 'Content-Type: application/json' \
 --header 'profile_id: 12345' \
 --data '{
@@ -65,7 +65,7 @@ curl --location 'http://localhost:8888/home/feed/search/' \
 }'
 """
 
-url = "http://localhost:8888/home/feed/search/"
+url = "http://127.0.0.1:8888/home/feed/search/"
 
 payana_global_influencer_feed_search_itinerary_cache_object_json = {
     "profile_id": "12345",
@@ -113,13 +113,13 @@ profile_global_influencer_feed_search_itinerary_cache_object_response_json = res
 # GET
 # CURL request
 """
-curl --location 'http://localhost:8888/home/feed/search/' \
+curl --location 'http://127.0.0.1:8888/home/feed/search/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa' \
 --data ''
 """
 
-url = "http://localhost:8888/home/feed/search/"
+url = "http://127.0.0.1:8888/home/feed/search/"
 headers = {payana_feed_search_itinerary_cache_profile_id: profile_id,
            'Content-Type': 'application/json'}
 
@@ -135,7 +135,7 @@ print("Payana feed search global itinearry cache creation verification status: "
 
 # Edit
 """
-curl --location 'http://localhost:8888/home/feed/search/' \
+curl --location 'http://127.0.0.1:8888/home/feed/search/' \
 --header 'Content-Type: application/json' \
 --header 'profile_id: 12345' \
 --data '{
@@ -169,7 +169,7 @@ curl --location 'http://localhost:8888/home/feed/search/' \
 }'
 """
 
-url = "http://localhost:8888/home/feed/search/"
+url = "http://127.0.0.1:8888/home/feed/search/"
 
 payana_global_influencer_feed_search_itinerary_cache_object_edit_json = {
     "profile_id": "12345",
@@ -229,13 +229,13 @@ profile_global_influencer_feed_search_itinerary_cache_object_response_json = res
 # GET
 # CURL request
 """
-curl --location 'http://localhost:8888/home/feed/search/' \
+curl --location 'http://127.0.0.1:8888/home/feed/search/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa' \
 --data ''
 """
 
-url = "http://localhost:8888/home/feed/search/"
+url = "http://127.0.0.1:8888/home/feed/search/"
 headers = {payana_feed_search_itinerary_cache_profile_id: profile_id,
            'Content-Type': 'application/json'}
 
@@ -251,7 +251,7 @@ print("Payana influencer feed search itinerary cache object edit verification st
 
 # Delete specific column family and column values
 """
-curl --location 'http://localhost:8888/home/feed/search/delete/values/' \
+curl --location 'http://127.0.0.1:8888/home/feed/search/delete/values/' \
 --header 'Content-Type: application/json' \
 --header 'profile_id: 12345' \
 --data '{
@@ -279,7 +279,7 @@ curl --location 'http://localhost:8888/home/feed/search/delete/values/' \
 }'
 """
 
-url = "http://localhost:8888/home/feed/search/delete/values/"
+url = "http://127.0.0.1:8888/home/feed/search/delete/values/"
 
 headers = {payana_feed_search_itinerary_cache_profile_id: profile_id,
            'Content-Type': 'application/json'}
@@ -321,13 +321,13 @@ print("Payana global influencer feed search itinerary cache object column values
 # GET
 # CURL request
 """
-curl --location 'http://localhost:8888/home/feed/search/' \
+curl --location 'http://127.0.0.1:8888/home/feed/search/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa' \
 --data ''
 """
 
-url = "http://localhost:8888/home/feed/search/"
+url = "http://127.0.0.1:8888/home/feed/search/"
 headers = {payana_feed_search_itinerary_cache_profile_id: profile_id,
            'Content-Type': 'application/json'}
 
@@ -343,7 +343,7 @@ print("Payana influencer feed search itinerary cache object delete CV verificati
 
 # Delete entire column family
 """
-curl --location 'http://localhost:8888/home/feed/search/delete/cf/' \
+curl --location 'http://127.0.0.1:8888/home/feed/search/delete/cf/' \
 --header 'Content-Type: application/json' \
 --header 'profile_id: 12345' \
 --data '{
@@ -354,7 +354,7 @@ curl --location 'http://localhost:8888/home/feed/search/delete/cf/' \
 }'
 """
 
-url = "http://localhost:8888/home/feed/search/delete/cf/"
+url = "http://127.0.0.1:8888/home/feed/search/delete/cf/"
 headers = {payana_feed_search_itinerary_cache_profile_id: profile_id,
            'Content-Type': 'application/json'}
 
@@ -377,13 +377,13 @@ print("Payana global influencer feed search itinerary cache object column family
 # GET
 # CURL request
 """
-curl --location 'http://localhost:8888/home/feed/search/' \
+curl --location 'http://127.0.0.1:8888/home/feed/search/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa' \
 --data ''
 """
 
-url = "http://localhost:8888/home/feed/search/"
+url = "http://127.0.0.1:8888/home/feed/search/"
 headers = {payana_feed_search_itinerary_cache_profile_id: profile_id,
            'Content-Type': 'application/json'}
 
@@ -399,13 +399,13 @@ print("Payana influencer feed search itinerary cache object delete CV verificati
 
 # Delete row
 """
-curl --location --request DELETE 'http://localhost:8888/home/feed/search/delete/' \
+curl --location --request DELETE 'http://127.0.0.1:8888/home/feed/search/delete/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa' \
 --data ''
 """
 
-url = "http://localhost:8888/home/feed/search/delete/"
+url = "http://127.0.0.1:8888/home/feed/search/delete/"
 headers = {payana_feed_search_itinerary_cache_profile_id: profile_id,
            'Content-Type': 'application/json'}
 
@@ -417,13 +417,13 @@ print("Payana global influencer feed search itinerary cache object row delete st
 # GET
 # CURL request
 """
-curl --location 'http://localhost:8888/home/feed/search/' \
+curl --location 'http://127.0.0.1:8888/home/feed/search/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa' \
 --data ''
 """
 
-url = "http://localhost:8888/home/feed/search/"
+url = "http://127.0.0.1:8888/home/feed/search/"
 headers = {payana_feed_search_itinerary_cache_profile_id: profile_id,
            'Content-Type': 'application/json'}
 

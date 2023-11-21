@@ -32,7 +32,7 @@ payana_city_to_influencers_table_global_influencers_column_family = bigtable_con
 # POST profile travel city influencer
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/influencers/city/' \
+curl --location 'http://127.0.0.1:8888/entity/influencers/city/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa##november##2022' \
 --data '{
@@ -42,7 +42,7 @@ curl --location 'http://localhost:8888/entity/influencers/city/' \
 }'
 """
 
-url = "http://localhost:8888/entity/influencers/city/"
+url = "http://127.0.0.1:8888/entity/influencers/city/"
 
 profile_travel_city_influencer_json = {
     "city": "cupertino##california##usa##november##2022",
@@ -65,12 +65,12 @@ profile_travel_city_influencer_response_json = response.json()
 # GET travel city influencer
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/influencers/city' \
+curl --location 'http://127.0.0.1:8888/entity/influencers/city' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa##november##2022'
 """
 
-url = "http://localhost:8888/entity/influencers/city/"
+url = "http://127.0.0.1:8888/entity/influencers/city/"
 headers = {'city': city, 'Content-Type': 'application/json'}
 
 response = requests.get(url, headers=headers)
@@ -85,7 +85,7 @@ print("Profile travel city influencer creation verification status: " +
 
 # Edit travel influencer city object
 """
-curl --location --request PUT 'http://localhost:8888/entity/influencers/city/' \
+curl --location --request PUT 'http://127.0.0.1:8888/entity/influencers/city/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa##november##2022' \
 --data '{
@@ -113,12 +113,12 @@ updated_cq, updated_cq_value = list(profile_travel_influencer_city_json[payana_c
 # GET travel city influencer
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/influencers/city' \
+curl --location 'http://127.0.0.1:8888/entity/influencers/city' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa##november##2022'
 """
 
-url = "http://localhost:8888/entity/influencers/city/"
+url = "http://127.0.0.1:8888/entity/influencers/city/"
 headers = {'city': city, 'Content-Type': 'application/json'}
 
 response = requests.get(url, headers=headers)
@@ -133,7 +133,7 @@ print("Profile travel city influencer update verification status: " +
 
 # Delete specific column family and column values
 """
-curl --location 'http://localhost:8888/entity/influencers/city/delete/values/' \
+curl --location 'http://127.0.0.1:8888/entity/influencers/city/delete/values/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa##november##2022' \
 --data '{
@@ -141,7 +141,7 @@ curl --location 'http://localhost:8888/entity/influencers/city/delete/values/' \
     "hiking_city_global_influencers": ["123456789"]
 }'
 """
-url = "http://localhost:8888/entity/influencers/city/delete/values/"
+url = "http://127.0.0.1:8888/entity/influencers/city/delete/values/"
 headers = {'city': city, 'Content-Type': 'application/json'}
 
 profile_travel_city_influencer_delete_cv_json = {
@@ -158,12 +158,12 @@ print("Profile travel city influencer contents column values delete status: " +
 # GET travel city influencer
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/influencers/city' \
+curl --location 'http://127.0.0.1:8888/entity/influencers/city' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa##november##2022'
 """
 
-url = "http://localhost:8888/entity/influencers/city/"
+url = "http://127.0.0.1:8888/entity/influencers/city/"
 headers = {'city': city, 'Content-Type': 'application/json'}
 
 response = requests.get(url, headers=headers)
@@ -178,7 +178,7 @@ print("Profile travel city influencer delete value verification status: " +
 # POST profile travel city influencer
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/influencers/city/' \
+curl --location 'http://127.0.0.1:8888/entity/influencers/city/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa##november##2022' \
 --data '{
@@ -188,7 +188,7 @@ curl --location 'http://localhost:8888/entity/influencers/city/' \
 }'
 """
 
-url = "http://localhost:8888/entity/influencers/city/"
+url = "http://127.0.0.1:8888/entity/influencers/city/"
 
 profile_travel_city_influencer_json = {
     "city": "cupertino##california##usa##november##2022",
@@ -211,12 +211,12 @@ profile_travel_city_influencer_response_json = response.json()
 # GET travel city influencer
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/influencers/city' \
+curl --location 'http://127.0.0.1:8888/entity/influencers/city' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa##november##2022'
 """
 
-url = "http://localhost:8888/entity/influencers/city/"
+url = "http://127.0.0.1:8888/entity/influencers/city/"
 headers = {'city': city, 'Content-Type': 'application/json'}
 
 response = requests.get(url, headers=headers)
@@ -230,7 +230,7 @@ print("Profile travel city influencer creation verification status: " +
 
 # Delete entire column family
 """
-curl --location 'http://localhost:8888/entity/influencers/city/delete/cf/' \
+curl --location 'http://127.0.0.1:8888/entity/influencers/city/delete/cf/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa##november##2022' \
 --data '{
@@ -239,7 +239,7 @@ curl --location 'http://localhost:8888/entity/influencers/city/delete/cf/' \
 }'
 """
 
-url = "http://localhost:8888/entity/influencers/city/delete/cf/"
+url = "http://127.0.0.1:8888/entity/influencers/city/delete/cf/"
 headers = {'city': city, 'Content-Type': 'application/json'}
 
 profile_travel_city_influencer_delete_cf_json = {
@@ -257,12 +257,12 @@ print("Profile travel city influencer column family delete status: " +
 # GET travel city influencer
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/influencers/city' \
+curl --location 'http://127.0.0.1:8888/entity/influencers/city' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa##november##2022'
 """
 
-url = "http://localhost:8888/entity/influencers/city/"
+url = "http://127.0.0.1:8888/entity/influencers/city/"
 headers = {'city': city, 'Content-Type': 'application/json'}
 
 response = requests.get(url, headers=headers)
@@ -276,13 +276,13 @@ print("Profile travel city influencer delete CF verification status: " +
 
 # Delete profile travel city influencer row
 """
-curl --location --request DELETE 'http://localhost:8888/entity/influencers/city/delete/' \
+curl --location --request DELETE 'http://127.0.0.1:8888/entity/influencers/city/delete/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa##november##2022' \
 --data ''
 """
 
-url = "http://localhost:8888/entity/influencers/city/delete/"
+url = "http://127.0.0.1:8888/entity/influencers/city/delete/"
 headers = {'city': city, 'Content-Type': 'application/json'}
 
 response = requests.delete(url, headers=headers)
@@ -293,12 +293,12 @@ print("Profile travel city influencer row delete status: " + str(response.status
 # GET travel city influencer
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/influencers/city' \
+curl --location 'http://127.0.0.1:8888/entity/influencers/city' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa##november##2022'
 """
 
-url = "http://localhost:8888/entity/influencers/city/"
+url = "http://127.0.0.1:8888/entity/influencers/city/"
 headers = {'city': city, 'Content-Type': 'application/json'}
 
 response = requests.get(url, headers=headers)

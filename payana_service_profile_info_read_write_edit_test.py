@@ -49,7 +49,7 @@ payana_profile_table_profile_pictures = bigtable_constants.payana_profile_table_
 # POST profile info
 # CURL request
 """
-curl --location --request POST 'http://localhost:8888/profile/info/' \
+curl --location --request POST 'http://127.0.0.1:8888/profile/info/' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "personal_information":
@@ -100,7 +100,7 @@ curl --location --request POST 'http://localhost:8888/profile/info/' \
 }'
 """
 
-url = "http://localhost:8888/profile/info/"
+url = "http://127.0.0.1:8888/profile/info/"
 
 profile_info_json = {
     payana_profile_table_personal_info_column_family:
@@ -171,11 +171,11 @@ print("Profile creation verification status: " +
 # GET profile info
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/profile/info/' \
+curl --location --request GET 'http://127.0.0.1:8888/profile/info/' \
 --header 'profile_id: 6ab6a9d059ab8f9a9e26cb51e27151e62b0e90f3f72b96789b095b8373ff7a2f'
 """
 
-url = "http://localhost:8888/profile/info/"
+url = "http://127.0.0.1:8888/profile/info/"
 headers = {'profile_id': profile_id}
 
 response = requests.get(url, headers=headers)
@@ -189,7 +189,7 @@ print("Profile creation verification status: " +
 
 # Edit personal information
 """
-curl --location --request POST 'http://localhost:8888/profile/info/' \
+curl --location --request POST 'http://127.0.0.1:8888/profile/info/' \
 --header 'profile_id: 123456' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -237,11 +237,11 @@ print("Profile info update status: " + str(response.status_code == 200))
 # GET profile info
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/profile/info/' \
+curl --location --request GET 'http://127.0.0.1:8888/profile/info/' \
 --header 'profile_id: 6ab6a9d059ab8f9a9e26cb51e27151e62b0e90f3f72b96789b095b8373ff7a2f'
 """
 
-url = "http://localhost:8888/profile/info/"
+url = "http://127.0.0.1:8888/profile/info/"
 headers = {'profile_id': profile_id}
 
 response = requests.get(url, headers=headers)
@@ -255,7 +255,7 @@ print("Profile info update read verification status: " +
 
 # Edit top activities tracker rating
 """
-curl --location --request POST 'http://localhost:8888/profile/info/' \
+curl --location --request POST 'http://127.0.0.1:8888/profile/info/' \
 --header 'profile_id: 123456' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -287,11 +287,11 @@ print("Profile activities tracker update status: " +
 # GET profile info
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/profile/info/' \
+curl --location --request GET 'http://127.0.0.1:8888/profile/info/' \
 --header 'profile_id: 6ab6a9d059ab8f9a9e26cb51e27151e62b0e90f3f72b96789b095b8373ff7a2f'
 """
 
-url = "http://localhost:8888/profile/info/"
+url = "http://127.0.0.1:8888/profile/info/"
 headers = {'profile_id': profile_id}
 
 response = requests.get(url, headers=headers)
@@ -306,7 +306,7 @@ print("Profile info top_activities_tracker_rating update read verification statu
 
 # Edit favorite_places_preference
 """
-curl --location --request POST 'http://localhost:8888/profile/info/' \
+curl --location --request POST 'http://127.0.0.1:8888/profile/info/' \
 --header 'profile_id: 123456' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -344,11 +344,11 @@ print("Profile favorite places preference update status: " +
 # GET profile info
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/profile/info/' \
+curl --location --request GET 'http://127.0.0.1:8888/profile/info/' \
 --header 'profile_id: 6ab6a9d059ab8f9a9e26cb51e27151e62b0e90f3f72b96789b095b8373ff7a2f'
 """
 
-url = "http://localhost:8888/profile/info/"
+url = "http://127.0.0.1:8888/profile/info/"
 headers = {'profile_id': profile_id}
 
 response = requests.get(url, headers=headers)
@@ -362,7 +362,7 @@ print("Profile info favorite_places_preference update read verification status: 
 
 # Edit favorite_activities_preference
 """
-curl --location --request POST 'http://localhost:8888/profile/info/' \
+curl --location --request POST 'http://127.0.0.1:8888/profile/info/' \
 --header 'profile_id: 123456' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -400,11 +400,11 @@ print("Profile favorite activities update status: " +
 # GET profile info
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/profile/info/' \
+curl --location --request GET 'http://127.0.0.1:8888/profile/info/' \
 --header 'profile_id: 6ab6a9d059ab8f9a9e26cb51e27151e62b0e90f3f72b96789b095b8373ff7a2f'
 """
 
-url = "http://localhost:8888/profile/info/"
+url = "http://127.0.0.1:8888/profile/info/"
 headers = {'profile_id': profile_id}
 
 response = requests.get(url, headers=headers)
@@ -418,7 +418,7 @@ print("Profile info favorite_activities_preference update read verification stat
 
 # Edit thumbnail_travel_buddies
 """
-curl --location --request POST 'http://localhost:8888/profile/info/' \
+curl --location --request POST 'http://127.0.0.1:8888/profile/info/' \
 --header 'profile_id: 123456' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -458,11 +458,11 @@ print("Profile thumbnail travel buddies update status: " +
 # GET profile info
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/profile/info/' \
+curl --location --request GET 'http://127.0.0.1:8888/profile/info/' \
 --header 'profile_id: 6ab6a9d059ab8f9a9e26cb51e27151e62b0e90f3f72b96789b095b8373ff7a2f'
 """
 
-url = "http://localhost:8888/profile/info/"
+url = "http://127.0.0.1:8888/profile/info/"
 headers = {'profile_id': profile_id}
 
 response = requests.get(url, headers=headers)
@@ -476,7 +476,7 @@ print("Profile info thumbnail_travel_buddies update read verification status: " 
 
 # Delete specific column family and column values
 """
-curl --location --request POST 'http://localhost:8888/profile/info/delete/values/' \
+curl --location --request POST 'http://127.0.0.1:8888/profile/info/delete/values/' \
 --header 'profile_id: d6b088551f82508ae569668ce146db6f56a90a762c11eb0901cbe87e9bede637' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -491,7 +491,7 @@ curl --location --request POST 'http://localhost:8888/profile/info/delete/values
     }
 }'
 """
-url = "http://localhost:8888/profile/info/delete/values/"
+url = "http://127.0.0.1:8888/profile/info/delete/values/"
 headers = {'profile_id': profile_id, 'Content-Type': 'application/json'}
 
 profile_info_thumbnail_travel_buddies_json = {
@@ -512,11 +512,11 @@ print("Profile info contents delete status: " +
 # GET profile info
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/profile/info/' \
+curl --location --request GET 'http://127.0.0.1:8888/profile/info/' \
 --header 'profile_id: 6ab6a9d059ab8f9a9e26cb51e27151e62b0e90f3f72b96789b095b8373ff7a2f'
 """
 
-url = "http://localhost:8888/profile/info/"
+url = "http://127.0.0.1:8888/profile/info/"
 headers = {'profile_id': profile_id}
 
 response = requests.get(url, headers=headers)
@@ -532,7 +532,7 @@ print("Profile info contents delete verification status: " +
 
 # Delete thumbnail_travel_buddies - entire column family
 """
-curl --location --request POST 'http://localhost:8888/profile/info/delete/cf/' \
+curl --location --request POST 'http://127.0.0.1:8888/profile/info/delete/cf/' \
 --header 'profile_id: d6b088551f82508ae569668ce146db6f56a90a762c11eb0901cbe87e9bede637' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -547,7 +547,7 @@ curl --location --request POST 'http://localhost:8888/profile/info/delete/cf/' \
     }
 }'
 """
-url = "http://localhost:8888/profile/info/delete/cf/"
+url = "http://127.0.0.1:8888/profile/info/delete/cf/"
 headers = {'profile_id': profile_id, 'Content-Type': 'application/json'}
 
 profile_info_thumbnail_travel_buddies_json = {
@@ -566,11 +566,11 @@ print("Profile info contents delete status: " +
 # GET profile info
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/profile/info/' \
+curl --location --request GET 'http://127.0.0.1:8888/profile/info/' \
 --header 'profile_id: 6ab6a9d059ab8f9a9e26cb51e27151e62b0e90f3f72b96789b095b8373ff7a2f'
 """
 
-url = "http://localhost:8888/profile/info/"
+url = "http://127.0.0.1:8888/profile/info/"
 headers = {'profile_id': profile_id}
 
 response = requests.get(url, headers=headers)
@@ -586,10 +586,10 @@ print("Profile info contents delete verification status: " +
 
 # Delete profile info
 """
-curl --location --request DELETE 'http://localhost:8888/profile/info/delete/' \
+curl --location --request DELETE 'http://127.0.0.1:8888/profile/info/delete/' \
 --header 'profile_id: da8fcdcf7ee10d71961fe4251de602e8f42d2a39fd77758176552f229ad32859'
 """
-url = "http://localhost:8888/profile/info/delete/"
+url = "http://127.0.0.1:8888/profile/info/delete/"
 headers = {'profile_id': profile_id}
 
 response = requests.delete(url, headers=headers)
@@ -600,11 +600,11 @@ print("Profile info delete status: " + str(response.status_code == 200))
 # GET profile info
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/profile/info/' \
+curl --location --request GET 'http://127.0.0.1:8888/profile/info/' \
 --header 'profile_id: 6ab6a9d059ab8f9a9e26cb51e27151e62b0e90f3f72b96789b095b8373ff7a2f'
 """
 
-url = "http://localhost:8888/profile/info/"
+url = "http://127.0.0.1:8888/profile/info/"
 headers = {'profile_id': profile_id}
 
 response = requests.get(url, headers=headers)
