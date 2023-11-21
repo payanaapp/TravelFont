@@ -60,7 +60,7 @@ created_activity_guide_id_list_activity_generic_column_family_id = "_".join(
 # POST profile info
 # CURL request
 """
-curl --location --request POST 'http://localhost:8888/profile/itineraries/' \
+curl --location --request POST 'http://127.0.0.1:8888/profile/itineraries/' \
 --header 'profile_id: 123456' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -75,7 +75,7 @@ curl --location --request POST 'http://localhost:8888/profile/itineraries/' \
 }'
 """
 
-url = "http://localhost:8888/profile/itineraries/"
+url = "http://127.0.0.1:8888/profile/itineraries/"
 
 profile_page_itinerary_json = {
     payana_profile_table_profile_id: "123456",
@@ -110,11 +110,11 @@ print("Profile Page Itinerary creation verification status: " +
 # GET profile page itinerary
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/profile/itineraries/' \
+curl --location --request GET 'http://127.0.0.1:8888/profile/itineraries/' \
 --header 'profile_id: 123456'
 """
 
-url = "http://localhost:8888/profile/itineraries/"
+url = "http://127.0.0.1:8888/profile/itineraries/"
 headers = {'profile_id': profile_id}
 
 response = requests.get(url, headers=headers)
@@ -129,7 +129,7 @@ print("Profile Page Itinerary creation verification status: " +
 
 # Edit itinerary id list -- add a new one
 """
-curl --location --request PUT 'http://localhost:8888/profile/itineraries/' \
+curl --location --request PUT 'http://127.0.0.1:8888/profile/itineraries/' \
 --header 'profile_id: 123456' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -168,11 +168,11 @@ print("Profile Page Itinerary update status: " +
 # GET profile page itinerary
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/profile/itineraries/' \
+curl --location --request GET 'http://127.0.0.1:8888/profile/itineraries/' \
 --header 'profile_id: 123456'
 """
 
-url = "http://localhost:8888/profile/itineraries/"
+url = "http://127.0.0.1:8888/profile/itineraries/"
 headers = {'profile_id': profile_id}
 
 response = requests.get(url, headers=headers)
@@ -186,7 +186,7 @@ print("Profile Page Itinerary update verification status: " +
 
 # Delete specific column family and column values
 """
-curl --location --request POST 'http://localhost:8888/profile/itineraries/delete/values/' \
+curl --location --request POST 'http://127.0.0.1:8888/profile/itineraries/delete/values/' \
 --header 'profile_id: 123456' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -196,7 +196,7 @@ curl --location --request POST 'http://localhost:8888/profile/itineraries/delete
 }'
 """
 
-url = "http://localhost:8888/profile/itineraries/delete/values/"
+url = "http://127.0.0.1:8888/profile/itineraries/delete/values/"
 headers = {'profile_id': profile_id, 'Content-Type': 'application/json'}
 
 key, value = list(profile_page_itinerary_response[profile_id]
@@ -215,11 +215,11 @@ print("Profile page itineraries contents column values delete status: " +
 # GET profile page itinerary
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/profile/itineraries/' \
+curl --location --request GET 'http://127.0.0.1:8888/profile/itineraries/' \
 --header 'profile_id: 123456'
 """
 
-url = "http://localhost:8888/profile/itineraries/"
+url = "http://127.0.0.1:8888/profile/itineraries/"
 headers = {'profile_id': profile_id}
 
 response = requests.get(url, headers=headers)
@@ -233,7 +233,7 @@ print("Profile Page Itinerary deletion column values verification status: " +
 
 # Delete created_activity_guide_id_list_activity_generic_column_family_id - entire column family
 """
-curl --location --request POST 'http://localhost:8888/profile/itineraries/delete/cf/' \
+curl --location --request POST 'http://127.0.0.1:8888/profile/itineraries/delete/cf/' \
 --header 'profile_id: 123456' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -241,7 +241,7 @@ curl --location --request POST 'http://localhost:8888/profile/itineraries/delete
     "exotic_created_excursion_id_list": ""
 }'
 """
-url = "http://localhost:8888/profile/itineraries/delete/cf/"
+url = "http://127.0.0.1:8888/profile/itineraries/delete/cf/"
 headers = {'profile_id': profile_id, 'Content-Type': 'application/json'}
 
 profile_page_itinerary_delete_cf_json = {
@@ -259,11 +259,11 @@ print("Profile page itinerary contents column family delete status: " +
 # GET profile page itinerary
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/profile/itineraries/' \
+curl --location --request GET 'http://127.0.0.1:8888/profile/itineraries/' \
 --header 'profile_id: 123456'
 """
 
-url = "http://localhost:8888/profile/itineraries/"
+url = "http://127.0.0.1:8888/profile/itineraries/"
 headers = {'profile_id': profile_id}
 
 response = requests.get(url, headers=headers)
@@ -277,10 +277,10 @@ print("Profile Page Itinerary column family deletion verification status: " +
 
 # Delete profile info
 """
-curl --location --request DELETE 'http://localhost:8888/profile/itineraries/delete/' \
+curl --location --request DELETE 'http://127.0.0.1:8888/profile/itineraries/delete/' \
 --header 'profile_id: 123456'
 """
-url = "http://localhost:8888/profile/itineraries/delete/"
+url = "http://127.0.0.1:8888/profile/itineraries/delete/"
 headers = {'profile_id': profile_id}
 
 response = requests.delete(url, headers=headers)
@@ -292,11 +292,11 @@ print("Profile page itineraries row delete status: " +
 # GET profile page itinerary
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/profile/itineraries/' \
+curl --location --request GET 'http://127.0.0.1:8888/profile/itineraries/' \
 --header 'profile_id: 123456'
 """
 
-url = "http://localhost:8888/profile/itineraries/"
+url = "http://127.0.0.1:8888/profile/itineraries/"
 headers = {'profile_id': profile_id}
 
 response = requests.get(url, headers=headers)

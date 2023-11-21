@@ -33,7 +33,7 @@ payana_sign_up_mail_id_list_profile_name = bigtable_constants.payana_sign_up_mai
 # POST write
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/signup/' \
+curl --location 'http://127.0.0.1:8888/entity/signup/' \
 --header 'Content-Type: application/json' \
 --header 'profile_id: 123456789' \
 --data-raw '{
@@ -46,7 +46,7 @@ curl --location 'http://localhost:8888/entity/signup/' \
 }'
 """
 
-url = "http://localhost:8888/entity/signup/"
+url = "http://127.0.0.1:8888/entity/signup/"
 
 payana_sign_up_mail_id_notification_json = {
     "profile_name": "abkr",

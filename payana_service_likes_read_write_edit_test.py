@@ -33,7 +33,7 @@ payana_likes_table_entity_id = bigtable_constants.payana_likes_table_entity_id
 # POST profile likes
 # CURL request
 """
-curl --location --request POST 'http://localhost:8888/entity/likes/' \
+curl --location --request POST 'http://127.0.0.1:8888/entity/likes/' \
 --header 'Content-Type: application/json' \
 --header 'entity_id: 12345' \
 --data-raw '{
@@ -46,7 +46,7 @@ curl --location --request POST 'http://localhost:8888/entity/likes/' \
 }'
 """
 
-url = "http://localhost:8888/entity/likes/"
+url = "http://127.0.0.1:8888/entity/likes/"
 
 profile_likes_json = {
     payana_like_column_family: {
@@ -72,12 +72,12 @@ print("Profile likes object creation status: " +
 # GET payana likes
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/entity/likes/' \
+curl --location --request GET 'http://127.0.0.1:8888/entity/likes/' \
 --header 'Content-Type: application/json' \
 --header 'entity_id: 12345'
 """
 
-url = "http://localhost:8888/entity/likes/"
+url = "http://127.0.0.1:8888/entity/likes/"
 headers = {payana_likes_table_entity_id: entity_id,
            'Content-Type': 'application/json'}
 
@@ -93,7 +93,7 @@ print("Profile likes creation verification status: " +
 
 # Edit payana likes object
 """
-curl --location --request PUT 'http://localhost:8888/entity/likes/' \
+curl --location --request PUT 'http://127.0.0.1:8888/entity/likes/' \
 --header 'Content-Type: application/json' \
 --header 'entity_id: 12345' \
 --data-raw '{
@@ -125,12 +125,12 @@ print("Profile Likes object update status: " + str(response.status_code == 200))
 # GET payana likes
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/entity/likes/' \
+curl --location --request GET 'http://127.0.0.1:8888/entity/likes/' \
 --header 'Content-Type: application/json' \
 --header 'entity_id: 12345'
 """
 
-url = "http://localhost:8888/entity/likes/"
+url = "http://127.0.0.1:8888/entity/likes/"
 headers = {payana_likes_table_entity_id: entity_id,
            'Content-Type': 'application/json'}
 
@@ -145,14 +145,14 @@ print("Profile likes creation verification status: " +
 
 # Delete specific column family and column values
 """
-curl --location --request POST 'http://localhost:8888/entity/likes/delete/values/' \
+curl --location --request POST 'http://127.0.0.1:8888/entity/likes/delete/values/' \
 --header 'Content-Type: application/json' \
 --header 'entity_id: 12345' \
 --data-raw '{
     "payana_likes": ["pf_id_1", "pf_id_2"]
 }'
 """
-url = "http://localhost:8888/entity/likes/delete/values/"
+url = "http://127.0.0.1:8888/entity/likes/delete/values/"
 headers = {payana_likes_table_entity_id: entity_id,
            'Content-Type': 'application/json'}
 
@@ -170,12 +170,12 @@ print("Payana likes contents column values delete status: " +
 # GET payana likes
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/entity/likes/' \
+curl --location --request GET 'http://127.0.0.1:8888/entity/likes/' \
 --header 'Content-Type: application/json' \
 --header 'entity_id: 12345'
 """
 
-url = "http://localhost:8888/entity/likes/"
+url = "http://127.0.0.1:8888/entity/likes/"
 headers = {payana_likes_table_entity_id: entity_id,
            'Content-Type': 'application/json'}
 
@@ -190,12 +190,12 @@ print("Profile likes creation verification status: " +
 
 # Delete entire column family
 """
-curl --location --request POST 'http://localhost:8888/profile/travelfont/delete/cf/' \
+curl --location --request POST 'http://127.0.0.1:8888/profile/travelfont/delete/cf/' \
 --header 'Content-Type: application/json' \
 --header 'profile_id: 123456789'
 """
 
-url = "http://localhost:8888/entity/likes/delete/cf/"
+url = "http://127.0.0.1:8888/entity/likes/delete/cf/"
 headers = {payana_likes_table_entity_id: entity_id,
            'Content-Type': 'application/json'}
 
@@ -208,12 +208,12 @@ print("Payana Likes column family delete status: " +
 # GET payana likes
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/entity/likes/' \
+curl --location --request GET 'http://127.0.0.1:8888/entity/likes/' \
 --header 'Content-Type: application/json' \
 --header 'entity_id: 12345'
 """
 
-url = "http://localhost:8888/entity/likes/"
+url = "http://127.0.0.1:8888/entity/likes/"
 headers = {payana_likes_table_entity_id: entity_id,
            'Content-Type': 'application/json'}
 
@@ -224,7 +224,7 @@ print("Payana likes read status: " + str(response.status_code == 400))
 # POST profile likes
 # CURL request
 """
-curl --location --request POST 'http://localhost:8888/entity/likes/' \
+curl --location --request POST 'http://127.0.0.1:8888/entity/likes/' \
 --header 'Content-Type: application/json' \
 --header 'entity_id: 12345' \
 --data-raw '{
@@ -237,7 +237,7 @@ curl --location --request POST 'http://localhost:8888/entity/likes/' \
 }'
 """
 
-url = "http://localhost:8888/entity/likes/"
+url = "http://127.0.0.1:8888/entity/likes/"
 
 profile_likes_json = {
     payana_like_column_family: {
@@ -263,12 +263,12 @@ print("Profile likes object creation status: " +
 # GET payana likes
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/entity/likes/' \
+curl --location --request GET 'http://127.0.0.1:8888/entity/likes/' \
 --header 'Content-Type: application/json' \
 --header 'entity_id: 12345'
 """
 
-url = "http://localhost:8888/entity/likes/"
+url = "http://127.0.0.1:8888/entity/likes/"
 headers = {payana_likes_table_entity_id: entity_id,
            'Content-Type': 'application/json'}
 
@@ -283,12 +283,12 @@ print("Profile likes creation verification status: " +
 
 # Delete payana likes row
 """
-curl --location --request DELETE 'http://localhost:8888/entity/likes/delete/' \
+curl --location --request DELETE 'http://127.0.0.1:8888/entity/likes/delete/' \
 --header 'Content-Type: application/json' \
 --header 'entity_id: 12345'
 """
 
-url = "http://localhost:8888/entity/likes/delete/"
+url = "http://127.0.0.1:8888/entity/likes/delete/"
 headers = {payana_likes_table_entity_id: entity_id,
            'Content-Type': 'application/json'}
 
@@ -300,12 +300,12 @@ print("Payana likes row delete status: " + str(response.status_code == 200))
 # GET payana likes
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/entity/likes/' \
+curl --location --request GET 'http://127.0.0.1:8888/entity/likes/' \
 --header 'Content-Type: application/json' \
 --header 'entity_id: 12345'
 """
 
-url = "http://localhost:8888/entity/likes/"
+url = "http://127.0.0.1:8888/entity/likes/"
 headers = {payana_likes_table_entity_id: entity_id,
            'Content-Type': 'application/json'}
 

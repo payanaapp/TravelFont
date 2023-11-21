@@ -38,7 +38,7 @@ payana_profile_travel_footprint_obj_list = bigtable_constants.payana_profile_tra
 # POST profile travel footprint
 # CURL request
 """
-curl --location --request POST 'http://localhost:8888/profile/travelfont/' \
+curl --location --request POST 'http://127.0.0.1:8888/profile/travelfont/' \
 --header 'Content-Type: application/json' \
 --header 'profile_id: 123456789' \
 --data-raw '{
@@ -54,7 +54,7 @@ curl --location --request POST 'http://localhost:8888/profile/travelfont/' \
 }'
 """
 
-url = "http://localhost:8888/profile/travelfont/"
+url = "http://127.0.0.1:8888/profile/travelfont/"
 
 profile_travel_footprint_json = {
     payana_profile_page_travel_footprint_profile_id: "123456789",
@@ -83,12 +83,12 @@ profile_info_response_json = response.json()
 # GET profile info
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/profile/travelfont/' \
+curl --location --request GET 'http://127.0.0.1:8888/profile/travelfont/' \
 --header 'Content-Type: application/json' \
 --header 'profile_id: 123456789'
 """
 
-url = "http://localhost:8888/profile/travelfont/"
+url = "http://127.0.0.1:8888/profile/travelfont/"
 headers = {'profile_id': profile_id, 'Content-Type': 'application/json'}
 
 response = requests.get(url, headers=headers)
@@ -103,7 +103,7 @@ print("Profile travel footprint creation verification status: " +
 
 # Edit travel footprint object
 """
-curl --location --request PUT 'http://localhost:8888/profile/travelfont/' \
+curl --location --request PUT 'http://127.0.0.1:8888/profile/travelfont/' \
 --header 'Content-Type: application/json' \
 --header 'profile_id: 123456789' \
 --data-raw '{
@@ -141,12 +141,12 @@ print("Profile travel footprint update status: " + str(response.status_code == 2
 # GET profile info
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/profile/travelfont/' \
+curl --location --request GET 'http://127.0.0.1:8888/profile/travelfont/' \
 --header 'Content-Type: application/json' \
 --header 'profile_id: 123456789'
 """
 
-url = "http://localhost:8888/profile/travelfont/"
+url = "http://127.0.0.1:8888/profile/travelfont/"
 headers = {'profile_id': profile_id}
 
 response = requests.get(url, headers=headers)
@@ -160,7 +160,7 @@ print("Profile travel footprint update verification status: " +
 
 # Delete specific column family and column values
 """
-curl --location --request POST 'http://localhost:8888/profile/travelfont/delete/values/' \
+curl --location --request POST 'http://127.0.0.1:8888/profile/travelfont/delete/values/' \
 --header 'Content-Type: application/json' \
 --header 'profile_id: 123456789' \
 --data-raw '{
@@ -174,7 +174,7 @@ curl --location --request POST 'http://localhost:8888/profile/travelfont/delete/
     ]
 }'
 """
-url = "http://localhost:8888/profile/travelfont/delete/values/"
+url = "http://127.0.0.1:8888/profile/travelfont/delete/values/"
 headers = {'profile_id': profile_id, 'Content-Type': 'application/json'}
 
 profile_travel_footprint_delete_cv_json = {
@@ -198,12 +198,12 @@ print("Profile travel footprint contents column values delete status: " +
 # GET profile info
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/profile/travelfont/' \
+curl --location --request GET 'http://127.0.0.1:8888/profile/travelfont/' \
 --header 'Content-Type: application/json' \
 --header 'profile_id: 123456789'
 """
 
-url = "http://localhost:8888/profile/travelfont/"
+url = "http://127.0.0.1:8888/profile/travelfont/"
 headers = {'profile_id': profile_id}
 
 response = requests.get(url, headers=headers)
@@ -217,12 +217,12 @@ print("Profile travel footprint column value deleteion verification status: " +
 
 # Delete entire column family
 """
-curl --location --request POST 'http://localhost:8888/profile/travelfont/delete/cf/' \
+curl --location --request POST 'http://127.0.0.1:8888/profile/travelfont/delete/cf/' \
 --header 'Content-Type: application/json' \
 --header 'profile_id: 123456789'
 """
 
-url = "http://localhost:8888/profile/travelfont/delete/cf/"
+url = "http://127.0.0.1:8888/profile/travelfont/delete/cf/"
 headers = {'profile_id': profile_id, 'Content-Type': 'application/json'}
 
 response = requests.post(url, headers=headers)
@@ -234,12 +234,12 @@ print("Profile travel footprint column family delete status: " +
 # GET profile info
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/profile/travelfont/' \
+curl --location --request GET 'http://127.0.0.1:8888/profile/travelfont/' \
 --header 'Content-Type: application/json' \
 --header 'profile_id: 123456789'
 """
 
-url = "http://localhost:8888/profile/travelfont/"
+url = "http://127.0.0.1:8888/profile/travelfont/"
 headers = {'profile_id': profile_id, 'Content-Type': 'application/json'}
 
 response = requests.get(url, headers=headers)
@@ -250,7 +250,7 @@ print("Profile travel footprint column family delete status: " + str(response.st
 # POST profile info
 # CURL request
 """
-curl --location --request POST 'http://localhost:8888/profile/travelfont/' \
+curl --location --request POST 'http://127.0.0.1:8888/profile/travelfont/' \
 --header 'Content-Type: application/json' \
 --header 'profile_id: 123456789' \
 --data-raw '{
@@ -266,7 +266,7 @@ curl --location --request POST 'http://localhost:8888/profile/travelfont/' \
 }'
 """
 
-url = "http://localhost:8888/profile/travelfont/"
+url = "http://127.0.0.1:8888/profile/travelfont/"
 
 profile_travel_footprint_json = {
     payana_profile_page_travel_footprint_profile_id: "123456789",
@@ -295,12 +295,12 @@ profile_info_response_json = response.json()
 # GET profile info
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/profile/travelfont/' \
+curl --location --request GET 'http://127.0.0.1:8888/profile/travelfont/' \
 --header 'Content-Type: application/json' \
 --header 'profile_id: 123456789'
 """
 
-url = "http://localhost:8888/profile/travelfont/"
+url = "http://127.0.0.1:8888/profile/travelfont/"
 headers = {'profile_id': profile_id, 'Content-Type': 'application/json'}
 
 response = requests.get(url, headers=headers)
@@ -314,12 +314,12 @@ print("Profile travel footprint creation verification status: " +
 
 # Delete profile travel footprint row
 """
-curl --location --request DELETE 'http://localhost:8888/profile/travelfont/delete/' \
+curl --location --request DELETE 'http://127.0.0.1:8888/profile/travelfont/delete/' \
 --header 'Content-Type: application/json' \
 --header 'profile_id: 123456789'
 """
 
-url = "http://localhost:8888/profile/travelfont/delete/"
+url = "http://127.0.0.1:8888/profile/travelfont/delete/"
 headers = {'profile_id': profile_id, 'Content-Type': 'application/json'}
 
 response = requests.delete(url, headers=headers)
@@ -330,12 +330,12 @@ print("Profile travelfootprint row delete status: " + str(response.status_code =
 # GET profile info
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/profile/travelfont/' \
+curl --location --request GET 'http://127.0.0.1:8888/profile/travelfont/' \
 --header 'Content-Type: application/json' \
 --header 'profile_id: 123456789'
 """
 
-url = "http://localhost:8888/profile/travelfont/"
+url = "http://127.0.0.1:8888/profile/travelfont/"
 headers = {'profile_id': profile_id}
 
 response = requests.get(url, headers=headers)

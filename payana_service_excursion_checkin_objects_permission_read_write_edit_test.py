@@ -34,7 +34,7 @@ payana_excursion_checkin_permission_table_admin_column_family = bigtable_constan
 # POST
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/edit/permission/' \
+curl --location 'http://127.0.0.1:8888/entity/edit/permission/' \
 --header 'Content-Type: application/json' \
 --header 'entity_id: 123456789' \
 --data '{
@@ -45,7 +45,7 @@ curl --location 'http://localhost:8888/entity/edit/permission/' \
 }'
 """
 
-url = "http://localhost:8888/entity/edit/permission/"
+url = "http://127.0.0.1:8888/entity/edit/permission/"
 
 payana_excursion_objects_permission_json = {
     "entity_id": "123456789",
@@ -73,13 +73,13 @@ profile_excursion_objects_permission_response_json = response.json()
 # GET 
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/edit/permission/' \
+curl --location 'http://127.0.0.1:8888/entity/edit/permission/' \
 --header 'Content-Type: application/json' \
 --header 'entity_id: 123456789' \
 --data ''
 """
 
-url = "http://localhost:8888/entity/edit/permission/"
+url = "http://127.0.0.1:8888/entity/edit/permission/"
 headers = {'entity_id': entity_id, 'Content-Type': 'application/json'}
 
 response = requests.get(url, headers=headers)
@@ -94,7 +94,7 @@ print("Payana excursion objects permission edit verification status: " +
 
 # Edit 
 """
-curl --location --request PUT 'http://localhost:8888/entity/edit/permission/' \
+curl --location --request PUT 'http://127.0.0.1:8888/entity/edit/permission/' \
 --header 'Content-Type: application/json' \
 --header 'entity_id: 123456789' \
 --data '{
@@ -104,7 +104,7 @@ curl --location --request PUT 'http://localhost:8888/entity/edit/permission/' \
     "admin": {"pf_id_1": "1234567"}
 }'
 """
-url = "http://localhost:8888/entity/edit/permission/"
+url = "http://127.0.0.1:8888/entity/edit/permission/"
 
 new_profile_id = "pf_id_4"
 new_profile_id_number = "1234567"
@@ -131,13 +131,13 @@ profile_excursion_objects_permission_response_json = response.json()
 # GET 
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/edit/permission/' \
+curl --location 'http://127.0.0.1:8888/entity/edit/permission/' \
 --header 'Content-Type: application/json' \
 --header 'entity_id: 123456789' \
 --data ''
 """
 
-url = "http://localhost:8888/entity/edit/permission/"
+url = "http://127.0.0.1:8888/entity/edit/permission/"
 headers = {'entity_id': entity_id, 'Content-Type': 'application/json'}
 
 response = requests.get(url, headers=headers)
@@ -152,7 +152,7 @@ print("Payana excursion objects permission edit verification status: " +
 
 # Delete specific column family and column values
 """
-curl --location 'http://localhost:8888/entity/edit/permission/delete/values/' \
+curl --location 'http://127.0.0.1:8888/entity/edit/permission/delete/values/' \
 --header 'Content-Type: application/json' \
 --header 'entity_id: 123456789' \
 --data '{
@@ -160,7 +160,7 @@ curl --location 'http://localhost:8888/entity/edit/permission/delete/values/' \
     "edit_participants_list": {"pf_id_2": ""}
 }'
 """
-url = "http://localhost:8888/entity/edit/permission/delete/values/"
+url = "http://127.0.0.1:8888/entity/edit/permission/delete/values/"
 headers = {'entity_id': entity_id, 'Content-Type': 'application/json'}
 
 payana_excursion_object_permission_delete_cv_json = {
@@ -177,13 +177,13 @@ print("Payana excursion object permission column values delete status: " +
 # GET 
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/edit/permission/' \
+curl --location 'http://127.0.0.1:8888/entity/edit/permission/' \
 --header 'Content-Type: application/json' \
 --header 'entity_id: 123456789' \
 --data ''
 """
 
-url = "http://localhost:8888/entity/edit/permission/"
+url = "http://127.0.0.1:8888/entity/edit/permission/"
 headers = {'entity_id': entity_id, 'Content-Type': 'application/json'}
 
 response = requests.get(url, headers=headers)
@@ -198,7 +198,7 @@ print("Payana excursion objects permission delete values verification status: " 
 
 # Delete entire column family
 """
-curl --location 'http://localhost:8888/entity/edit/permission/delete/cf/' \
+curl --location 'http://127.0.0.1:8888/entity/edit/permission/delete/cf/' \
 --header 'Content-Type: application/json' \
 --header 'entity_id: 123456789' \
 --data '{
@@ -208,7 +208,7 @@ curl --location 'http://localhost:8888/entity/edit/permission/delete/cf/' \
 }'
 """
 
-url = "http://localhost:8888/entity/edit/permission/delete/cf/"
+url = "http://127.0.0.1:8888/entity/edit/permission/delete/cf/"
 headers = {'entity_id': entity_id, 'Content-Type': 'application/json'}
 
 profile_excursion_object_permission_delete_cf_json = {
@@ -225,13 +225,13 @@ print("Payana country city column family delete status: " +
 # GET 
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/edit/permission/' \
+curl --location 'http://127.0.0.1:8888/entity/edit/permission/' \
 --header 'Content-Type: application/json' \
 --header 'entity_id: 123456789' \
 --data ''
 """
 
-url = "http://localhost:8888/entity/edit/permission/"
+url = "http://127.0.0.1:8888/entity/edit/permission/"
 headers = {'entity_id': entity_id, 'Content-Type': 'application/json'}
 
 response = requests.get(url, headers=headers)
@@ -247,7 +247,7 @@ print("Payana excursion objects permission delete column family verification sta
 # POST
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/edit/permission/' \
+curl --location 'http://127.0.0.1:8888/entity/edit/permission/' \
 --header 'Content-Type: application/json' \
 --header 'entity_id: 123456789' \
 --data '{
@@ -258,7 +258,7 @@ curl --location 'http://localhost:8888/entity/edit/permission/' \
 }'
 """
 
-url = "http://localhost:8888/entity/edit/permission/"
+url = "http://127.0.0.1:8888/entity/edit/permission/"
 
 payana_excursion_objects_permission_json = {
     "entity_id": "123456789",
@@ -286,13 +286,13 @@ profile_excursion_objects_permission_response_json = response.json()
 # GET 
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/edit/permission/' \
+curl --location 'http://127.0.0.1:8888/entity/edit/permission/' \
 --header 'Content-Type: application/json' \
 --header 'entity_id: 123456789' \
 --data ''
 """
 
-url = "http://localhost:8888/entity/edit/permission/"
+url = "http://127.0.0.1:8888/entity/edit/permission/"
 headers = {'entity_id': entity_id, 'Content-Type': 'application/json'}
 
 response = requests.get(url, headers=headers)
@@ -307,13 +307,13 @@ print("Payana excursion objects permission edit verification status: " +
 
 # Delete row
 """
-curl --location --request DELETE 'http://localhost:8888/entity/edit/permission/delete/' \
+curl --location --request DELETE 'http://127.0.0.1:8888/entity/edit/permission/delete/' \
 --header 'Content-Type: application/json' \
 --header 'entity_id: 123456789' \
 --data ''
 """
 
-url = "http://localhost:8888/entity/edit/permission/delete/"
+url = "http://127.0.0.1:8888/entity/edit/permission/delete/"
 headers = {'entity_id': entity_id, 'Content-Type': 'application/json'}
 
 response = requests.delete(url, headers=headers)
@@ -324,13 +324,13 @@ print("Payana excursion objects permission row delete status: " +
 # GET 
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/edit/permission/' \
+curl --location 'http://127.0.0.1:8888/entity/edit/permission/' \
 --header 'Content-Type: application/json' \
 --header 'entity_id: 123456789' \
 --data ''
 """
 
-url = "http://localhost:8888/entity/edit/permission/"
+url = "http://127.0.0.1:8888/entity/edit/permission/"
 headers = {'entity_id': entity_id, 'Content-Type': 'application/json'}
 
 response = requests.get(url, headers=headers)

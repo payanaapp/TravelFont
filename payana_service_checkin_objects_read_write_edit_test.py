@@ -37,7 +37,7 @@ payana_entity_to_comments_table_comment_id_list = bigtable_constants.payana_enti
 # POST profile checkin objects
 # CURL request
 """
-curl --location --request POST 'http://localhost:8888/entity/checkin/' \
+curl --location --request POST 'http://127.0.0.1:8888/entity/checkin/' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "image_id_list": {
@@ -74,7 +74,7 @@ curl --location --request POST 'http://localhost:8888/entity/checkin/' \
 '
 """
 
-url = "http://localhost:8888/entity/checkin/"
+url = "http://127.0.0.1:8888/entity/checkin/"
 
 payana_checkin_obj_json = {
     "image_id_list": {
@@ -127,12 +127,12 @@ print("Profile checkin object creation status: " +
 # GET payana checkin objects
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/entity/checkin/' \
+curl --location --request GET 'http://127.0.0.1:8888/entity/checkin/' \
 --header 'Content-Type: application/json' \
 --header 'checkin_id: 730665e80500a504eb0caab7a15f65c76dc6465efb9090546595e6318694be05'
 """
 
-url = "http://localhost:8888/entity/checkin/"
+url = "http://127.0.0.1:8888/entity/checkin/"
 
 headers = {payana_checkin_id: checkin_id,
            'Content-Type': 'application/json'}
@@ -152,7 +152,7 @@ print("Profile checkin object creation verification status: " +
 # Edit payana checkin object
 # CURL request
 """
-curl --location --request PUT 'http://localhost:8888/entity/checkin/' \
+curl --location --request PUT 'http://127.0.0.1:8888/entity/checkin/' \
 --header 'Content-Type: application/json' \
 --header 'checkin_id: d5abe50bba3a82383300e46ee14ce283d30d70bc9a4dc855a853011f124b3ba8' \
 --data-raw '{
@@ -187,7 +187,7 @@ curl --location --request PUT 'http://localhost:8888/entity/checkin/' \
 '
 """
 
-url = "http://localhost:8888/entity/checkin/"
+url = "http://127.0.0.1:8888/entity/checkin/"
 
 payana_checkin_obj_edit_json = {
     "image_id_list": {
@@ -233,12 +233,12 @@ print("Profile checkin object edit status: " +
 # GET payana checkin objects
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/entity/checkin/' \
+curl --location --request GET 'http://127.0.0.1:8888/entity/checkin/' \
 --header 'Content-Type: application/json' \
 --header 'checkin_id: 730665e80500a504eb0caab7a15f65c76dc6465efb9090546595e6318694be05'
 """
 
-url = "http://localhost:8888/entity/checkin/"
+url = "http://127.0.0.1:8888/entity/checkin/"
 
 headers = {payana_checkin_id: checkin_id,
            'Content-Type': 'application/json'}
@@ -257,7 +257,7 @@ print("Profile checkin object edit verification status: " +
 
 # Delete specific column family and column values
 """
-curl --location --request POST 'http://localhost:8888/entity/checkin/delete/values/' \
+curl --location --request POST 'http://127.0.0.1:8888/entity/checkin/delete/values/' \
 --header 'Content-Type: application/json' \
 --header 'checkin_id: d5abe50bba3a82383300e46ee14ce283d30d70bc9a4dc855a853011f124b3ba8' \
 --data-raw '{
@@ -271,7 +271,7 @@ curl --location --request POST 'http://localhost:8888/entity/checkin/delete/valu
 }'
 """
 
-url = "http://localhost:8888/entity/checkin/delete/values/"
+url = "http://127.0.0.1:8888/entity/checkin/delete/values/"
 headers = {payana_checkin_id: checkin_id, 'Content-Type': 'application/json'}
 
 payana_checkin_value_delete_json = {
@@ -294,12 +294,12 @@ print("Profile checkin objects contents column values delete status: " +
 # GET payana checkin objects
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/entity/checkin/' \
+curl --location --request GET 'http://127.0.0.1:8888/entity/checkin/' \
 --header 'Content-Type: application/json' \
 --header 'checkin_id: 730665e80500a504eb0caab7a15f65c76dc6465efb9090546595e6318694be05'
 """
 
-url = "http://localhost:8888/entity/checkin/"
+url = "http://127.0.0.1:8888/entity/checkin/"
 
 headers = {payana_checkin_id: checkin_id,
            'Content-Type': 'application/json'}
@@ -319,7 +319,7 @@ print("Profile checkin object delete values verification status: " +
 
 # Delete entire column family
 """
-curl --location --request POST 'http://localhost:8888/entity/checkin/delete/cf/' \
+curl --location --request POST 'http://127.0.0.1:8888/entity/checkin/delete/cf/' \
 --header 'Content-Type: application/json' \
 --header 'checkin_id: d5abe50bba3a82383300e46ee14ce283d30d70bc9a4dc855a853011f124b3ba8' \
 --data-raw '{
@@ -327,7 +327,7 @@ curl --location --request POST 'http://localhost:8888/entity/checkin/delete/cf/'
     "checkin_metadata": {}
 }'
 """
-url = "http://localhost:8888/entity/checkin/delete/cf/"
+url = "http://127.0.0.1:8888/entity/checkin/delete/cf/"
 headers = {payana_checkin_id: checkin_id, 'Content-Type': 'application/json'}
 
 profile_checkin_delete_cf_json = {
@@ -345,12 +345,12 @@ print("Profile checkin contents column family delete status: " +
 # GET payana checkin objects
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/entity/checkin/' \
+curl --location --request GET 'http://127.0.0.1:8888/entity/checkin/' \
 --header 'Content-Type: application/json' \
 --header 'checkin_id: 730665e80500a504eb0caab7a15f65c76dc6465efb9090546595e6318694be05'
 """
 
-url = "http://localhost:8888/entity/checkin/"
+url = "http://127.0.0.1:8888/entity/checkin/"
 
 headers = {payana_checkin_id: checkin_id,
            'Content-Type': 'application/json'}
@@ -366,12 +366,12 @@ print("Profile checkin object delete CF verification status: " +
 
 # Delete check in object
 """
-curl --location --request DELETE 'http://localhost:8888/entity/checkin/delete/' \
+curl --location --request DELETE 'http://127.0.0.1:8888/entity/checkin/delete/' \
 --header 'Content-Type: application/json' \
 --header 'checkin_id: 730665e80500a504eb0caab7a15f65c76dc6465efb9090546595e6318694be05'
 """
 
-url = "http://localhost:8888/entity/checkin/delete/"
+url = "http://127.0.0.1:8888/entity/checkin/delete/"
 headers = {payana_checkin_id: checkin_id}
 
 response = requests.delete(url, headers=headers)
@@ -383,12 +383,12 @@ print("Payana checkin row delete status: " +
 # GET checkin itinerary
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/entity/checkin/' \
+curl --location --request GET 'http://127.0.0.1:8888/entity/checkin/' \
 --header 'Content-Type: application/json' \
 --header 'checkin_id: d5abe50bba3a82383300e46ee14ce283d30d70bc9a4dc855a853011f124b3ba8'
 """
 
-url = "http://localhost:8888/entity/checkin/"
+url = "http://127.0.0.1:8888/entity/checkin/"
 headers = {payana_checkin_id: checkin_id}
 
 response = requests.get(url, headers=headers)

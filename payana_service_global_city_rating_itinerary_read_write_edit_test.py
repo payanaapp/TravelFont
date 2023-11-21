@@ -33,7 +33,7 @@ payana_itinerary_city = bigtable_constants.payana_itinerary_city
 # POST
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/global/rating/city/' \
+curl --location 'http://127.0.0.1:8888/entity/global/rating/city/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa' \
 --data '{
@@ -59,7 +59,7 @@ curl --location 'http://localhost:8888/entity/global/rating/city/' \
 }'
 """
 
-url = "http://localhost:8888/entity/global/rating/city/"
+url = "http://127.0.0.1:8888/entity/global/rating/city/"
 
 payana_global_city_rating_itinerary_object_json = {
     "city": "cupertino##california##usa",
@@ -100,13 +100,13 @@ profile_global_city_rating_itinerary_object_response_json = response.json()
 # GET
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/global/rating/city/' \
+curl --location 'http://127.0.0.1:8888/entity/global/rating/city/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa' \
 --data ''
 """
 
-url = "http://localhost:8888/entity/global/rating/city/"
+url = "http://127.0.0.1:8888/entity/global/rating/city/"
 headers = {payana_itinerary_city: city,
            'Content-Type': 'application/json'}
 
@@ -122,7 +122,7 @@ print("Payana global_city_rating_itinerary object creation verification status: 
 
 # Edit
 """
-curl --location --request PUT 'http://localhost:8888/entity/global/rating/city/' \
+curl --location --request PUT 'http://127.0.0.1:8888/entity/global/rating/city/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa' \
 --data '{
@@ -152,7 +152,7 @@ curl --location --request PUT 'http://localhost:8888/entity/global/rating/city/'
 }'
 """
 
-url = "http://localhost:8888/entity/global/rating/city/"
+url = "http://127.0.0.1:8888/entity/global/rating/city/"
 
 payana_global_city_rating_itinerary_object_edit_json = {
     "city": "cupertino##california##usa",
@@ -201,13 +201,13 @@ profile_global_city_rating_itinerary_object_response_json = response.json()
 # GET
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/global/rating/city/' \
+curl --location 'http://127.0.0.1:8888/entity/global/rating/city/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa' \
 --data ''
 """
 
-url = "http://localhost:8888/entity/global/rating/city/"
+url = "http://127.0.0.1:8888/entity/global/rating/city/"
 headers = {payana_itinerary_city: city,
            'Content-Type': 'application/json'}
 
@@ -225,7 +225,7 @@ print("Payana global_city_rating_itinerary object edit verification status: " +
 
 # Delete specific column family and column values
 """
-curl --location 'http://localhost:8888/entity/global/rating/city/delete/values/' \
+curl --location 'http://127.0.0.1:8888/entity/global/rating/city/delete/values/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa' \
 --data '{
@@ -244,7 +244,7 @@ curl --location 'http://localhost:8888/entity/global/rating/city/delete/values/'
 }'
 """
 
-url = "http://localhost:8888/entity/global/rating/city/delete/values/"
+url = "http://127.0.0.1:8888/entity/global/rating/city/delete/values/"
 headers = {payana_itinerary_city: city,
            'Content-Type': 'application/json'}
 
@@ -272,13 +272,13 @@ print("Payana global_city_rating_itinerary object column values delete CV status
 # GET
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/global/rating/city/' \
+curl --location 'http://127.0.0.1:8888/entity/global/rating/city/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa' \
 --data ''
 """
 
-url = "http://localhost:8888/entity/global/rating/city/"
+url = "http://127.0.0.1:8888/entity/global/rating/city/"
 headers = {payana_itinerary_city: city,
            'Content-Type': 'application/json'}
 
@@ -297,7 +297,7 @@ print("Payana global_city_rating_itinerary object delete CV verification status:
 
 # Delete entire column family
 """
-curl --location 'http://localhost:8888/entity/global/rating/city/delete/cf/' \
+curl --location 'http://127.0.0.1:8888/entity/global/rating/city/delete/cf/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa' \
 --data '{
@@ -308,7 +308,7 @@ curl --location 'http://localhost:8888/entity/global/rating/city/delete/cf/' \
 }'
 """
 
-url = "http://localhost:8888/entity/global/rating/city/delete/cf/"
+url = "http://127.0.0.1:8888/entity/global/rating/city/delete/cf/"
 headers = {payana_itinerary_city: city,
            'Content-Type': 'application/json'}
 
@@ -331,13 +331,13 @@ print("Payana global_city_rating_itinerary object column family delete CF status
 # GET
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/global/rating/city/' \
+curl --location 'http://127.0.0.1:8888/entity/global/rating/city/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa' \
 --data ''
 """
 
-url = "http://localhost:8888/entity/global/rating/city/"
+url = "http://127.0.0.1:8888/entity/global/rating/city/"
 headers = {payana_itinerary_city: city,
            'Content-Type': 'application/json'}
 
@@ -353,13 +353,13 @@ print("Payana global_city_rating_itinerary object delete CF verification status:
 
 # Delete row
 """
-curl --location --request DELETE 'http://localhost:8888/entity/global/rating/city/delete/' \
+curl --location --request DELETE 'http://127.0.0.1:8888/entity/global/rating/city/delete/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa' \
 --data ''
 """
 
-url = "http://localhost:8888/entity/global/rating/city/delete/"
+url = "http://127.0.0.1:8888/entity/global/rating/city/delete/"
 headers = {payana_itinerary_city: city,
            'Content-Type': 'application/json'}
 
@@ -371,13 +371,13 @@ print("Payana global city rating itinerary object row delete status: " +
 # GET
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/global/rating/city/' \
+curl --location 'http://127.0.0.1:8888/entity/global/rating/city/' \
 --header 'Content-Type: application/json' \
 --header 'city: cupertino##california##usa' \
 --data ''
 """
 
-url = "http://localhost:8888/entity/global/rating/city/"
+url = "http://127.0.0.1:8888/entity/global/rating/city/"
 headers = {payana_itinerary_city: city,
            'Content-Type': 'application/json'}
 

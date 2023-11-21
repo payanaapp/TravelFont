@@ -46,7 +46,7 @@ payana_travel_buddy_table_column_family_received_pending_request = bigtable_cons
 # POST write
 # CURL request
 """
-curl --location 'http://localhost:8888/profile/travelbuddy/' \
+curl --location 'http://127.0.0.1:8888/profile/travelbuddy/' \
 --header 'Content-Type: application/json' \
 --header 'profile_id: 1234567' \
 --data '{
@@ -60,7 +60,7 @@ curl --location 'http://localhost:8888/profile/travelbuddy/' \
 }'
 """
 
-url = "http://localhost:8888/profile/travelbuddy/"
+url = "http://127.0.0.1:8888/profile/travelbuddy/"
 
 profile_travel_buddy_json = {
     "profile_id": "1234567",
@@ -91,12 +91,12 @@ profile_info_response_json = response.json()
 # GET read
 # CURL request
 """
-curl --location 'http://localhost:8888/profile/travelbuddy/' \
+curl --location 'http://127.0.0.1:8888/profile/travelbuddy/' \
 --header 'Content-Type: application/json' \
 --header 'profile_id: 1234567'
 """
 
-url = "http://localhost:8888/profile/travelbuddy/"
+url = "http://127.0.0.1:8888/profile/travelbuddy/"
 headers = {payana_travel_buddy_table_column_family_profile_id: profile_id,
            'Content-Type': 'application/json'}
 
@@ -112,7 +112,7 @@ print("Profile travel buddy creation verification status: " +
 # GET friend tag autocomplete
 # CURL request
 """
-curl --location 'http://localhost:8888/profile/travelbuddy/tag/' \
+curl --location 'http://127.0.0.1:8888/profile/travelbuddy/tag/' \
 --header 'Content-Type: application/json' \
 --header 'profile_id: 1234567' \
 --header 'friend_id: 456.*'
@@ -120,7 +120,7 @@ curl --location 'http://localhost:8888/profile/travelbuddy/tag/' \
 friend_id = "456.*"
 travel_buddy_profile_id = "456789"
 
-url = "http://localhost:8888/profile/travelbuddy/tag/"
+url = "http://127.0.0.1:8888/profile/travelbuddy/tag/"
 
 headers = {payana_travel_buddy_table_column_family_profile_id: profile_id,
            payana_travel_buddy_table_friend_id: friend_id,
@@ -139,7 +139,7 @@ print("Profile travel buddy regex friend comments tag verification status: " +
 
 # Edit travel buddy object
 """
-curl --location 'http://localhost:8888/profile/travelbuddy/' \
+curl --location 'http://127.0.0.1:8888/profile/travelbuddy/' \
 --header 'Content-Type: application/json' \
 --header 'profile_id: 1234567' \
 --data '{
@@ -163,7 +163,7 @@ profile_travel_buddy_json = {
 }
 
 new_travel_buddy_profile_id = "456789123"
-url = "http://localhost:8888/profile/travelbuddy/"
+url = "http://127.0.0.1:8888/profile/travelbuddy/"
 
 headers = {'Content-Type': 'application/json', payana_travel_buddy_table_column_family_profile_id: profile_id}
 
@@ -176,12 +176,12 @@ print("Profile travel buddy update status: " + str(response.status_code == 200))
 # GET read
 # CURL request
 """
-curl --location 'http://localhost:8888/profile/travelbuddy/' \
+curl --location 'http://127.0.0.1:8888/profile/travelbuddy/' \
 --header 'Content-Type: application/json' \
 --header 'profile_id: 1234567'
 """
 
-url = "http://localhost:8888/profile/travelbuddy/"
+url = "http://127.0.0.1:8888/profile/travelbuddy/"
 headers = {payana_travel_buddy_table_column_family_profile_id: profile_id,
            'Content-Type': 'application/json'}
 
@@ -197,7 +197,7 @@ print("Profile travel buddy update read verification status: " +
 
 # Delete specific column family and column values
 """
-curl --location 'http://localhost:8888/profile/travelbuddy/delete/values/' \
+curl --location 'http://127.0.0.1:8888/profile/travelbuddy/delete/values/' \
 --header 'Content-Type: application/json' \
 --header 'profile_id: 1234567' \
 --data '{
@@ -206,7 +206,7 @@ curl --location 'http://localhost:8888/profile/travelbuddy/delete/values/' \
     }
 }'
 """
-url = "http://localhost:8888/profile/travelbuddy/delete/values/"
+url = "http://127.0.0.1:8888/profile/travelbuddy/delete/values/"
 headers = {payana_travel_buddy_table_column_family_profile_id: profile_id,
            'Content-Type': 'application/json'}
 
@@ -226,12 +226,12 @@ print("Profile travel buddy contents column values delete status: " +
 # GET read
 # CURL request
 """
-curl --location 'http://localhost:8888/profile/travelbuddy/' \
+curl --location 'http://127.0.0.1:8888/profile/travelbuddy/' \
 --header 'Content-Type: application/json' \
 --header 'profile_id: 1234567'
 """
 
-url = "http://localhost:8888/profile/travelbuddy/"
+url = "http://127.0.0.1:8888/profile/travelbuddy/"
 headers = {payana_travel_buddy_table_column_family_profile_id: profile_id,
            'Content-Type': 'application/json'}
 
@@ -246,7 +246,7 @@ print("Profile travel buddy delete CV verification status: " +
 
 # Delete entire column family
 """
-curl --location 'http://localhost:8888/profile/travelbuddy/delete/cf/' \
+curl --location 'http://127.0.0.1:8888/profile/travelbuddy/delete/cf/' \
 --header 'Content-Type: application/json' \
 --header 'profile_id: 1234567' \
 --data '{
@@ -254,7 +254,7 @@ curl --location 'http://localhost:8888/profile/travelbuddy/delete/cf/' \
 }'
 """
 
-url = "http://localhost:8888/profile/travelbuddy/delete/cf/"
+url = "http://127.0.0.1:8888/profile/travelbuddy/delete/cf/"
 
 headers = {payana_travel_buddy_table_column_family_profile_id: profile_id,
            'Content-Type': 'application/json'}
@@ -273,12 +273,12 @@ print("Profile travel buddy column family delete status: " +
 # GET read
 # CURL request
 """
-curl --location 'http://localhost:8888/profile/travelbuddy/' \
+curl --location 'http://127.0.0.1:8888/profile/travelbuddy/' \
 --header 'Content-Type: application/json' \
 --header 'profile_id: 1234567'
 """
 
-url = "http://localhost:8888/profile/travelbuddy/"
+url = "http://127.0.0.1:8888/profile/travelbuddy/"
 headers = {payana_travel_buddy_table_column_family_profile_id: profile_id,
            'Content-Type': 'application/json'}
 
@@ -294,12 +294,12 @@ print("Profile travel buddy creation verification status: " +
 
 # Delete row
 """
-curl --location --request DELETE 'http://localhost:8888/profile/travelbuddy/delete/' \
+curl --location --request DELETE 'http://127.0.0.1:8888/profile/travelbuddy/delete/' \
 --header 'Content-Type: application/json' \
 --header 'profile_id: 1234567'
 """
 
-url = "http://localhost:8888/profile/travelbuddy/delete/"
+url = "http://127.0.0.1:8888/profile/travelbuddy/delete/"
 headers = {payana_travel_buddy_table_column_family_profile_id: profile_id,
            'Content-Type': 'application/json'}
 
@@ -312,12 +312,12 @@ print("Profile travel buddy row delete status: " +
 # GET profile info
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/profile/travelbuddy/' \
+curl --location --request GET 'http://127.0.0.1:8888/profile/travelbuddy/' \
 --header 'Content-Type: application/json' \
 --header 'profile_id: 123456789'
 """
 
-url = "http://localhost:8888/profile/travelbuddy/"
+url = "http://127.0.0.1:8888/profile/travelbuddy/"
 headers = {'profile_id': profile_id}
 
 response = requests.get(url, headers=headers)

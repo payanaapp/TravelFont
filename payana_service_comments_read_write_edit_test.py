@@ -34,7 +34,7 @@ payana_entity_to_comments_table_comment_id_list = bigtable_constants.payana_enti
 # POST profile comments
 # CURL request
 """
-curl --location --request POST 'http://localhost:8888/entity/comments/' \
+curl --location --request POST 'http://127.0.0.1:8888/entity/comments/' \
 --header 'Content-Type: application/json' \
 --header 'entity_id: imagee' \
 --data-raw '{
@@ -48,7 +48,7 @@ curl --location --request POST 'http://localhost:8888/entity/comments/' \
 }'
 """
 
-url = "http://localhost:8888/entity/comments/"
+url = "http://127.0.0.1:8888/entity/comments/"
 
 profile_comments_json = {
     "comment_timestamp": "123456789",
@@ -75,12 +75,12 @@ print("Profile comments object creation status: " +
 # GET payana comments
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/entity/comments/' \
+curl --location --request GET 'http://127.0.0.1:8888/entity/comments/' \
 --header 'Content-Type: application/json' \
 --header 'entity_id: imagee'
 """
 
-url = "http://localhost:8888/entity/comments/"
+url = "http://127.0.0.1:8888/entity/comments/"
 headers = {payana_comments_table_entity_id: entity_id,
            'Content-Type': 'application/json'}
 
@@ -96,12 +96,12 @@ print("Profile entity comments creation verification status: " +
       str(len(profile_entity_comments_response[entity_id]) == 1))
 
 """
-curl --location --request GET 'http://localhost:8888/entity/comments/details/' \
+curl --location --request GET 'http://127.0.0.1:8888/entity/comments/details/' \
 --header 'Content-Type: application/json' \
 --header 'comment_id: bd87253f6de33321353645c41ce7e7bfa57c515430b2df01831ffe67f318706e'
 """
 
-url = "http://localhost:8888/entity/comments/details/"
+url = "http://127.0.0.1:8888/entity/comments/details/"
 headers = {payana_comments_table_comment_id: comment_id,
            'Content-Type': 'application/json'}
 
@@ -121,7 +121,7 @@ print("Profile comments creation verification status: " +
 # POST profile comments
 # CURL request
 """
-curl --location --request POST 'http://localhost:8888/entity/comments/' \
+curl --location --request POST 'http://127.0.0.1:8888/entity/comments/' \
 --header 'Content-Type: application/json' \
 --header 'entity_id: imagee' \
 --data-raw '{
@@ -135,7 +135,7 @@ curl --location --request POST 'http://localhost:8888/entity/comments/' \
 }'
 """
 
-url = "http://localhost:8888/entity/comments/"
+url = "http://127.0.0.1:8888/entity/comments/"
 
 profile_comments_json = {
     "comment_timestamp": "123456789",
@@ -163,12 +163,12 @@ print("Profile comments object edit status: " +
 # CURL request
 
 """
-curl --location --request GET 'http://localhost:8888/entity/comments/details/' \
+curl --location --request GET 'http://127.0.0.1:8888/entity/comments/details/' \
 --header 'Content-Type: application/json' \
 --header 'comment_id: bd87253f6de33321353645c41ce7e7bfa57c515430b2df01831ffe67f318706e'
 """
 
-url = "http://localhost:8888/entity/comments/details/"
+url = "http://127.0.0.1:8888/entity/comments/details/"
 headers = {payana_comments_table_comment_id: comment_id,
            'Content-Type': 'application/json'}
 
@@ -188,7 +188,7 @@ print("Profile comments edit verification status: " +
 # POST profile comments
 # CURL request
 """
-curl --location --request POST 'http://localhost:8888/entity/comments/' \
+curl --location --request POST 'http://127.0.0.1:8888/entity/comments/' \
 --header 'Content-Type: application/json' \
 --header 'entity_id: imagee' \
 --data-raw '{
@@ -202,7 +202,7 @@ curl --location --request POST 'http://localhost:8888/entity/comments/' \
 }'
 """
 
-url = "http://localhost:8888/entity/comments/"
+url = "http://127.0.0.1:8888/entity/comments/"
 
 profile_comments_json = {
     "comment_timestamp": "123456789",
@@ -229,12 +229,12 @@ print("Profile comments object creation status: " +
 # GET payana comments
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/entity/comments/' \
+curl --location --request GET 'http://127.0.0.1:8888/entity/comments/' \
 --header 'Content-Type: application/json' \
 --header 'entity_id: imagee'
 """
 
-url = "http://localhost:8888/entity/comments/"
+url = "http://127.0.0.1:8888/entity/comments/"
 headers = {payana_comments_table_entity_id: entity_id,
            'Content-Type': 'application/json'}
 
@@ -250,7 +250,7 @@ print("Profile entity comments creation verification status: " +
 
 # Delete comment row and entity comment table column value
 """
-curl --location --request POST 'http://localhost:8888/entity/comments/delete/' \
+curl --location --request POST 'http://127.0.0.1:8888/entity/comments/delete/' \
 --header 'Content-Type: application/json' \
 --header 'entity_id: imagee' \
 --data-raw '{
@@ -261,7 +261,7 @@ curl --location --request POST 'http://localhost:8888/entity/comments/delete/' \
 }'
 """
 
-url = "http://localhost:8888/entity/comments/delete/"
+url = "http://127.0.0.1:8888/entity/comments/delete/"
 headers = {payana_comments_table_entity_id: entity_id,
            'Content-Type': 'application/json'}
 
@@ -281,12 +281,12 @@ print("Payana comments row and entity column values delete status: " +
 # GET payana likes
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/entity/comments/' \
+curl --location --request GET 'http://127.0.0.1:8888/entity/comments/' \
 --header 'Content-Type: application/json' \
 --header 'entity_id: imagee'
 """
 
-url = "http://localhost:8888/entity/comments/"
+url = "http://127.0.0.1:8888/entity/comments/"
 headers = {payana_comments_table_entity_id: entity_id,
            'Content-Type': 'application/json'}
 
@@ -300,12 +300,12 @@ print("Profile entity comments creation verification status: " +
       str(comment_id not in profile_entity_comments_response[entity_id]))
 
 """
-curl --location --request GET 'http://localhost:8888/entity/comments/details/' \
+curl --location --request GET 'http://127.0.0.1:8888/entity/comments/details/' \
 --header 'Content-Type: application/json' \
 --header 'comment_id: bd87253f6de33321353645c41ce7e7bfa57c515430b2df01831ffe67f318706e'
 """
 
-url = "http://localhost:8888/entity/comments/details/"
+url = "http://127.0.0.1:8888/entity/comments/details/"
 headers = {payana_comments_table_comment_id: comment_id,
            'Content-Type': 'application/json'}
 
@@ -315,12 +315,12 @@ print("Payana comments deletion verification status: " + str(response.status_cod
 
 # Delete payana coments row
 """
-curl --location --request DELETE 'http://localhost:8888/entity/comments/entity/delete/' \
+curl --location --request DELETE 'http://127.0.0.1:8888/entity/comments/entity/delete/' \
 --header 'Content-Type: application/json' \
 --header 'entity_id: imagee'
 """
 
-url = "http://localhost:8888/entity/comments/entity/delete/"
+url = "http://127.0.0.1:8888/entity/comments/entity/delete/"
 
 headers = {payana_comments_table_entity_id: entity_id,
            'Content-Type': 'application/json'}
@@ -333,12 +333,12 @@ print("Payana comments row delete status: " + str(response.status_code == 200))
 # GET payana likes
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/entity/comments/' \
+curl --location --request GET 'http://127.0.0.1:8888/entity/comments/' \
 --header 'Content-Type: application/json' \
 --header 'entity_id: imagee'
 """
 
-url = "http://localhost:8888/entity/comments/"
+url = "http://127.0.0.1:8888/entity/comments/"
 headers = {payana_comments_table_entity_id: entity_id,
            'Content-Type': 'application/json'}
 
@@ -347,12 +347,12 @@ response = requests.get(url, headers=headers)
 print("Payana entity comments read status: " + str(response.status_code == 400))
 
 """
-curl --location --request GET 'http://localhost:8888/entity/comments/details/' \
+curl --location --request GET 'http://127.0.0.1:8888/entity/comments/details/' \
 --header 'Content-Type: application/json' \
 --header 'comment_id: bd87253f6de33321353645c41ce7e7bfa57c515430b2df01831ffe67f318706e'
 """
 
-url = "http://localhost:8888/entity/comments/details/"
+url = "http://127.0.0.1:8888/entity/comments/details/"
 headers = {payana_comments_table_comment_id: comment_id,
            'Content-Type': 'application/json'}
 

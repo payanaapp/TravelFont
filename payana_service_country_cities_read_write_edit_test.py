@@ -32,7 +32,7 @@ payana_country_table_column_family_city_list = bigtable_constants.payana_country
 # POST country cities
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/country/city/' \
+curl --location 'http://127.0.0.1:8888/entity/country/city/' \
 --header 'Content-Type: application/json' \
 --header 'country: usa' \
 --data '{
@@ -44,7 +44,7 @@ curl --location 'http://localhost:8888/entity/country/city/' \
 }'
 """
 
-url = "http://localhost:8888/entity/country/city/"
+url = "http://127.0.0.1:8888/entity/country/city/"
 
 payana_country_city_json = {
     "country": "usa",
@@ -70,7 +70,7 @@ profile_travel_city_influencer_response_json = response.json()
 # GET country cities
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/entity/country/city/' \
+curl --location --request GET 'http://127.0.0.1:8888/entity/country/city/' \
 --header 'Content-Type: application/json' \
 --header 'country: usa' \
 --data '{
@@ -82,7 +82,7 @@ curl --location --request GET 'http://localhost:8888/entity/country/city/' \
 }'
 """
 
-url = "http://localhost:8888/entity/country/city/"
+url = "http://127.0.0.1:8888/entity/country/city/"
 headers = {'country': country, 'Content-Type': 'application/json'}
 
 response = requests.get(url, headers=headers)
@@ -97,7 +97,7 @@ print("Payana country city creation verification status: " +
 
 # Edit travel influencer city object
 """
-curl --location --request PUT 'http://localhost:8888/entity/country/city/' \
+curl --location --request PUT 'http://127.0.0.1:8888/entity/country/city/' \
 --header 'Content-Type: application/json' \
 --header 'country: usa' \
 --data '{
@@ -132,7 +132,7 @@ print("Payana country city update status: " + str(response.status_code == 200))
 # GET country cities
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/entity/country/city/' \
+curl --location --request GET 'http://127.0.0.1:8888/entity/country/city/' \
 --header 'Content-Type: application/json' \
 --header 'country: usa' \
 --data '{
@@ -144,7 +144,7 @@ curl --location --request GET 'http://localhost:8888/entity/country/city/' \
 }'
 """
 
-url = "http://localhost:8888/entity/country/city/"
+url = "http://127.0.0.1:8888/entity/country/city/"
 headers = {'country': country, 'Content-Type': 'application/json'}
 
 response = requests.get(url, headers=headers)
@@ -158,7 +158,7 @@ print("Payana country city edit verification status: " +
 
 # Delete specific column family and column values
 """
-curl --location 'http://localhost:8888/entity/country/city/delete/values/' \
+curl --location 'http://127.0.0.1:8888/entity/country/city/delete/values/' \
 --header 'Content-Type: application/json' \
 --header 'country: usa' \
 --data '{
@@ -168,7 +168,7 @@ curl --location 'http://localhost:8888/entity/country/city/delete/values/' \
         }
 }'
 """
-url = "http://localhost:8888/entity/country/city/delete/values/"
+url = "http://127.0.0.1:8888/entity/country/city/delete/values/"
 headers = {'country': country, 'Content-Type': 'application/json'}
 
 payana_country_city_delete_cv_json = {
@@ -187,7 +187,7 @@ print("Payana country city contents column values delete status: " +
 # GET country cities
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/entity/country/city/' \
+curl --location --request GET 'http://127.0.0.1:8888/entity/country/city/' \
 --header 'Content-Type: application/json' \
 --header 'country: usa' \
 --data '{
@@ -199,7 +199,7 @@ curl --location --request GET 'http://localhost:8888/entity/country/city/' \
 }'
 """
 
-url = "http://localhost:8888/entity/country/city/"
+url = "http://127.0.0.1:8888/entity/country/city/"
 headers = {'country': country, 'Content-Type': 'application/json'}
 
 response = requests.get(url, headers=headers)
@@ -213,7 +213,7 @@ print("Payana country city creation verification status: " +
 
 # Delete entire column family
 """
-curl --location 'http://localhost:8888/entity/country/city/delete/cf/' \
+curl --location 'http://127.0.0.1:8888/entity/country/city/delete/cf/' \
 --header 'Content-Type: application/json' \
 --header 'country: usa' \
 --data '{
@@ -221,7 +221,7 @@ curl --location 'http://localhost:8888/entity/country/city/delete/cf/' \
 }'
 """
 
-url = "http://localhost:8888/entity/country/city/delete/cf/"
+url = "http://127.0.0.1:8888/entity/country/city/delete/cf/"
 headers = {'country': country, 'Content-Type': 'application/json'}
 
 profile_travel_city_influencer_delete_cf_json = {
@@ -237,7 +237,7 @@ print("Payana country city column family delete status: " +
 # GET travel city influencer
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/entity/country/city/' \
+curl --location --request GET 'http://127.0.0.1:8888/entity/country/city/' \
 --header 'Content-Type: application/json' \
 --header 'country: usa' \
 --data '{
@@ -249,7 +249,7 @@ curl --location --request GET 'http://localhost:8888/entity/country/city/' \
 }'
 """
 
-url = "http://localhost:8888/entity/country/city/"
+url = "http://127.0.0.1:8888/entity/country/city/"
 headers = {'country': country, 'Content-Type': 'application/json'}
 
 response = requests.get(url, headers=headers)
@@ -260,7 +260,7 @@ print("Payana country city row delete status: " +
 # POST country cities
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/country/city/' \
+curl --location 'http://127.0.0.1:8888/entity/country/city/' \
 --header 'Content-Type: application/json' \
 --header 'country: usa' \
 --data '{
@@ -272,7 +272,7 @@ curl --location 'http://localhost:8888/entity/country/city/' \
 }'
 """
 
-url = "http://localhost:8888/entity/country/city/"
+url = "http://127.0.0.1:8888/entity/country/city/"
 
 payana_country_city_json = {
     "country": "usa",
@@ -298,7 +298,7 @@ profile_travel_city_influencer_response_json = response.json()
 # GET country cities
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/entity/country/city/' \
+curl --location --request GET 'http://127.0.0.1:8888/entity/country/city/' \
 --header 'Content-Type: application/json' \
 --header 'country: usa' \
 --data '{
@@ -310,7 +310,7 @@ curl --location --request GET 'http://localhost:8888/entity/country/city/' \
 }'
 """
 
-url = "http://localhost:8888/entity/country/city/"
+url = "http://127.0.0.1:8888/entity/country/city/"
 headers = {'country': country, 'Content-Type': 'application/json'}
 
 response = requests.get(url, headers=headers)
@@ -324,13 +324,13 @@ print("Payana country city creation verification status: " +
 
 # Delete payana country city row
 """
-curl --location --request DELETE 'http://localhost:8888/entity/country/city/delete/' \
+curl --location --request DELETE 'http://127.0.0.1:8888/entity/country/city/delete/' \
 --header 'Content-Type: application/json' \
 --header 'country: usa' \
 --data ''
 """
 
-url = "http://localhost:8888/entity/country/city/delete/"
+url = "http://127.0.0.1:8888/entity/country/city/delete/"
 headers = {'country': country, 'Content-Type': 'application/json'}
 
 response = requests.delete(url, headers=headers)
@@ -341,13 +341,13 @@ print("Payana country city row delete status: " +
 # GET travel city influencer
 # CURL request
 """
-curl --location --request GET 'http://localhost:8888/entity/country/city/' \
+curl --location --request GET 'http://127.0.0.1:8888/entity/country/city/' \
 --header 'Content-Type: application/json' \
 --header 'country: usa' \
 --data ''
 """
 
-url = "http://localhost:8888/entity/country/city/"
+url = "http://127.0.0.1:8888/entity/country/city/"
 headers = {'country': country, 'Content-Type': 'application/json'}
 
 response = requests.get(url, headers=headers)

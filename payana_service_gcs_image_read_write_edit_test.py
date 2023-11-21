@@ -34,14 +34,14 @@ gcs_payana_profile_pictures_bucket_name = "payana_profile_pictures"
 
 # Get Signed Upload URL
 """
-curl --location --request GET 'http://localhost:8888/entity/signed_url/upload' \
+curl --location --request GET 'http://127.0.0.1:8888/entity/signed_url/upload' \
 --header 'Content-Type: application/json' \
 --header 'profile_id: 123456789' \
 --header 'payana_storage_bucket: payana_profile_pictures' \
 --header 'payana_storage_object: profile_picture_one'
 """
 
-url = "http://localhost:8888/entity/signed_url/upload/"
+url = "http://127.0.0.1:8888/entity/signed_url/upload/"
 
 headers = {'payana_storage_bucket': gcs_payana_profile_pictures_bucket_name,
            'payana_storage_object': profile_picture_bucket_name}
@@ -89,14 +89,14 @@ print("Profile image upload status: " +
 
 # Get Signed URL for download
 """
-curl --location --request GET 'http://localhost:8888/entity/signed_url/download' \
+curl --location --request GET 'http://127.0.0.1:8888/entity/signed_url/download' \
 --header 'Content-Type: application/json' \
 --header 'profile_id: 123456789' \
 --header 'payana_storage_bucket: payana_profile_pictures' \
 --header 'payana_storage_object: profile_picture_one'
 """
 
-url = "http://localhost:8888/entity/signed_url/download/"
+url = "http://127.0.0.1:8888/entity/signed_url/download/"
 
 headers = {'Content-Type': 'application/json', 'payana_storage_bucket': gcs_payana_profile_pictures_bucket_name,
            'payana_storage_object': profile_picture_bucket_name}
@@ -133,14 +133,14 @@ with open(payana_gcs_image_download_path, 'wb') as f:
 
 # Get Resumable Upload Signed URL
 """
-curl --location --request GET 'http://localhost:8888/entity/signed_url/upload/resumable' \
+curl --location --request GET 'http://127.0.0.1:8888/entity/signed_url/upload/resumable' \
 --header 'Content-Type: application/json' \
 --header 'profile_id: 123456789' \
 --header 'payana_storage_bucket: payana_profile_pictures' \
 --header 'payana_storage_object: profile_picture_one'
 """
 
-url = "http://localhost:8888/entity/signed_url/upload/resumable/"
+url = "http://127.0.0.1:8888/entity/signed_url/upload/resumable/"
 
 headers = {'Content-Type': 'application/json', 'payana_storage_bucket': gcs_payana_profile_pictures_bucket_name,
            'payana_storage_object': profile_picture_bucket_name}
@@ -231,14 +231,14 @@ print("Profile image resumable upload signed URL PUT status check: " +
 
 # Get Signed URL for download
 """
-curl --location --request GET 'http://localhost:8888/entity/signed_url/download' \
+curl --location --request GET 'http://127.0.0.1:8888/entity/signed_url/download' \
 --header 'Content-Type: application/json' \
 --header 'profile_id: 123456789' \
 --header 'payana_storage_bucket: payana_profile_pictures' \
 --header 'payana_storage_object: profile_picture_one'
 """
 
-url = "http://localhost:8888/entity/signed_url/download/"
+url = "http://127.0.0.1:8888/entity/signed_url/download/"
 
 headers = {'Content-Type': 'application/json', 'payana_storage_bucket': gcs_payana_profile_pictures_bucket_name,
            'payana_storage_object': profile_picture_bucket_name}
@@ -275,7 +275,7 @@ with open(payana_gcs_image_download_path, 'wb') as f:
 
 # metadata update POST
 """
-curl --location 'http://localhost:8888/entity/gcs/object/metadata/' \
+curl --location 'http://127.0.0.1:8888/entity/gcs/object/metadata/' \
 --header 'Content-Type: application/json' \
 --header 'payana_storage_bucket: payana_profile_pictures' \
 --header 'payana_storage_object: profile_picture_one' \
@@ -292,7 +292,7 @@ metadata_obj = {
     "author_name": "abkr"
 }
 
-url = "http://localhost:8888/entity/gcs/object/metadata/"
+url = "http://127.0.0.1:8888/entity/gcs/object/metadata/"
 
 headers = {'Content-Type': 'application/json', 'payana_storage_bucket': gcs_payana_profile_pictures_bucket_name,
            'payana_storage_object': profile_picture_bucket_name}
@@ -304,13 +304,13 @@ print("Metadata update status: " +
 
 # metadata GET
 """
-curl --location 'http://localhost:8888/entity/gcs/object/metadata/' \
+curl --location 'http://127.0.0.1:8888/entity/gcs/object/metadata/' \
 --header 'Content-Type: application/json' \
 --header 'payana_storage_bucket: payana_profile_pictures' \
 --header 'payana_storage_object: profile_picture_one' 
 """
 
-url = "http://localhost:8888/entity/gcs/object/metadata/"
+url = "http://127.0.0.1:8888/entity/gcs/object/metadata/"
 
 headers = {'Content-Type': 'application/json', 'payana_storage_bucket': gcs_payana_profile_pictures_bucket_name,
            'payana_storage_object': profile_picture_bucket_name}
@@ -327,7 +327,7 @@ print("Metadata GET status: " +
 
 # CORS update POST
 """
-curl --location 'http://localhost:8888/entity/gcs/object/cors/' \
+curl --location 'http://127.0.0.1:8888/entity/gcs/object/cors/' \
 --header 'Content-Type: application/json' \
 --header 'payana_storage_bucket: payana_profile_pictures' \
 --data '[
@@ -369,7 +369,7 @@ cors_obj = [
     }
 ]
 
-url = "http://localhost:8888/entity/gcs/object/cors/"
+url = "http://127.0.0.1:8888/entity/gcs/object/cors/"
 
 headers = {'Content-Type': 'application/json',
            'payana_storage_bucket': gcs_payana_profile_pictures_bucket_name}
@@ -381,12 +381,12 @@ print("Metadata CORS update status: " +
 
 # metadata GET
 """
-curl --location 'http://localhost:8888/entity/gcs/object/cors/' \
+curl --location 'http://127.0.0.1:8888/entity/gcs/object/cors/' \
 --header 'Content-Type: application/json' \
 --header 'payana_storage_bucket: payana_profile_pictures' 
 """
 
-url = "http://localhost:8888/entity/gcs/object/cors/"
+url = "http://127.0.0.1:8888/entity/gcs/object/cors/"
 
 headers = {'Content-Type': 'application/json',
            'payana_storage_bucket': gcs_payana_profile_pictures_bucket_name}
@@ -403,13 +403,13 @@ print("Metadata CORS GET status: " +
 
 # Delete object
 """
-curl --location --request DELETE 'http://localhost:8888/entity/gcs/object/' \
+curl --location --request DELETE 'http://127.0.0.1:8888/entity/gcs/object/' \
 --header 'Content-Type: application/json' \
 --header 'payana_storage_bucket: payana_profile_pictures' \
 --header 'payana_storage_object: profile_picture_one'
 """
 
-url = "http://localhost:8888/entity/gcs/object/"
+url = "http://127.0.0.1:8888/entity/gcs/object/"
 
 headers = {'Content-Type': 'application/json', 'payana_storage_bucket': gcs_payana_profile_pictures_bucket_name,
            'payana_storage_object': profile_picture_bucket_name}

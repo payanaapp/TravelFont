@@ -36,7 +36,7 @@ payana_excursion_column_family_checkin_id_list = bigtable_constants.payana_excur
 # POST
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/excursion/' \
+curl --location 'http://127.0.0.1:8888/entity/excursion/' \
 --header 'Content-Type: application/json' \
 --data '{
     "checkin_id_list": {
@@ -64,7 +64,7 @@ curl --location 'http://localhost:8888/entity/excursion/' \
 }'
 """
 
-url = "http://localhost:8888/entity/excursion/"
+url = "http://127.0.0.1:8888/entity/excursion/"
 
 payana_excursion_object_json = {
     "checkin_id_list": {
@@ -108,13 +108,13 @@ profile_excursion_object_response_json = response.json()
 # GET
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/excursion/' \
+curl --location 'http://127.0.0.1:8888/entity/excursion/' \
 --header 'Content-Type: application/json' \
 --header 'excursion_id: 123456789' \
 --data ''
 """
 
-url = "http://localhost:8888/entity/excursion/"
+url = "http://127.0.0.1:8888/entity/excursion/"
 headers = {payana_excursion_id: excursion_id,
            'Content-Type': 'application/json'}
 
@@ -130,13 +130,13 @@ print("Payana excursion object creation verification status: " +
 
 # Edit
 """
-curl --location 'http://localhost:8888/entity/excursion/' \
+curl --location 'http://127.0.0.1:8888/entity/excursion/' \
 --header 'Content-Type: application/json' \
 --header 'excursion_id: 123456789' \
 --data ''
 """
 
-url = "http://localhost:8888/entity/excursion/"
+url = "http://127.0.0.1:8888/entity/excursion/"
 
 payana_excursion_object_edit_json = {
     "checkin_id_list": {
@@ -171,13 +171,13 @@ profile_excursion_object_response_json = response.json()
 # GET
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/excursion/' \
+curl --location 'http://127.0.0.1:8888/entity/excursion/' \
 --header 'Content-Type: application/json' \
 --header 'excursion_id: 123456789' \
 --data ''
 """
 
-url = "http://localhost:8888/entity/excursion/"
+url = "http://127.0.0.1:8888/entity/excursion/"
 headers = {payana_excursion_id: excursion_id,
            'Content-Type': 'application/json'}
 
@@ -193,7 +193,7 @@ print("Payana excursion object edit verification status: " +
 
 # Delete specific column family and column values
 """
-curl --location 'http://localhost:8888/entity/excursion/delete/values/' \
+curl --location 'http://127.0.0.1:8888/entity/excursion/delete/values/' \
 --header 'Content-Type: application/json' \
 --header 'excursion_id: 123456789' \
 --data '{
@@ -217,7 +217,7 @@ curl --location 'http://localhost:8888/entity/excursion/delete/values/' \
 }'
 """
 
-url = "http://localhost:8888/entity/excursion/delete/values/"
+url = "http://127.0.0.1:8888/entity/excursion/delete/values/"
 headers = {payana_excursion_id: excursion_id,
            'Content-Type': 'application/json'}
 
@@ -254,13 +254,13 @@ print("Payana excursion object column values delete status: " +
 # GET
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/excursion/' \
+curl --location 'http://127.0.0.1:8888/entity/excursion/' \
 --header 'Content-Type: application/json' \
 --header 'excursion_id: 123456789' \
 --data ''
 """
 
-url = "http://localhost:8888/entity/excursion/"
+url = "http://127.0.0.1:8888/entity/excursion/"
 headers = {payana_excursion_id: excursion_id,
            'Content-Type': 'application/json'}
 
@@ -276,7 +276,7 @@ print("Payana excursion object CV delete verification status: " +
 
 # Delete entire column family
 """
-curl --location 'http://localhost:8888/entity/excursion/delete/cf/' \
+curl --location 'http://127.0.0.1:8888/entity/excursion/delete/cf/' \
 --header 'Content-Type: application/json' \
 --header 'excursion_id: 123456789' \
 --data '{
@@ -287,7 +287,7 @@ curl --location 'http://localhost:8888/entity/excursion/delete/cf/' \
 }'
 """
 
-url = "http://localhost:8888/entity/excursion/delete/cf/"
+url = "http://127.0.0.1:8888/entity/excursion/delete/cf/"
 headers = {payana_excursion_id: excursion_id,
            'Content-Type': 'application/json'}
 
@@ -310,13 +310,13 @@ print("Payana excursion object column family delete status: " +
 # GET
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/excursion/' \
+curl --location 'http://127.0.0.1:8888/entity/excursion/' \
 --header 'Content-Type: application/json' \
 --header 'excursion_id: 123456789' \
 --data ''
 """
 
-url = "http://localhost:8888/entity/excursion/"
+url = "http://127.0.0.1:8888/entity/excursion/"
 headers = {payana_excursion_id: excursion_id,
            'Content-Type': 'application/json'}
 
@@ -332,13 +332,13 @@ print("Payana excursion object CF delete verification status: " +
 
 # Delete row
 """
-curl --location --request DELETE 'http://localhost:8888/entity/excursion/delete/' \
+curl --location --request DELETE 'http://127.0.0.1:8888/entity/excursion/delete/' \
 --header 'Content-Type: application/json' \
 --header 'excursion_id: 123456789' \
 --data ''
 """
 
-url = "http://localhost:8888/entity/excursion/delete/"
+url = "http://127.0.0.1:8888/entity/excursion/delete/"
 headers = {payana_excursion_id: excursion_id,
            'Content-Type': 'application/json'}
 
@@ -350,13 +350,13 @@ print("Payana excursion object row delete status: " +
 # GET
 # CURL request
 """
-curl --location 'http://localhost:8888/entity/excursion/' \
+curl --location 'http://127.0.0.1:8888/entity/excursion/' \
 --header 'Content-Type: application/json' \
 --header 'excursion_id: 123456789' \
 --data ''
 """
 
-url = "http://localhost:8888/entity/excursion/"
+url = "http://127.0.0.1:8888/entity/excursion/"
 headers = {payana_excursion_id: excursion_id,
            'Content-Type': 'application/json'}
 
