@@ -19,9 +19,9 @@ def number_of_gunicorn_workers():
     return (multiprocessing.cpu_count() * 2) + 1
 
 
-def configure_app(flask_app):
-    # flask_app.config['SERVER_NAME'] = service_settings.FLASK_SERVER_NAME
-    flask_app.config['SERVER_NAME'] = ':'.join([flask_server_name, port])
+# def configure_app(flask_app):
+#     # flask_app.config['SERVER_NAME'] = service_settings.FLASK_SERVER_NAME
+#     flask_app.config['SERVER_NAME'] = ':'.join([flask_server_name, port])
 
 def register_payana_blueprints(flask_app):
     flask_app.register_blueprint(
@@ -35,12 +35,12 @@ def register_payana_blueprints(flask_app):
     
 
 def initialize_app():
-    configure_app(payana_flask_app)
+    # configure_app(payana_flask_app)
     register_payana_blueprints(payana_flask_app)
     payana_flask_app.run(debug=service_settings.FLASK_DEBUG)
     
 def gunicorn_initialize_app():
-    configure_app(payana_flask_app)
+    # configure_app(payana_flask_app)
     register_payana_blueprints(payana_flask_app)
     
     workers = number_of_gunicorn_workers()
