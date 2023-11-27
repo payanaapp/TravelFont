@@ -12,6 +12,12 @@ status_code = "statusCode"
 payana_profile_id_header = "profile_id"
 payana_empty_row_read_exception = "Empty result. Check if it's a valid entity key."
 
+# Payana GKE Readiness probe controller constants
+payana_readiness_probe_success_message = "Payana Service Layer Ready!"
+
+# Payana GKE Liveness probe controller constants
+payana_liveness_probe_success_message = "Payana Service Layer Live!"
+
 #Payana Profile Table Controller constants
 payana_profile_table_write_success_message_post = "Profile successfully created!"
 payana_profile_table_write_success_message_put = "Profile successfully updated!"
