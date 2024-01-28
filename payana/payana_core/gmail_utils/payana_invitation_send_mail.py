@@ -163,7 +163,7 @@ def gmail_set_mime_payload(message, attachment_file):
     return msg
 
 
-service_credentials_path = os.path.join(bigtable_constants.travelfont_home, "project-payana-service-mail.json")
+service_credentials_path = os.path.join(bigtable_constants.travelfont_home, "google_mail_service_credentials.json")
 attachment_file = os.path.join(bigtable_constants.travelfont_home,"gmail_attach.jpg")
 
 @payana_generic_exception_handler
