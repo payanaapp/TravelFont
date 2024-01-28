@@ -1,5 +1,5 @@
 instance_id: inst-payana
-project_id: project-payana-395305
+project_id: payana-two
 cluster_id: clus-payana
 location_id: us-central1-f
 serve_nodes: 1
