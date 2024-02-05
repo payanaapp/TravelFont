@@ -67,6 +67,13 @@ payana_city_autocomplete_table = "payana_city_autocomplete_table"
 payana_users_autocomplete_table = "payana_users_autocomplete_table"
 payana_mail_sign_up_notification_table = "payana_mail_sign_up_notification_table"
 payana_mail_share_itinerary_notification_table = "payana_mail_share_itinerary_notification_table"
+payana_profile_auth_table = "payana_profile_auth_table"
+
+# payana_auth_profile_table
+payana_auth_information = "auth_information"
+payana_auth_mail_id = "mail_id"
+payana_auth_profile_name = "profile_name"
+payana_auth_profile_picture_id = "profile_picture_id"
 
 # payana_profile_table_field_names
 payana_profile_table_personal_info_column_family = "personal_information"
