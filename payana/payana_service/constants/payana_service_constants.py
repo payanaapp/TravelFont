@@ -10,6 +10,7 @@ status_code = "statusCode"
 
 #Payana generic constants
 payana_profile_id_header = "profile_id"
+payana_mail_id_header = "mail_id"
 payana_empty_row_read_exception = "Empty result. Check if it's a valid entity key."
 
 # Payana GKE Readiness probe controller constants
@@ -28,6 +29,17 @@ payana_profile_table_write_failure_message_post = "Failed to update the profile"
 payana_profile_table_objects_delete_failure_message = "Failed to delete the profile objects"
 payana_profile_table_objects_delete_success_message = "Profile content successfully deleted!"
 payana_missing_profile_object = "Missing profile info object in the request body"
+
+#Payana Auth Profile Table Controller constants
+payana_auth_profile_table_write_success_message_post = "Auth Profile successfully created!"
+payana_auth_profile_table_write_success_message_put = "Auth Profile successfully updated!"
+payana_auth_profile_table_delete_success_message = "Auth Profile successfully deleted!"
+payana_auth_profile_table_create_failure_message_post = "Failed to create the Auth profile"
+payana_auth_profile_table_delete_failure_message = "Failed to delete the Auth profile"
+payana_auth_profile_table_write_failure_message_post = "Failed to update the Auth profile"
+payana_auth_profile_table_objects_delete_failure_message = "Failed to delete the Auth profile objects"
+payana_auth_profile_table_objects_delete_success_message = "Auth Profile content successfully deleted!"
+payana_auth_missing_profile_object = "Missing Auth profile info object in the request body"
 
 # Payana Travel footprint controller constants
 payana_profile_page_travelfont_write_success_message_post = "Travel Footprint successfully created!"
@@ -278,3 +290,4 @@ payana_missing_profile_id_header_exception = "Missing Profile ID in the headers"
 payana_missing_entity_id_header_exception = "Missing Entity ID in the headers"
 payana_missing_comment_id_header_exception = "Missing comment ID in the headers"
 payana_missing_city_header_exception = "Missing city in the headers"
+payana_missing_mail_id_header_exception = "Missing Mail ID in the headers"

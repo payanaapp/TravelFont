@@ -12,6 +12,14 @@
         "purpose": "To fetch the details of a profile",
         "max_versions": 1
     },
+    "payana_profile_auth_table": {
+        "column_family_id": [
+            "auth_information"
+        ],
+        "description": "This table will hold the authentication details of the user",
+        "purpose": "To fetch the authentication details of a profile",
+        "max_versions": 1
+    },
     "payana_travel_footprint_table": {
         "column_family_id": [
             "travel_footprint"

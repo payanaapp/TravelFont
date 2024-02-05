@@ -8,6 +8,7 @@ from payana.payana_service.constants import payana_service_constants
 from payana.payana_service.common_utils.payana_service_exception_handlers import payana_service_generic_exception_handler
 
 payana_profile_id_header = payana_service_constants.payana_profile_id_header
+payana_mail_id_header = payana_service_constants.payana_mail_id_header
 payana_entity_id_header = payana_service_constants.payana_entity_id_header
 payana_city_header = payana_service_constants.payana_city_header
 payana_user_header = payana_service_constants.payana_autocomplete_users_header
@@ -38,6 +39,13 @@ def get_profile_id_header(request):
     profile_id = request.headers.get(payana_profile_id_header)
 
     return None if profile_id is None else profile_id.strip()
+
+@payana_service_generic_exception_handler
+def get_mail_id_header(request):
+
+    mail_id = request.headers.get(payana_mail_id_header)
+
+    return None if mail_id is None else mail_id.strip()
 
 @payana_service_generic_exception_handler
 def get_friend_id_header(request):
