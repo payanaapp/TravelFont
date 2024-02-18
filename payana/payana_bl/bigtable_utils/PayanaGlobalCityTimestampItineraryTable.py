@@ -39,8 +39,6 @@ class PayanaGlobalCityTimestampItineraryTable:
         self.activity_generic_column_family_id = bigtable_constants.payana_generic_activity_column_family
         self.payana_global_city_itinerary_table_itinerary_id_timestamp_quantifier_value = bigtable_constants.payana_global_city_itinerary_table_itinerary_id_timestamp_quantifier_value
 
-        self.current_year = str(datetime.now().year)
-
     @payana_generic_exception_handler
     def toJSON(self):
         return self.__dict__
@@ -48,7 +46,7 @@ class PayanaGlobalCityTimestampItineraryTable:
     @payana_generic_exception_handler
     def generate_row_id(self):
 
-        self.row_id = self.city + "##" + self.current_year
+        self.row_id = self.city
 
     @payana_generic_exception_handler
     def update_global_city_itinerary_bigtable(self):

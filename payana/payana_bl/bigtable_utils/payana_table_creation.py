@@ -48,11 +48,13 @@ def payana_table_create(payana_table_creation_config_file, instance):
 
         for table_column_family_id in table_column_family_id_list:
             column_family_dict[table_column_family_id] = max_versions_rule
+            
+        print("Created table: " + table_id)
 
         bigtable_table_create(
             instance, table_id, column_family_dict)
 
-        print("Created table: " + table_id)
+    print("All tables created")
 
     # [END bigtable_create_table]
 
