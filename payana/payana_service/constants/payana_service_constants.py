@@ -64,6 +64,12 @@ payana_likes_objects_delete_success_message = "Payana likes object content succe
 payana_missing_likes_object = "Missing Payana likes object in the request body"
 payana_entity_id_header = "entity_id"
 
+# Payana Tables controller constants
+payana_tables_create_success_message = "Payana tables successfully created!"
+payana_tables_create_failure_message = "Payana tables failed to create!"
+payana_tables_delete_success_message = "Payana tables  successfully deleted!"
+payana_tables_delete_failure_message = "Failed to delete the Payana tables"
+
 # Payana signed URL controller constants
 payana_signed_url_success_message_get = "Payana Signed URL successfully fetched!"
 payana_signed_url_storage_bucket_header = "payana_storage_bucket"
@@ -209,6 +215,19 @@ payana_global_city_rating_itinerary_objects_values_delete_success_message = "Pay
 payana_missing_global_city_rating_itinerary_object = "Missing Payana global city itinerary rating object in the request body"
 payana_missing_global_city_rating_itinerary_objects_header_exception = "Missing Payana global city itinerary rating header in the request body"
 payana_global_city_rating_itinerary_id_header = "city"
+
+# Payana global city itinerary timestamp controller constants
+payana_global_city_timestamp_itinerary_objects_write_success_message_post = "Payana global city itinerary timestamp object successfully created!"
+payana_global_city_timestamp_itinerary_objects_write_success_message_put = "Payana global city itinerary timestamp object successfully updated!"
+payana_global_city_timestamp_itinerary_objects_delete_success_message = "Payana global city itinerary timestamp object successfully deleted!"
+payana_global_city_timestamp_itinerary_objects_create_failure_message_post = "Failed to create the Payana global city itinerary timestamp object"
+payana_global_city_timestamp_itinerary_objects_delete_failure_message = "Failed to delete the Payana global city itinerary timestamp object"
+payana_global_city_timestamp_itinerary_objects_write_failure_message_post = "Failed to update the Payana global city itinerary timestamp object"
+payana_global_city_timestamp_itinerary_objects_values_delete_failure_message = "Failed to delete the Payana global city itinerary timestamp object contents"
+payana_global_city_timestamp_itinerary_objects_values_delete_success_message = "Payana global city itinerary timestamp object content successfully deleted!"
+payana_missing_global_city_timestamp_itinerary_object = "Missing Payana global city itinerary timestamp object in the request body"
+payana_missing_global_city_timestamp_itinerary_objects_header_exception = "Missing Payana global city itinerary timestamp header in the request body"
+payana_global_city_timestamp_itinerary_id_header = "city"
 
 # Payana global influencer feed search itinerary cache controller constants
 payana_global_influencers_feed_search_itinerary_cache_objects_write_success_message_post = "Payana global influencers feed search itinerary cache object successfully created!"

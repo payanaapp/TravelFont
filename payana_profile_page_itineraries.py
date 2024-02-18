@@ -31,6 +31,12 @@ profile_page_itinerary_obj = {
     "created_itinerary_id_list": ["12345"],
     "created_activity_guide_id_list": ["12345"],
     "created_excursion_id_list": ["12345"],
+    "saved_itinerary_id_mapping": {"12345": "itinerary_name_one"},
+    "saved_excursion_id_mapping": {"12345": "excursion_name_one"},
+    "saved_activity_guide_id_mapping": {"12345": "activity_guide_name_one"},
+    "created_itinerary_id_mapping": {"12345": "itinerary_name_one"},
+    "created_activity_guide_id_mapping": {"12345": "activity_guide_name_one"},
+    "created_excursion_id_mapping": {"12345": "excursion_name_one"},
     "activities": ["generic", "hiking", "romantic", "exotic"]
 }
 

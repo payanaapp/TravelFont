@@ -31,9 +31,10 @@ def payana_tables_delete(payana_table_creation_config_file, instance):
     for table_id in payana_tables_dict.keys():
 
         table = bigtable_table_get(instance, table_id)
-
-        bigtable_table_delete(table)
-        print("Deleted table: " + table_id)
+        
+        if table is not None:        
+            bigtable_table_delete(table)
+            print("Deleted table: " + table_id)
 
     # [END bigtable_create_table]
 

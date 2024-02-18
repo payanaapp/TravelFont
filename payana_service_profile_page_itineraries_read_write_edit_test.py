@@ -71,6 +71,12 @@ curl --location --request POST 'http://127.0.0.1:8888/profile/itineraries/' \
     "created_itinerary_id_list": ["12345"],
     "created_activity_guide_id_list": ["12345"],
     "created_excursion_id_list": ["12345"],
+    "saved_itinerary_id_mapping": {"12345": "itinerary_name_one"},
+    "saved_excursion_id_mapping": {"12345": "excursion_name_one"},
+    "saved_activity_guide_id_mapping": {"12345": "activity_guide_name_one"},
+    "created_itinerary_id_mapping": {"12345": "itinerary_name_one"},
+    "created_activity_guide_id_mapping": {"12345": "activity_guide_name_one"},
+    "created_excursion_id_mapping": {"12345": "excursion_name_one"},
     "activities": ["generic", "hiking", "romantic", "exotic"]
 }'
 """
@@ -85,6 +91,12 @@ profile_page_itinerary_json = {
     payana_profile_page_itinerary_table_created_itinerary_id_list_quantifier_value: ["12345"],
     payana_profile_page_itinerary_table_created_activity_guide_id_list_quantifier_value: ["12345"],
     payana_profile_page_itinerary_table_created_excursion_id_list_quantifier_value: ["12345"],
+    "saved_itinerary_id_mapping": {"12345": "itinerary_name_one"},
+    "saved_excursion_id_mapping": {"12345": "excursion_name_one"},
+    "saved_activity_guide_id_mapping": {"12345": "activity_guide_name_one"},
+    "created_itinerary_id_mapping": {"12345": "itinerary_name_one"},
+    "created_activity_guide_id_mapping": {"12345": "activity_guide_name_one"},
+    "created_excursion_id_mapping": {"12345": "excursion_name_one"},
     payana_profile_page_itinerary_table_activities: [
         "generic", "hiking", "romantic", "exotic"]
 }
@@ -140,6 +152,12 @@ curl --location --request PUT 'http://127.0.0.1:8888/profile/itineraries/' \
     "created_itinerary_id_list": ["123456"],
     "created_activity_guide_id_list": ["123456"],
     "created_excursion_id_list": ["123456"],
+    "saved_itinerary_id_mapping": {"12345": "itinerary_name_two"},
+    "saved_excursion_id_mapping": {"12345": "excursion_name_two"},
+    "saved_activity_guide_id_mapping": {"12345": "activity_guide_name_two"},
+    "created_itinerary_id_mapping": {"12345": "itinerary_name_two"},
+    "created_activity_guide_id_mapping": {"12345": "activity_guide_name_two"},
+    "created_excursion_id_mapping": {"12345": "excursion_name_two"},
     "activities": ["generic", "hiking", "romantic", "exotic"]
 }'
 """
@@ -151,6 +169,12 @@ profile_page_itinerary_json = {
     payana_profile_page_itinerary_table_created_itinerary_id_list_quantifier_value: ["123456"],
     payana_profile_page_itinerary_table_created_activity_guide_id_list_quantifier_value: ["123456"],
     payana_profile_page_itinerary_table_created_excursion_id_list_quantifier_value: ["123456"],
+    "saved_itinerary_id_mapping": {"12345": "itinerary_name_two"},
+    "saved_excursion_id_mapping": {"12345": "excursion_name_two"},
+    "saved_activity_guide_id_mapping": {"12345": "activity_guide_name_two"},
+    "created_itinerary_id_mapping": {"12345": "itinerary_name_two"},
+    "created_activity_guide_id_mapping": {"12345": "activity_guide_name_two"},
+    "created_excursion_id_mapping": {"12345": "excursion_name_two"},
     payana_profile_page_itinerary_table_activities: [
         "generic", "hiking", "romantic", "exotic"]
 }

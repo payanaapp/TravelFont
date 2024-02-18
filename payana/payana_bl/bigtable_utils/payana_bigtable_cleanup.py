@@ -29,9 +29,10 @@ def payana_bigtable_cleanup(client_config_path, payana_table_creation_config_fil
     # delete the bigtable
     payana_tables_delete(payana_table_creation_config_file, instance)
 
+    print("Client deleted")
+    
     # delete the bigtable cluster
     bigtable_client_delete(client_config_path)
-    print("Client deleted")
 
 
 if __name__ == '__main__':

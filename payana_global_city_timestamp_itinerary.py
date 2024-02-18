@@ -25,10 +25,10 @@ payana_bigtable_init(client_config_file_path, bigtable_tables_schema_path)
 
 global_city_itinerary_obj = {
     "city": "cupertino##california##usa",
-    "itinerary_id": {"1" : "12345"},
-    "excursion_id": {"1" : "12345"},
-    "checkin_id": {"1" : "12345"},
-    "activity_guide_id": {"1" : "12345"},
+    "itinerary_id": {"123456789" : "12345"},
+    "excursion_id": {"123456789" : "12345"},
+    "checkin_id": {"123456789" : "12345"},
+    "activity_guide_id": {"123456789" : "12345"},
     "activities": ["generic", "hiking", "romantic", "exotic"]
 }
 
@@ -71,9 +71,9 @@ payana_global_city_itinerary_table_excursion_id_quantifier_value = bigtable_cons
 payana_global_city_itinerary_table_checkin_id_quantifier_value = bigtable_constants.payana_global_city_itinerary_table_checkin_id_quantifier_value
 
 # Add another itinerary ID, excursion ID and checkin ID
-itinerary_new = {"2": "6789"}
-excursion_new = {"2": "6789"}
-checkin_new = {"2": "6789"}
+itinerary_new = {"1234567892": "6789"}
+excursion_new = {"1234567892": "6789"}
+checkin_new = {"1234567892": "6789"}
 
 for rating, itinerary_id in itinerary_new.items():
     payana_global_city_itinerary_table_write_object = bigtable_write_object_wrapper(
@@ -115,9 +115,9 @@ for rating, checkin_id in checkin_new.items():
 
 # Add another itinerary ID, excursion ID and checkin ID with activities
 global_city_itinerary_update_obj = {
-    "itinerary_id": {"3": "34567"},
-    "excursion_id": {"3": "34567"},
-    "checkin_id": {"3": "34567"},
+    "itinerary_id": {"12345678923": "34567"},
+    "excursion_id": {"12345678923": "34567"},
+    "checkin_id": {"12345678923": "34567"},
     "activities": ["hiking", "romantic", "exotic"]
 }
 

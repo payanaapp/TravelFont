@@ -1,0 +1,10 @@
+from datetime import datetime
+
+from payana.payana_bl.bigtable_utils.payana_bigtable_cleanup import payana_bigtable_cleanup
+from payana.payana_bl.bigtable_utils.constants import bigtable_constants
+
+
+client_config_file_path = bigtable_constants.bigtable_client_config_path
+bigtable_tables_schema_path = bigtable_constants.bigtable_schema_config_file
+
+payana_bigtable_cleanup(client_config_file_path, bigtable_tables_schema_path)

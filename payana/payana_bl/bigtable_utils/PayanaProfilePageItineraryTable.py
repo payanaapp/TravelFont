@@ -24,7 +24,9 @@ class PayanaProfilePageItineraryTable:
     @payana_generic_exception_handler
     def __init__(self, profile_id, saved_activity_guide_id_list, created_activity_guide_id_list,
                  saved_itinerary_id_list, saved_excursion_id_list, created_itinerary_id_list,
-                 created_excursion_id_list, activities):
+                 created_excursion_id_list, saved_activity_guide_id_mapping, created_activity_guide_id_mapping,
+                 saved_itinerary_id_mapping, saved_excursion_id_mapping, created_itinerary_id_mapping,
+                 created_excursion_id_mapping, activities):
 
         self.profile_id = profile_id
         self.saved_itinerary_id_list = saved_itinerary_id_list
@@ -34,7 +36,12 @@ class PayanaProfilePageItineraryTable:
         self.activities = activities
         self.saved_activity_guide_id_list = saved_activity_guide_id_list
         self.created_activity_guide_id_list = created_activity_guide_id_list
-        
+        self.saved_activity_guide_id_mapping = saved_activity_guide_id_mapping
+        self.created_activity_guide_id_mapping = created_activity_guide_id_mapping
+        self.saved_itinerary_id_mapping = saved_itinerary_id_mapping
+        self.saved_excursion_id_mapping = saved_excursion_id_mapping
+        self.created_itinerary_id_mapping = created_itinerary_id_mapping
+        self.created_excursion_id_mapping = created_excursion_id_mapping
         self.row_id = None
 
         self.update_bigtable_write_objects = []
@@ -46,6 +53,13 @@ class PayanaProfilePageItineraryTable:
         self.payana_profile_page_itinerary_table_created_excursion_id_list_quantifier_value = bigtable_constants.payana_profile_page_itinerary_table_created_excursion_id_list_quantifier_value
         self.payana_profile_page_itinerary_table_created_activity_guide_id_list_quantifier_value = bigtable_constants.payana_profile_page_itinerary_table_created_activity_guide_id_list_quantifier_value
         self.payana_profile_page_itinerary_table_saved_activity_guide_id_list_quantifier_value = bigtable_constants.payana_profile_page_itinerary_table_saved_activity_guide_id_list_quantifier_value
+
+        self.payana_profile_page_itinerary_table_saved_itinerary_id_mapping_quantifier_value = bigtable_constants.payana_profile_page_itinerary_table_saved_itinerary_id_mapping_quantifier_value
+        self.payana_profile_page_itinerary_table_saved_excursion_id_mapping_quantifier_value = bigtable_constants.payana_profile_page_itinerary_table_saved_excursion_id_mapping_quantifier_value
+        self.payana_profile_page_itinerary_table_created_itinerary_id_mapping_quantifier_value = bigtable_constants.payana_profile_page_itinerary_table_created_itinerary_id_mapping_quantifier_value
+        self.payana_profile_page_itinerary_table_created_excursion_id_mapping_quantifier_value = bigtable_constants.payana_profile_page_itinerary_table_created_excursion_id_mapping_quantifier_value
+        self.payana_profile_page_itinerary_table_created_activity_guide_id_mapping_quantifier_value = bigtable_constants.payana_profile_page_itinerary_table_created_activity_guide_id_mapping_quantifier_value
+        self.payana_profile_page_itinerary_table_saved_activity_guide_id_mapping_quantifier_value = bigtable_constants.payana_profile_page_itinerary_table_saved_activity_guide_id_mapping_quantifier_value
 
         self.current_ts = str(int(datetime.utcnow().timestamp()))
 
@@ -131,6 +145,54 @@ class PayanaProfilePageItineraryTable:
                     # excursion id write object
                     self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
                         self.row_id, created_activity_guide_id_list_activity_column_family_id, self.current_ts, activity_guide))
+                    
+                saved_itinerary_id_list_activity_column_family_mapping = "_".join(
+                    [activity, self.payana_profile_page_itinerary_table_saved_itinerary_id_mapping_quantifier_value])
+
+                saved_excursion_id_list_activity_column_family_mapping = "_".join(
+                    [activity, self.payana_profile_page_itinerary_table_saved_excursion_id_mapping_quantifier_value])
+                
+                saved_activity_guide_id_list_activity_column_family_mapping = "_".join(
+                    [activity, self.payana_profile_page_itinerary_table_saved_activity_guide_id_mapping_quantifier_value])
+
+                created_itinerary_id_list_activity_column_family_mapping = "_".join(
+                    [activity, self.payana_profile_page_itinerary_table_created_itinerary_id_mapping_quantifier_value])
+
+                created_excursion_id_list_activity_column_family_mapping = "_".join(
+                    [activity, self.payana_profile_page_itinerary_table_created_excursion_id_mapping_quantifier_value])
+                
+                created_activity_guide_id_list_activity_column_family_mapping = "_".join(
+                    [activity, self.payana_profile_page_itinerary_table_created_activity_guide_id_mapping_quantifier_value])
+                
+                for itinerary_id, itinerary_name in self.saved_itinerary_id_mapping.items():
+                    # itinerary id write object
+                    self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+                        self.row_id, saved_itinerary_id_list_activity_column_family_mapping, itinerary_id, itinerary_name))
+
+                for excursion_id, excursion_name in self.saved_excursion_id_mapping.items():
+                    # excursion id write object
+                    self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+                        self.row_id, saved_excursion_id_list_activity_column_family_mapping, excursion_id, excursion_name))
+                    
+                for activity_guide_id, activity_guide_name in self.saved_activity_guide_id_mapping.items():
+                    # excursion id write object
+                    self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+                        self.row_id, saved_activity_guide_id_list_activity_column_family_mapping, activity_guide_id, activity_guide_name))
+            
+                for itinerary_id, itinerary_name in self.created_itinerary_id_mapping.items():
+                    # itinerary id write object
+                    self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+                        self.row_id, created_itinerary_id_list_activity_column_family_mapping, itinerary_id, itinerary_name))
+
+                for excursion_id, excursion_name in self.created_excursion_id_mapping.items():
+                    # excursion id write object
+                    self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+                        self.row_id, created_excursion_id_list_activity_column_family_mapping, excursion_id, excursion_name))
+                    
+                for activity_guide_id, activity_guide_name in self.created_activity_guide_id_mapping.items():
+                    # excursion id write object
+                    self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+                        self.row_id, created_activity_guide_id_list_activity_column_family_mapping, activity_guide_id, activity_guide_name))                
 
             else:
                 # to-do : raise exception that it is an invalid activity
