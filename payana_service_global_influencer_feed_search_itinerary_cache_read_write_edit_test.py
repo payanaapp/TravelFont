@@ -29,6 +29,10 @@ payana_bigtable_init(client_config_file_path, bigtable_tables_schema_path)
 
 payana_feed_search_itinerary_cache_profile_id = bigtable_constants.payana_feed_search_itinerary_cache_profile_id
 
+"""
+To make a city based search amongst all your followers/influencers/any profile ID -- not needed for Alpha
+"""
+
 
 # POST
 # CURL request
@@ -129,6 +133,8 @@ print("Payana feed search global itinearry cache object read status: " +
       str(response.status_code == 200))
 
 payana_global_influencer_feed_search_itinerary_cache_object_response = response.json()
+
+print(payana_global_influencer_feed_search_itinerary_cache_object_response)
 
 print("Payana feed search global itinearry cache creation verification status: " +
       str(profile_id in payana_global_influencer_feed_search_itinerary_cache_object_response))

@@ -12,6 +12,7 @@ status_code = "statusCode"
 payana_profile_id_header = "profile_id"
 payana_mail_id_header = "mail_id"
 payana_empty_row_read_exception = "Empty result. Check if it's a valid entity key."
+payana_activity_id_header = "activity_id"
 
 # Payana GKE Readiness probe controller constants
 payana_readiness_probe_success_message = "Payana Service Layer Ready!"
@@ -29,6 +30,18 @@ payana_profile_table_write_failure_message_post = "Failed to update the profile"
 payana_profile_table_objects_delete_failure_message = "Failed to delete the profile objects"
 payana_profile_table_objects_delete_success_message = "Profile content successfully deleted!"
 payana_missing_profile_object = "Missing profile info object in the request body"
+
+
+#Payana Activity Guide Thumbnail Controller constants
+payana_activity_guide_thumbnail_table_write_success_message_post = "Activity guide thumbnail successfully created!"
+payana_activity_guide_thumbnail_table_write_success_message_put = "Activity guide thumbnail successfully updated!"
+payana_activity_guide_thumbnail_table_delete_success_message = "Activity guide thumbnail successfully deleted!"
+payana_activity_guide_thumbnail_table_create_failure_message_post = "Failed to create the Activity guide thumbnail"
+payana_activity_guide_thumbnail_table_delete_failure_message = "Failed to delete the Activity guide thumbnail"
+payana_activity_guide_thumbnail_table_write_failure_message_post = "Failed to update the Activity guide thumbnail"
+payana_activity_guide_thumbnail_table_objects_delete_failure_message = "Failed to delete the Activity guide thumbnail objects"
+payana_activity_guide_thumbnail_table_objects_delete_success_message = "Activity guide thumbnail content successfully deleted!"
+payana_activity_guide_thumbnail_profile_object = "Missing Activity guide thumbnail object in the request body"
 
 #Payana Auth Profile Table Controller constants
 payana_auth_profile_table_write_success_message_post = "Auth Profile successfully created!"
@@ -310,3 +323,4 @@ payana_missing_entity_id_header_exception = "Missing Entity ID in the headers"
 payana_missing_comment_id_header_exception = "Missing comment ID in the headers"
 payana_missing_city_header_exception = "Missing city in the headers"
 payana_missing_mail_id_header_exception = "Missing Mail ID in the headers"
+payana_missing_activity_guide_header_exception = "Missing activity in the headers"

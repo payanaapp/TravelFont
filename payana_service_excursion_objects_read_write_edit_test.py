@@ -125,6 +125,8 @@ print("Payana excursion object read status: " +
 
 payana_excursion_object_response = response.json()
 
+print(payana_excursion_object_response)
+
 print("Payana excursion object creation verification status: " +
       str(excursion_id in payana_excursion_object_response))
 

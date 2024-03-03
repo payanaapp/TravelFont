@@ -86,6 +86,8 @@ print("Payana neighboring city read status: " + str(response.status_code == 200)
 
 payana_neighboring_city_response = response.json()
 
+print(payana_neighboring_city_response)
+
 print("Payana neighboring city creation verification status: " +
       str(len(payana_neighboring_city_response[city]) is not None))
 

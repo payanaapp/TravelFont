@@ -47,6 +47,9 @@ payana_missing_influencers_feed_search_itinerary_cache_objects_header_exception 
 payana_missing_influencers_feed_search_itinerary_cache_itinerary_object = payana_service_constants.payana_missing_influencers_feed_search_itinerary_cache_itinerary_object
 payana_global_influencer_feed_search_itinerary_cache_table = bigtable_constants.payana_global_influencer_feed_search_itinerary_cache_table
 
+"""
+To make a city based search amongst all your followers/influencers/any profile ID -- not needed for Alpha
+"""
 
 @payana_global_city_influencers_feed_search_itinerary_cache_name_space.route("/")
 class PayanaGlobalInfluencerFeedSearchItineraryCacheObjectEndPoint(Resource):

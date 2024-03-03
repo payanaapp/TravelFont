@@ -108,6 +108,8 @@ print("Profile signed download URL GET status: " +
 
 payana_signed_download_url = response.json()
 
+print(payana_signed_download_url)
+
 print("Profile signed download URL GET status: " +
       str(response is not None or len(payana_signed_download_url) > 0))
 

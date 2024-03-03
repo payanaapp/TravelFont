@@ -1,0 +1,265 @@
+Step 1 - On loading the home page - GET the current location using browser/phone location API. 
+ -- We need the city, country and state name and join them using '##' delimitor
+ Example: Cupertino, Califonia, USA becomes cupertino##califonia##usa
+
+
+Step 2 - Fetch the neighboring cities or a mapping metropolitan major city, using the city name from Step 1
+ -- 
+ Example: city is the city name from Step 1 i.e. cupertino##califonia##usa
+
+ CURL API call:
+"""
+curl --location 'http://127.0.0.1:8888/entity/neighbors/city/' \
+--header 'Content-Type: application/json' \
+--header 'city: cupertino##california##usa'
+"""
+
+Response:
+"""
+{
+   "cupertino##california##usa":{
+      "neighboring_city_list":{
+         "cupertino##california##usa":"72.56",
+         "sanjose##california##usa":"82.56"
+      }
+   }
+}
+"""
+
+Step 3 - Fetch the Activity Guides/Itinerary around you
+
+3A -  Make a GET call to fetch the top Itinerary/Activity Guide IDs 
+    -- Use the city names in the 'neighboring_city_list' from Step 2 response
+       -- Example: 'cupertino##california##usa', 'sanjose##california##usa'
+    -- Do GET calls using these city names to fetch the metadata of the itinerary/activity guide. Repeat for each city.
+
+    CURL API call:
+    """
+    curl --location 'http://127.0.0.1:8888/entity/global/timestamp/city/' \
+        --header 'Content-Type: application/json' \
+        --header 'city: cupertino##california##usa'
+    """
+
+    Response:
+    """
+    {
+    "cupertino##california##usa": {
+        "hiking_timestamp_activity_guide_id": {
+            "1": "12345"
+        },
+        "hiking_timestamp_checkin_id": {
+            "1": "12345"
+        },
+        "hiking_timestamp_excursion_id": {
+            "1": "12345"
+        },
+        "hiking_timestamp_itinerary_id": {
+            "1": "12345"
+        },
+        "generic_timestamp_activity_guide_id": {
+            "1": "12345"
+        },
+        "generic_timestamp_checkin_id": {
+            "1": "12345"
+        },
+        "generic_timestamp_excursion_id": {
+            "1": "12345"
+        },
+        "generic_timestamp_itinerary_id": {
+            "1": "12345"
+        }
+        }
+    }
+    """
+
+    Meaning of the Response:
+    """
+    "cupertino##california##usa" => Name of the city 
+    "hiking_timestamp_activity_guide_id" => hiking is the name of the activity, timestamp is what the value is, activity_guide_id means it is the ID for an activity guide i.e. these are the top activity guides to show when the user selects hiking as the activity
+    "hiking_timestamp_itinerary_id" => itinerary_id means the ID for an itinerary guide 
+    "generic_timestamp_itinerary_id" => generic means activity agnostic i.e. these are the top itinerary/activity guide IDs to show when the user doesn't select a specific activity
+
+    Activity Guide IDs go into the Activity Guides section
+    Itinerary IDs go into teh Itinerary section
+
+    "generic_timestamp_checkin_id" => Ignore checkin_id (for future use)
+    "generic_timestamp_excursion_id" => Ignore excursion_id (for future use)
+
+    "1": "12345" => "1" is the activity_guide/itinerary ID, "12345" is the UNIX timestamp
+    """
+
+
+3B - Fetch activity guide/itinerary related metatdata etc from top activity guides/itineraries
+
+  -- CURL API call:
+    excursion_id is the activity guide/itinerary ID from 3A. Repeat this for all the IDs in generic_timestamp_itinerary_id, generic_timestamp_activity_guide_id
+    """
+        curl --location 'http://127.0.0.1:8888/entity/excursion/' \
+        --header 'Content-Type: application/json' \
+        --header 'excursion_id: 123456789'
+    """
+
+  -- Response:
+    """
+    {
+   "123456789":{
+      "activities_list":{
+         "hiking":"4",
+         "roadtrip":"6"
+      },
+      "checkin_id_list":{
+         "1":"12345",
+         "2":"23456",
+         "3":"34567"
+      },
+      "excursion_metadata":{
+         "activity_guide":"False",
+         "city":"SF##California##USA",
+         "country":"USA",
+         "create_timestamp":"123456789",
+         "description":"My excursion",
+         "excursion_id":"123456789",
+         "excursion_owner_profile_id":"1234567",
+         "itinerary_id":"1234",
+         "last_updated_timestamp":"123456789",
+         "place_id":"1234567",
+         "place_name":"Land's End",
+         "state":"California##USA",
+         "transport_mode":"drive"
+      },
+      "participants_list":{
+         "pf_id_1":"1234567",
+         "pf_id_2":"1234567",
+         "pf_id_3":"1234567"
+      }
+    }
+    }
+    """
+
+    -- Meaning of the Response:
+     -- "checkin_id_list" represents the image set IDs (image set is a collection of images) in the activity guide/itinerary ID
+     -- "1":"12345" => "1" is the position of the image set in the itinerary/activity guide
+
+3C - Fetch the individual image IDs from checkin_id_list
+
+  -- CURL API call:
+    """
+        curl --location --request GET 'http://127.0.0.1:8888/entity/checkin/' \
+        --header 'Content-Type: application/json' \
+        --header 'checkin_id: 12345'
+    """
+
+  -- Response:
+    """
+    {
+    "12345":{
+        "activities_list":{
+            "hiking":"8",
+            "roadtrip":"9"
+        },
+        "airbnb_metadata":{
+            "airbnb_embed_url":"xyz.com",
+            "airbnb_post_id":"12345"
+        },
+        "checkin_metadata":{
+            "checkin_id":"12345",
+            "checkin_owner_profile_id":"1234567",
+            "city":"SF##California##USA",
+            "country":"USA",
+            "create_timestamp":"123456789",
+            "description":"Enjoying the beach!",
+            "excursion_id":"12345",
+            "itinerary_id":"12345",
+            "last_updated_timestamp":"123456789",
+            "place_id":"1234567",
+            "place_name":"Land's End",
+            "state":"California##USA",
+            "transport_mode":"drive"
+        },
+        "image_id_list":{
+            "1":"img_id_1",
+            "2":"img_id_2",
+            "3":"img_id_3"
+        },
+        "instagram_metadata":{
+            "instagram_embed_url":"xyz.com",
+            "instagram_post_id":"12345"
+        },
+        "participants_list":{
+            "pf_id_1":"1234567",
+            "pf_id_2":"1234567",
+            "pf_id_3":"1234567"
+        }
+    }
+    }
+    """
+
+  -- Meaning of the Response:
+  """
+    "image_id_list":{
+            "1":"img_id_1",
+            "2":"img_id_2",
+            "3":"img_id_3"
+    }
+
+    List of images => "1" is the position of the image, "img_id_1" is the ID of the image
+  """
+
+3D - Fetch the thumbnail image ID for activity guides
+  -- To-Do: Abhi
+
+3E - Fetch the signed URL to download images i.e. img_id_1, img_id_2, img_id_3. Images are stored on Google cloud. 
+     Need an authorized URL to access the images. This step helps fetch the authorized URL.
+
+  -- CURL API call: Replace the payana_storage_object value to the image ID value from 3C. Repeat for all images.
+  """
+    curl --location --request GET 'http://127.0.0.1:8888/entity/signed_url/download' \
+    --header 'Content-Type: application/json' \
+    --header 'profile_id: 123456789' \
+    --header 'payana_storage_bucket: payana_itinerary_pictures' \
+    --header 'payana_storage_object: img_id_1'
+  """
+  
+  -- Response:
+  """
+    https://storage.googleapis.com/payana_profile_pictures/profile_picture_one?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=payana-two-bigtable%40payana-two.iam.gserviceaccount.com%2F20240220%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20240220T072300Z&X-Goog-Expires=900&X-Goog-SignedHeaders=host&X-Goog-Signature=9aed3b43619f27df13f6c0da8665ab3ee8ee765119aa0587cafb5047711103f4261aa3bcff61b9151eb13988fac70cb8e9ad89beeb5d609da82ca057e5d3a78ca5f9307d023a11296859361860a05dc0a90cc66833fa59da2fe159777cd33ab12696408cf54d9880bca7aa9df3b0947c8bbf37fdc9d30401fa33ad73afb6098df1178de9237521e0babd24d521fd9c64f0210d60de7b6dcf54d263a18653c425001582fa990d6f37d0b0e6025fdc0221c19a0ea6147208aee0250b44c41d754635ea16584ade454bfe6c7f75133605a70523cf0063d83b8d81850855a2f53b3f39d27b4e87171eaf17bd324e247ca86006d48ad5aaa891d2e576b32cbb3dbb5a
+  """
+
+  -- Meaning of the Response: Returns an URL
+
+3F - Fetch the images from Google Cloud using the returned URL from 3E
+
+  -- CURL API call:
+  """
+    curl --location 'https://storage.googleapis.com/payana_profile_pictures/profile_picture_one?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=payana-two-bigtable%40payana-two.iam.gserviceaccount.com%2F20240220%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20240220T072300Z&X-Goog-Expires=900&X-Goog-SignedHeaders=host&X-Goog-Signature=9aed3b43619f27df13f6c0da8665ab3ee8ee765119aa0587cafb5047711103f4261aa3bcff61b9151eb13988fac70cb8e9ad89beeb5d609da82ca057e5d3a78ca5f9307d023a11296859361860a05dc0a90cc66833fa59da2fe159777cd33ab12696408cf54d9880bca7aa9df3b0947c8bbf37fdc9d30401fa33ad73afb6098df1178de9237521e0babd24d521fd9c64f0210d60de7b6dcf54d263a18653c425001582fa990d6f37d0b0e6025fdc0221c19a0ea6147208aee0250b44c41d754635ea16584ade454bfe6c7f75133605a70523cf0063d83b8d81850855a2f53b3f39d27b4e87171eaf17bd324e247ca86006d48ad5aaa891d2e576b32cbb3dbb5a'
+  """
+
+  -- Response: Returns an image
+
+Step 4 - Allow Users to Search itineraries based on City/Activities
+
+4A - Auto-Complete the city name
+
+ -- CURL API call:
+    """
+        curl --location 'http://127.0.0.1:8888/entity/autocomplete/city/' \
+        --header 'Content-Type: application/json' \
+        --header 'city: seatt.*'
+    """
+
+  -- Response:
+    """
+        {
+        "city":{
+            "payana_autocomplete_cities_list":{
+                "cupertino##california##usa":"156"
+            }
+        }
+        }
+    """
+
+  -- Meaning of the Response: City name suggestions matching the RegEx pattern
+
+
+4B - Using the new city name, repeat steps 3A to 3E
+  -- If the users select a specific activity, filter & display the result specific to the activity on UI

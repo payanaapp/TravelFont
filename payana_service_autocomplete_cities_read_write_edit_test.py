@@ -92,6 +92,8 @@ print("Payana autocomplete city read status: " +
 
 payana_autocomplete_city_response = response.json()
 
+print(payana_autocomplete_city_response)
+
 print("Payana autocomplete city creation verification status: " +
       str(payana_autocomplete_city_response[payana_autocomplete_city_header][payana_city_autocomplete_column_family][full_city_name] == score))
 

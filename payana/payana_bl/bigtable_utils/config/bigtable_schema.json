@@ -20,6 +20,14 @@
         "purpose": "To fetch the authentication details of a profile",
         "max_versions": 1
     },
+    "payana_activity_guide_thumbnail_table": {
+        "column_family_id": [
+            "payana_activity_thumbnail"
+        ],
+        "description": "This table will hold the thumbnail images for the activity guides",
+        "purpose": "To fetch the thumbnail images details for activity guides",
+        "max_versions": 1
+    },
     "payana_travel_footprint_table": {
         "column_family_id": [
             "travel_footprint"

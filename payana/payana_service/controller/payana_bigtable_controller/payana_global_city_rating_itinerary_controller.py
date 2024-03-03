@@ -47,6 +47,12 @@ payana_missing_global_city_rating_itinerary_objects_header_exception = payana_se
 payana_missing_global_city_rating_itinerary_object = payana_service_constants.payana_missing_global_city_rating_itinerary_object
 payana_global_city_itinerary_table = bigtable_constants.payana_global_city_itinerary_table
 
+"""
+To fetch top itineraries/activities/excursions based on city search & top rated.
+Logic for rating - not determined yet (weighted number of likes/comments)
+For Alpha - we do not use this. We use timestamp based.
+Population of this table needs a batch map/reduce script to update the table once a day.
+"""
 
 @payana_global_city_itinerary_rating_name_space.route("/")
 class PayanaGlobalCityRatingItineraryObjectEndPoint(Resource):
