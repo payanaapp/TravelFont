@@ -6,16 +6,6 @@ from payana.payana_bl.bigtable_utils.bigtable_read_write_object_wrapper import b
 from payana.payana_bl.bigtable_utils.constants import bigtable_constants
 from payana.payana_bl.bigtable_utils.PayanaProfileTable import PayanaProfileTable
 from payana.payana_bl.bigtable_utils.PayanaBigTable import PayanaBigTable
-from payana.payana_bl.bigtable_utils.PayanaCommentsTable import PayanaCommentsTable
-from payana.payana_bl.bigtable_utils.PayanaExcursionTable import PayanaExcursionTable
-from payana.payana_bl.bigtable_utils.PayanaItineraryTable import PayanaItineraryTable
-from payana.payana_bl.bigtable_utils.PayanaCheckinTable import PayanaCheckinTable
-from payana.payana_bl.bigtable_utils.PayanaLikesTable import PayanaLikesTable
-from payana.payana_bl.bigtable_utils.PayanaTravelBuddyTable import PayanaTravelBuddyTable
-from payana.payana_bl.bigtable_utils.PayanaPlaceIdMetadataTable import PayanaPlaceIdMetadataTable
-from payana.payana_bl.bigtable_utils.PayanaNeighboringCitiesTable import PayanaNeighboringCitiesTable
-from payana.payana_bl.bigtable_utils.PayanaStateTable import PayanaStateTable
-from payana.payana_bl.bigtable_utils.PayanaCountryTable import PayanaCountryTable
 
 client_config_file_path = bigtable_constants.bigtable_client_config_path
 bigtable_tables_schema_path = bigtable_constants.bigtable_schema_config_file
@@ -42,7 +32,9 @@ profile_obj = {
         "private_account": "true",
         "gender": "male",
         "date_of_birth": "11/11/1111",
-        "doj": "11/11/1111"
+        "doj": "11/11/1111",
+        "payana_payment_id": "abkr", 
+        "payana_payment_type": "venmo"
     },
     payana_profile_table_top_activities_tracker_rating:
     {

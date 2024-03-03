@@ -35,6 +35,8 @@ class PayanaProfileTable:
         self.payana_profile_table_date_of_birth = bigtable_constants.payana_profile_table_date_of_birth
         self.payana_profile_table_doj = bigtable_constants.payana_profile_table_doj
         self.payana_profile_table_profile_pictures = bigtable_constants.payana_profile_table_profile_pictures
+        self.payana_profile_table_payment_id = bigtable_constants.payana_profile_table_payment_id
+        self.payana_profile_table_payment_type = bigtable_constants.payana_profile_table_payment_type
 
         self.top_activities_tracker_rating = top_activities_tracker_rating
         self.payana_profile_pictures = payana_profile_pictures
@@ -91,6 +93,16 @@ class PayanaProfileTable:
 
         if self.payana_profile_table_doj in personal_information:
             self.doj = personal_information[self.payana_profile_table_doj]
+        else:
+            pass
+        
+        if self.payana_profile_table_payment_id in personal_information:
+                self.payment_id = personal_information[self.payana_profile_table_payment_id]
+        else:
+            pass
+        
+        if self.payana_profile_table_payment_type in personal_information:
+                self.payment_type = personal_information[self.payana_profile_table_payment_type]
         else:
             pass
 
@@ -159,6 +171,8 @@ class PayanaProfileTable:
         self.set_favorite_activities_preference_write_object()
         self.set_thumbnail_travel_buddies_write_object()
         self.set_payana_profile_pictures_write_object()
+        self.set_payment_id_write_object()
+        self.set_payment_type_write_object()
 
     @payana_generic_exception_handler
     def set_profile_name_write_object(self):
@@ -236,6 +250,20 @@ class PayanaProfileTable:
         # date_of_birth write object
         self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
             self.profile_id, self.column_family_id, bigtable_constants.payana_profile_table_doj, self.doj))
+        
+    @payana_generic_exception_handler
+    def set_payment_id_write_object(self):
+
+        # date_of_birth write object
+        self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+            self.profile_id, self.column_family_id, bigtable_constants.payana_profile_table_payment_id, self.payment_id))
+        
+    @payana_generic_exception_handler
+    def set_payment_type_write_object(self):
+
+        # date_of_birth write object
+        self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+            self.profile_id, self.column_family_id, bigtable_constants.payana_profile_table_payment_type, self.payment_type))
 
     @payana_generic_exception_handler
     def set_top_activities_write_object(self):
