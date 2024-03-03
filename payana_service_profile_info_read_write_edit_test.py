@@ -4,18 +4,6 @@ from payana.payana_bl.bigtable_utils.payana_bigtable_init import payana_bigtable
 from payana.payana_bl.bigtable_utils.payana_bigtable_cleanup import payana_bigtable_cleanup
 from payana.payana_bl.bigtable_utils.bigtable_read_write_object_wrapper import bigtable_write_object_wrapper, bigtable_read_row_key_wrapper
 from payana.payana_bl.bigtable_utils.constants import bigtable_constants
-from payana.payana_bl.bigtable_utils.PayanaProfileTable import PayanaProfileTable
-from payana.payana_bl.bigtable_utils.PayanaBigTable import PayanaBigTable
-from payana.payana_bl.bigtable_utils.PayanaCommentsTable import PayanaCommentsTable
-from payana.payana_bl.bigtable_utils.PayanaExcursionTable import PayanaExcursionTable
-from payana.payana_bl.bigtable_utils.PayanaItineraryTable import PayanaItineraryTable
-from payana.payana_bl.bigtable_utils.PayanaCheckinTable import PayanaCheckinTable
-from payana.payana_bl.bigtable_utils.PayanaLikesTable import PayanaLikesTable
-from payana.payana_bl.bigtable_utils.PayanaTravelBuddyTable import PayanaTravelBuddyTable
-from payana.payana_bl.bigtable_utils.PayanaPlaceIdMetadataTable import PayanaPlaceIdMetadataTable
-from payana.payana_bl.bigtable_utils.PayanaNeighboringCitiesTable import PayanaNeighboringCitiesTable
-from payana.payana_bl.bigtable_utils.PayanaStateTable import PayanaStateTable
-from payana.payana_bl.bigtable_utils.PayanaCountryTable import PayanaCountryTable
 
 from urllib import response
 import requests
@@ -64,7 +52,8 @@ curl --location --request POST 'http://127.0.0.1:8888/profile/info/' \
         "private_account": "true",
         "gender": "male",
         "date_of_birth": "11/11/1111",
-        "doj" : "11/11/1111"
+        "doj" : "11/11/1111",
+        "venmo_id": "abkr"
     },
     "top_activities_tracker_rating":
     {
@@ -115,7 +104,8 @@ profile_info_json = {
         "private_account": "true",
         "gender": "male",
         "date_of_birth": "11/11/1111",
-        "doj": "11/11/1111"
+        "doj": "11/11/1111",
+        "venmo_id": "abkr"
     },
     payana_profile_table_top_activities_tracker_rating:
     {
@@ -205,7 +195,8 @@ curl --location --request POST 'http://127.0.0.1:8888/profile/info/' \
         "private_account": "true",
         "gender": "male",
         "date_of_birth": "11/11/1111",
-        "doj" : "11/11/1111"
+        "doj" : "11/11/1111",
+        "venmo_id": "abkr"
     }
 }'
 """
