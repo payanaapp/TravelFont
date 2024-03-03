@@ -18,6 +18,12 @@ from payana.payana_bl.common_utils.payana_exception_handler_utils import payana_
 # google cloud bigtable imports
 from google.cloud.bigtable import column_family
 
+"""
+To fetch top itineraries/activities/excursions based on city search & top rated.
+Logic for rating - not determined yet (weighted number of likes/comments)
+For Alpha - we do not use this. We use timestamp based.
+Population of this table needs a batch map/reduce script to update the table once a day.
+"""
 
 class PayanaGlobalCityRatingItineraryTable:
 

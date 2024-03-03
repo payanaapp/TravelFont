@@ -18,6 +18,9 @@ from payana.payana_bl.common_utils.payana_exception_handler_utils import payana_
 # google cloud bigtable imports
 from google.cloud.bigtable import column_family
 
+"""
+To make a city based search amongst all your followers/influencers/any profile ID -- not needed for Alpha
+"""
 
 class PayanaGlobalInfluencerFeedSearchItineraryCache:
 

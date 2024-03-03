@@ -68,6 +68,7 @@ payana_users_autocomplete_table = "payana_users_autocomplete_table"
 payana_mail_sign_up_notification_table = "payana_mail_sign_up_notification_table"
 payana_mail_share_itinerary_notification_table = "payana_mail_share_itinerary_notification_table"
 payana_profile_auth_table = "payana_profile_auth_table"
+payana_activity_guide_thumbnail_table = "payana_activity_guide_thumbnail_table"
 
 # payana_auth_profile_table
 payana_auth_information = "auth_information"
@@ -93,6 +94,9 @@ payana_profile_favorite_places_preference = "favorite_places_preference"
 payana_profile_favorite_activities_preference = "favorite_activities_preference"
 payana_profile_table_thumbnail_travel_buddies = "thumbnail_travel_buddies"
 payana_profile_table_profile_pictures = "payana_profile_pictures"
+
+# payana_activity_guide_thumbnail_table
+payana_activity_thumbnail = "payana_activity_thumbnail"
 
 # payana_comments_table_field_names
 payana_comments_table_comments_family_id = "payana_comments"

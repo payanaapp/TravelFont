@@ -47,6 +47,11 @@ payana_missing_global_city_timestamp_itinerary_objects_header_exception = payana
 payana_missing_global_city_timestamp_itinerary_object = payana_service_constants.payana_missing_global_city_timestamp_itinerary_object
 payana_global_city_itinerary_table = bigtable_constants.payana_global_city_itinerary_table
 
+"""
+To fetch top itineraries/activities/excursions based on city search & timestamp ordered.
+For Alpha - we use this. While rendering we render based on real time ordering of likes/comments
+Population of this table happens in real time as a new itinerary is added.
+"""
 
 @payana_global_city_itinerary_timestamp_name_space.route("/")
 class PayanaGlobalCitytimestampItineraryObjectEndPoint(Resource):

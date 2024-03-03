@@ -143,6 +143,8 @@ print("Payana checkin object read status: " + str(response.status_code == 200))
 
 profile_checkin_response = response.json()
 
+print(profile_checkin_response)
+
 payana_checkin_metadata = bigtable_constants.payana_checkin_metadata
 
 print("Profile checkin object creation verification status: " +

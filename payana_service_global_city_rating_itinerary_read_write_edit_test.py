@@ -29,6 +29,12 @@ payana_bigtable_init(client_config_file_path, bigtable_tables_schema_path)
 
 payana_itinerary_city = bigtable_constants.payana_itinerary_city
 
+"""
+To fetch top itineraries/activities/excursions based on city search & top rated.
+Logic for rating - not determined yet (weighted number of likes/comments)
+For Alpha - we do not use this. We use timestamp based.
+Population of this table needs a batch map/reduce script to update the table once a day.
+"""
 
 # POST
 # CURL request

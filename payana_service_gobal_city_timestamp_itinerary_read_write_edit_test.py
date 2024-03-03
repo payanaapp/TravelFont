@@ -29,8 +29,13 @@ payana_bigtable_init(client_config_file_path, bigtable_tables_schema_path)
 
 payana_itinerary_city = bigtable_constants.payana_itinerary_city
 
+"""
+To fetch top itineraries/activities/excursions based on city search & timestamp ordered.
+For Alpha - we use this. While rendering we render based on real time ordering of likes/comments
+Population of this table happens in real time as a new itinerary is added.
+"""
 
-# POST
+# POST - To add an itinerary/activity guide/excursion into the city search timestamp ordered itinerary table
 # CURL request
 """
 curl --location 'http://127.0.0.1:8888/entity/global/timestamp/city/' \
@@ -39,16 +44,16 @@ curl --location 'http://127.0.0.1:8888/entity/global/timestamp/city/' \
 --data '{
     "city": "cupertino##california##usa",
     "itinerary_id": {
-        "1": "12345"
+        "1": "12345"          # itinerary_id: timestamp
     },
     "activity_guide_id": {
-        "1": "12345"
+        "1": "12345"          # activity_guide_id: timestamp
     },
     "excursion_id": {
-        "1": "12345"
+        "1": "12345"          # excursion_id: timestamp
     },
     "checkin_id": {
-        "1": "12345"
+        "1": "12345"          # checkin_id: timestamp
     },
     "activities": [
         "generic",
@@ -97,7 +102,63 @@ print("Payana global city itinerary ranking objects creation status: " +
 
 profile_global_city_timestamp_itinerary_object_response_json = response.json()
 
-# GET
+# GET - To fetch itineraries/activity guides/excursions corresponding to a given city
+"""
+Result:
+
+{
+    "cupertino##california##usa": {
+        "exotic_timestamp_activity_guide_id": {
+            "1": "12345"
+        },
+        "exotic_timestamp_checkin_id": {
+            "1": "12345"
+        },
+        "exotic_timestamp_excursion_id": {
+            "1": "12345"
+        },
+        "exotic_timestamp_itinerary_id": {
+            "1": "12345"
+        },
+        "generic_timestamp_activity_guide_id": {
+            "1": "12345"
+        },
+        "generic_timestamp_checkin_id": {
+            "1": "12345"
+        },
+        "generic_timestamp_excursion_id": {
+            "1": "12345"
+        },
+        "generic_timestamp_itinerary_id": {
+            "1": "12345"
+        },
+        "hiking_timestamp_activity_guide_id": {
+            "1": "12345"
+        },
+        "hiking_timestamp_checkin_id": {
+            "1": "12345"
+        },
+        "hiking_timestamp_excursion_id": {
+            "1": "12345"
+        },
+        "hiking_timestamp_itinerary_id": {
+            "1": "12345"
+        },
+        "romantic_timestamp_activity_guide_id": {
+            "1": "12345"
+        },
+        "romantic_timestamp_checkin_id": {
+            "1": "12345"
+        },
+        "romantic_timestamp_excursion_id": {
+            "1": "12345"
+        },
+        "romantic_timestamp_itinerary_id": {
+            "1": "12345"
+        }
+    }
+}
+"""
 # CURL request
 """
 curl --location 'http://127.0.0.1:8888/entity/global/timestamp/city/' \
@@ -117,10 +178,12 @@ print("Payana global_city_timestamp_itinerary object read status: " +
 
 payana_global_city_timestamp_itinerary_object_response = response.json()
 
+print(payana_global_city_timestamp_itinerary_object_response)
+
 print("Payana global_city_timestamp_itinerary object creation verification status: " +
       str(city in payana_global_city_timestamp_itinerary_object_response))
 
-# Edit
+# Edit - Edit 
 """
 curl --location --request PUT 'http://127.0.0.1:8888/entity/global/timestamp/city/' \
 --header 'Content-Type: application/json' \

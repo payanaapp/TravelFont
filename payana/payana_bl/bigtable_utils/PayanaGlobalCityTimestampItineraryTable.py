@@ -18,8 +18,13 @@ from payana.payana_bl.common_utils.payana_exception_handler_utils import payana_
 # google cloud bigtable imports
 from google.cloud.bigtable import column_family
 
+"""
+To fetch top itineraries/activities/excursions based on city search & timestamp ordered.
+For Alpha - we use this. While rendering we render based on real time ordering of likes/comments
+Population of this table happens in real time as a new itinerary is added.
+"""
 
-class PayanaGlobalCityTimestampItineraryTable:
+class PayanaGlobalCityTimestampItineraryTable: 
 
     @payana_generic_exception_handler
     def __init__(self, city, activity_guide_id,
@@ -86,25 +91,25 @@ class PayanaGlobalCityTimestampItineraryTable:
                 activity_guide_activity_column_family_id = "_".join(
                     [activity, self.payana_global_city_itinerary_table_itinerary_id_timestamp_quantifier_value, bigtable_constants.payana_global_city_itinerary_table_activity_guide_id_quantifier_value])
 
-                for timestamp, itinerary in self.itinerary_id.items():
+                for itinerary, timestamp in self.itinerary_id.items():
                     # itinerary id write object
                     self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-                        self.row_id, itinerary_activity_column_family_id, timestamp, itinerary))
+                        self.row_id, itinerary_activity_column_family_id, itinerary, timestamp))
 
-                for timestamp, excursion in self.excursion_id.items():
+                for excursion, timestamp in self.excursion_id.items():
                     # excursion id write object
                     self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-                        self.row_id, excursion_activity_column_family_id, timestamp, excursion))
+                        self.row_id, excursion_activity_column_family_id, excursion, timestamp))
 
-                for timestamp, checkin in self.checkin_id.items():
+                for checkin, timestamp in self.checkin_id.items():
                     # checkin id write object
                     self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-                        self.row_id, checkin_activity_column_family_id, timestamp, checkin))
+                        self.row_id, checkin_activity_column_family_id, checkin, timestamp))
                     
-                for timestamp, activity_guide in self.activity_guide_id.items():
+                for activity_guide, timestamp in self.activity_guide_id.items():
                     # checkin id write object
                     self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-                        self.row_id, activity_guide_activity_column_family_id, timestamp, activity_guide))
+                        self.row_id, activity_guide_activity_column_family_id, activity_guide, timestamp))
 
             else:
                 # to-do : raise exception that it is an invalid activity
