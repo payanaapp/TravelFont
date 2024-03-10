@@ -137,7 +137,7 @@ class PayanaItineraryTable:
     @payana_generic_exception_handler
     def create_bigtable_write_objects(self):
         self.set_excursion_id_list_write_object()
-        self.set_participants_list_write_object()
+        # self.set_participants_list_write_object()
         self.set_activities_list_write_object()
         self.set_description_write_object()
         self.set_visit_timestamp_write_object()
@@ -146,7 +146,7 @@ class PayanaItineraryTable:
         self.set_itinerary_place_id_write_object()
         self.set_itinerary_place_name_write_object()
         self.set_itinerary_city_write_object()
-        self.set_itinerary_state_name_write_object()
+        self.set_itinerary_state_write_object()
         self.set_itinerary_country_write_object()
 
     @payana_generic_exception_handler
@@ -157,13 +157,13 @@ class PayanaItineraryTable:
             self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
                 self.itinerary_id, self.column_family_excursion_id_list, key, excursion_id))
 
-    @payana_generic_exception_handler
-    def set_participants_list_write_object(self):
+    # @payana_generic_exception_handler
+    # def set_participants_list_write_object(self):
 
-        # participants_list write object
-        for participant, timestamp in self.participants_list.items():
-            self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-                self.itinerary_id, self.column_family_participants_list, participant, timestamp))
+    #     # participants_list write object
+    #     for participant, timestamp in self.participants_list.items():
+    #         self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+    #             self.itinerary_id, self.column_family_participants_list, participant, timestamp))
 
     @payana_generic_exception_handler
     def set_activities_list_write_object(self):

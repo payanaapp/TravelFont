@@ -94,6 +94,7 @@ payana_profile_favorite_places_preference = "favorite_places_preference"
 payana_profile_favorite_activities_preference = "favorite_activities_preference"
 payana_profile_table_thumbnail_travel_buddies = "thumbnail_travel_buddies"
 payana_profile_table_profile_pictures = "payana_profile_pictures"
+payana_profile_table_cover_pictures = "payana_cover_pictures"
 payana_profile_table_payment_id = "payana_payment_id"
 payana_profile_table_payment_type = "payana_payment_type"
 

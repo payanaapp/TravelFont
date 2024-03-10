@@ -13,8 +13,8 @@ payana_flask_app = Flask(__name__)
 port = '8888'
 flask_server_name = '127.0.0.1'
 
-server = '0.0.0.0' #for Docker
-# server = '127.0.0.1' #for local env
+server = '0.0.0.0' # for Docker
+# server = '127.0.0.1' # for local env
 
 def number_of_gunicorn_workers():
     return (multiprocessing.cpu_count() * 2) + 1

@@ -9,4 +9,4 @@ class PlatformEnums(str, enum.Enum):
 
     Android = "android"
     Web = "web"
-    Darwin = "darwin"
+    ios = "ios"
