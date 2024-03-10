@@ -106,6 +106,8 @@ print("Profile travel buddy read status: " + str(response.status_code == 200))
 
 profile_travel_buddy_response = response.json()
 
+print(profile_travel_buddy_response)
+
 print("Profile travel buddy creation verification status: " +
       str(travel_buddy_profile_id in profile_travel_buddy_response[profile_id][payana_travel_buddy_table_column_family_travel_buddy_list]))
 

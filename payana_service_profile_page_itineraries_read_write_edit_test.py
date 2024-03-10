@@ -204,6 +204,9 @@ response = requests.get(url, headers=headers)
 print("Profile read status: " + str(response.status_code == 200))
 
 profile_page_itinerary_response = response.json()
+
+print(profile_page_itinerary_response)
+
 print("Profile Page Itinerary update verification status: " +
       str(len(profile_page_itinerary_response[profile_id]
           [created_activity_guide_id_list_activity_generic_column_family_id]) == 2))

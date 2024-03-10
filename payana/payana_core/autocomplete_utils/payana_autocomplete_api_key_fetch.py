@@ -26,11 +26,11 @@ def payana_autocomplete_api_key_web():
 
 
 @payana_generic_exception_handler
-def payana_autocomplete_api_key_darwin():
+def payana_autocomplete_api_key_ios():
 
     # read the apikey from the file
-    darwin_api_key_file_path = autocomplete_api_key_constants.autocomplete_darwin_api_key_config_file
-    return payana_autocomplete_api_key_read(darwin_api_key_file_path)
+    ios_api_key_file_path = autocomplete_api_key_constants.autocomplete_ios_api_key_config_file
+    return payana_autocomplete_api_key_read(ios_api_key_file_path)
 
 
 @payana_generic_exception_handler

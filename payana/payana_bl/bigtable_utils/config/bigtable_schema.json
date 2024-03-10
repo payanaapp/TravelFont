@@ -6,7 +6,8 @@
             "thumbnail_travel_buddies",
             "favorite_places_preference",
             "favorite_activities_preference",
-            "payana_profile_pictures"
+            "payana_profile_pictures",
+            "payana_cover_pictures"
         ],
         "description": "This table will hold all the profile details of the user",
         "purpose": "To fetch the details of a profile",

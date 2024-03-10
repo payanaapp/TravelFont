@@ -7,7 +7,7 @@ import argparse
 
 from payana.payana_bl.common_utils.payana_exception_handler_utils import payana_generic_exception_handler
 from payana.payana_bl.autocomplete_utils.constants.PlatformEnums import PlatformEnums
-from payana.payana_core.autocomplete_utils.payana_autocomplete_api_key_fetch import payana_autocomplete_api_key_android, payana_autocomplete_api_key_darwin, payana_autocomplete_api_key_web
+from payana.payana_core.autocomplete_utils.payana_autocomplete_api_key_fetch import payana_autocomplete_api_key_android, payana_autocomplete_api_key_ios, payana_autocomplete_api_key_web
 
 
 @payana_generic_exception_handler
@@ -21,8 +21,8 @@ def fetch_autocomplete_api_key(platform):
         return payana_autocomplete_api_key_android()
     elif platform == PlatformEnums.Web:
         return payana_autocomplete_api_key_web()
-    elif platform == PlatformEnums.Darwin:
-        return payana_autocomplete_api_key_darwin()
+    elif platform == PlatformEnums.ios:
+        return payana_autocomplete_api_key_ios()
     else:
         return None
 

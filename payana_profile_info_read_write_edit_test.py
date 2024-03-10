@@ -18,6 +18,7 @@ payana_profile_favorite_activities_preference = bigtable_constants.payana_profil
 payana_profile_table_thumbnail_travel_buddies = bigtable_constants.payana_profile_table_thumbnail_travel_buddies
 payana_profile_table_top_activities_tracker_rating = bigtable_constants.payana_profile_table_top_activities_tracker_rating
 payana_profile_table_profile_pictures = bigtable_constants.payana_profile_table_profile_pictures
+payana_profile_table_cover_pictures = bigtable_constants.payana_profile_table_cover_pictures
 
 profile_obj = {
     payana_profile_table_personal_info_column_family:
@@ -69,6 +70,9 @@ profile_obj = {
     },
     payana_profile_table_profile_pictures: {
         "123456789": "profile_picture_id_1"
+    },
+    payana_profile_table_cover_pictures: {
+        "123456789": "cover_picture_id_1"
     }
 }
 

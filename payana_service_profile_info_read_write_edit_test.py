@@ -33,11 +33,12 @@ payana_profile_table_gender = bigtable_constants.payana_profile_table_gender
 payana_profile_table_date_of_birth = bigtable_constants.payana_profile_table_date_of_birth
 payana_profile_table_doj = bigtable_constants.payana_profile_table_doj
 payana_profile_table_profile_pictures = bigtable_constants.payana_profile_table_profile_pictures
+payana_profile_table_cover_pictures = bigtable_constants.payana_profile_table_cover_pictures
 
 # POST profile info
 # CURL request
 """
-curl --location --request POST 'http://127.0.0.1:8888/profile/info/' \
+curl --location 'http://localhost:8888/profile/info/' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "personal_information":
@@ -45,7 +46,7 @@ curl --location --request POST 'http://127.0.0.1:8888/profile/info/' \
         "profile_name": "abkr",
         "user_name": "abkr",
         "blog_url": "abkr.com",
-        "profile_description": "abkr's profile",
+        "profile_description": "abkr'\''s profile",
         "profile_id": "",
         "email": "abkr@gmail.com",
         "phone": "123456789",
@@ -53,7 +54,8 @@ curl --location --request POST 'http://127.0.0.1:8888/profile/info/' \
         "gender": "male",
         "date_of_birth": "11/11/1111",
         "doj" : "11/11/1111",
-        "venmo_id": "abkr"
+        "payana_payment_id": "abkr", 
+        "payana_payment_type": "venmo"
     },
     "top_activities_tracker_rating":
     {
@@ -85,6 +87,12 @@ curl --location --request POST 'http://127.0.0.1:8888/profile/info/' \
         "567890" : "5",
         "678911" : "6",
         "678921" : "7"
+    },
+    "payana_profile_pictures": {
+        "123456789": "profile_picture_id_1"
+    },
+    "payana_cover_pictures": {
+        "123456789": "cover_picture_id_1"
     }
 }'
 """
@@ -105,7 +113,8 @@ profile_info_json = {
         "gender": "male",
         "date_of_birth": "11/11/1111",
         "doj": "11/11/1111",
-        "venmo_id": "abkr"
+        "payana_payment_id": "abkr", 
+        "payana_payment_type": "venmo"
     },
     payana_profile_table_top_activities_tracker_rating:
     {
@@ -140,6 +149,9 @@ profile_info_json = {
     },
     payana_profile_table_profile_pictures: {
         "123456789": "profile_picture_id_1"
+    },
+    payana_profile_table_cover_pictures: {
+        "123456789": "cover_picture_id_1"
     }
 }
 
@@ -196,7 +208,8 @@ curl --location --request POST 'http://127.0.0.1:8888/profile/info/' \
         "gender": "male",
         "date_of_birth": "11/11/1111",
         "doj" : "11/11/1111",
-        "venmo_id": "abkr"
+        "payana_payment_id": "abkr", 
+        "payana_payment_type": "venmo"
     }
 }'
 """
