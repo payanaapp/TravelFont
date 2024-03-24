@@ -202,8 +202,108 @@ Response: 200 SUCCESS
 
 Step 1 - Check if the email ID exists in the  Metadata authentication table
 
-How to check? Mentioned in Step 2 above
+ -- 1A
+    How to check? Mentioned in Step 2 above
+    Via a GET call - should return a response JSON if profile exists, else returns a 400
+    Files:
+        * payana_service_auth_profile_info_read_write_edit_test.py
+        * payana_auth_profile_info_read_write_edit_test.py
 
- -- 2A - If yes, load the HomePage
- 
- -- 2B - If no, flash a message saying - "A TravelFont account doesn't exist with the associated email ID. Please Sign Up." and take the Sign Up Flow.
+    API call:
+    """
+    curl --location 'http://localhost:8888/profile/auth/' \
+    --header 'mail_id: abkr@gmail.com'
+    """
+
+    Response:
+    """
+    {
+        "abkr@gmail.com": {
+            "auth_information": {
+                "profile_id": "1234567890",
+                "profile_name": "abkr",
+                "profile_picture_id": "123456789"
+            }
+        }
+    }
+    """
+
+Step 2
+ -- 2A - If profile exists, load the HomePage after fetching profile details
+
+    -- 2A1 - Fetch profile picture from Google Cloud storage using profile_picture_id from the Step above
+
+        How to fetch? Mentioned in Steps 3C1 and 3C2
+
+    -- 2A2 - Fetch profile info metadata details using profile_id from the Step above
+
+    Files:
+        * payana_service_profile_info_read_write_edit_test.py
+        * payana_profile_info_read_write_edit_test.py
+
+    API:
+    """
+    curl --location 'http://localhost:8888/profile/info/' \
+    --header 'profile_id: 0961ac35daad1ea7e32ea7890ec9143c5c4f6fbe2014b1fd67cdfee057c485be'
+    """
+
+    Response:
+    """
+    {
+    "0961ac35daad1ea7e32ea7890ec9143c5c4f6fbe2014b1fd67cdfee057c485be": {
+        "favorite_activities_preference": {
+            "adventures": "3",
+            "food trips": "6",
+            "hiking": "1",
+            "road trips": "5",
+            "ski trips": "2",
+            "spring break": "4"
+        },
+        "favorite_places_preference": {
+            "california##usa": "1234578",
+            "cupertino##california##usa": "1234578",
+            "france": "1234578",
+            "oregon##usa": "1234578",
+            "sanfrancisco##california##usa": "1234578",
+            "usa": "1234578"
+        },
+        "payana_cover_pictures": {
+            "123456789": "cover_picture_id_1"
+        },
+        "payana_profile_pictures": {
+            "123456789": "profile_picture_id_1"
+        },
+        "personal_information": {
+            "blog_url": "abkr.com",
+            "date_of_birth": "11/11/1111",
+            "doj": "11/11/1111",
+            "email": "abkr@gmail.com",
+            "gender": "male",
+            "payana_payment_id": "abkr",
+            "payana_payment_type": "venmo",
+            "phone": "123456789",
+            "private_account": "true",
+            "profile_description": "abkr's profile",
+            "profile_id": "0961ac35daad1ea7e32ea7890ec9143c5c4f6fbe2014b1fd67cdfee057c485be",
+            "profile_name": "abkr",
+            "user_name": "abkr"
+        },
+        "thumbnail_travel_buddies": {
+            "123456": "1",
+            "234567": "2",
+            "345678": "3",
+            "456789": "4",
+            "567890": "5",
+            "678911": "6",
+            "678921": "7"
+        },
+        "top_activities_tracker_rating": {
+            "adventure": "0.4",
+            "fashion": "0.78",
+            "hiking": "0.67"
+        }
+    }
+}
+    """
+
+ -- 2B - If profile doesn't exist, flash a message saying - "A TravelFont account doesn't exist with the associated email ID. Please Sign Up." and take the Sign Up Flow.
