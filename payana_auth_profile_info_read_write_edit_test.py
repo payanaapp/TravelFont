@@ -16,6 +16,7 @@ payana_bigtable_init(client_config_file_path, bigtable_tables_schema_path)
 payana_auth_information = bigtable_constants.payana_auth_information
 payana_auth_mail_id = bigtable_constants.payana_auth_mail_id
 payana_auth_profile_name = bigtable_constants.payana_auth_profile_name
+payana_auth_profile_id = bigtable_constants.payana_auth_profile_id
 payana_auth_profile_picture_id = bigtable_constants.payana_auth_profile_picture_id
 
 auth_profile_obj = {
@@ -23,7 +24,8 @@ auth_profile_obj = {
     {
         payana_auth_profile_name: "abkr",
         payana_auth_mail_id: "abkr@gmail.com",
-        payana_auth_profile_picture_id: "123456789"
+        payana_auth_profile_picture_id: "123456789",
+        payana_auth_profile_id: "123456789010"
     }
 }
 

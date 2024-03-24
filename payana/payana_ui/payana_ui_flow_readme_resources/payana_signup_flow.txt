@@ -1,0 +1,209 @@
+Two UX flows:
+1. Sign Up 
+2. Log In 
+
+1. Sign Up 
+
+Step 1 - Facebook/Google/Apple Log In returns Name, Email ID, Profile Picture 
+
+Step 2 - Check if the email ID exists in the  Metadata authentication table
+
+How to check? Via a GET call - should return a response JSON if profile exists, else returns a 400
+Files:
+    * payana_service_auth_profile_info_read_write_edit_test.py
+    * payana_auth_profile_info_read_write_edit_test.py
+
+API call:
+"""
+curl --location 'http://localhost:8888/profile/auth/' \
+--header 'mail_id: abkr@gmail.com'
+"""
+
+Response:
+"""
+{
+    "abkr@gmail.com": {
+        "auth_information": {
+            "profile_id": "1234567890",
+            "profile_name": "abkr",
+            "profile_picture_id": "123456789"
+        }
+    }
+}
+"""
+
+ -- 2A - If profile doesn't exist, proceed to step 3
+ -- 2B - Flash a message saying - "A TraveFont account exists. Please Log In." and take the Log In Flow below.
+
+Step 3 - Save the returned Profile Picture Into the backend Google cloud storage database. This database returns a storage object ID.
+
+Files:
+    * payana_gcs_itinerary_checkin_objects_read_write_edit_test.py
+    * payana_gcs_profile_pictures_read_write_edit_test.py
+    * payana_service_gcs_image_read_write_edit_test.py
+
+ -- 3A - Get a Signed Auth URL Token to upload the Profile Picture Image
+
+API:
+"""
+curl --location 'http://localhost:8888/entity/signed_url/upload' \
+--header 'Content-Type: image/jpeg' \
+--header 'profile_id: 123456789' \
+--header 'payana_storage_bucket: payana_profile_pictures' \
+--header 'payana_storage_object: profile_picture_one' \
+--data '@'
+"""
+Note: Please change the payana_storage_object to the mail ID of the user.
+
+Response:
+"""
+https://storage.googleapis.com/payana_profile_pictures/profile_picture_one?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=payana-two-bigtable%40payana-two.iam.gserviceaccount.com%2F20240324%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20240324T015906Z&X-Goog-Expires=900&X-Goog-SignedHeaders=content-type%3Bhost&X-Goog-Signature=7304c71c218ae8db0b015f5d404b7ccd761c17067cbfc329800e2deac8acaf51400b6b46f4fc9ba28476ea835911563114fedfa831527db58838c68a69daf2e5a3bae097741fdded2845842a3c9c3e9c136af8d11cfb2355f557aa8aec76e31b34c10e9899549c33b81f0340f44d8ddfef14d30efc34e9d99897fc7cba0f1ff5fb9349e272ec77fbcf87b705523646cb2eb3618f2949c13b6ff843094f76b149d1ff72c30a4dde35f1605b78b34b0f777b7abbc208d5aec2fb72c9e5e45e9c7aa889978bcaaf8609d2caaa5b0c93f8b0a3763a81a0060e3dfcfe2515e75b1c01148c80a59528a9fbdc53114ef2498699a5fe01e8b34e3e7af61db790abf2fd3c
+"""
+
+
+ -- 3B - Upload the image via a POST call using the Signed URL token from 3A
+ API:
+"""
+curl --location --request PUT 'https://storage.googleapis.com/payana_profile_pictures/profile_picture_one?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=payana-two-bigtable%40payana-two.iam.gserviceaccount.com%2F20240324%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20240324T015906Z&X-Goog-Expires=900&X-Goog-SignedHeaders=content-type%3Bhost&X-Goog-Signature=7304c71c218ae8db0b015f5d404b7ccd761c17067cbfc329800e2deac8acaf51400b6b46f4fc9ba28476ea835911563114fedfa831527db58838c68a69daf2e5a3bae097741fdded2845842a3c9c3e9c136af8d11cfb2355f557aa8aec76e31b34c10e9899549c33b81f0340f44d8ddfef14d30efc34e9d99897fc7cba0f1ff5fb9349e272ec77fbcf87b705523646cb2eb3618f2949c13b6ff843094f76b149d1ff72c30a4dde35f1605b78b34b0f777b7abbc208d5aec2fb72c9e5e45e9c7aa889978bcaaf8609d2caaa5b0c93f8b0a3763a81a0060e3dfcfe2515e75b1c01148c80a59528a9fbdc53114ef2498699a5fe01e8b34e3e7af61db790abf2fd3c' \
+--header 'Content-Type: application/octet-stream' \
+--data '@/Users/abhinandankelgereramesh/Documents/payana-github/TravelFont/image.jpg'
+"""
+
+ Response:
+ """
+ 200 success response
+ """
+
+
+ -- 3C - How to verify if the image got uploaded successfully?
+
+   -- 3C1 - Get the Signed URL token to download the image
+
+   API:
+   """
+   curl --location 'http://localhost:8888/entity/signed_url/download' \
+    --header 'Content-Type: application/json' \
+    --header 'profile_id: 123456789' \
+    --header 'payana_storage_bucket: payana_profile_pictures' \
+    --header 'payana_storage_object: profile_picture_one'
+   """
+   Note: payana_storage_object should match the object you want to download, in this case, the email ID of the user
+
+   Response: Returns a signed URL token
+   """
+   https://storage.googleapis.com/payana_profile_pictures/profile_picture_one?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=payana-two-bigtable%40payana-two.iam.gserviceaccount.com%2F20240324%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20240324T021259Z&X-Goog-Expires=900&X-Goog-SignedHeaders=host&X-Goog-Signature=1f3b483c087a32e603c4241002eff151fbf0194892cd25707087c445a1abf2b443f2b579a17edcb0e67db4f19f874c431609c625f30055d3918eff63438da4ede94bad4f88f9a0786e13169fa21b72d38690a68251436c59ca925119af7288f4adf6631b89d56a7a52c92045effe0f8bdf05e5a47b808e1f2b7a7dcef157f5048a620d9b9c1f53badf5158f122d4cbaf451983218d2840ef6b2a26ad9d977f9ce4a692b7df15c9cdc0318805fe017d5bece363309fd429b266180ce82e3825e5b05c17ec2622700c68ece2893ff49ac15747190ef0d656cc52c598a0106c1e0adf02e6e8f32f957c814cf554ea525084681d14d7d03fa45f1e69782d9aef216b
+   """
+
+
+   -- 3C2 - Download the image 
+   API:
+   """
+   curl --location 'https://storage.googleapis.com/payana_profile_pictures/profile_picture_one?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=payana-two-bigtable%40payana-two.iam.gserviceaccount.com%2F20240324%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20240324T021259Z&X-Goog-Expires=900&X-Goog-SignedHeaders=host&X-Goog-Signature=1f3b483c087a32e603c4241002eff151fbf0194892cd25707087c445a1abf2b443f2b579a17edcb0e67db4f19f874c431609c625f30055d3918eff63438da4ede94bad4f88f9a0786e13169fa21b72d38690a68251436c59ca925119af7288f4adf6631b89d56a7a52c92045effe0f8bdf05e5a47b808e1f2b7a7dcef157f5048a620d9b9c1f53badf5158f122d4cbaf451983218d2840ef6b2a26ad9d977f9ce4a692b7df15c9cdc0318805fe017d5bece363309fd429b266180ce82e3825e5b05c17ec2622700c68ece2893ff49ac15747190ef0d656cc52c598a0106c1e0adf02e6e8f32f957c814cf554ea525084681d14d7d03fa45f1e69782d9aef216b'
+   """
+
+   Response:
+   """
+   200 SUCCESS 
+   """
+
+Step 4 - Take the User Favorite Places preference, User Favorite Activities preference, Profile Info details
+
+Step 5 - Save the details from step 5 into the Profile Info metadata table using a POST table
+
+Files:
+    * payana_service_profile_info_read_write_edit_test.py
+    * payana_profile_info_read_write_edit_test.py
+
+API:
+"""
+curl --location 'http://localhost:8888/profile/info/' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "personal_information":
+    {
+        "profile_name": "abkr",
+        "user_name": "abkr",
+        "blog_url": "abkr.com",
+        "profile_description": "abkr'\''s profile",
+        "profile_id": "",
+        "email": "abkr@gmail.com",
+        "phone": "123456789",
+        "private_account": "true",
+        "gender": "male",
+        "date_of_birth": "11/11/1111",
+        "doj" : "11/11/1111",
+        "payana_payment_id": "abkr", 
+        "payana_payment_type": "venmo"
+    },
+    "top_activities_tracker_rating": {},
+    "favorite_places_preference": {
+        "cupertino##california##usa": "1234578",
+        "california##usa": "1234578",
+        "usa": "1234578",
+        "sanfrancisco##california##usa": "1234578",
+        "oregon##usa": "1234578",
+        "france": "1234578"
+    },
+    "favorite_activities_preference": {
+        "hiking": "1",
+        "ski trips": "2",
+        "adventures": "3",
+        "spring break" : "4",
+        "road trips" : "5",
+        "food trips" : "6"
+    },
+    "thumbnail_travel_buddies" : {},
+    "payana_profile_pictures": {
+        "123456789": "profile_picture_id_1"
+    },
+    "payana_cover_pictures": {}
+}'
+"""
+
+Response:
+"""
+{
+    "status": "Created",
+    "profile_id": "00c406b2251a8ce85b48c4da879e1319912c3d6294d28befefcc5a260710a44c",
+    "message": "Profile successfully created!",
+    "statusCode": 201
+}
+"""
+
+Step 6 - Save the Profile Name, Email ID, profile picture storage ID into the metadata authentication table
+
+API:
+"""
+curl --location 'http://localhost:8888/profile/auth/' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "auth_information":
+    {
+        "profile_name": "abkr",
+        "mail_id": "abkr@gmail.com",
+        "profile_picture_id": "abkr@gmail.com",
+        "profile_id": "1234567890"
+    }
+}'
+"""
+Note: profile_id is returned in Step 5 response object
+
+Response: 200 SUCCESS
+"""
+{
+    "status": "Created",
+    "mail_id": "abkr@gmail.com",
+    "message": "Auth Profile successfully created!",
+    "statusCode": 201
+}
+"""
+
+2. Log In
+
+Step 1 - Check if the email ID exists in the  Metadata authentication table
+
+How to check? Mentioned in Step 2 above
+
+ -- 2A - If yes, load the HomePage
+ 
+ -- 2B - If no, flash a message saying - "A TravelFont account doesn't exist with the associated email ID. Please Sign Up." and take the Sign Up Flow.

@@ -39,6 +39,11 @@ class PayanaAuthProfileTable:
                 self.profile_picture_id = self.auth_information[bigtable_constants.payana_auth_profile_picture_id]
         else:
             pass
+        
+        if bigtable_constants.payana_auth_profile_id in self.auth_information:
+            self.profile_id = self.auth_information[bigtable_constants.payana_auth_profile_id]
+        else:
+            self.profile_id = None
 
         self.update_bigtable_write_objects = []
 
@@ -61,6 +66,9 @@ class PayanaAuthProfileTable:
     def create_bigtable_write_objects(self):
         self.set_profile_name_write_object()
         self.set_prpfile_picture_id_write_object()
+        
+        if self.profile_id  is not None:
+            self.set_profile_id_write_object()
 
     @payana_generic_exception_handler
     def set_profile_name_write_object(self):
@@ -68,6 +76,13 @@ class PayanaAuthProfileTable:
         # profile_name write object
         self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
             self.mail_id, bigtable_constants.payana_auth_information, bigtable_constants.payana_auth_profile_name, self.profile_name))
+        
+    @payana_generic_exception_handler
+    def set_profile_id_write_object(self):
+
+        # profile_name write object
+        self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+            self.mail_id, bigtable_constants.payana_auth_information, bigtable_constants.payana_auth_profile_id, self.profile_id))
         
     @payana_generic_exception_handler
     def set_prpfile_picture_id_write_object(self):
