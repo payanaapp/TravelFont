@@ -75,6 +75,7 @@ payana_auth_information = "auth_information"
 payana_auth_mail_id = "mail_id"
 payana_auth_profile_name = "profile_name"
 payana_auth_profile_picture_id = "profile_picture_id"
+payana_auth_profile_id = "profile_id"
 
 # payana_profile_table_field_names
 payana_profile_table_personal_info_column_family = "personal_information"

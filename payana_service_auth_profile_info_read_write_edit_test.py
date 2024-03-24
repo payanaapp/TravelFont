@@ -42,7 +42,8 @@ curl --location 'http://localhost:8888/profile/auth/' \
     {
         "profile_name": "abkr",
         "mail_id": "abkr@gmail.com",
-        "profile_picture_id": "123456789"
+        "profile_picture_id": "123456789",
+        "profile_id": "123456789010"
     }
 }'
 """
@@ -54,7 +55,8 @@ profile_info_json = {
     {
         payana_auth_profile_name: "abkr",
         payana_auth_mail_id: "abkr@gmail.com",
-        payana_auth_profile_picture_id: "123456789"
+        payana_auth_profile_picture_id: "123456789",
+        "profile_id": "123456789010"
     }
 }
 headers = {'Content-Type': 'application/json'}
@@ -103,7 +105,8 @@ curl --location --request PUT 'http://localhost:8888/profile/auth/' \
     {
         "profile_name": "abkr1",
         "mail_id": "abkr@gmail.com",
-        "profile_picture_id": "123456789"
+        "profile_picture_id": "123456789",
+        "profile_id": "123456789010"
     }
 }'
 """
@@ -112,7 +115,8 @@ profile_info_personal_information_json = {
     {
         payana_auth_profile_name: "abkr1",
         payana_auth_mail_id: "abkr@gmail.com",
-        payana_auth_profile_picture_id: "123456789"
+        payana_auth_profile_picture_id: "123456789",
+        "profile_id": "123456789010"
     }
 }
 
@@ -233,7 +237,8 @@ curl --location 'http://localhost:8888/profile/auth/' \
     {
         "profile_name": "abkr",
         "mail_id": "abkr@gmail.com",
-        "profile_picture_id": "123456789"
+        "profile_picture_id": "123456789",
+        "profile_id": "123456789010"
     }
 }'
 """
@@ -245,7 +250,8 @@ profile_info_json = {
     {
         payana_auth_profile_name: "abkr",
         payana_auth_mail_id: "abkr@gmail.com",
-        payana_auth_profile_picture_id: "123456789"
+        payana_auth_profile_picture_id: "123456789",
+        "profile_id": "123456789010"
     }
 }
 headers = {'Content-Type': 'application/json'}
