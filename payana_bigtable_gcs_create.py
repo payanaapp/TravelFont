@@ -2,9 +2,11 @@ from datetime import datetime
 
 from payana.payana_bl.bigtable_utils.payana_bigtable_init import payana_bigtable_init
 from payana.payana_bl.bigtable_utils.constants import bigtable_constants
-
+from payana.payana_bl.cloud_storage_utils.payana_cloud_storage_init import payana_cloud_storage_init
 
 client_config_file_path = bigtable_constants.bigtable_client_config_path
 bigtable_tables_schema_path = bigtable_constants.bigtable_schema_config_file
 
 payana_bigtable_init(client_config_file_path, bigtable_tables_schema_path)
+
+payana_cloud_storage_init(bigtable_constants.gcs_client_config_path)

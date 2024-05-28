@@ -1,0 +1,267 @@
+Step 1 - Search button flow (search for travel buddies/influencers by name or city)
+
+1A - Auto-Complete City names
+  -- 7A in payana_homepage_flow.txt
+
+1B - Auto-Complete User names 
+  -- 7B in payana_homepage_flow.txt
+
+1C - Fetch travel influencer names based on names 
+  -- 7C in payana_homepage_flow.txt
+
+1D - Fetch travel influencer names based on city
+  -- 7D in payana_homepage_flow.txt
+
+
+Step 2 - List all travel buddies user is connected to 
+
+Reference Files:
+  -- * payana_service_travel_buddy_read_write_edit_test.py
+  -- * payana_travel_buddy_read_write_edit_test.py 
+
+API call:
+"""
+curl --location 'http://127.0.0.1:8888/profile/travelbuddy/' \
+--header 'Content-Type: application/json' \
+--header 'profile_id: 1234567'
+"""
+
+Response:
+"""
+{
+   "1234567":{
+      "payana_favorite_buddy_list":{
+         "456789":"1716832884.79309"
+      },
+      "payana_pending_sent_requests_travel_buddy_list":{
+         "456789":"1716832884.79309"
+      },
+      "payana_travel_buddy_list":{
+         "456789":"1716832884.79309"
+      },
+      "payana_pending_received_requests_travel_buddy_list":{
+         "456789":"1716832884.79309"
+      }
+   }
+}
+"""
+
+Note: 
+-- Read the dict from payana_pending_sent_requests_travel_buddy_list for travel buddy list. 
+-- In "456789":"1716832884.79309" => "456789" is the travel buddy profile ID.
+-- Filter out the profile_id not in payana_pending_sent_requests_travel_buddy_list and payana_pending_received_requests_travel_buddy_list i.e. these are pending requests.
+
+Step 3 - get the profile picture and profile details of travel buddies
+
+3A - Get the profile details of travel buddy
+  -- Same as Step 2A2  in payana_signup_flow.txt
+
+  Interested fields:
+  -- profile_name => gives the profile name of the user  
+  -- Get profile_picture_id from payana_profile_pictures
+
+3B - Get the travel buddy profile picture using the profile_picture_id
+  -- Same as Steps 3C1 and 3C2 in payana_signup_flow.txt
+
+Step 4 - Favorite buddies
+
+4A - List the favorite buddies 
+  -- Same as Step 2 => use the dict "payana_favorite_buddy_list"
+
+4B - Favorite/Unfavorite buddies
+
+Reference Files:
+  -- * payana_service_travel_buddy_read_write_edit_test.py
+  -- * payana_travel_buddy_read_write_edit_test.py 
+
+API call (PUT call):
+"""
+curl --location 'http://127.0.0.1:8888/profile/travelbuddy/' \
+--header 'Content-Type: application/json' \
+--header 'profile_id: 1234567' \
+--data '{
+    "profile_id": "1234567",
+    "travel_buddy_profile_id": "456789123",
+    "global_influencer": false,
+    "favorite": true,
+    "sent_pending_request": true,
+    "received_pending_request": true,
+    "new_friend_request": true
+}'
+"""
+
+Note: Set "favorite" to true or false to favorite or unfavorite respectively
+
+Response: 200
+
+Step 5 - Friend requests 
+
+5A - List the friend requests
+  -- Same as Step 2 
+    -- use the dict "payana_pending_sent_requests_travel_buddy_list" to show the requests that you sent out
+    -- use the dict "payana_pending_received_requests_travel_buddy_list" to show the requests that you received
+
+
+5B - Accept a friend request 
+
+Reference Files:
+  -- * payana_service_travel_buddy_read_write_edit_test.py
+  -- * payana_travel_buddy_read_write_edit_test.py 
+
+  -- 5B1 - Remove the received request from your profile 
+
+  API call (PUT request):
+    """
+    curl --location 'http://127.0.0.1:8888/profile/travelbuddy/' \
+    --header 'Content-Type: application/json' \
+    --header 'profile_id: 1234567' \
+    --data '{
+        "profile_id": "1234567",
+        "travel_buddy_profile_id": "456789123",
+        "global_influencer": false,
+        "favorite": false,
+        "sent_pending_request": true,
+        "received_pending_request": false,
+        "new_friend_request": true
+    }'
+    """
+
+  Note: Set the received_pending_request to false
+
+Response: 200
+
+  -- 5B2 - Remove the sent request from your travel buddy's profile
+
+  API call:
+    """
+    curl --location 'http://127.0.0.1:8888/profile/travelbuddy/' \
+    --header 'Content-Type: application/json' \
+    --header 'profile_id: 1234567' \
+    --data '{
+        "profile_id": "456789123",
+        "travel_buddy_profile_id": "1234567",
+        "global_influencer": false,
+        "favorite": false,
+        "sent_pending_request": false,
+        "received_pending_request": false,
+        "new_friend_request": true
+    }'
+    """
+
+  Note: Swap the profile_id, travel_buddy_profile_id from 5B1. Set the sent_pending_request to false
+
+  Response: 200
+
+5C - Send a friend request 
+
+Reference Files:
+  -- * payana_service_travel_buddy_read_write_edit_test.py
+  -- * payana_travel_buddy_read_write_edit_test.py 
+
+5C1 - Add to your sent pending travel buddy list 
+
+API call (PUT call):
+"""
+curl --location 'http://127.0.0.1:8888/profile/travelbuddy/' \
+--header 'Content-Type: application/json' \
+--header 'profile_id: 1234567' \
+--data '{
+    "profile_id": "1234567",
+    "travel_buddy_profile_id": "456789123",
+    "global_influencer": false,
+    "favorite": true,
+    "sent_pending_request": true,
+    "received_pending_request": false,
+    "new_friend_request": true
+}'
+"""
+
+Note: Set "sent_pending_request" to true and "received_pending_request" to false
+
+Response: 200
+
+5C2 - Add to your travel buddy's received pending travel buddy list
+
+API call (PUT call):
+"""
+curl --location 'http://127.0.0.1:8888/profile/travelbuddy/' \
+--header 'Content-Type: application/json' \
+--header 'profile_id: 1234567' \
+--data '{
+    "profile_id": "456789123",
+    "travel_buddy_profile_id": "1234567",
+    "global_influencer": false,
+    "favorite": true,
+    "sent_pending_request": false,
+    "received_pending_request": true,
+    "new_friend_request": true
+}'
+"""
+
+Note: 
+ -- Swap the profile_id, travel_buddy_profile_id from 5C1
+ -- Set "received_pending_request" to true and "sent_pending_request" to false
+
+Response: 200
+
+
+5D - Reject a friend request received
+
+  -- 5D1 - Remove the travel buddy profile ID column qualifier from your travel buddy list
+
+  API call:
+    """
+    curl --location 'http://127.0.0.1:8888/profile/travelbuddy/delete/values/' \
+    --header 'Content-Type: application/json' \
+    --header 'profile_id: 1234567' \
+    --data '{
+        "payana_travel_buddy_list": {
+            "456789": ""
+        }
+        "payana_favorite_buddy_list":{
+         "456789":""
+      },
+      "payana_pending_sent_requests_travel_buddy_list":{
+         "456789":""
+      },
+      "payana_pending_received_requests_travel_buddy_list":{
+         "456789":""
+      }
+    }'
+    """
+
+  Repsonse: 200
+
+  -- 5D2 - Remove your profile ID column qualifier from your travel buddy's list
+
+  API call:
+    """
+    curl --location 'http://127.0.0.1:8888/profile/travelbuddy/delete/values/' \
+    --header 'Content-Type: application/json' \
+    --header 'profile_id: 456789' \
+    --data '{
+        "payana_travel_buddy_list": {
+            "1234567": ""
+        },
+        "payana_favorite_buddy_list":{
+         "1234567":""
+        },
+        "payana_pending_sent_requests_travel_buddy_list":{
+         "1234567":""
+        },
+        "payana_pending_received_requests_travel_buddy_list":{
+         "1234567":""
+        }
+    }'
+    """
+
+  Note - From 5D1, swap the profile_id in the header with the values in the request body
+
+  Repsonse: 200
+
+
+5E - Cancel a sent friend request
+
+5E1 - Same as 5D1 
+
+5E2 - Same as 5D2

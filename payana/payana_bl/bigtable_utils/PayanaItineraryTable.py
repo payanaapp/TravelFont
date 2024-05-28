@@ -170,8 +170,9 @@ class PayanaItineraryTable:
 
         # participants_list write object
         for activity, number in self.activities_list.items():
-            self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-                self.itinerary_id, self.column_family_activities_list, activity, number))
+            if activity in bigtable_constants.payana_activity_column_family:
+                self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+                    self.itinerary_id, self.column_family_activities_list, activity, number))
 
     @payana_generic_exception_handler
     def set_description_write_object(self):

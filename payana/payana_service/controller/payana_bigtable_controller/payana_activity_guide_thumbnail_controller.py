@@ -5,7 +5,7 @@ import json
 from payana.payana_service.server import service_settings
 from payana.payana_bl.bigtable_utils.bigtable_read_write_object_wrapper import bigtable_write_object_wrapper
 from payana.payana_service.constants import payana_service_constants
-from payana.payana_service.common_utils.payana_parsers import payana_profile_id_header_parser, get_activity_id_header
+from payana.payana_service.common_utils.payana_parsers import payana_profile_id_header_parser, get_city_header
 from payana.payana_service.common_utils.payana_service_exception_handlers import payana_service_generic_exception_handler
 from payana.payana_bl.bigtable_utils.bigtable_read_write_object_wrapper import bigtable_read_row_key_wrapper
 from payana.payana_bl.bigtable_utils.PayanaActivityGuideThumbNailTable import PayanaActivityGuideThumbNailTable
@@ -30,7 +30,7 @@ message = payana_service_constants.message
 status_code = payana_service_constants.status_code
 payana_empty_row_read_exception = payana_service_constants.payana_empty_row_read_exception
 
-payana_activity_id_header = payana_service_constants.payana_activity_id_header
+payana_city_header = payana_service_constants.payana_city_header
 
 payana_200_response = payana_service_constants.payana_200_response
 payana_201_response = payana_service_constants.payana_201_response
@@ -55,15 +55,15 @@ class PayanaActivityGuideThumbnailEndPoint(Resource):
     @payana_service_generic_exception_handler
     def get(self):
 
-        activity_id = get_activity_id_header(request)
+        city = get_city_header(request)
 
-        if activity_id is None or len(activity_id) == 0:
+        if city is None or len(city) == 0:
             raise KeyError(
                 payana_missing_activity_guide_header_exception, payana_activity_guide_thumbnail_name_space)
 
         payana_activity_thumbnail_read_obj = PayanaBigTable(payana_activity_guide_thumbnail_table)
 
-        row_key = str(activity_id)
+        row_key = str(city)
 
         payana_activity_thumbnail_read_obj_dict = payana_activity_thumbnail_read_obj.get_row_dict(
             row_key, include_column_family=True)
@@ -120,16 +120,16 @@ class PayanaActivityGuideThumbNailTableRowDeleteEndPoint(Resource):
     @payana_service_generic_exception_handler
     def delete(self):
 
-        activity_id = get_activity_id_header(request)
+        city = get_city_header(request)
 
-        if activity_id is None or len(activity_id) == 0:
+        if city is None or len(city) == 0:
             raise KeyError(
                 payana_missing_activity_guide_header_exception, payana_activity_guide_thumbnail_name_space)
 
         payana_activity_guide_thumbnail_read_obj = PayanaBigTable(payana_activity_guide_thumbnail_table)
 
         payana_activity_guide_thumbnail_obj_delete_status = payana_activity_guide_thumbnail_read_obj.delete_bigtable_row_with_row_key(
-            activity_id)
+            city)
 
         if not payana_activity_guide_thumbnail_obj_delete_status:
             raise Exception(
@@ -137,7 +137,7 @@ class PayanaActivityGuideThumbNailTableRowDeleteEndPoint(Resource):
 
         return {
             status: payana_200_response,
-            payana_activity_id_header: activity_id,
+            payana_city_header: city,
             message: payana_activity_guide_thumbnail_table_delete_success_message,
             status_code: payana_200
         }, payana_200
@@ -150,9 +150,9 @@ class PayanaActivityGuideThumbNailTableColumnValuesDeleteEndPoint(Resource):
     @payana_service_generic_exception_handler
     def post(self):
 
-        activity_id = get_activity_id_header(request)
+        city = get_city_header(request)
 
-        if activity_id is None or len(activity_id) == 0:
+        if city is None or len(city) == 0:
             raise KeyError(
                 payana_missing_activity_guide_header_exception, payana_activity_guide_thumbnail_name_space)
 
@@ -171,7 +171,7 @@ class PayanaActivityGuideThumbNailTableColumnValuesDeleteEndPoint(Resource):
             # Delete specific column family and column values
             for column_quantifier, column_value in column_family_dict.items():
                 payana_activity_guide_thumbnail_table_delete_wrapper = bigtable_write_object_wrapper(
-                    activity_id, column_family, column_quantifier, column_value)
+                    city, column_family, column_quantifier, column_value)
 
                 payana_activity_guide_thumbnail_table_delete_wrappers.append(
                     payana_activity_guide_thumbnail_table_delete_wrapper)
@@ -185,7 +185,7 @@ class PayanaActivityGuideThumbNailTableColumnValuesDeleteEndPoint(Resource):
 
         return {
             status: payana_200_response,
-            payana_activity_id_header: activity_id,
+            payana_city_header: city,
             message: payana_activity_guide_thumbnail_table_objects_delete_success_message,
             status_code: payana_200
         }, payana_200
@@ -197,9 +197,9 @@ class PayanaActivityGuideThumbNailTableColumnFamilyDeleteEndPoint(Resource):
     @payana_service_generic_exception_handler
     def post(self):
 
-        activity_id = get_activity_id_header(request)
+        city = get_city_header(request)
 
-        if activity_id is None or len(activity_id) == 0:
+        if city is None or len(city) == 0:
             raise KeyError(
                 payana_missing_activity_guide_header_exception, payana_activity_guide_thumbnail_name_space)
 
@@ -214,7 +214,7 @@ class PayanaActivityGuideThumbNailTableColumnFamilyDeleteEndPoint(Resource):
         for column_family, _ in activity_guide_thumbnail_table_object.items():
 
             payana_activity_guide_thumbnail_table_delete_wrapper = bigtable_write_object_wrapper(
-                activity_id, column_family, "", "")
+                city, column_family, "", "")
 
             payana_activity_guide_thumbnail_obj_delete_status = payana_activity_guide_thumbnail_read_obj.delete_bigtable_row_column_family_cells(
                 payana_activity_guide_thumbnail_table_delete_wrapper)
@@ -225,7 +225,7 @@ class PayanaActivityGuideThumbNailTableColumnFamilyDeleteEndPoint(Resource):
 
         return {
             status: payana_200_response,
-            payana_activity_id_header: activity_id,
+            payana_city_header: city,
             message: payana_activity_guide_thumbnail_table_objects_delete_success_message,
             status_code: payana_200
         }, payana_200

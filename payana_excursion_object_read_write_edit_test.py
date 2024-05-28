@@ -25,12 +25,20 @@ client_config_file_path = bigtable_constants.bigtable_client_config_path
 bigtable_tables_schema_path = bigtable_constants.bigtable_schema_config_file
 
 payana_bigtable_init(client_config_file_path, bigtable_tables_schema_path)
-
+ 
 excursion_obj = {
     "checkin_id_list": {
         "1": "12345",
         "2": "23456",
         "3": "34567"
+    },
+    "image_id_list":{
+        "1A": "12345",
+        "1B": "34567",
+        "2A": "23456",
+        "2B": "34567",
+        "3A": "23456",
+        "3B": "34567" 
     },
     "participants_list": {"pf_id_1": "1234567", "pf_id_2": "1234567", "pf_id_3": "1234567"},
     "activities_list": {"hiking": "4", "roadtrip": "6"},

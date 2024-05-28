@@ -33,16 +33,24 @@ payana_excursion_column_family_participants_list = bigtable_constants.payana_exc
 payana_excursion_column_family_checkin_id_list = bigtable_constants.payana_excursion_column_family_checkin_id_list
 
 
-# POST
+# POST 
 # CURL request
 """
-curl --location 'http://127.0.0.1:8888/entity/excursion/' \
+curl --location 'http://localhost:8888/entity/excursion/' \
 --header 'Content-Type: application/json' \
 --data '{
     "checkin_id_list": {
         "1": "12345",
         "2": "23456",
         "3": "34567"
+    },
+    "image_id_list":{
+        "1A": "12345",
+        "1B": "34567",
+        "2A": "23456",
+        "2B": "34567",
+        "3A": "23456",
+        "3B": "34567" 
     },
     "participants_list": {"pf_id_1": "1234567", "pf_id_2": "1234567", "pf_id_3": "1234567"},
     "activities_list": {"hiking": "4", "roadtrip": "6"},
@@ -71,6 +79,14 @@ payana_excursion_object_json = {
         "1": "12345",
         "2": "23456",
         "3": "34567"
+    },
+    "image_id_list":{
+        "1A": "12345",
+        "1B": "34567",
+        "2A": "23456",
+        "2B": "34567",
+        "3A": "23456",
+        "3B": "34567" 
     },
     "participants_list": {"pf_id_1": "1234567", "pf_id_2": "1234567", "pf_id_3": "1234567"},
     "activities_list": {"hiking": "4", "roadtrip": "6"},
@@ -144,6 +160,14 @@ payana_excursion_object_edit_json = {
     "checkin_id_list": {
         "5": "34567",
         "4": "45678"
+    },
+    "image_id_list":{
+        "1A": "12345",
+        "1B": "34567",
+        "2A": "23456",
+        "2B": "34567",
+        "3A": "23456",
+        "3B": "34567" 
     },
     "participants_list": {"pf_id_4": "1234567", "pf_id_2": "12345678"},
     "activities_list": {"romantic": "4", "roadtrip": "7"},

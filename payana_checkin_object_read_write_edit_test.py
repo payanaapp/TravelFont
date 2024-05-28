@@ -25,12 +25,12 @@ client_config_file_path = bigtable_constants.bigtable_client_config_path
 bigtable_tables_schema_path = bigtable_constants.bigtable_schema_config_file
 
 payana_bigtable_init(client_config_file_path, bigtable_tables_schema_path)
-
+ 
 checkin_obj = {
     "image_id_list": {
-        "1": "img_id_1",
-        "2": "img_id_2",
-        "3": "img_id_3"
+        "A": "img_id_1",
+        "B": "img_id_2",
+        "C": "img_id_3"
     },
     "participants_list": {"pf_id_1": "1234567", "pf_id_2": "1234567", "pf_id_3": "1234567"},
     "activities_list": {"hiking": "8", "roadtrip": "9"},
@@ -214,7 +214,7 @@ for column_qualifier_new_participant, column_value_new_participant in new_partic
 
 # Add an image ID -- no use case to call as an API end point. For debugging or backfilling purpose
 column_family_image_id_list = bigtable_constants.payana_checkin_column_family_image_id_list
-new_image_id = {"4": "image_id_new"}
+new_image_id = {"D": "image_id_new"}
 
 for column_qualifier_new_image_id, column_value_new_image_id in new_image_id.items():
 

@@ -63,26 +63,33 @@ class PayanaAutocompleteUsersEndPoint(Resource):
         if city is None or len(city) == 0:
             raise KeyError(
                 payana_missing_autocomplete_cities_header_exception, payana_autocomplete_users_name_space)
-
-        if user is None or len(city) == 0:
-            raise KeyError(
-                payana_missing_autocomplete_users_header_exception, payana_autocomplete_users_name_space)
-
+            
         payana_autocomplete_users_read_obj = PayanaBigTable(
             payana_users_autocomplete_table)
 
         row_key = str(city)
+        
+        if user is None or len(user) == 0:
+            payana_users_obj = payana_autocomplete_users_read_obj.get_row_dict(
+                row_key, include_column_family=True)
 
-        user_regex = str(user)
+            if len(payana_users_obj) == 0:
+                raise KeyError(payana_empty_row_read_exception,
+                            payana_autocomplete_users_name_space)
+                
+            return payana_users_obj, payana_200
 
-        payana_autocomplete_users_obj = payana_autocomplete_users_read_obj.get_row_cells_column_qualifier(
-            row_key, user_regex, include_column_family=True)
+        else:
+            user_regex = str(user)
 
-        if len(payana_autocomplete_users_obj) == 0:
-            raise KeyError(payana_empty_row_read_exception,
-                           payana_autocomplete_users_name_space)
+            payana_autocomplete_users_obj = payana_autocomplete_users_read_obj.get_row_cells_column_qualifier(
+                row_key, user_regex, include_column_family=True)
 
-        return payana_autocomplete_users_obj, payana_200
+            if len(payana_autocomplete_users_obj) == 0:
+                raise KeyError(payana_empty_row_read_exception,
+                            payana_autocomplete_users_name_space)
+
+            return payana_autocomplete_users_obj, payana_200
 
     @payana_autocomplete_users_name_space.doc(responses={200: payana_200_response, 400: payana_400_response, 500: payana_500_response})
     @payana_service_generic_exception_handler
@@ -138,6 +145,40 @@ class PayanaAutocompleteUsersEndPoint(Resource):
             status_code: payana_200
         }, payana_200
 
+@payana_autocomplete_users_name_space.route("/regex/")
+class PayanaAutocompleteUsersEndPoint(Resource):
+
+    @payana_autocomplete_users_name_space.doc(responses={200: payana_200_response, 400: payana_400_response, 500: payana_500_response})
+    @payana_service_generic_exception_handler
+    def get(self):
+
+        city = get_city_header(request)
+        user = get_user_header(request)
+        
+        if user is None or len(user) == 0:
+            raise KeyError(
+                payana_missing_autocomplete_users_header_exception, payana_autocomplete_users_name_space)
+            
+        payana_autocomplete_users_read_obj = PayanaBigTable(
+            payana_users_autocomplete_table)
+        
+        user_regex = str(user)
+
+        if city is None or len(city) == 0:
+            payana_users_obj = payana_autocomplete_users_read_obj.get_cells_column_qualifier(user_regex, include_column_family=False)
+                
+        else:
+            row_key = str(city)
+                
+            payana_users_obj = payana_autocomplete_users_read_obj.get_table_rows_rowkey_regex_column_qualifier_regex_chain(
+                row_key, user_regex, include_column_family=False)
+
+        if len(payana_users_obj) == 0:
+            raise KeyError(payana_empty_row_read_exception,
+                payana_autocomplete_users_name_space)
+                
+        return payana_users_obj, payana_200
+    
 
 @payana_autocomplete_users_name_space.route("/delete/")
 class PayanaAutocompleteUsersRowDeleteEndPoint(Resource):

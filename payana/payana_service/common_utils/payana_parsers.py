@@ -17,6 +17,7 @@ payana_country_header = payana_service_constants.payana_country_header
 payana_comment_id_header = payana_service_constants.payana_comment_id_header
 payana_check_in_id_header = payana_service_constants.payana_check_in_id_header
 payana_excursion_id_header = payana_service_constants.payana_excursion_id_header
+payana_itinerary_id_header = payana_service_constants.payana_itinerary_id_header
 payana_friend_id_header = payana_service_constants.payana_friend_id_header
 payana_signed_url_storage_bucket_header = payana_service_constants.payana_signed_url_storage_bucket_header
 payana_signed_url_storage_object_header = payana_service_constants.payana_signed_url_storage_object_header
@@ -114,6 +115,13 @@ def get_excursion_id_header(request):
     excursion_id = request.headers.get(payana_excursion_id_header)
 
     return None if excursion_id is None else excursion_id.strip()
+
+@payana_service_generic_exception_handler
+def get_itinerary_id_header(request):
+
+    itinerary_id = request.headers.get(payana_itinerary_id_header)
+
+    return None if itinerary_id is None else itinerary_id.strip()
 
 @payana_service_generic_exception_handler
 def get_gcs_object_id_header(request):

@@ -39,20 +39,16 @@ curl --location 'http://127.0.0.1:8888/entity/global/timestamp/city/' \
     "excursion_id": {
         "1": "12345"          # excursion_id: timestamp
     },
-    "checkin_id": {
-        "1": "12345"          # checkin_id: timestamp
-    },
     "activities": [
         "generic",
         "hiking",
-        "romantic",
-        "exotic"
+        "romantic"
     ]
 }'
 """
 
 url = "http://127.0.0.1:8888/entity/global/timestamp/city/"
-
+ 
 payana_global_city_timestamp_itinerary_object_json = {
     "city": "cupertino##california##usa",
     "itinerary_id": {
@@ -64,14 +60,10 @@ payana_global_city_timestamp_itinerary_object_json = {
     "excursion_id": {
         "1": "12345"
     },
-    "checkin_id": {
-        "1": "12345"
-    },
     "activities": [
         "generic",
         "hiking",
-        "romantic",
-        "exotic"
+        "romantic"
     ]
 }
 
@@ -95,22 +87,7 @@ Result:
 
 {
     "cupertino##california##usa": {
-        "exotic_timestamp_activity_guide_id": {
-            "1": "12345"
-        },
-        "exotic_timestamp_checkin_id": {
-            "1": "12345"
-        },
-        "exotic_timestamp_excursion_id": {
-            "1": "12345"
-        },
-        "exotic_timestamp_itinerary_id": {
-            "1": "12345"
-        },
         "generic_timestamp_activity_guide_id": {
-            "1": "12345"
-        },
-        "generic_timestamp_checkin_id": {
             "1": "12345"
         },
         "generic_timestamp_excursion_id": {
@@ -122,9 +99,6 @@ Result:
         "hiking_timestamp_activity_guide_id": {
             "1": "12345"
         },
-        "hiking_timestamp_checkin_id": {
-            "1": "12345"
-        },
         "hiking_timestamp_excursion_id": {
             "1": "12345"
         },
@@ -132,9 +106,6 @@ Result:
             "1": "12345"
         },
         "romantic_timestamp_activity_guide_id": {
-            "1": "12345"
-        },
-        "romantic_timestamp_checkin_id": {
             "1": "12345"
         },
         "romantic_timestamp_excursion_id": {
@@ -189,15 +160,10 @@ curl --location --request PUT 'http://127.0.0.1:8888/entity/global/timestamp/cit
         "1": "1234578",
         "2": "12345"
     },
-    "checkin_id": {
-        "1": "1234578",
-        "2": "12345"
-    },
     "activities": [
         "generic",
         "hiking",
-        "romantic",
-        "exotic"
+        "romantic"
     ]
 }'
 """
@@ -218,15 +184,10 @@ payana_global_city_timestamp_itinerary_object_edit_json = {
         "1": "1234578",
         "2": "12345"
     },
-    "checkin_id": {
-        "1": "1234578",
-        "2": "12345"
-    },
     "activities": [
         "generic",
         "hiking",
-        "romantic",
-        "exotic"
+        "romantic"
     ]
 }
 
@@ -287,9 +248,6 @@ curl --location 'http://127.0.0.1:8888/entity/global/timestamp/city/delete/value
     },
     "generic_timestamp_excursion_id": {
         "1": "1234578"
-    },
-    "generic_timestamp_checkin_id": {
-        "1": "1234578"
     }
 }'
 """
@@ -306,9 +264,6 @@ payana_global_city_timestamp_itinerary_object_delete_cv_json = {
         "1": "1234578"
     },
     "generic_timestamp_excursion_id": {
-        "1": "1234578"
-    },
-    "generic_timestamp_checkin_id": {
         "1": "1234578"
     }
 }
@@ -353,8 +308,7 @@ curl --location 'http://127.0.0.1:8888/entity/global/timestamp/city/delete/cf/' 
 --data '{
     "hiking_timestamp_itinerary_id": "",
     "hiking_timestamp_activity_guide_id": "",
-    "hiking_timestamp_excursion_id": "",
-    "hiking_timestamp_checkin_id": ""
+    "hiking_timestamp_excursion_id": ""
 }'
 """
 
@@ -365,8 +319,7 @@ headers = {payana_itinerary_city: city,
 profile_global_city_timestamp_itinerary_object_delete_cf_json = {
     "hiking_timestamp_itinerary_id": "",
     "hiking_timestamp_activity_guide_id": "",
-    "hiking_timestamp_excursion_id": "",
-    "hiking_timestamp_checkin_id": ""
+    "hiking_timestamp_excursion_id": ""
 }
 
 cf_delete_value_one = "hiking_timestamp_itinerary_id"

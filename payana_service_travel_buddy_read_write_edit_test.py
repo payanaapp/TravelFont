@@ -66,7 +66,7 @@ profile_travel_buddy_json = {
     "profile_id": "1234567",
     "travel_buddy_profile_id": "456789",
     "global_influencer": False,
-    "favorite": False,
+    "favorite": True,
     "sent_pending_request": True,
     "received_pending_request": True,
     "new_friend_request": True
@@ -194,6 +194,8 @@ print("Profile travel buddy update read status: " +
 
 profile_travel_buddy_response = response.json()
 
+print(profile_travel_buddy_response)
+
 print("Profile travel buddy update read verification status: " +
       str(new_travel_buddy_profile_id in profile_travel_buddy_response[profile_id][payana_travel_buddy_table_column_family_travel_buddy_list]))
 
@@ -215,6 +217,15 @@ headers = {payana_travel_buddy_table_column_family_profile_id: profile_id,
 profile_travel_buddy_delete_cv_json = {
     "payana_travel_buddy_list": {
         new_travel_buddy_profile_id: ""
+    },
+    "payana_favorite_buddy_list":{
+        new_travel_buddy_profile_id:""
+    },
+    "payana_pending_sent_requests_travel_buddy_list":{
+        new_travel_buddy_profile_id:""
+    },
+    "payana_pending_received_requests_travel_buddy_list":{
+        new_travel_buddy_profile_id:""
     }
 }
 
@@ -243,8 +254,10 @@ print("Profile travel buddy read status: " + str(response.status_code == 200))
 
 profile_travel_buddy_response = response.json()
 
+print(profile_travel_buddy_response)
+
 print("Profile travel buddy delete CV verification status: " +
-      str(new_travel_buddy_profile_id not in profile_travel_buddy_response[profile_id][payana_travel_buddy_table_column_family_travel_buddy_list]))
+      str(new_travel_buddy_profile_id not in profile_travel_buddy_response[profile_id][payana_travel_buddy_table_column_family_travel_buddy_list] and new_travel_buddy_profile_id not in profile_travel_buddy_response[profile_id]["payana_pending_sent_requests_travel_buddy_list"]))
 
 # Delete entire column family
 """
