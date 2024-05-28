@@ -29,12 +29,12 @@ payana_bigtable_init(client_config_file_path, bigtable_tables_schema_path)
 activity_generic_column_family_id = bigtable_constants.payana_generic_activity_column_family
 
 # generic activity write objects
-payana_profile_page_itinerary_table_saved_itinerary_id_list_quantifier_value = bigtable_constants.payana_profile_page_itinerary_table_saved_itinerary_id_list_quantifier_value
-payana_profile_page_itinerary_table_saved_excursion_id_list_quantifier_value = bigtable_constants.payana_profile_page_itinerary_table_saved_excursion_id_list_quantifier_value
-payana_profile_page_itinerary_table_created_itinerary_id_list_quantifier_value = bigtable_constants.payana_profile_page_itinerary_table_created_itinerary_id_list_quantifier_value
-payana_profile_page_itinerary_table_created_excursion_id_list_quantifier_value = bigtable_constants.payana_profile_page_itinerary_table_created_excursion_id_list_quantifier_value
-payana_profile_page_itinerary_table_saved_activity_guide_id_list_quantifier_value = bigtable_constants.payana_profile_page_itinerary_table_saved_activity_guide_id_list_quantifier_value
-payana_profile_page_itinerary_table_created_activity_guide_id_list_quantifier_value = bigtable_constants.payana_profile_page_itinerary_table_created_activity_guide_id_list_quantifier_value
+payana_profile_page_itinerary_table_saved_itinerary_id_list_quantifier_value = bigtable_constants.payana_profile_page_itinerary_table_saved_itinerary_id_mapping_quantifier_value
+payana_profile_page_itinerary_table_saved_excursion_id_list_quantifier_value = bigtable_constants.payana_profile_page_itinerary_table_saved_excursion_id_mapping_quantifier_value
+payana_profile_page_itinerary_table_created_itinerary_id_list_quantifier_value = bigtable_constants.payana_profile_page_itinerary_table_created_itinerary_id_mapping_quantifier_value
+payana_profile_page_itinerary_table_created_excursion_id_list_quantifier_value = bigtable_constants.payana_profile_page_itinerary_table_created_excursion_id_mapping_quantifier_value
+payana_profile_page_itinerary_table_saved_activity_guide_id_list_quantifier_value = bigtable_constants.payana_profile_page_itinerary_table_saved_activity_guide_id_mapping_quantifier_value
+payana_profile_page_itinerary_table_created_activity_guide_id_list_quantifier_value = bigtable_constants.payana_profile_page_itinerary_table_created_activity_guide_id_mapping_quantifier_value
 payana_profile_page_itinerary_table_activities = bigtable_constants.payana_profile_page_itinerary_table_activities
 payana_profile_table_profile_id = bigtable_constants.payana_profile_table_profile_id
 
@@ -54,7 +54,7 @@ created_excursion_id_list_activity_generic_column_family_id = "_".join(
 created_activity_guide_id_list_activity_generic_column_family_id = "_".join(
     [activity_generic_column_family_id, payana_profile_page_itinerary_table_created_activity_guide_id_list_quantifier_value])
 
-created_activity_guide_id_list_activity_generic_column_family_id = "_".join(
+saved_activity_guide_id_list_activity_generic_column_family_id = "_".join(
     [activity_generic_column_family_id, payana_profile_page_itinerary_table_saved_activity_guide_id_list_quantifier_value])
 
 # POST profile info
@@ -65,19 +65,13 @@ curl --location --request POST 'http://127.0.0.1:8888/profile/itineraries/' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "profile_id": "123456",
-    "saved_itinerary_id_list": ["12345"],
-    "saved_excursion_id_list": ["12345"],
-    "saved_activity_guide_id_list": ["12345"],
-    "created_itinerary_id_list": ["12345"],
-    "created_activity_guide_id_list": ["12345"],
-    "created_excursion_id_list": ["12345"],
     "saved_itinerary_id_mapping": {"12345": "itinerary_name_one"},
     "saved_excursion_id_mapping": {"12345": "excursion_name_one"},
     "saved_activity_guide_id_mapping": {"12345": "activity_guide_name_one"},
     "created_itinerary_id_mapping": {"12345": "itinerary_name_one"},
     "created_activity_guide_id_mapping": {"12345": "activity_guide_name_one"},
     "created_excursion_id_mapping": {"12345": "excursion_name_one"},
-    "activities": ["generic", "hiking", "romantic", "exotic"]
+    "activities": ["generic", "hiking", "romantic"]
 }'
 """
 
@@ -85,12 +79,6 @@ url = "http://127.0.0.1:8888/profile/itineraries/"
 
 profile_page_itinerary_json = {
     payana_profile_table_profile_id: "123456",
-    payana_profile_page_itinerary_table_saved_itinerary_id_list_quantifier_value: ["12345"],
-    payana_profile_page_itinerary_table_saved_excursion_id_list_quantifier_value: ["12345"],
-    payana_profile_page_itinerary_table_saved_activity_guide_id_list_quantifier_value: ["12345"],
-    payana_profile_page_itinerary_table_created_itinerary_id_list_quantifier_value: ["12345"],
-    payana_profile_page_itinerary_table_created_activity_guide_id_list_quantifier_value: ["12345"],
-    payana_profile_page_itinerary_table_created_excursion_id_list_quantifier_value: ["12345"],
     "saved_itinerary_id_mapping": {"12345": "itinerary_name_one"},
     "saved_excursion_id_mapping": {"12345": "excursion_name_one"},
     "saved_activity_guide_id_mapping": {"12345": "activity_guide_name_one"},
@@ -98,7 +86,7 @@ profile_page_itinerary_json = {
     "created_activity_guide_id_mapping": {"12345": "activity_guide_name_one"},
     "created_excursion_id_mapping": {"12345": "excursion_name_one"},
     payana_profile_page_itinerary_table_activities: [
-        "generic", "hiking", "romantic", "exotic"]
+        "generic", "hiking", "romantic"]
 }
 
 
@@ -139,44 +127,32 @@ print("Profile Page Itinerary creation verification status: " +
           [created_activity_guide_id_list_activity_generic_column_family_id]) == 1))
 
 
-# Edit itinerary id list -- add a new one
+# Edit itinerary id list -- add a new one 
 """
 curl --location --request PUT 'http://127.0.0.1:8888/profile/itineraries/' \
 --header 'profile_id: 123456' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "profile_id": "123456",
-    "saved_itinerary_id_list": ["123456"],
-    "saved_excursion_id_list": ["123456"],
-    "saved_activity_guide_id_list": ["123456"],
-    "created_itinerary_id_list": ["123456"],
-    "created_activity_guide_id_list": ["123456"],
-    "created_excursion_id_list": ["123456"],
     "saved_itinerary_id_mapping": {"12345": "itinerary_name_two"},
     "saved_excursion_id_mapping": {"12345": "excursion_name_two"},
     "saved_activity_guide_id_mapping": {"12345": "activity_guide_name_two"},
     "created_itinerary_id_mapping": {"12345": "itinerary_name_two"},
     "created_activity_guide_id_mapping": {"12345": "activity_guide_name_two"},
     "created_excursion_id_mapping": {"12345": "excursion_name_two"},
-    "activities": ["generic", "hiking", "romantic", "exotic"]
+    "activities": ["generic", "hiking", "romantic"]
 }'
 """
 profile_page_itinerary_json = {
     payana_profile_table_profile_id: "123456",
-    payana_profile_page_itinerary_table_saved_itinerary_id_list_quantifier_value: ["123456"],
-    payana_profile_page_itinerary_table_saved_excursion_id_list_quantifier_value: ["123456"],
-    payana_profile_page_itinerary_table_saved_activity_guide_id_list_quantifier_value: ["123456"],
-    payana_profile_page_itinerary_table_created_itinerary_id_list_quantifier_value: ["123456"],
-    payana_profile_page_itinerary_table_created_activity_guide_id_list_quantifier_value: ["123456"],
-    payana_profile_page_itinerary_table_created_excursion_id_list_quantifier_value: ["123456"],
-    "saved_itinerary_id_mapping": {"12345": "itinerary_name_two"},
-    "saved_excursion_id_mapping": {"12345": "excursion_name_two"},
-    "saved_activity_guide_id_mapping": {"12345": "activity_guide_name_two"},
-    "created_itinerary_id_mapping": {"12345": "itinerary_name_two"},
-    "created_activity_guide_id_mapping": {"12345": "activity_guide_name_two"},
-    "created_excursion_id_mapping": {"12345": "excursion_name_two"},
+    "saved_itinerary_id_mapping": {"123456": "itinerary_name_two"},
+    "saved_excursion_id_mapping": {"123456": "excursion_name_two"},
+    "saved_activity_guide_id_mapping": {"123456": "activity_guide_name_two"},
+    "created_itinerary_id_mapping": {"123456": "itinerary_name_two"},
+    "created_activity_guide_id_mapping": {"123456": "activity_guide_name_two"},
+    "created_excursion_id_mapping": {"123456": "excursion_name_two"},
     payana_profile_page_itinerary_table_activities: [
-        "generic", "hiking", "romantic", "exotic"]
+        "generic", "hiking", "romantic"]
 }
 
 
@@ -217,7 +193,7 @@ curl --location --request POST 'http://127.0.0.1:8888/profile/itineraries/delete
 --header 'profile_id: 123456' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-    "exotic_created_activity_guide_id_list": {
+    "romantic_created_activity_guide_id_list": {
             "1674896220": "12345"
         }
 }'
@@ -264,8 +240,8 @@ curl --location --request POST 'http://127.0.0.1:8888/profile/itineraries/delete
 --header 'profile_id: 123456' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-    "exotic_created_activity_guide_id_list": "",
-    "exotic_created_excursion_id_list": ""
+    "romantic_created_activity_guide_id_list": "",
+    "romantic_created_excursion_id_list": ""
 }'
 """
 url = "http://127.0.0.1:8888/profile/itineraries/delete/cf/"

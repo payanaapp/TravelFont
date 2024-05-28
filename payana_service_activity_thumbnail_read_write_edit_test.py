@@ -28,6 +28,7 @@ payana_bigtable_init(client_config_file_path, bigtable_tables_schema_path)
 
 payana_activity_thumbnail = bigtable_constants.payana_activity_thumbnail
 payana_activity_guide_thumbnail_table = bigtable_constants.payana_activity_guide_thumbnail_table
+payana_activity_thumbnail_city = bigtable_constants.payana_activity_thumbnail_city
 
 # POST 
 # CURL request
@@ -39,10 +40,11 @@ curl --location 'http://localhost:8888/home/activity/thumbnail/' \
         "hiking": {
             "12345": "123456789"
         },
-        "adventure": {
+        "romantic": {
             "12345": "123456789"
         }   
-    }
+    },
+    "city": "cupertino##california##usa"
 }'
 """
 
@@ -51,16 +53,19 @@ url = "http://localhost:8888/home/activity/thumbnail/"
 payana_activity_guide_thumbnail_json = {
     payana_activity_thumbnail: {
         "hiking": {
-            "12345": "123456789"
+            "12345": "123456789"  # image ID: timestamp
         },
-        "adventure": {
+        "romantic": {
             "12345": "123456789"
         }   
-    }
+    },
+    payana_activity_thumbnail_city: "cupertina##california##usa"
 }
 
-activity_id_one = "hiking"
-activity_id_two = "adventure"
+city = payana_activity_guide_thumbnail_json[payana_activity_thumbnail_city]
+
+activity_one = "_".join(["hiking", payana_activity_thumbnail])
+activity_two = "_".join(["romantic", payana_activity_thumbnail])
 
 activity_id_one_image_id = "12345"
 activity_id_two_image_id = "12345"
@@ -74,15 +79,15 @@ response = requests.post(url, data=json.dumps(
 print("payana_activity_guide_thumbnail creation status: " + str(response.status_code == 201))
 
 # GET
-# CURL request
+# CURL request 
 """
 curl --location 'http://localhost:8888/home/activity/thumbnail/' \
---header 'activity_id: hiking'
+--header 'city: cupertino##california##usa'
 """
 
 url = "http://localhost:8888/home/activity/thumbnail/"
 
-headers = {'activity_id': activity_id_one}
+headers = {payana_activity_thumbnail_city: city}
 
 response = requests.get(url, headers=headers)
 
@@ -91,7 +96,9 @@ print("payana_activity_guide_thumbnail read status: " + str(response.status_code
 payana_activity_thumbnail_response = response.json()
 
 print("payana_activity_guide_thumbnail creation verification status: " +
-      str(activity_id_one_image_id in payana_activity_thumbnail_response[activity_id_one][payana_activity_thumbnail]))
+      str(activity_id_one_image_id in payana_activity_thumbnail_response[city][activity_one]))
+
+print(payana_activity_thumbnail_response)
 
 
 # Edit 
@@ -103,10 +110,11 @@ curl --location --request PUT 'http://localhost:8888/home/activity/thumbnail/' \
         "hiking": {
             "123456": "123456789"
         },
-        "adventure": {
+        "romantic": {
             "123456": "123456789"
         }   
-    }
+    },
+    "city": "cupertino##california##usa"
 }'
 """
 payana_activity_guide_thumbnail_json_new = {
@@ -114,10 +122,11 @@ payana_activity_guide_thumbnail_json_new = {
         "hiking": {
             "123456": "123456789"
         },
-        "adventure": {
+        "romantic": {
             "123456": "123456789"
         }   
-    }
+    },
+    payana_activity_thumbnail_city: "cupertina##california##usa"
 }
 
 activity_id_one_image_id_new = "123456"
@@ -135,12 +144,12 @@ print("payana_activity_guide_thumbnail update status: " + str(response.status_co
 # CURL request
 """
 curl --location 'http://localhost:8888/home/activity/thumbnail/' \
---header 'activity_id: hiking'
+--header 'city: cupertino##california##usa'
 """
 
 url = "http://localhost:8888/home/activity/thumbnail/"
 
-headers = {'activity_id': activity_id_one}
+headers = {payana_activity_thumbnail_city: city}
 
 response = requests.get(url, headers=headers)
 
@@ -148,25 +157,25 @@ print("payana_activity_guide_thumbnail read status: " + str(response.status_code
 
 payana_activity_thumbnail_response = response.json()
 print("payana_activity_guide_thumbnail edit verification status: " +
-      str(activity_id_one_image_id_new in payana_activity_thumbnail_response[activity_id_one][payana_activity_thumbnail]))
+      str(activity_id_one_image_id_new in payana_activity_thumbnail_response[city][activity_one]))
 
 
 # Delete specific column values
 """
 curl --location 'http://localhost:8888/home/activity/thumbnail/delete/values/' \
---header 'activity_id: hiking' \
+--header 'city: cupertino##california##usa' \
 --header 'Content-Type: application/json' \
 --data '{
-    "payana_activity_thumbnail": {
+    "hiking_payana_activity_thumbnail": {
         "12345": "123456789"
     }
 }'
 """
 url = "http://localhost:8888/home/activity/thumbnail/delete/values/"
-headers = {'activity_id': activity_id_one, 'Content-Type': 'application/json'}
+headers = {payana_activity_thumbnail_city: city, 'Content-Type': 'application/json'}
 
 payana_activity_guide_thumbnail_json_delete_values = {
-    "payana_activity_thumbnail": {
+    "hiking_payana_activity_thumbnail": {
         "12345": "123456789"
     }
 }
@@ -182,12 +191,12 @@ print("payana_activity_guide_thumbnail delete values status: " +
 # CURL request
 """
 curl --location 'http://localhost:8888/home/activity/thumbnail/' \
---header 'activity_id: hiking'
+--header 'city: cupertino##california##usa'
 """
 
 url = "http://localhost:8888/home/activity/thumbnail/"
 
-headers = {'activity_id': activity_id_one}
+headers = {payana_activity_thumbnail_city: city}
 
 response = requests.get(url, headers=headers)
 
@@ -195,22 +204,22 @@ print("payana_activity_guide_thumbnail read status: " + str(response.status_code
 
 payana_activity_thumbnail_response = response.json()
 print("payana_activity_guide_thumbnail delete values verification status: " +
-      str(activity_id_one_image_id not in payana_activity_thumbnail_response[activity_id_one][payana_activity_thumbnail]))
+      str(activity_id_one_image_id not in payana_activity_thumbnail_response[city][activity_one]))
 
 # Delete entire column family
 """
 curl --location 'http://localhost:8888/home/activity/thumbnail/delete/cf/' \
---header 'activity_id: hiking' \
+--header 'city: cupertino##california##usa' \
 --header 'Content-Type: application/json' \
 --data '{
-    "payana_activity_thumbnail": ""
+    "hiking_payana_activity_thumbnail": ""
 }'
 """
 url = "http://localhost:8888/home/activity/thumbnail/delete/cf/"
-headers = {'activity_id': activity_id_one, 'Content-Type': 'application/json'}
+headers = {payana_activity_thumbnail_city: city, 'Content-Type': 'application/json'}
 
 payana_activity_guide_thumbnail_json_delete_cf = {
-    "payana_activity_thumbnail": {
+    activity_one: {
     }
 }
 
@@ -225,25 +234,28 @@ print("payana_activity_guide_thumbnail delete CF status: " +
 # CURL request
 """
 curl --location 'http://localhost:8888/home/activity/thumbnail/' \
---header 'activity_id: hiking'
+--header 'city: cupertino##california##usa'
 """
 
 url = "http://localhost:8888/home/activity/thumbnail/"
 
-headers = {'activity_id': activity_id_one}
+headers = {payana_activity_thumbnail_city: city}
 
 response = requests.get(url, headers=headers)
 
-print("payana_activity_guide_thumbnail delete CF status: " + str(response.status_code == 400))
+print("payana_activity_guide_thumbnail delete CF status: " + str(response.status_code == 200))
+
+print("payana_activity_guide_thumbnail delete values verification status: " +
+      str(activity_two not in payana_activity_thumbnail_response[city]))
 
 
 # Delete row
 """
 curl --location --request DELETE 'http://localhost:8888/home/activity/thumbnail/delete/' \
---header 'activity_id: adventure'
+--header 'city: cupertino##california##usa'
 """
 url = "http://localhost:8888/home/activity/thumbnail/delete/"
-headers = {'activity_id': activity_id_two}
+headers = {payana_activity_thumbnail_city: city}
 
 response = requests.delete(url, headers=headers)
 
@@ -254,12 +266,12 @@ print("payana_activity_guide_thumbnail delete row status: " + str(response.statu
 # CURL request
 """
 curl --location 'http://localhost:8888/home/activity/thumbnail/' \
---header 'activity_id: adventure'
+--header 'city: cupertino##california##usa'
 """
 
 url = "http://localhost:8888/home/activity/thumbnail/"
 
-headers = {'activity_id': activity_id_two}
+headers = {payana_activity_thumbnail_city: city}
 
 response = requests.get(url, headers=headers)
 

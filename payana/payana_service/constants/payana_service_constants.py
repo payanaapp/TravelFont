@@ -216,6 +216,19 @@ payana_missing_excursion_object = "Missing Payana excursion checkin object in th
 payana_missing_excursion_objects_header_exception = "Missing Payana excursion checkin header in the request body"
 payana_excursion_id_header = "excursion_id"
 
+# Payana itinerary objects controller constants
+payana_itinerary_objects_write_success_message_post = "Payana itinerary checkin object successfully created!"
+payana_itinerary_objects_write_success_message_put = "Payana itinerary checkin object successfully updated!"
+payana_itinerary_objects_delete_success_message = "Payana itinerary checkin object successfully deleted!"
+payana_itinerary_objects_create_failure_message_post = "Failed to create the Payana itinerary checkin object"
+payana_itinerary_objects_delete_failure_message = "Failed to delete the Payana itinerary checkin object"
+payana_itinerary_objects_write_failure_message_post = "Failed to update the itinerary checkin object"
+payana_itinerary_objects_values_delete_failure_message = "Failed to delete the Payana itinerary checkin object contents"
+payana_itinerary_objects_values_delete_success_message = "Payana itinerary checkin object content successfully deleted!"
+payana_missing_itinerary_object = "Missing Payana itinerary checkin object in the request body"
+payana_missing_itinerary_objects_header_exception = "Missing Payana itinerary checkin header in the request body"
+payana_itinerary_id_header = "itinerary_id"
+
 # Payana global city itinerary rating controller constants
 payana_global_city_rating_itinerary_objects_write_success_message_post = "Payana global city itinerary rating object successfully created!"
 payana_global_city_rating_itinerary_objects_write_success_message_put = "Payana global city itinerary rating object successfully updated!"

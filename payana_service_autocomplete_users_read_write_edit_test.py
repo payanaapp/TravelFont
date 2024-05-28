@@ -33,6 +33,16 @@ payana_users_autocomplete_column_family = bigtable_constants.payana_users_autoco
 payana_autocomplete_city_header = payana_service_constants.payana_autocomplete_city_header
 payana_autocomplete_users_header = payana_service_constants.payana_autocomplete_users_header
 
+# Note: Reasons why we have a city field
+
+# 1. To search all travel influencers indexed by a city
+
+# 2. To search for travel influencers based on a name autocomplete regex
+  # -- Start the search with user's city radius. Example - "cupertino##california##usa"
+  # -- Expand to neighboring city list. 
+  # -- Expand to State. Example - "*.##california##usa"
+  # -- Expand to country. Example - "*.##usa"
+  
 # POST write
 # CURL request
 """
@@ -76,7 +86,7 @@ print("Payana autocomplete users creation status: " +
 
 payana_autocomplete_users_response_json = response.json()
 
-# GET read
+# GET read - regex column values i.e. for a given city (row key - no regex), search matching user (column quantifier - regex)
 # CURL request
 """
 curl --location 'http://127.0.0.1:8888/entity/autocomplete/users/' \
@@ -86,7 +96,8 @@ curl --location 'http://127.0.0.1:8888/entity/autocomplete/users/' \
 """
 
 url = "http://127.0.0.1:8888/entity/autocomplete/users/"
-autocomplete_user_string = "user.*"
+autocomplete_user_string = "user.*" # strings starting with 'user'
+# autocomplete_user_string = ".*1$" -- strings ending with '1'
 full_user_name = "user_1"
 score = "156"
 
@@ -96,14 +107,147 @@ headers = {payana_autocomplete_city_header: city,
 
 response = requests.get(url, headers=headers)
 
-print("Payana autocomplete user read status: " +
+print("Payana autocomplete user read regex status: " +
       str(response.status_code == 200))
 
 payana_autocomplete_user_response = response.json()
 
-print("Payana autocomplete user creation verification status: " +
+print("Payana autocomplete user creation verification regex read status: " +
       str(payana_autocomplete_user_response[city][payana_users_autocomplete_column_family][full_user_name] == score))
 
+# POST write
+# CURL request
+"""
+curl --location 'http://127.0.0.1:8888/entity/autocomplete/users/' \
+--header 'Content-Type: application/json' \
+--header 'city: cupertino##california##usa' \
+--data '{
+    "city": "cupertino##california##usa",
+    "payana_autocomplete_users_list": {
+        "user_1": "156",
+        "user_2": "789",
+        "user_3": "8678",
+        "user_4": "1457"
+    }
+}'
+"""
+
+url = "http://127.0.0.1:8888/entity/autocomplete/users/"
+
+payana_autocomplete_users_obj_json_two = {
+    "city": "sf##california##usa",
+    "payana_autocomplete_users_list": {
+        "user_1": "156",
+        "user_2": "789",
+        "user_3": "8678",
+        "user_4": "1457"
+    }
+}
+
+city_two = payana_autocomplete_users_obj_json_two[payana_autocomplete_city_header]
+
+headers = {payana_autocomplete_city_header: city_two,
+           'Content-Type': 'application/json'}
+
+response = requests.post(url, data=json.dumps(
+    payana_autocomplete_users_obj_json_two), headers=headers)
+
+
+print("Payana autocomplete users creation status for object two: " +
+      str(response.status_code == 201))
+
+payana_autocomplete_users_response_json = response.json()
+
+# GET read - regex column values i.e. for a matching city (row key - regex), search matching user (column qualifier - regex)
+# CURL request
+"""
+# curl --location 'http://127.0.0.1:8888/entity/autocomplete/users/regex/' \
+--header 'Content-Type: application/json' \
+--header 'city: .*##usa' \
+--header 'user: user.*'
+"""
+
+url = "http://127.0.0.1:8888/entity/autocomplete/users/regex/"
+# autocomplete_user_string = "user.*" # strings starting with 'user'
+autocomplete_user_string = ".*1$" # -- strings ending with '1'
+full_user_name = "user_1"
+score = "156"
+regex_city = ".*##usa"
+
+headers = {payana_autocomplete_city_header: regex_city,
+           payana_autocomplete_users_header: autocomplete_user_string,
+           'Content-Type': 'application/json'}
+
+response = requests.get(url, headers=headers)
+
+print("Payana autocomplete user read regex (both row & column quantifier) status: " +
+      str(response.status_code == 200))
+
+payana_autocomplete_user_response = response.json()
+
+print(payana_autocomplete_user_response)
+
+print("Payana autocomplete user creation verification regex (both row & column quantifier) read status: " +
+      str(len(payana_autocomplete_user_response) == 2))
+
+# GET read - regex column values i.e. for a all rows (all cities in this case), search matching user (column qualifier - regex)
+# CURL request
+"""
+# curl --location 'http://127.0.0.1:8888/entity/autocomplete/users/regex/' \
+--header 'Content-Type: application/json' \
+--header 'city: .*##usa' \
+--header 'user: user.*'
+"""
+
+url = "http://127.0.0.1:8888/entity/autocomplete/users/regex/"
+# autocomplete_user_string = "user.*" # strings starting with 'user'
+autocomplete_user_string = ".*1$" # -- strings ending with '1'
+full_user_name = "user_1"
+score = "156"
+regex_empty_city = ""
+
+headers = {payana_autocomplete_city_header: regex_empty_city,
+           payana_autocomplete_users_header: autocomplete_user_string,
+           'Content-Type': 'application/json'}
+
+response = requests.get(url, headers=headers)
+
+print("Payana autocomplete user read regex (column quantifier) status: " +
+      str(response.status_code == 200))
+
+payana_autocomplete_user_response = response.json()
+
+print(payana_autocomplete_user_response)
+
+print("Payana autocomplete user creation verification regex (column quantifier) read status: " +
+      str(len(payana_autocomplete_user_response) == 2))
+
+
+# GET read
+# CURL request
+"""
+curl --location 'http://localhost:8888/entity/autocomplete/users/' \
+--header 'Content-Type: application/json' \
+--header 'city: cupertino##california##usa' \
+--header 'user;'
+"""
+
+url = "http://127.0.0.1:8888/entity/autocomplete/users/"
+autocomplete_user_string = ""
+
+headers = {payana_autocomplete_city_header: city,
+           payana_autocomplete_users_header: autocomplete_user_string,
+           'Content-Type': 'application/json'}
+
+response = requests.get(url, headers=headers)
+
+print("Payana autocomplete user read row status: " +
+      str(response.status_code == 200))
+
+payana_autocomplete_user_response = response.json()
+
+print("Payana autocomplete user creation verification row read status: " +
+      str(len(payana_autocomplete_user_response[city][payana_users_autocomplete_column_family]) == 4))
 
 # Edit PUT
 """

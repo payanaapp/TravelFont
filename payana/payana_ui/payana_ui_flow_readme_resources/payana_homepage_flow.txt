@@ -1,11 +1,17 @@
-Step 1 - On loading the home page - GET the current location using browser/phone location API. 
- -- We need the city, country and state name and join them using '##' delimitor
- Example: Cupertino, Califonia, USA becomes cupertino##califonia##usa
+Step 1 - On loading the home page - GET the current location using web browser/phone location API. 
+ -- We need the city, state, country name and join them using '##' delimitor
+ Example: 
+ Cupertino, Califonia, USA becomes cupertino##califonia##usa
+ OR 
+ Bangalore, Karnataka, India becomes bangalore##karnataka##india
 
 
 Step 2 - Fetch the neighboring cities or a mapping metropolitan major city, using the city name from Step 1
  -- 
- Example: city is the city name from Step 1 i.e. cupertino##califonia##usa
+ Example: city is the city name from Step 1 i.e. cupertino##califonia##usa OR bangalore##karnataka##india
+References:
+payana_neighboring_cities_read_write_edit.py
+payana_service_neighboring_cities_controller.py
 
  CURL API call:
 """
@@ -28,10 +34,14 @@ Response:
 
 Step 3 - Fetch the Activity Guides/Itinerary around you
 
-3A -  Make a GET call to fetch the top Itinerary/Activity Guide IDs 
+3A -  Make a GET call to fetch the top Itinerary/Activity Guide IDs in a given city
     -- Use the city names in the 'neighboring_city_list' from Step 2 response
        -- Example: 'cupertino##california##usa', 'sanjose##california##usa'
-    -- Do GET calls using these city names to fetch the metadata of the itinerary/activity guide. Repeat for each city.
+    -- Do GET calls for each of these city names to fetch the metadata of the itinerary/activity guide as shown below. Repeat for each city.
+
+  References:
+        * payana_service_gobal_city_timestamp_itinerary_read_write_edit_test.py
+        * payana_global_city_timestamp_itinerary.py
 
     CURL API call:
     """
@@ -45,54 +55,125 @@ Step 3 - Fetch the Activity Guides/Itinerary around you
     {
     "cupertino##california##usa": {
         "hiking_timestamp_activity_guide_id": {
-            "1": "12345"
+            "123456789": "12345"
         },
         "hiking_timestamp_checkin_id": {
-            "1": "12345"
+            "123456789": "12345"
         },
         "hiking_timestamp_excursion_id": {
-            "1": "12345"
+            "123456789": "12345"
         },
         "hiking_timestamp_itinerary_id": {
-            "1": "12345"
+            "123456789": "12345"
         },
         "generic_timestamp_activity_guide_id": {
-            "1": "12345"
+            "123456789": "12345"
         },
         "generic_timestamp_checkin_id": {
-            "1": "12345"
+            "123456789": "12345"
         },
         "generic_timestamp_excursion_id": {
-            "1": "12345"
+            "123456789": "12345"
         },
         "generic_timestamp_itinerary_id": {
-            "1": "12345"
+            "123456789": "12345"
         }
         }
     }
     """
 
+    Enums corresponding to different activities:
+    ["generic", "hiking", "aerial_activities", "city_culture", "coffee_bar", "fashion_trips", "food_trips", "instagrammable_locations", "island_beaches", "kid_friendly", "land_adventures", "romantic", "rooftop_bars", "spring_break", "staycation", "water_activities", "weekend_getaway"]
+
     Meaning of the Response:
     """
     "cupertino##california##usa" => Name of the city 
-    "hiking_timestamp_activity_guide_id" => hiking is the name of the activity, timestamp is what the value is, activity_guide_id means it is the ID for an activity guide i.e. these are the top activity guides to show when the user selects hiking as the activity
-    "hiking_timestamp_itinerary_id" => itinerary_id means the ID for an itinerary guide 
-    "generic_timestamp_itinerary_id" => generic means activity agnostic i.e. these are the top itinerary/activity guide IDs to show when the user doesn't select a specific activity
+    "hiking_timestamp_activity_guide_id" => hiking is the name of the activity, timestamp is what the value is, activity_guide_id means it is an activity guide i.e. these are the top activity guides to show when the user selects hiking as the activity
+    "hiking_timestamp_excursion_id" => excursion_id means an excursion guide 
+    "generic_timestamp_excursion_id" => generic means activity agnostic i.e. these are the top excursion/activity guide IDs to show when the user doesn't select a specific activity
 
-    Activity Guide IDs go into the Activity Guides section
-    Itinerary IDs go into teh Itinerary section
+    Activity Guide IDs go into the "Popular Activities Around You" section
+    Excursion IDs go into the "Popular Itineraries Around You" section
 
     "generic_timestamp_checkin_id" => Ignore checkin_id (for future use)
     "generic_timestamp_excursion_id" => Ignore excursion_id (for future use)
 
-    "1": "12345" => "1" is the activity_guide/itinerary ID, "12345" is the UNIX timestamp
+    "123456789": "12345" => "123456789" is the activity_guide/itinerary ID, "12345" is the UNIX timestamp
     """
 
+3B - Fetch the activity guide thumbnail Image IDs for the "Popular Activities Around You" section
 
-3B - Fetch activity guide/itinerary related metatdata etc from top activity guides/itineraries
+  References:
+        * payana_activity_thumbnail_read_write_edit_test.py
+        * payana_service_activity_thumbnail_read_write_edit_test.py
+
+  CURL API call:
+  """
+  curl --location 'http://localhost:8888/home/activity/thumbnail/' \
+  --header 'city: cupertino##california##usa'
+  """
+
+  Response:
+  """
+  {
+      "cupertino##california##usa": {
+          "hiking_payana_activity_thumbnail": {
+              "12345": "123456789"
+          },
+          "romantic_payana_activity_thumbnail": {
+              "12345": "123456789"
+          }
+      }
+  }
+  """
+  Meaning:
+  hiking_payana_activity_thumbnail means the activity thumbnail image for hiking activity
+
+  "12345": "123456789" => # key: value => image ID: timestamp
+
+3C - For the Activity Guide Image IDs from step 3B, fetch the images from GCS(Google Cloud Service)
+
+  References:
+    * payana_gcs_itinerary_checkin_objects_read_write_edit_test.py
+    * payana_service_gcs_image_read_write_edit_test.py
+
+   -- 3C1 - Get the Signed URL token to download the image
+
+   API:
+   """
+   curl --location 'http://localhost:8888/entity/signed_url/download' \
+    --header 'Content-Type: application/json' \
+    --header 'profile_id: 123456789' \
+    --header 'payana_storage_bucket: payana_itinerary_pictures' \
+    --header 'payana_storage_object: <image_id>'
+   """
+   Note: payana_storage_object should be the image IDs from Step 3B
+
+   Response: Returns a signed URL token
+   """
+   https://storage.googleapis.com/payana_profile_pictures/profile_picture_one?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=payana-two-bigtable%40payana-two.iam.gserviceaccount.com%2F20240324%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20240324T021259Z&X-Goog-Expires=900&X-Goog-SignedHeaders=host&X-Goog-Signature=1f3b483c087a32e603c4241002eff151fbf0194892cd25707087c445a1abf2b443f2b579a17edcb0e67db4f19f874c431609c625f30055d3918eff63438da4ede94bad4f88f9a0786e13169fa21b72d38690a68251436c59ca925119af7288f4adf6631b89d56a7a52c92045effe0f8bdf05e5a47b808e1f2b7a7dcef157f5048a620d9b9c1f53badf5158f122d4cbaf451983218d2840ef6b2a26ad9d977f9ce4a692b7df15c9cdc0318805fe017d5bece363309fd429b266180ce82e3825e5b05c17ec2622700c68ece2893ff49ac15747190ef0d656cc52c598a0106c1e0adf02e6e8f32f957c814cf554ea525084681d14d7d03fa45f1e69782d9aef216b
+   """
+
+
+   -- 3C2 - Download the image 
+   API:
+   """
+   curl --location 'https://storage.googleapis.com/payana_itinerary_pictures/image_id?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=payana-two-bigtable%40payana-two.iam.gserviceaccount.com%2F20240324%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20240324T021259Z&X-Goog-Expires=900&X-Goog-SignedHeaders=host&X-Goog-Signature=1f3b483c087a32e603c4241002eff151fbf0194892cd25707087c445a1abf2b443f2b579a17edcb0e67db4f19f874c431609c625f30055d3918eff63438da4ede94bad4f88f9a0786e13169fa21b72d38690a68251436c59ca925119af7288f4adf6631b89d56a7a52c92045effe0f8bdf05e5a47b808e1f2b7a7dcef157f5048a620d9b9c1f53badf5158f122d4cbaf451983218d2840ef6b2a26ad9d977f9ce4a692b7df15c9cdc0318805fe017d5bece363309fd429b266180ce82e3825e5b05c17ec2622700c68ece2893ff49ac15747190ef0d656cc52c598a0106c1e0adf02e6e8f32f957c814cf554ea525084681d14d7d03fa45f1e69782d9aef216b'
+   """
+
+   Response: Returns the image
+   """
+   200 SUCCESS 
+   """
+
+3D - Fetch excursion ID related metadata etc for top excursions
+
+  References:
+        * payana_service_excursion_objects_read_write_edit_test.py
+        * payana_excursion_object_read_write_edit_test.py
 
   -- CURL API call:
-    excursion_id is the activity guide/itinerary ID from 3A. Repeat this for all the IDs in generic_timestamp_itinerary_id, generic_timestamp_activity_guide_id
+    excursion_id is the set of excursion IDs from 3A. Repeat this for all the IDs in generic_timestamp_excursion_id if no activity is selected. If an activity is selected, then pick the corresponding activity related excursion IDs, for example - hiking_timestamp_excursion_id
     """
         curl --location 'http://127.0.0.1:8888/entity/excursion/' \
         --header 'Content-Type: application/json' \
@@ -108,9 +189,17 @@ Step 3 - Fetch the Activity Guides/Itinerary around you
          "roadtrip":"6"
       },
       "checkin_id_list":{
-         "1":"12345",
-         "2":"23456",
-         "3":"34567"
+        "1": "12345",
+        "2": "23456",
+        "3": "23456", 
+      },
+      "image_id_list":{
+        "1A": "12345",
+        "1B": "34567",
+        "2A": "23456",
+        "2B": "34567",
+        "3A": "23456",
+        "3B": "34567" 
       },
       "excursion_metadata":{
          "activity_guide":"False",
@@ -137,88 +226,21 @@ Step 3 - Fetch the Activity Guides/Itinerary around you
     """
 
     -- Meaning of the Response:
-     -- "checkin_id_list" represents the image set IDs (image set is a collection of images) in the activity guide/itinerary ID
-     -- "1":"12345" => "1" is the position of the image set in the itinerary/activity guide
+     -- "image_id_list" represents the image IDs in the activity guide/excursion ID
+     -- "1A":"12345" => "1" is the position of the checkin image set in the excursion/activity guide, "A" is the position of the image in the image set 
 
-3C - Fetch the individual image IDs from checkin_id_list
-
-  -- CURL API call:
-    """
-        curl --location --request GET 'http://127.0.0.1:8888/entity/checkin/' \
-        --header 'Content-Type: application/json' \
-        --header 'checkin_id: 12345'
-    """
-
-  -- Response:
-    """
-    {
-    "12345":{
-        "activities_list":{
-            "hiking":"8",
-            "roadtrip":"9"
-        },
-        "airbnb_metadata":{
-            "airbnb_embed_url":"xyz.com",
-            "airbnb_post_id":"12345"
-        },
-        "checkin_metadata":{
-            "checkin_id":"12345",
-            "checkin_owner_profile_id":"1234567",
-            "city":"SF##California##USA",
-            "country":"USA",
-            "create_timestamp":"123456789",
-            "description":"Enjoying the beach!",
-            "excursion_id":"12345",
-            "itinerary_id":"12345",
-            "last_updated_timestamp":"123456789",
-            "place_id":"1234567",
-            "place_name":"Land's End",
-            "state":"California##USA",
-            "transport_mode":"drive"
-        },
-        "image_id_list":{
-            "1":"img_id_1",
-            "2":"img_id_2",
-            "3":"img_id_3"
-        },
-        "instagram_metadata":{
-            "instagram_embed_url":"xyz.com",
-            "instagram_post_id":"12345"
-        },
-        "participants_list":{
-            "pf_id_1":"1234567",
-            "pf_id_2":"1234567",
-            "pf_id_3":"1234567"
-        }
-    }
-    }
-    """
-
-  -- Meaning of the Response:
-  """
-    "image_id_list":{
-            "1":"img_id_1",
-            "2":"img_id_2",
-            "3":"img_id_3"
-    }
-
-    List of images => "1" is the position of the image, "img_id_1" is the ID of the image
-  """
-
-3D - Fetch the thumbnail image ID for activity guides
-  -- To-Do: Abhi
-
-3E - Fetch the signed URL to download images i.e. img_id_1, img_id_2, img_id_3. Images are stored on Google cloud. 
+3E (same as 3C) - Fetch the signed URL to download images using the image IDs (any 4 image IDs) from image_id_list in 3D. Images are stored on Google cloud. 
      Need an authorized URL to access the images. This step helps fetch the authorized URL.
 
-  -- CURL API call: Replace the payana_storage_object value to the image ID value from 3C. Repeat for all images.
+  -- CURL API call: Replace the payana_storage_object value to the image ID values from 3C. Repeat for all images.
   """
     curl --location --request GET 'http://127.0.0.1:8888/entity/signed_url/download' \
     --header 'Content-Type: application/json' \
     --header 'profile_id: 123456789' \
     --header 'payana_storage_bucket: payana_itinerary_pictures' \
-    --header 'payana_storage_object: img_id_1'
+    --header 'payana_storage_object: <img_id_1>'
   """
+   Note: payana_storage_object should be the image IDs from Step 3D
   
   -- Response:
   """
@@ -240,6 +262,10 @@ Step 4 - Allow Users to Search itineraries based on City/Activities
 
 4A - Auto-Complete the city name
 
+ -- Reference files:
+    -- payana_service_autocomplete_cities_read_write_edit_test.py 
+    -- payana_autocomplete_cities_read_write_edit.py
+
  -- CURL API call:
     """
         curl --location 'http://127.0.0.1:8888/entity/autocomplete/city/' \
@@ -258,8 +284,356 @@ Step 4 - Allow Users to Search itineraries based on City/Activities
         }
     """
 
-  -- Meaning of the Response: City name suggestions matching the RegEx pattern
+  -- Meaning of the Response: List of City names matching the RegEx pattern
 
 
-4B - Using the new city name, repeat steps 3A to 3E
+4B - Using the new city name, repeat steps 2 to 3E
   -- If the users select a specific activity, filter & display the result specific to the activity on UI
+
+
+Step 5 - When the User clicks on "Save this Itinerary" and clicks on "Add To Existing Itinerary"
+
+  5A - GET call to fetch the User's list of Saved Itineraries
+
+  Reference Files:
+  - * payana_service_profile_page_itineraries_read_write_edit_test.py
+  - * payana_profile_page_itineraries.py
+
+  API call:
+  """
+  curl --location --request GET 'http://127.0.0.1:8888/profile/itineraries/' \
+  --header 'profile_id: 123456'
+  """
+
+  Response:
+  """
+  {
+   "123456":{
+      "generic_created_activity_guide_id_mapping":{
+         "12345":"activity_guide_name_one",
+         "123456":"activity_guide_name_two"
+      },
+      "generic_created_excursion_id_mapping":{
+         "12345":"excursion_name_one",
+         "123456":"excursion_name_two"
+      },
+      "generic_created_itinerary_id_mapping":{
+         "12345":"itinerary_name_one",
+         "123456":"itinerary_name_two"
+      },
+      "generic_saved_activity_guide_id_mapping":{
+         "12345":"activity_guide_name_one",
+         "123456":"activity_guide_name_two"
+      },
+      "generic_saved_excursion_id_mapping":{
+         "12345":"excursion_name_one",
+         "123456":"excursion_name_two"
+      },
+      "generic_saved_itinerary_id_mapping":{
+         "12345":"itinerary_name_one",
+         "123456":"itinerary_name_two"
+      },
+      "hiking_created_activity_guide_id_mapping":{
+         "12345":"activity_guide_name_one",
+         "123456":"activity_guide_name_two"
+      },
+      "hiking_created_excursion_id_mapping":{
+         "12345":"excursion_name_one",
+         "123456":"excursion_name_two"
+      },
+      "hiking_created_itinerary_id_mapping":{
+         "12345":"itinerary_name_one",
+         "123456":"itinerary_name_two"
+      },
+      "hiking_saved_activity_guide_id_mapping":{
+         "12345":"activity_guide_name_one",
+         "123456":"activity_guide_name_two"
+      },
+      "hiking_saved_excursion_id_mapping":{
+         "12345":"excursion_name_one",
+         "123456":"excursion_name_two"
+      },
+      "hiking_saved_itinerary_id_mapping":{
+         "12345":"itinerary_name_one",
+         "123456":"itinerary_name_two"
+      },
+      "romantic_created_activity_guide_id_mapping":{
+         "12345":"activity_guide_name_one",
+         "123456":"activity_guide_name_two"
+      },
+      "romantic_created_excursion_id_mapping":{
+         "12345":"excursion_name_one",
+         "123456":"excursion_name_two"
+      },
+      "romantic_created_itinerary_id_mapping":{
+         "12345":"itinerary_name_one",
+         "123456":"itinerary_name_two"
+      },
+      "romantic_saved_activity_guide_id_mapping":{
+         "12345":"activity_guide_name_one",
+         "123456":"activity_guide_name_two"
+      },
+      "romantic_saved_excursion_id_mapping":{
+         "12345":"excursion_name_one",
+         "123456":"excursion_name_two"
+      },
+      "romantic_saved_itinerary_id_mapping":{
+         "12345":"itinerary_name_one",
+         "123456":"itinerary_name_two"
+      }
+   }
+}
+  """
+
+  Meaning:
+  Returns the list of Saved, Created Itineraries etc. Look for the saved itinerary names and IDs in generic_saved_itinerary_id_mapping. Gives the Itinerary ID and Itinerary name.
+  
+  "12345":"itinerary_name_one" => <Itinerary ID>: <Itinerary Name>
+
+  5B - GET the list of excursion IDs for each of the Itinerary ID in saved_itinerary_id_mapping
+
+  Reference Files:
+  - * payana_itinerary_object_read_write_edit_test.py
+  - * payana_service_itinerary_object_read_write_edit_test.py
+
+  API call:
+  """
+  curl --location 'http://localhost:8888/entity/itinerary/' \
+  --header 'Content-Type: application/json' \
+  --header 'itinerary_id: 12345678' \
+  --data ''
+  """
+
+  Response:
+  """
+  {
+      "12345678": {
+          "activities_list": {
+              "hiking": "1.0"
+          },
+          "excursion_id_list": {
+              "1": "12345",
+              "2": "23456",
+              "3": "34567"
+          },
+          "itinerary_metadata": {
+              "city": "SF##California##USA",
+              "country": "USA",
+              "description": "Abhinandan's SF excursions",
+              "itinerary_id": "12345678",
+              "itinerary_owner_profile_id": "1234567",
+              "place_id": "123456",
+              "place_name": "Land's End",
+              "state": "California##USA",
+              "visit_timestamp": "123456789"
+          }
+      }
+  }
+  """
+
+
+  5C
+  
+    - For each excursion ID from 5B, make a GET call to fetch the metadata i.e. Image ID list (this is to show an image for a given itinerary)
+      - Repeat Step 3D
+
+  5D
+    - Using the Image IDs from 5B, for any one image ID, download the image from GCS
+      - Repeat Steps 3E, 3F
+
+  5E - PUT call to save the excursion to the selected itinerary in Step 5A
+  Reference Files:
+    - * payana_itinerary_object_read_write_edit_test.py
+    - * payana_service_itinerary_object_read_write_edit_test.py
+
+  API call:
+  """
+  curl --location --request PUT 'http://localhost:8888/entity/itinerary/' \
+  --header 'Content-Type: application/json' \
+  --header 'itinerary_id: 12345678' \
+  --data '{
+      "excursion_id_list": {
+          "4": "34567"
+      },
+      "activities_list": {
+          "hiking": "1.0",
+          "aerial_activities": "1.0"
+      }
+  }'
+  """
+
+  In the API call: 
+  -- "4": "34567" is <position of the excursion>: <excursion_id>. Get the position of the excursion from the response in 5B i.e. <largest key in "excursion_id_list"> + 1
+  -- itinerary_id is what the user selects
+  -- excursion_id is the one user wishes to save
+
+  Response:
+  """
+  {
+      "status": "OK",
+      "itinerary_id": "12345678",
+      "message": "Payana itinerary checkin object successfully updated!",
+      "statusCode": 200
+  }
+  """
+
+Step 6 - When the User clicks on "Save this Itinerary" and clicks on "New Itinerary"
+  
+  6A - A POST call to create an itinerary metadata object
+  Reference Files:
+  - * payana_itinerary_object_read_write_edit_test.py
+  - * payana_service_itinerary_object_read_write_edit_test.py
+
+  API call:
+  """
+  curl --location 'http://localhost:8888/entity/itinerary/' \
+  --header 'Content-Type: application/json' \
+  --data '{
+      "excursion_id_list": {
+          "3": "34567"
+      },
+      "activities_list": {
+          "hiking": "1.0",
+          "roadtrip": "1.0"
+      },
+      "itinerary_metadata": {
+          "description": "Abhinandan'\''s SF excursions",
+          "visit_timestamp": "123456789",
+          "itinerary_id": "",
+          "itinerary_owner_profile_id": "1234567",
+          "place_id": "123456",
+          "place_name": "Land'\''s End",
+          "city": "SF##California##USA",
+          "state": "California##USA",
+          "country": "USA",
+          "last_updated_timestamp": "123456789"
+      }
+  }'
+  """
+
+  In the API call: 
+  -- Leave the itinerary_id empty as a new one is being created
+  -- excursion_id is the one user wishes to save
+
+  Response:  
+  """
+  {
+      "status": "Created",
+      "itinerary_id": "12345678",
+      "message": "Payana itinerary checkin object successfully created!",
+      "statusCode": 201
+  }
+  """
+
+  6B - A PUT call to create and save to the User's list of Saved Itineraries
+
+    Reference Files:
+      - * payana_service_profile_page_itineraries_read_write_edit_test.py
+      - * payana_profile_page_itineraries.py  
+
+    API call:
+    """
+      curl --location --request PUT 'http://127.0.0.1:8888/profile/itineraries/' \
+      --header 'profile_id: 123456' \
+      --header 'Content-Type: application/json' \
+      --data-raw '{
+          "profile_id": "123456",
+          "saved_itinerary_id_list": ["123456"],
+          "saved_itinerary_id_mapping": {"12345": "itinerary_name_two"}
+      }'
+    """
+
+    In the API call:
+    -- 123456 is the new itinerary ID returned in 6A
+    -- itinerary_name_two is the name of the itinerary
+
+  Response: 200
+
+Step 7 - Search button flow (search for travel buddies/influencers by name or city)
+
+7A - Auto-Complete City Names
+
+Reference files:
+  - * payana_service_autocomplete_cities_read_write_edit_test.py 
+  - * payana_autocomplete_cities_read_write_edit.py
+
+API call:
+"""
+curl --location 'http://127.0.0.1:8888/entity/autocomplete/city/' \
+--header 'Content-Type: application/json' \
+--header 'city: seatt.*'
+"""
+
+Response:
+"""
+{'city': {'payana_autocomplete_cities_list': {'cupertino##california##usa': '156'}}}
+"""
+
+7B - Auto-Complete User Names 
+
+Reference files:
+  - * payana_service_autocomplete_users_read_write_edit_test.py 
+  - * payana_autocomplete_users_read_write_edit.py
+
+API call:
+"""
+curl --location 'http://127.0.0.1:8888/entity/autocomplete/users/regex/' \
+--header 'Content-Type: application/json' \
+--header 'city: .*##usa' \
+--header 'user: user.*'
+"""
+
+Meaning of the fields:
+ -- user is the search string that users enter for auto-complete
+ -- city is the radius of search for auto-complete search
+   -- To begin with, start with the city user lives in, example - 'cupertino##california##usa'
+   -- If empty response, then go to the state, example - '.*##california##usa'
+   -- Then the country, example - '.*##usa'
+   -- Then the whole world, use "" (empty string) for the city
+
+Response:
+"""
+{
+   "cupertino##california##usa":{
+      "payana_autocomplete_users_list":{
+         "user_1":"156"
+      }
+   },
+   "sf##california##usa":{
+      "payana_autocomplete_users_list":{
+         "user_1":"156"
+      }
+   }
+}
+"""
+
+7C - Fetch travel influencer names based on names 
+ -- Same API as 7B, just use city = "" (empty string)
+
+7D - Fetch travel influencer names based on city
+
+Reference files:
+  - * payana_service_autocomplete_users_read_write_edit_test.py 
+  - * payana_autocomplete_users_read_write_edit.py
+
+API call:
+"""
+curl --location 'http://localhost:8888/entity/autocomplete/users/' \
+--header 'Content-Type: application/json' \
+--header 'city: cupertino##california##usa' \
+--header 'user;'
+"""
+
+Response:
+"""
+{
+   "cupertino##california##usa":{
+      "payana_autocomplete_users_list":{
+         "user_1":"156",
+         "user_2":"789",
+         "user_3":"8678",
+         "user_4":"1457"
+      }
+   }
+}
+"""

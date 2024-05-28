@@ -41,9 +41,9 @@ curl --location --request POST 'http://127.0.0.1:8888/entity/checkin/' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "image_id_list": {
-        "1": "img_id_1",
-        "2": "img_id_2",
-        "3": "img_id_3"
+        "A": "img_id_1",
+        "B": "img_id_2",
+        "C": "img_id_3"
     },
     "participants_list": {"pf_id_1": "1234567", "pf_id_2": "1234567", "pf_id_3": "1234567"},
     "activities_list": {"hiking": "8", "roadtrip": "9"},
@@ -78,9 +78,9 @@ url = "http://127.0.0.1:8888/entity/checkin/"
 
 payana_checkin_obj_json = {
     "image_id_list": {
-        "1": "img_id_1",
-        "2": "img_id_2",
-        "3": "img_id_3"
+        "A": "img_id_1",
+        "B": "img_id_2",
+        "C": "img_id_3"
     },
     "participants_list": {"pf_id_1": "1234567", "pf_id_2": "1234567", "pf_id_3": "1234567"},
     "activities_list": {"hiking": "8", "roadtrip": "9"},
@@ -159,7 +159,7 @@ curl --location --request PUT 'http://127.0.0.1:8888/entity/checkin/' \
 --header 'checkin_id: d5abe50bba3a82383300e46ee14ce283d30d70bc9a4dc855a853011f124b3ba8' \
 --data-raw '{
     "image_id_list": {
-        "4": "img_id_4"
+        "D": "img_id_4"
     },
     "activities_list": {"hiking": "8", "roadtrip": "9"},
     "instagram_metadata": {
@@ -193,7 +193,7 @@ url = "http://127.0.0.1:8888/entity/checkin/"
 
 payana_checkin_obj_edit_json = {
     "image_id_list": {
-        "4": "img_id_4"
+        "D": "img_id_4"
     },
     "activities_list": {"hiking": "8", "roadtrip": "9"},
     "instagram_metadata": {
@@ -264,7 +264,7 @@ curl --location --request POST 'http://127.0.0.1:8888/entity/checkin/delete/valu
 --header 'checkin_id: d5abe50bba3a82383300e46ee14ce283d30d70bc9a4dc855a853011f124b3ba8' \
 --data-raw '{
     "image_id_list": [
-        "1"
+        "A"
     ],
     "checkin_metadata": [
         "transport_mode",
@@ -278,7 +278,7 @@ headers = {payana_checkin_id: checkin_id, 'Content-Type': 'application/json'}
 
 payana_checkin_value_delete_json = {
     "image_id_list": [
-        "1"
+        "A"
     ],
     "checkin_metadata": [
         "transport_mode",
@@ -367,7 +367,7 @@ print("Profile checkin object delete CF verification status: " +
       str(payana_checkin_metadata not in profile_checkin_response[checkin_id]))
 
 # Delete check in object
-"""
+""" 
 curl --location --request DELETE 'http://127.0.0.1:8888/entity/checkin/delete/' \
 --header 'Content-Type: application/json' \
 --header 'checkin_id: 730665e80500a504eb0caab7a15f65c76dc6465efb9090546595e6318694be05'

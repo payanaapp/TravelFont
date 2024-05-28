@@ -32,13 +32,12 @@ Response:
 }
 """
 
- -- 2A - If profile doesn't exist, proceed to step 3
+ -- 2A - If profile doesn't exist (400 response), proceed to step 3
  -- 2B - Flash a message saying - "A TraveFont account exists. Please Log In." and take the Log In Flow below.
 
-Step 3 - Save the returned Profile Picture Into the backend Google cloud storage database. This database returns a storage object ID.
+Step 3 - Save the returned Profile Picture from FB/Google log in Into the backend Google cloud storage database. This database returns a storage object ID.
 
 Files:
-    * payana_gcs_itinerary_checkin_objects_read_write_edit_test.py
     * payana_gcs_profile_pictures_read_write_edit_test.py
     * payana_service_gcs_image_read_write_edit_test.py
 
@@ -106,9 +105,9 @@ curl --location --request PUT 'https://storage.googleapis.com/payana_profile_pic
    200 SUCCESS 
    """
 
-Step 4 - Take the User Favorite Places preference, User Favorite Activities preference, Profile Info details
+Step 4 - Take the User Favorite Places preference, User Favorite Activities preference, Profile Info details on UI screen
 
-Step 5 - Save the details from step 5 into the Profile Info metadata table using a POST table
+Step 5 - Save the details from step 4 into the Profile Info metadata table using a POST call
 
 Files:
     * payana_service_profile_info_read_write_edit_test.py
@@ -146,11 +145,11 @@ curl --location 'http://localhost:8888/profile/info/' \
     },
     "favorite_activities_preference": {
         "hiking": "1",
-        "ski trips": "2",
-        "adventures": "3",
-        "spring break" : "4",
-        "road trips" : "5",
-        "food trips" : "6"
+        "aerial_activities": "2",
+        "city_culture": "3",
+        "coffee_bar" : "4",
+        "fashion_trips" : "5",
+        "food_trips" : "6"
     },
     "thumbnail_travel_buddies" : {},
     "payana_profile_pictures": {
@@ -159,6 +158,10 @@ curl --location 'http://localhost:8888/profile/info/' \
     "payana_cover_pictures": {}
 }'
 """
+
+Enums corresponding to different activities:
+["generic", "hiking", "aerial_activities", "city_culture", "coffee_bar", "fashion_trips", "food_trips", "instagrammable_locations", "island_beaches", "kid_friendly", "land_adventures", "romantic", "rooftop_bars", "spring_break", "staycation", "water_activities", "weekend_getaway"]
+
 
 Response:
 """
@@ -170,7 +173,7 @@ Response:
 }
 """
 
-Step 6 - Save the Profile Name, Email ID, profile picture storage ID into the metadata authentication table
+Step 6 - Save the Profile Name, Email ID, profile picture storage ID into the profile info authentication metadata table
 
 API:
 """
@@ -203,7 +206,7 @@ Response: 200 SUCCESS
 Step 1 - Check if the email ID exists in the  Metadata authentication table
 
  -- 1A
-    How to check? Mentioned in Step 2 above
+    How to check? Mentioned in Step 2 above in the Sign Up flow
     Via a GET call - should return a response JSON if profile exists, else returns a 400
     Files:
         * payana_service_auth_profile_info_read_write_edit_test.py
@@ -231,11 +234,11 @@ Step 1 - Check if the email ID exists in the  Metadata authentication table
 Step 2
  -- 2A - If profile exists, load the HomePage after fetching profile details
 
-    -- 2A1 - Fetch profile picture from Google Cloud storage using profile_picture_id from the Step above
+    -- 2A1 - Fetch profile picture from Google Cloud storage using profile_picture_id from the Steps above
 
         How to fetch? Mentioned in Steps 3C1 and 3C2
 
-    -- 2A2 - Fetch profile info metadata details using profile_id from the Step above
+    -- 2A2 - Fetch profile info metadata details using profile_id (returned by Google/FB/Apple SDKs) in the Step 1 
 
     Files:
         * payana_service_profile_info_read_write_edit_test.py

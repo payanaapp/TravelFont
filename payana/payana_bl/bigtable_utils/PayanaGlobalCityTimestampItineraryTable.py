@@ -28,13 +28,12 @@ class PayanaGlobalCityTimestampItineraryTable:
 
     @payana_generic_exception_handler
     def __init__(self, city, activity_guide_id,
-                 itinerary_id, excursion_id, checkin_id,
+                 itinerary_id, excursion_id,
                  activities):
 
         self.city = city
         self.itinerary_id = itinerary_id
         self.excursion_id = excursion_id
-        self.checkin_id = checkin_id
         self.activities = activities
         self.activity_guide_id = activity_guide_id
         self.row_id = None
@@ -84,9 +83,6 @@ class PayanaGlobalCityTimestampItineraryTable:
 
                 excursion_activity_column_family_id = "_".join(
                     [activity, self.payana_global_city_itinerary_table_itinerary_id_timestamp_quantifier_value, bigtable_constants.payana_global_city_itinerary_table_excursion_id_quantifier_value])
-
-                checkin_activity_column_family_id = "_".join(
-                    [activity, self.payana_global_city_itinerary_table_itinerary_id_timestamp_quantifier_value, bigtable_constants.payana_global_city_itinerary_table_checkin_id_quantifier_value])
                 
                 activity_guide_activity_column_family_id = "_".join(
                     [activity, self.payana_global_city_itinerary_table_itinerary_id_timestamp_quantifier_value, bigtable_constants.payana_global_city_itinerary_table_activity_guide_id_quantifier_value])
@@ -100,14 +96,8 @@ class PayanaGlobalCityTimestampItineraryTable:
                     # excursion id write object
                     self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
                         self.row_id, excursion_activity_column_family_id, excursion, timestamp))
-
-                for checkin, timestamp in self.checkin_id.items():
-                    # checkin id write object
-                    self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-                        self.row_id, checkin_activity_column_family_id, checkin, timestamp))
                     
                 for activity_guide, timestamp in self.activity_guide_id.items():
-                    # checkin id write object
                     self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
                         self.row_id, activity_guide_activity_column_family_id, activity_guide, timestamp))
 

@@ -21,14 +21,16 @@ from google.cloud.bigtable import column_family
 class PayanaExcursionTable:
 
     @payana_generic_exception_handler
-    def __init__(self, checkin_id_list, participants_list, activities_list, excursion_metadata):
+    def __init__(self, checkin_id_list, image_id_list, participants_list, activities_list, excursion_metadata):
 
         self.checkin_id_list = checkin_id_list
+        self.image_id_list = image_id_list
         self.participants_list = participants_list
         self.excursion_metadata = excursion_metadata
         self.activities_list = activities_list
 
         self.column_family_checkin_id_list = bigtable_constants.payana_excursion_column_family_checkin_id_list
+        self.column_family_image_id_list = bigtable_constants.payana_excursion_column_family_image_id_list
         self.column_family_participants_list = bigtable_constants.payana_excursion_column_family_participants_list
         self.column_qualifier_description = bigtable_constants.payana_excursion_column_family_description
         self.column_qualifier_create_timestamp = bigtable_constants.payana_excursion_column_family_create_timestamp
@@ -162,6 +164,7 @@ class PayanaExcursionTable:
     @payana_generic_exception_handler
     def create_bigtable_write_objects(self):
         self.set_checkin_id_list_write_object()
+        self.set_image_id_list_write_object()
         self.set_participants_list_write_object()
         self.set_activities_list_write_object()
         self.set_description_write_object()
@@ -185,6 +188,14 @@ class PayanaExcursionTable:
         for key, checkin_id in self.checkin_id_list.items():
             self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
                 self.excursion_id, self.column_family_checkin_id_list, key, checkin_id))
+            
+    @payana_generic_exception_handler
+    def set_image_id_list_write_object(self):
+
+        # excursion_id_list write object
+        for key, image_id in self.image_id_list.items():
+            self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+                self.excursion_id, self.column_family_image_id_list, key, image_id))
 
     @payana_generic_exception_handler
     def set_participants_list_write_object(self):
@@ -199,8 +210,9 @@ class PayanaExcursionTable:
 
         # participants_list write object
         for activity, number in self.activities_list.items():
-            self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-                self.excursion_id, self.column_family_activities_list, activity, number))
+            if activity in bigtable_constants.payana_activity_column_family:
+                self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+                    self.excursion_id, self.column_family_activities_list, activity, number))
 
     @payana_generic_exception_handler
     def set_description_write_object(self):

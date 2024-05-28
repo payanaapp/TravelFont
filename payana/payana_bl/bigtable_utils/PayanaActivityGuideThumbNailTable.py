@@ -21,9 +21,10 @@ from google.cloud.bigtable import column_family
 class PayanaActivityGuideThumbNailTable:
 
     @payana_generic_exception_handler
-    def __init__(self, payana_activity_thumbnail):
+    def __init__(self, payana_activity_thumbnail, city):
 
         self.payana_activity_thumbnail = payana_activity_thumbnail
+        self.city = city
 
         self.update_bigtable_write_objects = []
 
@@ -54,7 +55,11 @@ class PayanaActivityGuideThumbNailTable:
         # top_friends write object
         for activity, thumbnail_dict in self.payana_activity_thumbnail.items():
             
-            for image_id, timestamp in thumbnail_dict.items():
+            if activity in bigtable_constants.payana_activity_column_family:
+            
+                for image_id, timestamp in thumbnail_dict.items():
+                    
+                    self.activity_thumbnail_column_family_id = "_".join([activity, self.column_family_id])
 
-                self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-                    activity, self.column_family_id, image_id, timestamp))
+                    self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+                        self.city, self.activity_thumbnail_column_family_id, image_id, timestamp))

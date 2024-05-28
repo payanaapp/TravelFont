@@ -161,6 +161,32 @@ class PayanaBigTable:
         else:
             print(payana_big_table_does_not_exist_exception)
             raise Exception(payana_big_table_exception)
+        
+    # Get rows based on row key regex
+    @payana_generic_exception_handler
+    def get_table_rows_rowkey_regex_column_qualifier_regex_chain(self, row_key_regex, column_qualifier_regex, include_column_family=True):
+
+        if self.table is not None:
+
+            row_key_regex_filter = bigtable_row_regex_read_filter(
+                row_key_regex)
+            
+            column_qualifier_filter = bigtable_cells_column_qualifier_read_filter(
+                column_qualifier_regex)
+            
+            combined_filter =  bigtable_cells_read_column_filter_chain([row_key_regex_filter, column_qualifier_filter])
+
+            bigtable_rows = bigtable_cells_read_column_filter(
+                self.table, combined_filter)
+
+            bigtable_rows_dict = convert_big_table_rows_to_dict(
+                bigtable_rows, include_column_family=include_column_family)
+
+            return bigtable_rows_dict
+
+        else:
+            print(payana_big_table_does_not_exist_exception)
+            raise Exception(payana_big_table_exception)
 
     # TO-DO : The calling function returns a PartialRowData object which might not have the full data. Fix the issue.
     @payana_generic_exception_handler

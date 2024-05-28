@@ -101,6 +101,7 @@ payana_profile_table_payment_type = "payana_payment_type"
 
 # payana_activity_guide_thumbnail_table
 payana_activity_thumbnail = "payana_activity_thumbnail"
+payana_activity_thumbnail_city = "city"
 
 # payana_comments_table_field_names
 payana_comments_table_comments_family_id = "payana_comments"
@@ -138,6 +139,7 @@ payana_itinerary_last_updated_timestamp = "last_updated_timestamp"
 
 # Payana excursion table constants
 payana_excursion_column_family_checkin_id_list = "checkin_id_list"
+payana_excursion_column_family_image_id_list = "image_id_list"
 payana_excursion_column_family_participants_list = "participants_list"
 payana_excursion_column_family_description = "description"
 payana_excursion_column_family_create_timestamp = "create_timestamp" 
@@ -222,7 +224,7 @@ payana_neighboring_cities_column_family = "neighboring_city_list"
 
 # Payana activity constants
 payana_generic_activity_column_family = "generic"
-payana_activity_column_family = ["generic", "hiking", "romantic", "exotic"]
+payana_activity_column_family = ["generic", "hiking", "aerial_activities", "city_culture", "coffee_bar", "fashion_trips", "food_trips", "instagrammable_locations", "island_beaches", "kid_friendly", "land_adventures", "romantic", "rooftop_bars", "spring_break", "staycation", "water_activities", "weekend_getaway"]
 
 # Payana personal place ID itinerary table constants
 payana_personal_place_id_itinerary_table_itinerary_id_quantifier_value = "itinerary_id"
