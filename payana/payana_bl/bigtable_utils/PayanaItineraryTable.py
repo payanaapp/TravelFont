@@ -21,13 +21,15 @@ from google.cloud.bigtable import column_family
 class PayanaItineraryTable:
 
     @payana_generic_exception_handler
-    def __init__(self, excursion_id_list, activities_list, itinerary_metadata):
+    def __init__(self, excursion_id_list, activities_list, itinerary_metadata, cities_list):
 
         self.excursion_id_list = excursion_id_list
         self.activities_list = activities_list
         self.itinerary_metadata = itinerary_metadata
+        self.cities_list = cities_list
 
         self.column_family_excursion_id_list = bigtable_constants.payana_itinerary_column_family_excursion_id_list
+        self.payana_itinerary_column_family_cities_list = bigtable_constants.payana_itinerary_column_family_cities_list
         self.column_qualifier_description = bigtable_constants.payana_itinerary_column_family_description
         self.column_qualifier_visit_timestamp = bigtable_constants.payana_itinerary_column_family_visit_timestamp
         self.column_qualifier_itinerary_owner_profile_id = bigtable_constants.payana_itinerary_column_family_itinerary_owner_profile_id
@@ -148,6 +150,7 @@ class PayanaItineraryTable:
         self.set_itinerary_city_write_object()
         self.set_itinerary_state_write_object()
         self.set_itinerary_country_write_object()
+        self.set_itinerary_cities_list_write_object()
 
     @payana_generic_exception_handler
     def set_excursion_id_list_write_object(self):
@@ -244,3 +247,11 @@ class PayanaItineraryTable:
         # user_name write object
         self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
             self.itinerary_id, self.column_family_itinerary_metadata, self.column_qualifier_last_updated_timestamp, self.itinerary_last_updated_timestamp))
+
+    @payana_generic_exception_handler
+    def set_itinerary_cities_list_write_object(self):
+
+        # cities_list write object
+        for city, place_id in self.cities_list.items():
+            self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+                self.itinerary_id, self.payana_itinerary_column_family_cities_list, city, place_id))

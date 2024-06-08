@@ -43,6 +43,10 @@ itinerary_obj = {
         "state": "California##USA",
         "country": "USA",
         "last_updated_timestamp": "123456789"
+    },
+    "cities_list": {
+        "cupertino": "12345678",
+        "sunnyvale": "12345678"
     }
 }
 

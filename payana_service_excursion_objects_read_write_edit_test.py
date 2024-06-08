@@ -52,6 +52,11 @@ curl --location 'http://localhost:8888/entity/excursion/' \
         "3A": "23456",
         "3B": "34567" 
     },
+    "cities_checkin_id_list":{
+        "1": "cupertino##california##usa",
+        "2": "sunnyvale##california##usa",
+        "3": "santaclara##california##usa"       
+    },
     "participants_list": {"pf_id_1": "1234567", "pf_id_2": "1234567", "pf_id_3": "1234567"},
     "activities_list": {"hiking": "4", "roadtrip": "6"},
     "excursion_metadata": {
@@ -88,6 +93,11 @@ payana_excursion_object_json = {
         "3A": "23456",
         "3B": "34567" 
     },
+    "cities_checkin_id_list":{
+        "1": "cupertino##california##usa",
+        "2": "sunnyvale##california##usa",
+        "3": "santaclara##california##usa"       
+    },
     "participants_list": {"pf_id_1": "1234567", "pf_id_2": "1234567", "pf_id_3": "1234567"},
     "activities_list": {"hiking": "4", "roadtrip": "6"},
     "excursion_metadata": {
@@ -104,7 +114,12 @@ payana_excursion_object_json = {
         "city": "SF##California##USA",
         "state": "California##USA",
         "country": "USA"
-    }
+    },
+    "cities_checkin_id_list":{
+        "1": "cupertino##california##usa",
+        "2": "sunnyvale##california##usa",
+        "3": "santaclara##california##usa"       
+    },
 }
 
 excursion_id = payana_excursion_object_json[column_family_excursion_metadata][payana_excursion_id]
@@ -168,6 +183,11 @@ payana_excursion_object_edit_json = {
         "2B": "34567",
         "3A": "23456",
         "3B": "34567" 
+    },
+    "cities_checkin_id_list":{
+        "1": "cupertino##california##usa",
+        "2": "sunnyvale##california##usa",
+        "3": "santaclara##california##usa"       
     },
     "participants_list": {"pf_id_4": "1234567", "pf_id_2": "12345678"},
     "activities_list": {"romantic": "4", "roadtrip": "7"},

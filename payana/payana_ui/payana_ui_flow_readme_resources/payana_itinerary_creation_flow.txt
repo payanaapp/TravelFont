@@ -1,0 +1,86 @@
+Step 1 - Fetch & save itinerary metadata via a POST call 
+
+Reference Files:
+-- payana_service_itinerary_object_read_write_edit_test.py 
+-- payana_service_excursion_objects_read_write_edit_test.py
+
+API call:
+
+Reponse:
+
+
+Step 2 - Google places auto-complete 
+
+Reference Files:
+
+API call:
+
+Reponse:
+
+
+Step 3 - Save Images into Google Cloud
+
+Reference Files:
+
+API call:
+
+Reponse:
+
+
+
+Step 4 - Image Metadata
+
+Reference Files:
+
+API call:
+
+Reponse:
+
+
+
+Step 5 - Share Itinerary 
+
+Reference Files:
+
+API call:
+
+Reponse:
+
+
+
+Step 6 - Edit Itinerary
+
+Reference Files:
+
+API call:
+
+Reponse:
+
+
+
+Step 7 - Remove an excursion
+
+Reference Files:
+
+API call:
+
+Reponse:
+
+
+
+Step 8 - Remove an itinerary album
+
+Reference Files:
+
+API call:
+
+Reponse:
+
+
+Step 9 - Grant edit access to itineraries
+
+Reference Files:
+
+API call:
+
+Reponse:
