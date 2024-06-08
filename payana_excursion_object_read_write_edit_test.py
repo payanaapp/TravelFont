@@ -32,6 +32,11 @@ excursion_obj = {
         "2": "23456",
         "3": "34567"
     },
+    "cities_checkin_id_list":{
+        "1": "cupertino##california##usa",
+        "2": "sunnyvale##california##usa",
+        "3": "santaclara##california##usa"       
+    },
     "image_id_list":{
         "1A": "12345",
         "1B": "34567",

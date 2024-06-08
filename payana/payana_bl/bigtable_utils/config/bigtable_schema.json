@@ -139,7 +139,8 @@
             "excursion_id_list",
             "participants_list",
             "activities_list",
-            "itinerary_metadata"
+            "itinerary_metadata",
+            "cities_list"
         ],
         "description": "This table will hold all the details of an itinerary",
         "purpose": "To fetch the details of an itinerary",
@@ -148,6 +149,7 @@
     "payana_excursion_table": {
         "column_family_id": [
             "checkin_id_list",
+            "cities_checkin_id_list",
             "image_id_list",
             "participants_list",
             "activities_list",

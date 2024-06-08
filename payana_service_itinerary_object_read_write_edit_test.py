@@ -59,9 +59,13 @@ curl --location 'http://localhost:8888/entity/itinerary/' \
         "state": "California##USA",
         "country": "USA",
         "last_updated_timestamp": "123456789"
+    },
+    "cities_list": {
+        "cupertino##california##usa": "123456",
+        "sunnyvale##california##usa": "1234567"
     }
 }'
-"""
+""" 
 
 url = "http://127.0.0.1:8888/entity/itinerary/"
 
@@ -84,6 +88,10 @@ payana_itinerary_object_json = {
         "state": "California##USA",
         "country": "USA",
         "last_updated_timestamp": "123456789"
+    },
+    "cities_list": {
+        "cupertino##california##usa": "12345678",  # city: place_id
+        "sunnyvale##california##usa": "12345678"
     }
 }
 
@@ -155,6 +163,10 @@ curl --location --request PUT 'http://localhost:8888/entity/itinerary/' \
         "state": "California##USA",
         "country": "USA",
         "last_updated_timestamp": "123456789"
+    },
+    "cities_list": {
+        "cupertino##california##usa": "123456",
+        "sunnyvale##california##usa": "1234567"
     }
 }'
 """
@@ -183,6 +195,10 @@ payana_itinerary_object_edit_json = {
         "state": "California##USA",
         "country": "USA",
         "last_updated_timestamp": "123456789"
+    },
+    "cities_list": {
+        "cupertino##california##usa": "123456",
+        "sunnyvale##california##usa": "1234567"
     }
 }
 
@@ -245,6 +261,10 @@ curl --location 'http://localhost:8888/entity/itinerary/delete/values/' \
         "description": "Abhinandan'\''s SF excursions",
         "visit_timestamp": "123456789",
         "itinerary_id": ""
+    },
+    "cities_list": {
+        "cupertino##california##usa": "123456",
+        "sunnyvale##california##usa": "1234567"
     }
 }'
 """
@@ -265,6 +285,10 @@ payana_itinerary_object_delete_cv_json = {
     "itinerary_metadata": {
         "description": "Abhinandan's SF excursions",
         "visit_timestamp": "123456789"
+    },
+    "cities_list": {
+        "cupertino##california##usa": "123456",
+        "sunnyvale##california##usa": "1234567"
     }
 }
 

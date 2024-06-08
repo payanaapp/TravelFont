@@ -136,9 +136,11 @@ payana_itinerary_city = "city"
 payana_itinerary_state = "state"
 payana_itinerary_country = "country"
 payana_itinerary_last_updated_timestamp = "last_updated_timestamp"
+payana_itinerary_column_family_cities_list = "cities_list"
 
 # Payana excursion table constants
 payana_excursion_column_family_checkin_id_list = "checkin_id_list"
+payana_excursion_column_family_cities_checkin_id_list = "cities_checkin_id_list"
 payana_excursion_column_family_image_id_list = "image_id_list"
 payana_excursion_column_family_participants_list = "participants_list"
 payana_excursion_column_family_description = "description"
