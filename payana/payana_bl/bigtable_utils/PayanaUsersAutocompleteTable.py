@@ -48,6 +48,6 @@ class PayanaUsersAutocompleteTable:
     @payana_generic_exception_handler
     def set_autocomplete_city_list_write_object(self):
 
-        for user, rating in self.payana_users_list.items():
+        for user, profile_id in self.payana_users_list.items():
             self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-                self.city, self.payana_users_autocomplete_column_family, user, rating))
+                self.city, self.payana_users_autocomplete_column_family, user, profile_id))

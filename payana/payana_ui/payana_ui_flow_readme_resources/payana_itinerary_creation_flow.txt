@@ -1,24 +1,189 @@
-Step 1 - Fetch & save itinerary metadata via a POST call 
+Step 1 - Save itinerary metadata via a POST call 
+
+1A - Create an Excursion object
+
+Reference Files:
+-- payana_service_excursion_objects_read_write_edit_test.py
+-- payana_excursion_object_read_write_edit_test.py
+
+API call: POST
+"""
+curl --location 'http://localhost:8888/entity/excursion/' \
+--header 'Content-Type: application/json' \
+--data '{
+    "checkin_id_list": {
+    },
+    "image_id_list":{ 
+    },
+    "cities_checkin_id_list":{     
+    },
+    "participants_list": {"pf_id_1": "1234567"},
+    "activities_list": {"hiking": "4", "roadtrip": "6"},
+    "excursion_metadata": {
+        "excursion_id": "",
+        "activity_guide": "False",
+        "transport_mode": "drive",
+        "place_id": "1234567",
+        "excursion_owner_profile_id": "1234567",
+        "create_timestamp": "123456789",
+        "last_updated_timestamp": "123456789",
+        "description": "My excursion",
+        "itinerary_id": "1234",
+        "place_name": "Land'\''s End",
+        "city": "SF##California##USA",
+        "state": "California##USA",
+        "country": "USA"
+    }
+}'
+"""
+
+Response: 201
+-- Returns an excursion ID
+"""
+{
+    "status": "Created",
+    "excursion_id": "45c003ff6ee06dfe098a27acdf837f9bf4790541057a693cd2e2e7204e1dac74",
+    "message": "Payana excursion checkin object successfully created!",
+    "statusCode": 201
+}
+"""
+
+1B - Create an itinerary album for the above excursion object. Use the excursion ID from the previous step
 
 Reference Files:
 -- payana_service_itinerary_object_read_write_edit_test.py 
--- payana_service_excursion_objects_read_write_edit_test.py
+-- payana_itinerary_object_read_write_edit_test.py
 
-API call:
 
-Reponse:
+API call: POST
+"""
+curl --location 'http://localhost:8888/entity/itinerary/' \
+--header 'Content-Type: application/json' \
+--data '{
+    "excursion_id_list": {
+        "1": "12345",
+    },
+    "activities_list": {
+        "hiking": "1.0",
+        "roadtrip": "1.0"
+    },
+    "itinerary_metadata": {
+        "description": "Abhinandan'\''s SF excursions",
+        "visit_timestamp": "123456789",
+        "itinerary_id": "",
+        "itinerary_owner_profile_id": "1234567",
+        "place_id": "123456",
+        "place_name": "Land'\''s End",
+        "city": "SF##California##USA",
+        "state": "California##USA",
+        "country": "USA",
+        "last_updated_timestamp": "123456789"
+    },
+    "cities_list": {
+        "cupertino##california##usa": "123456",
+        "sunnyvale##california##usa": "1234567"
+    }
+}'
+"""
 
+Reponse: 201
+"""
+{
+    "status": "Created",
+    "itinerary_id": "ebf4d62fbcdaa05fcb91d4320c0811546a2305164359e8d5985a039063cecb53",
+    "message": "Payana itinerary checkin object successfully created!",
+    "statusCode": 201
+}
+"""
 
 Step 2 - Google places auto-complete 
-
-Reference Files:
-
-API call:
-
-Reponse:
-
+  -- Step 7A in payana_homepage_flow.txt
 
 Step 3 - Save Images into Google Cloud
+  -- Steps 3A and 3B in payana_signup_flow.txt
+  -- Change the headers:
+        --header 'payana_storage_bucket: payana_itinerary_pictures' \
+        --header 'payana_storage_object: 1A##1##123456789' \
+
+        -- How to decipher 1A##1##123456789:
+            -- 1A => 1 is the check in object position, A is the image position
+            -- 1 => 1 is the check in object position
+            -- 123456789 => excursion ID
+
+Step 4 - Add/Edit CheckIn Metadata
+
+Reference Files:
+-- payana_service_excursion_objects_read_write_edit_test.py
+-- payana_excursion_object_read_write_edit_test.py
+
+API call: Same as 1A but a PUT call
+"""
+curl --location 'http://localhost:8888/entity/excursion/' \
+--header 'Content-Type: application/json' \
+--data '{
+    "checkin_id_list": {
+        "1": "1##<excursion_id>",
+        "2": "2##<excursion_id>",
+        "3": "3##<excursion_id>"
+    },
+    "image_id_list":{
+        "1A": "1A##1##<excursion_id>",
+        "1B": "1B##1##<excursion_id>",
+        "2A": "2A##2##<excursion_id>",
+        "2B": "2B##2##<excursion_id>",
+        "3A": "3A##3##<excursion_id>",
+        "3B": "3B##3##<excursion_id>" 
+    },
+    "cities_checkin_id_list":{
+        "1": "cupertino##california##usa",
+        "2": "sunnyvale##california##usa",
+        "3": "santaclara##california##usa"       
+    },
+    "participants_list": {"pf_id_1": "1234567"},
+    "activities_list": {"hiking": "4", "roadtrip": "6"},
+    "excursion_metadata": {
+        "excursion_id": "123456789",
+        "activity_guide": "False",
+        "transport_mode": "drive",
+        "place_id": "1234567",
+        "excursion_owner_profile_id": "1234567",
+        "create_timestamp": "123456789",
+        "last_updated_timestamp": "123456789",
+        "description": "My excursion",
+        "itinerary_id": "1234",
+        "place_name": "Land'\''s End",
+        "city": "SF##California##USA",
+        "state": "California##USA",
+        "country": "USA"
+    }
+}'
+"""
+
+Response: 200
+
+
+Step 5 - Share Itinerary with existing friends
+
+5A - Fetch existing friends auto-complete
+
+Reference files:
+-- payana_service_travel_buddy_read_write_edit_test.py
+-- payana_travel_buddy_read_write_edit_test.py
+
+API:
+"""
+curl --location 'http://127.0.0.1:8888/profile/travelbuddy/tag/' \
+--header 'Content-Type: application/json' \
+--header 'profile_id: 1234567' \
+--header 'friend_id: 456.*'
+"""
+
+Response:
+{
+    "456789": "abhinandankr"
+}
+
+5B - Share the itinerary with friends via Notifications
 
 Reference Files:
 
@@ -27,18 +192,7 @@ API call:
 Reponse:
 
 
-
-Step 4 - Image Metadata
-
-Reference Files:
-
-API call:
-
-Reponse:
-
-
-
-Step 5 - Share Itinerary 
+Step 5 - Share Itinerary with new users via a mail invite
 
 Reference Files:
 
@@ -47,8 +201,7 @@ API call:
 Reponse:
 
 
-
-Step 6 - Edit Itinerary
+Step 7 - Edit Itinerary
 
 Reference Files:
 

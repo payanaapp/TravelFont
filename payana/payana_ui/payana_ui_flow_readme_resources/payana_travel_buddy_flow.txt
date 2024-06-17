@@ -31,25 +31,27 @@ Response:
 {
    "1234567":{
       "payana_favorite_buddy_list":{
-         "456789":"1716832884.79309"
+         "abhinandankr":"456789"
       },
       "payana_pending_sent_requests_travel_buddy_list":{
-         "456789":"1716832884.79309"
+         "abhinandankr":"456789"
       },
       "payana_travel_buddy_list":{
-         "456789":"1716832884.79309"
+         "abhinandankr":"456789"
       },
       "payana_pending_received_requests_travel_buddy_list":{
-         "456789":"1716832884.79309"
+         "abhinandankr2":"45678910"
       }
    }
 }
 """
 
 Note: 
--- Read the dict from payana_pending_sent_requests_travel_buddy_list for travel buddy list. 
--- In "456789":"1716832884.79309" => "456789" is the travel buddy profile ID.
--- Filter out the profile_id not in payana_pending_sent_requests_travel_buddy_list and payana_pending_received_requests_travel_buddy_list i.e. these are pending requests.
+-- Read the dict from payana_travel_buddy_list for travel buddy list. 
+-- In "abhinandankr":"456789" => "abhinandank" is the travel buddy profile name, "456789" is the travel buddy profile ID
+-- Filter out the profile_ids not in payana_pending_sent_requests_travel_buddy_list and payana_pending_received_requests_travel_buddy_list i.e. these are pending requests.
+-- payana_pending_sent_requests_travel_buddy_list is the travel buddy requests you (profile owner) have sent out
+-- payana_pending_received_requests_travel_buddy_list is the travel buddy requests you (profile owner) have received
 
 Step 3 - get the profile picture and profile details of travel buddies
 
@@ -81,7 +83,9 @@ curl --location 'http://127.0.0.1:8888/profile/travelbuddy/' \
 --header 'profile_id: 1234567' \
 --data '{
     "profile_id": "1234567",
+    "profile_name": "abhinandankr",
     "travel_buddy_profile_id": "456789123",
+    "travel_buddy_profile_name": "abhinandankr",
     "global_influencer": false,
     "favorite": true,
     "sent_pending_request": true,
@@ -110,47 +114,36 @@ Reference Files:
 
   -- 5B1 - Remove the received request from your profile 
 
-  API call (PUT request):
-    """
-    curl --location 'http://127.0.0.1:8888/profile/travelbuddy/' \
-    --header 'Content-Type: application/json' \
-    --header 'profile_id: 1234567' \
-    --data '{
-        "profile_id": "1234567",
-        "travel_buddy_profile_id": "456789123",
-        "global_influencer": false,
-        "favorite": false,
-        "sent_pending_request": true,
-        "received_pending_request": false,
-        "new_friend_request": true
-    }'
-    """
-
-  Note: Set the received_pending_request to false
+API call (POST request):
+"""
+curl --location 'http://127.0.0.1:8888/profile/travelbuddy/delete/values/' \
+--header 'Content-Type: application/json' \
+--header 'profile_id: 1234567' \
+--data '{
+    "payana_pending_received_requests_travel_buddy_list": {
+        "xyz": "456789"
+    }
+}'
+"""
 
 Response: 200
 
   -- 5B2 - Remove the sent request from your travel buddy's profile
 
-  API call:
-    """
-    curl --location 'http://127.0.0.1:8888/profile/travelbuddy/' \
-    --header 'Content-Type: application/json' \
-    --header 'profile_id: 1234567' \
-    --data '{
-        "profile_id": "456789123",
-        "travel_buddy_profile_id": "1234567",
-        "global_influencer": false,
-        "favorite": false,
-        "sent_pending_request": false,
-        "received_pending_request": false,
-        "new_friend_request": true
-    }'
-    """
+API call:
+"""
+curl --location 'http://127.0.0.1:8888/profile/travelbuddy/delete/values/' \
+--header 'Content-Type: application/json' \
+--header 'profile_id: <travel_buddy_profile_id>' \
+--data '{
+    "payana_pending_sent_requests_travel_buddy_list": {
+        "abc": "456789"
+    }
+}'
+"""
 
-  Note: Swap the profile_id, travel_buddy_profile_id from 5B1. Set the sent_pending_request to false
 
-  Response: 200
+Response: 200
 
 5C - Send a friend request 
 
@@ -167,43 +160,20 @@ curl --location 'http://127.0.0.1:8888/profile/travelbuddy/' \
 --header 'profile_id: 1234567' \
 --data '{
     "profile_id": "1234567",
+    "profile_name": "abhinandankr",
     "travel_buddy_profile_id": "456789123",
+    "travel_buddy_profile_name": "abhinandankr",
     "global_influencer": false,
-    "favorite": true,
+    "favorite": false,
     "sent_pending_request": true,
-    "received_pending_request": false,
-    "new_friend_request": true
-}'
-"""
-
-Note: Set "sent_pending_request" to true and "received_pending_request" to false
-
-Response: 200
-
-5C2 - Add to your travel buddy's received pending travel buddy list
-
-API call (PUT call):
-"""
-curl --location 'http://127.0.0.1:8888/profile/travelbuddy/' \
---header 'Content-Type: application/json' \
---header 'profile_id: 1234567' \
---data '{
-    "profile_id": "456789123",
-    "travel_buddy_profile_id": "1234567",
-    "global_influencer": false,
-    "favorite": true,
-    "sent_pending_request": false,
     "received_pending_request": true,
     "new_friend_request": true
 }'
 """
 
-Note: 
- -- Swap the profile_id, travel_buddy_profile_id from 5C1
- -- Set "received_pending_request" to true and "sent_pending_request" to false
+Note: Set "sent_pending_request" to true and "received_pending_request" to true, "new_friend_request" to true
 
 Response: 200
-
 
 5D - Reject a friend request received
 
@@ -216,16 +186,16 @@ Response: 200
     --header 'profile_id: 1234567' \
     --data '{
         "payana_travel_buddy_list": {
-            "456789": ""
+            "abhinandankr": "12345678"
         }
         "payana_favorite_buddy_list":{
-         "456789":""
+         "abhinandankr": "12345678"
       },
       "payana_pending_sent_requests_travel_buddy_list":{
-         "456789":""
+         "abhinandankr": "12345678"
       },
       "payana_pending_received_requests_travel_buddy_list":{
-         "456789":""
+         "abhinandankr": "12345678"
       }
     }'
     """
@@ -238,24 +208,24 @@ Response: 200
     """
     curl --location 'http://127.0.0.1:8888/profile/travelbuddy/delete/values/' \
     --header 'Content-Type: application/json' \
-    --header 'profile_id: 456789' \
+    --header 'profile_id: 3456789' \
     --data '{
         "payana_travel_buddy_list": {
-            "1234567": ""
-        },
-        "payana_favorite_buddy_list":{
-         "1234567":""
-        },
-        "payana_pending_sent_requests_travel_buddy_list":{
-         "1234567":""
-        },
-        "payana_pending_received_requests_travel_buddy_list":{
-         "1234567":""
+            "abhinandankr": "12345678"
         }
+        "payana_favorite_buddy_list":{
+         "abhinandankr": "12345678"
+      },
+      "payana_pending_sent_requests_travel_buddy_list":{
+         "abhinandankr": "12345678"
+      },
+      "payana_pending_received_requests_travel_buddy_list":{
+         "abhinandankr": "12345678"
+      }
     }'
     """
 
-  Note - From 5D1, swap the profile_id in the header with the values in the request body
+  Note - use the travel buddy profile ID for profile_id
 
   Repsonse: 200
 
@@ -265,3 +235,10 @@ Response: 200
 5E1 - Same as 5D1 
 
 5E2 - Same as 5D2
+
+
+5F - Remove an existing friend
+
+5F1 - Same as 5D1 
+
+5F2 - Same as 5D2

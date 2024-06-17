@@ -280,3 +280,4 @@ class PayanaTravelBuddyTableColumnFamilyDeleteEndPoint(Resource):
                            profile_travel_buddy_name_space)
 
         return payana_travel_buddy_read_obj_dict[profile_id][payana_travel_buddy_table_column_family_travel_buddy_list], payana_200
+    
