@@ -586,9 +586,9 @@ curl --location 'http://127.0.0.1:8888/entity/autocomplete/users/regex/' \
 Meaning of the fields:
  -- user is the search string that users enter for auto-complete
  -- city is the radius of search for auto-complete search
-   -- To begin with, start with the city user lives in, example - 'cupertino##california##usa'
-   -- If empty response, then go to the state, example - '.*##california##usa'
-   -- Then the country, example - '.*##usa'
+   -- To begin with, start with the city user lives in, example - city: 'cupertino##california##usa'
+   -- If empty response, then go to the state, example - city: '.*##california##usa'
+   -- Then the country, example - city: '.*##usa'
    -- Then the whole world, use "" (empty string) for the city
 
 Response:

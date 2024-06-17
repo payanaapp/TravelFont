@@ -192,6 +192,7 @@ payana_likes_table_entity_id = "entity_id"
 
 # Payana travel buddy table constants
 payana_travel_buddy_table_column_family_travel_buddy_list = "payana_travel_buddy_list"
+payana_travel_buddy_table_column_family_travel_buddy_list_timestamp = "payana_travel_buddy_list_timestamp"
 payana_travel_buddy_table_column_family_favorite_travel_buddy_list = "payana_favorite_buddy_list"
 payana_travel_buddy_table_column_family_top_travel_buddy_list = "payana_top_buddy_list"
 payana_travel_buddy_table_column_family_global_influencers_travel_buddy_list = "payana_global_influencers_travel_buddy_list"

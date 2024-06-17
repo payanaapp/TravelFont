@@ -51,6 +51,8 @@ curl --location 'http://127.0.0.1:8888/profile/travelbuddy/' \
 --header 'profile_id: 1234567' \
 --data '{
     "profile_id": "1234567",
+    "profile_name": "abkr",
+    "travel_buddy_profile_name": "abhinandankr",
     "travel_buddy_profile_id": "456789",
     "global_influencer": false,
     "favorite": false,
@@ -64,7 +66,9 @@ url = "http://127.0.0.1:8888/profile/travelbuddy/"
 
 profile_travel_buddy_json = {
     "profile_id": "1234567",
+    "profile_name": "abkr",
     "travel_buddy_profile_id": "456789",
+    "travel_buddy_profile_name": "abhinandankr",
     "global_influencer": False,
     "favorite": True,
     "sent_pending_request": True,
@@ -73,6 +77,8 @@ profile_travel_buddy_json = {
 }
 
 travel_buddy_profile_id = "456789"
+
+travel_buddy_profile_name = "abhinandankr"
 
 profile_id = profile_travel_buddy_json[payana_travel_buddy_table_column_family_profile_id]
 
@@ -109,7 +115,7 @@ profile_travel_buddy_response = response.json()
 print(profile_travel_buddy_response)
 
 print("Profile travel buddy creation verification status: " +
-      str(travel_buddy_profile_id in profile_travel_buddy_response[profile_id][payana_travel_buddy_table_column_family_travel_buddy_list]))
+      str(travel_buddy_profile_name in profile_travel_buddy_response[profile_id][payana_travel_buddy_table_column_family_travel_buddy_list]))
 
 # GET friend tag autocomplete
 # CURL request
@@ -117,10 +123,10 @@ print("Profile travel buddy creation verification status: " +
 curl --location 'http://127.0.0.1:8888/profile/travelbuddy/tag/' \
 --header 'Content-Type: application/json' \
 --header 'profile_id: 1234567' \
---header 'friend_id: 456.*'
+--header 'friend_id: abh.*'
 """
-friend_id = "456.*"
-travel_buddy_profile_id = "456789"
+friend_id = "abh.*"
+travel_buddy_profile_name_regex = "abhinandankr"
 
 url = "http://127.0.0.1:8888/profile/travelbuddy/tag/"
 
@@ -136,7 +142,7 @@ print("Profile travel buddy read regex friend comments tag status: " +
 profile_travel_buddy_response = response.json()
 
 print("Profile travel buddy regex friend comments tag verification status: " +
-      str(travel_buddy_profile_id in profile_travel_buddy_response))
+      str(travel_buddy_profile_name_regex in profile_travel_buddy_response))
 
 
 # Edit travel buddy object
@@ -146,7 +152,9 @@ curl --location 'http://127.0.0.1:8888/profile/travelbuddy/' \
 --header 'profile_id: 1234567' \
 --data '{
     "profile_id": "1234567",
+    "profile_name": "abkr",
     "travel_buddy_profile_id": "456789123",
+    "travel_buddy_profile_name": "abhinandankr",
     "global_influencer": false,
     "favorite": false,
     "sent_pending_request": true,
@@ -156,7 +164,9 @@ curl --location 'http://127.0.0.1:8888/profile/travelbuddy/' \
 """
 profile_travel_buddy_json = {
     "profile_id": "1234567",
+    "profile_name": "abkr",
     "travel_buddy_profile_id": "456789123",
+    "travel_buddy_profile_name": "abhinandankr_two",
     "global_influencer": False,
     "favorite": False,
     "sent_pending_request": True,
@@ -165,6 +175,8 @@ profile_travel_buddy_json = {
 }
 
 new_travel_buddy_profile_id = "456789123"
+new_travel_buddy_profile_name = "abhinandankr_two"
+
 url = "http://127.0.0.1:8888/profile/travelbuddy/"
 
 headers = {'Content-Type': 'application/json', payana_travel_buddy_table_column_family_profile_id: profile_id}
@@ -197,7 +209,7 @@ profile_travel_buddy_response = response.json()
 print(profile_travel_buddy_response)
 
 print("Profile travel buddy update read verification status: " +
-      str(new_travel_buddy_profile_id in profile_travel_buddy_response[profile_id][payana_travel_buddy_table_column_family_travel_buddy_list]))
+      str(new_travel_buddy_profile_name in profile_travel_buddy_response[profile_id][payana_travel_buddy_table_column_family_travel_buddy_list]))
 
 # Delete specific column family and column values
 """
@@ -206,26 +218,27 @@ curl --location 'http://127.0.0.1:8888/profile/travelbuddy/delete/values/' \
 --header 'profile_id: 1234567' \
 --data '{
     "payana_travel_buddy_list": {
-        "456789": "1684481568.048925"
+        "abhinandankr": "456789"
     }
 }'
 """
+
 url = "http://127.0.0.1:8888/profile/travelbuddy/delete/values/"
 headers = {payana_travel_buddy_table_column_family_profile_id: profile_id,
            'Content-Type': 'application/json'}
 
 profile_travel_buddy_delete_cv_json = {
     "payana_travel_buddy_list": {
-        new_travel_buddy_profile_id: ""
+        new_travel_buddy_profile_name: ""
     },
     "payana_favorite_buddy_list":{
-        new_travel_buddy_profile_id:""
+        new_travel_buddy_profile_name:""
     },
     "payana_pending_sent_requests_travel_buddy_list":{
-        new_travel_buddy_profile_id:""
+        new_travel_buddy_profile_name:""
     },
     "payana_pending_received_requests_travel_buddy_list":{
-        new_travel_buddy_profile_id:""
+        new_travel_buddy_profile_name:""
     }
 }
 
@@ -257,7 +270,7 @@ profile_travel_buddy_response = response.json()
 print(profile_travel_buddy_response)
 
 print("Profile travel buddy delete CV verification status: " +
-      str(new_travel_buddy_profile_id not in profile_travel_buddy_response[profile_id][payana_travel_buddy_table_column_family_travel_buddy_list] and new_travel_buddy_profile_id not in profile_travel_buddy_response[profile_id]["payana_pending_sent_requests_travel_buddy_list"]))
+      str(new_travel_buddy_profile_name not in profile_travel_buddy_response[profile_id][payana_travel_buddy_table_column_family_travel_buddy_list] and new_travel_buddy_profile_name not in profile_travel_buddy_response[profile_id]["payana_pending_sent_requests_travel_buddy_list"]))
 
 # Delete entire column family
 """

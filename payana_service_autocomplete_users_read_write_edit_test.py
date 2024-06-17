@@ -65,7 +65,7 @@ url = "http://127.0.0.1:8888/entity/autocomplete/users/"
 payana_autocomplete_users_obj_json = {
     "city": "cupertino##california##usa",
     "payana_autocomplete_users_list": {
-        "user_1": "156",
+        "user_1": "156", # user_name: profile_id
         "user_2": "789",
         "user_3": "8678",
         "user_4": "1457"

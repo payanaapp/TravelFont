@@ -107,6 +107,9 @@ curl --location --request PUT 'https://storage.googleapis.com/payana_profile_pic
 
 Step 4 - Take the User Favorite Places preference, User Favorite Activities preference, Profile Info details on UI screen
 
+4A - Auto-complete places/cities
+  -- 7A in payana_homepage_flow.txt
+
 Step 5 - Save the details from step 4 into the Profile Info metadata table using a POST call
 
 Files:
