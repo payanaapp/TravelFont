@@ -4,7 +4,7 @@ attrs==19.1.0
 jsonschema==3.0.1
 pyrsistent==0.15.2
 pytz==2019.1
-six==1.13.0
+six==1.16
 gunicorn==21.2.0
 MarkupSafe==2.1.3
 Werkzeug==2.3.7
