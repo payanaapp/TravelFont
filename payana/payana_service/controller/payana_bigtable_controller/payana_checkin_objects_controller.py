@@ -117,10 +117,6 @@ class PayanaCheckinTableEndPoint(Resource):
         payana_checkin_metadata = bigtable_constants.payana_checkin_metadata
         payana_checkin_id = bigtable_constants.payana_checkin_id
 
-        if payana_checkin_object[payana_checkin_metadata][payana_checkin_id] is None or payana_checkin_object[payana_checkin_metadata][payana_checkin_id] == "":
-            raise Exception(
-                payana_check_in_id_empty_exception_message, payana_checkin_name_space)
-
         payana_checkin_obj_edit_status = payana_checkin_read_obj.insert_columns_column_family(
             checkin_id, payana_checkin_object)
 

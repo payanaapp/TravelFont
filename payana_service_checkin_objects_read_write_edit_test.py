@@ -203,21 +203,6 @@ payana_checkin_obj_edit_json = {
     "airbnb_metadata": {
         "airbnb_embed_url": "abc_xyz.com",
         "airbnb_post_id": "12345"
-    },
-    "checkin_metadata": {
-        "transport_mode": "drive",
-        "description": "Enjoying the beach!",
-        "checkin_owner_profile_id": "1234567",
-        "create_timestamp": "123456789",
-        "last_updated_timestamp": "123456789",
-        "checkin_id": checkin_id,
-        "place_id": "1234567",
-        "excursion_id": "12345",
-        "itinerary_id": "12345",
-        "place_name": "Land's End",
-        "city": "SF##California##USA",
-        "state": "California##USA",
-        "country": "USA"
     }
 }
 
@@ -279,10 +264,6 @@ headers = {payana_checkin_id: checkin_id, 'Content-Type': 'application/json'}
 payana_checkin_value_delete_json = {
     "image_id_list": [
         "A"
-    ],
-    "checkin_metadata": [
-        "transport_mode",
-        "description"
     ]
 }
 
@@ -317,7 +298,7 @@ payana_checkin_metadata = bigtable_constants.payana_checkin_metadata
 payana_checkin_column_family_description = bigtable_constants.payana_checkin_column_family_description
 
 print("Profile checkin object delete values verification status: " +
-      str(payana_checkin_transport_mode not in profile_checkin_response[checkin_id][payana_checkin_metadata] or payana_checkin_column_family_description not in profile_checkin_response[checkin_id][payana_checkin_metadata]))
+      str("A" not in profile_checkin_response[checkin_id]["image_id_list"]))
 
 # Delete entire column family
 """

@@ -163,10 +163,36 @@ print("Payana excursion object creation verification status: " +
 
 # Edit
 """
-curl --location 'http://127.0.0.1:8888/entity/excursion/' \
+curl --location --request PUT 'http://localhost:8888/entity/excursion/' \
 --header 'Content-Type: application/json' \
 --header 'excursion_id: 123456789' \
---data ''
+--data '{
+    "checkin_id_list": {
+        "5": "34567",
+        "4": "45678"
+    },
+    "image_id_list":{
+        "1A": "12345",
+        "1B": "34567",
+        "2A": "23456",
+        "2B": "34567",
+        "3A": "23456",
+        "3B": "34567" 
+    },
+    "cities_checkin_id_list":{
+        "1": "cupertino##california##usa",
+        "2": "sunnyvale##california##usa",
+        "3": "santaclara##california##usa"       
+    },
+    "participants_list": {"pf_id_4": "1234567", "pf_id_2": "12345678"},
+    "activities_list": {"romantic": "4", "roadtrip": "7"},
+    "excursion_metadata": {
+        "place_name": "Land's End 1",
+        "city": "SF##California##USA",
+        "state": "California##USA",
+        "country": "USA"
+    }
+}'
 """
 
 url = "http://127.0.0.1:8888/entity/excursion/"
@@ -284,12 +310,16 @@ payana_excursion_object_delete_cv_json = {
     "participants_list": {
         "pf_id_1": "",
         "pf_id_2": ""
+    },
+    "image_id_list": {
+        "1A": ""
     }
 }
 
 deleted_profile_id = "pf_id_1"
 deleted_checkin_id =  "1"
 deleted_excursion_metadata_cv = "activity_guide"
+deleted_image_id =  "1A"
 
 response = requests.post(url, data=json.dumps(
     payana_excursion_object_delete_cv_json), headers=headers)
@@ -318,7 +348,7 @@ print("Payana excursion object read status: " +
 payana_excursion_objects_permission_response = response.json()
 
 print("Payana excursion object CV delete verification status: " +
-      str(deleted_excursion_metadata_cv not in payana_excursion_objects_permission_response[excursion_id][column_family_excursion_metadata] and deleted_profile_id not in payana_excursion_objects_permission_response[excursion_id][payana_excursion_column_family_participants_list] and deleted_checkin_id not in payana_excursion_objects_permission_response[excursion_id][payana_excursion_column_family_checkin_id_list]))
+      str(deleted_excursion_metadata_cv not in payana_excursion_objects_permission_response[excursion_id][column_family_excursion_metadata] and deleted_profile_id not in payana_excursion_objects_permission_response[excursion_id][payana_excursion_column_family_participants_list] and deleted_checkin_id not in payana_excursion_objects_permission_response[excursion_id][payana_excursion_column_family_checkin_id_list] and deleted_image_id not in payana_excursion_objects_permission_response[excursion_id]["image_id_list"]))
 
 # Delete entire column family
 """

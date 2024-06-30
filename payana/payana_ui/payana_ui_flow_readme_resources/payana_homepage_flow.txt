@@ -571,6 +571,11 @@ Response:
 
 7B - Auto-Complete User Names 
 
+7B1 - Fetch travel buddy connection names 
+ -- Step 5A in payana_itinerary_creation_flow.txt
+
+7B2 - Fetch local travel buddies that are not connected
+
 Reference files:
   - * payana_service_autocomplete_users_read_write_edit_test.py 
   - * payana_autocomplete_users_read_write_edit.py
