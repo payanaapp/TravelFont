@@ -236,6 +236,60 @@ print("Profile Page Itinerary deletion column values verification status: " +
       str(len(profile_page_itinerary_response[profile_id]
           [created_activity_guide_id_list_activity_generic_column_family_id]) == 1))
 
+# Delete specific column family and column values - only  activity based itinerary/excursion IDs
+"""
+curl --location --request POST 'http://127.0.0.1:8888/profile/itineraries/delete/values/activities/' \
+--header 'profile_id: 123456' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "created_excursion_id_list": {
+            "1674896220": "12345"
+        }
+}'
+"""
+
+url = "http://127.0.0.1:8888/profile/itineraries/delete/values/activities/"
+headers = {'profile_id': profile_id, 'Content-Type': 'application/json'}
+
+key, value = list(profile_page_itinerary_response[profile_id]
+                  [created_excursion_id_list_activity_generic_column_family_id].items())[0]
+
+deleted_excursion_key = key
+
+profile_page_itineraries_column_value_delete_json = {
+    "created_excursion_id_mapping": {key: value}}
+
+response = requests.post(url, data=json.dumps(
+    profile_page_itineraries_column_value_delete_json), headers=headers)
+
+print("Profile page itineraries contents column values delete status: " +
+      str(response.status_code == 200))
+
+
+# GET profile page itinerary
+# CURL request
+"""
+curl --location --request GET 'http://127.0.0.1:8888/profile/itineraries/' \
+--header 'profile_id: 123456'
+"""
+
+url = "http://127.0.0.1:8888/profile/itineraries/"
+headers = {'profile_id': profile_id}
+
+response = requests.get(url, headers=headers)
+
+print("Profile read status: " + str(response.status_code == 200))
+
+profile_page_itinerary_response = response.json()
+
+print("Profile Page Itinerary deletion column activity values verification status: " +
+      str(deleted_excursion_key not in profile_page_itinerary_response[profile_id]
+          [created_activity_guide_id_list_activity_generic_column_family_id] and deleted_excursion_key not in profile_page_itinerary_response[profile_id]
+          ["hiking_created_excursion_id_mapping"] and deleted_excursion_key not in profile_page_itinerary_response[profile_id]
+          ["romantic_created_excursion_id_mapping"]))
+
+print(profile_page_itinerary_response)
+
 # Delete created_activity_guide_id_list_activity_generic_column_family_id - entire column family
 """
 curl --location --request POST 'http://127.0.0.1:8888/profile/itineraries/delete/cf/' \
