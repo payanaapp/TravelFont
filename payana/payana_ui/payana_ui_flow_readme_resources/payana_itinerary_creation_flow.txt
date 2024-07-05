@@ -1,6 +1,6 @@
 Step 1 - Save itinerary metadata via a POST call 
 
-1A - Create an Excursion object
+1A - Create an Excursion Metadata object
 
 Reference Files:
 -- payana_service_excursion_objects_read_write_edit_test.py
@@ -96,7 +96,7 @@ Reponse: 201
 }
 """
 
-1C - Save the new excursions and itineraries into user's profile itineraries
+1C - Save the new excursion and itinerary into user's profile itineraries
 
 Reference Files:
  -- payana_service_profile_page_itineraries_read_write_edit_test.py
@@ -186,7 +186,7 @@ curl --location --request POST 'http://127.0.0.1:8888/entity/checkin/' \
 Response: 201
 
 
-3C - Add CheckIn Metadata into Excursion Object
+3C - Add CheckIn Metadata into the parent Excursion Object
 
 Reference Files:
 -- payana_service_excursion_objects_read_write_edit_test.py
@@ -259,7 +259,7 @@ Response:
     "abhinandankr": "456789"
 }
 
-4B - Share the itinerary with friends via Notifications (To be done - both UI, backend)
+4B - Share the itinerary with friends via Notifications (To be done - UI, service, backend)
 
 Reference Files:
 
@@ -292,6 +292,8 @@ Reponse: 200
 
 
 Step 6 - Edit Itinerary Album Metadata 
+
+Step 6A - Update the name in the Itinerary Metadata table
 
 Reference Files:
 -- payana_service_itinerary_object_read_write_edit_test.py 
@@ -340,10 +342,15 @@ Note:
 
 Reponse: 200
 
+Step 6B - If itinerary name is changed, update the created_itinerary_id_mapping/saved_itinerary_id_mapping in the profile itinerary table of the user
+-- Same as 1C
+
 
 Step 7 - Edit Excursion 
 
 7A - Edit Excursion Metadata
+
+7A1 - Update the Excursion Metadata table
 
 Reference Files:
 -- payana_service_excursion_objects_read_write_edit_test.py
@@ -390,6 +397,8 @@ Note:
 
 Reponse: 200
 
+7A2 - If excursion name is changed, update the created_excursion_id_mapping/saved_excursion_id_mapping in the profile itinerary table of the user 
+ -- Same as 1C
 
 7B - Add new Images to an existing check in object
 
@@ -441,7 +450,7 @@ curl --location --request PUT 'http://localhost:8888/entity/excursion/' \
 Reponse: 200
 
 
-7C - Add new CheckIn 
+7C - Add new CheckIn object
 
 7C1 -- Upload the images into Google Cloud storage
   -- Same as Step 3A above
@@ -449,7 +458,7 @@ Reponse: 200
 7C2 - Create the CheckIn object metadata 
   -- Same as Step 3C above
 
-7C3 - Update the Excursion Object Metadata
+7C3 - Update the Excursion Object Metadata (same as 7B3, but different data)
 
 Reference Files:
 -- payana_service_excursion_objects_read_write_edit_test.py
@@ -479,9 +488,22 @@ curl --location --request PUT 'http://localhost:8888/entity/excursion/' \
 Reponse: 200/201
 
 
-7D - Remove Images
+7D - Remove Images from CheckIn object
 
 7D1 -- Remove the images from Google Cloud storage
+
+Reference files:
+--  payana_service_gcs_image_read_write_edit_test.py
+
+API call: DELETE
+"""
+curl --location --request DELETE 'http://127.0.0.1:8888/entity/gcs/object/' \
+--header 'Content-Type: application/json' \
+--header 'payana_storage_bucket: payana_profile_pictures' \
+--header 'payana_storage_object: profile_picture_one'
+"""
+
+Response: 200
 
 7D2 - Remove the image metadata from the CheckIn object metadata 
 
@@ -503,7 +525,7 @@ curl --location --request POST 'http://127.0.0.1:8888/entity/checkin/delete/valu
 
 Response: 200
 
-7D3 - Update the Excursion Object Metadata
+7D3 - Update the Excursion Object Metadata by removing the image ID metadata
 
 Reference Files:
 -- payana_service_excursion_objects_read_write_edit_test.py
@@ -530,6 +552,7 @@ Reponse: 200/201
 7E - Remove CheckIn Object
 
 7E1 -- Remove the images from Google Cloud storage
+  -- Same as 7D1
 
 7E2 - Remove the the CheckIn object metadata 
 
@@ -546,7 +569,7 @@ curl --location --request DELETE 'http://127.0.0.1:8888/entity/checkin/delete/' 
 
 Response: 200
 
-7E3 - Update the Excursion Object Metadata
+7E3 - Update the Excursion Object Metadata by removing the CheckIn ID and the Image IDs
 
 Reference Files:
 -- payana_service_excursion_objects_read_write_edit_test.py
@@ -621,11 +644,11 @@ Reponse: 200/201
 
 Step 9 - Remove an excursion
 
-9A - Remove the CheckIn Object Metadata
- -- Same as 7E2 above
+9A - Remove all the CheckIn Objects Metadata in the Excursion
+ -- Same as 7E2 above (repeat for all the check in object IDs in the Excursion)
 
 9B - Remove the images from GCS 
- -- Same as 7E1
+ -- Same as 7E1 (repeat for all the image IDs)
 
 9C -- Remove the excursion object
 
@@ -668,37 +691,90 @@ Response: 200
 9E - Update the profile itinerary/excursion object i.e. remove the excursion ID from the profile saved/created itineraries
 
 Reference Files:
+ -- payana_service_profile_page_itineraries_read_write_edit_test.py
+ -- payana_profile_page_itineraries.py
 
 API call:
+"""
+curl --location --request POST 'http://127.0.0.1:8888/profile/itineraries/delete/values/activities/' \
+--header 'profile_id: 123456' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "created_excursion_id_list": {
+            "1674896220": "12345"
+        }
+}'
+"""
 
-Reponse:
-
-
+Reponse: 200
 
 Step 10 - Remove an itinerary album
 
-10A -- Remove all the excursion objects
+10A -- Remove all the excursion objects in the itinerary 
+ -- Same as 9C (repeat for all the excursions)
 
 10B - Remove all the CheckIn Object Metadata objects
+ -- Same as 7E2 above (repeat for all the check in object IDs in the Excursion)
 
 10C - Remove the images from GCS 
+ -- Same as 7E1 (repeat for all the image IDs)
 
 10D - Remove the Itinerary 
+Reference Files:
+-- payana_service_itinerary_object_read_write_edit_test.py 
+-- payana_itinerary_object_read_write_edit_test.py
+
+API call: DELETE
+"""
+curl --location --request DELETE 'http://localhost:8888/entity/itinerary/delete/' \
+--header 'Content-Type: application/json' \
+--header 'itinerary_id: 12345678' \
+--data ''
+"""
+
+Response: 200
+
 
 10E - Update the profile itinerary/excursion object
-
-Reference Files:
-
-API call:
-
-Reponse:
-
+  -- Same as 1C
 
 
 Step 11 - Grant edit access to itineraries
 
 Reference Files:
+ -- payana_service_excursion_checkin_objects_permission_read_write_edit_test.py
+ -- payana_excursion_checkin_objects_permissions.py
 
 API call:
+"""
+curl --location 'http://127.0.0.1:8888/entity/edit/permission/' \
+--header 'Content-Type: application/json' \
+--header 'entity_id: 123456789' \
+--data '{
+    "entity_id": "123456789",
+    "participants_list": {"pf_id_1": "1234567", "pf_id_2": "1234567", "pf_id_3": "1234567"},
+    "edit_participants_list": {"pf_id_2": "1234567", "pf_id_3": "1234567"},
+    "admin": {"pf_id_1": "1234567"}
+}'
+"""
 
-Reponse:
+Reponse: 200
+
+Step 12 - Remove edit access to itineraries
+
+Reference Files:
+ -- payana_service_excursion_checkin_objects_permission_read_write_edit_test.py
+ -- payana_excursion_checkin_objects_permissions.py
+
+API call:
+"""
+curl --location 'http://127.0.0.1:8888/entity/edit/permission/delete/values/' \
+--header 'Content-Type: application/json' \
+--header 'entity_id: 123456789' \
+--data '{
+    "participants_list": {"pf_id_1": ""},
+    "edit_participants_list": {"pf_id_2": ""}
+}'
+"""
+
+Reponse: 200

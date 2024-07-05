@@ -250,3 +250,55 @@ class PayanaProfileTableColumnFamilyDeleteEndPoint(Resource):
             message: payana_profile_page_itinerary_objects_delete_success_message,
             status_code: payana_200
         }, payana_200
+
+@profile_page_itineraries_name_space.route("/delete/values/activities/")
+class PayanaProfilePageItinerariesColumnValuesDeleteEndPoint(Resource):
+
+    @profile_page_itineraries_name_space.doc(responses={200: payana_200_response, 400: payana_400_response, 500: payana_500_response})
+    @payana_service_generic_exception_handler
+    def post(self):
+
+        profile_id = get_profile_id_header(request)
+
+        if profile_id is None or len(profile_id) == 0:
+            raise KeyError(payana_missing_profile_id_header_exception,
+                           profile_page_itineraries_name_space)
+
+        profile_page_itinerary_object = request.json
+
+        if profile_page_itinerary_object is None:
+            raise KeyError(payana_missing_profile_page_itinerary_object,
+                           profile_page_itineraries_name_space)
+
+        payana_profile_page_itinerary_read_obj = PayanaBigTable(
+            payana_profile_page_itinerary_table)
+
+        payana_profile_page_itinerary_table_delete_wrappers = []
+
+        for column_family, column_family_dict in profile_page_itinerary_object.items():
+            
+            for activity in bigtable_constants.payana_activity_column_family:
+                activity_column_family_mapping = "_".join(
+                    [activity, column_family])
+                
+                # Delete specific column family and column values
+                for column_quantifier, column_value in column_family_dict.items():
+                    payana_profile_page_itinerary_table_delete_wrapper = bigtable_write_object_wrapper(
+                        profile_id, activity_column_family_mapping, column_quantifier, column_value)
+
+                    payana_profile_page_itinerary_table_delete_wrappers.append(
+                        payana_profile_page_itinerary_table_delete_wrapper)
+
+            payana_profile_page_itinerary_obj_delete_status = payana_profile_page_itinerary_read_obj.delete_bigtable_row_columns(
+                payana_profile_page_itinerary_table_delete_wrappers)
+
+            if not payana_profile_page_itinerary_obj_delete_status:
+                raise Exception(
+                    payana_profile_page_itinerary_objects_delete_failure_message, profile_page_itineraries_name_space)
+
+        return {
+            status: payana_200_response,
+            payana_profile_id_header: profile_id,
+            message: payana_profile_page_itinerary_objects_delete_success_message,
+            status_code: payana_200
+        }, payana_200
