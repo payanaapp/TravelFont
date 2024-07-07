@@ -557,6 +557,10 @@ Reference files:
   - * payana_service_autocomplete_cities_read_write_edit_test.py 
   - * payana_autocomplete_cities_read_write_edit.py
 
+API postman object name:
+  -- Payana  autocomplete cities object GET
+  Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-938177c5-d726-469a-bed0-6e3001c0fff0 
+
 API call:
 """
 curl --location 'http://127.0.0.1:8888/entity/autocomplete/city/' \

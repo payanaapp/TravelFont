@@ -114,12 +114,7 @@ payana_excursion_object_json = {
         "city": "SF##California##USA",
         "state": "California##USA",
         "country": "USA"
-    },
-    "cities_checkin_id_list":{
-        "1": "cupertino##california##usa",
-        "2": "sunnyvale##california##usa",
-        "3": "santaclara##california##usa"       
-    },
+    }
 }
 
 excursion_id = payana_excursion_object_json[column_family_excursion_metadata][payana_excursion_id]

@@ -6,6 +6,10 @@ Reference Files:
 -- payana_service_excursion_objects_read_write_edit_test.py
 -- payana_excursion_object_read_write_edit_test.py
 
+API postman object name:
+ -- Payana  Excursion objects POST
+ Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-28cc34d0-9f06-4932-bfbd-c113c467571f 
+
 API call: POST
 """
 curl --location 'http://localhost:8888/entity/excursion/' \
@@ -54,6 +58,9 @@ Reference Files:
 -- payana_service_itinerary_object_read_write_edit_test.py 
 -- payana_itinerary_object_read_write_edit_test.py
 
+API postman object name:
+ -- Payana Itinerary objects POST
+ Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-5470119e-ca3a-4150-b550-afb61be5c22d 
 
 API call: POST
 """
@@ -102,6 +109,10 @@ Reference Files:
  -- payana_service_profile_page_itineraries_read_write_edit_test.py
  -- payana_profile_page_itineraries.py
 
+API postman object name:
+ -- Payana Profile Itinerary Object WRITE
+ Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-d804f4c3-916f-4ec9-bee4-d52808cd3f87 
+
 API call:
 """
 curl --location --request POST 'http://127.0.0.1:8888/profile/itineraries/' \
@@ -143,10 +154,14 @@ Step 3 - Create an excursion and publish
             -- 123456789 => excursion ID
 
 
-3B - Create Check In objects
+3B - Create Check In object Metadata
 Reference Files:
 -- payana_service_checkin_objects_read_write_edit_test.py
 -- payana_checkin_object_read_write_edit_test.py
+
+API Postman Files:
+  -- Payana Check in POST
+  Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-70f0bc21-4fb2-46d5-a9a0-4bd7a79ca933 
 
 API call: POST
 """
@@ -191,6 +206,10 @@ Response: 201
 Reference Files:
 -- payana_service_excursion_objects_read_write_edit_test.py
 -- payana_excursion_object_read_write_edit_test.py
+
+API Postman file:
+  -- Payana  Excursion objects PUT
+  Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-7d9e3878-80ba-4f89-b624-a4ddeeb6c314
 
 API call: Same as 1A but a PUT call
 """
@@ -246,6 +265,10 @@ Reference files:
 -- payana_service_travel_buddy_read_write_edit_test.py
 -- payana_travel_buddy_read_write_edit_test.py
 
+API Postman file:
+  -- Payana  travel buddy object GET regex friend tag
+  Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-4e8145ab-617b-40f9-bd19-4db1ece0781a 
+
 API:
 """
 curl --location 'http://127.0.0.1:8888/profile/travelbuddy/tag/' \
@@ -273,6 +296,10 @@ Step 5 - Share Itinerary with new users via a mail invite
 Reference Files:
 -- payana_service_mail_id_sign_up_notification_controller.py 
 
+API Postman file:
+  -- Payana  sign up mail notification object POST
+  Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-8d9c983d-2b17-4385-8553-b0f2d60fd951
+
 API call:
 """
 curl --location 'http://127.0.0.1:8888/entity/signup/' \
@@ -298,6 +325,10 @@ Step 6A - Update the name in the Itinerary Metadata table
 Reference Files:
 -- payana_service_itinerary_object_read_write_edit_test.py 
 -- payana_itinerary_object_read_write_edit_test.py
+
+API Postman file:
+  -- Payana Itinerary objects PUT
+  Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-5691cdff-4b71-4c1f-bbd4-f4dd087c8e06
 
 API call: PUT
 # Edit
@@ -343,8 +374,11 @@ Note:
 Reponse: 200
 
 Step 6B - If itinerary name is changed, update the created_itinerary_id_mapping/saved_itinerary_id_mapping in the profile itinerary table of the user
--- Same as 1C
+-- Same as 1C but do a PUT call instead of POST
 
+API Postman files:
+  -- Payana Profile Itinerary Object EDIT
+  Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-34eed306-9b09-443a-872c-00cf05a5757c
 
 Step 7 - Edit Excursion 
 
@@ -356,7 +390,11 @@ Reference Files:
 -- payana_service_excursion_objects_read_write_edit_test.py
 -- payana_excursion_object_read_write_edit_test.py
 
-API call:
+API Postman File:
+  -- Payana  Excursion objects PUT
+  Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-7d9e3878-80ba-4f89-b624-a4ddeeb6c314 
+
+API call: PUT
 curl --location --request PUT 'http://localhost:8888/entity/excursion/' \
 --header 'Content-Type: application/json' \
 --header 'excursion_id: 123456789' \
@@ -399,12 +437,15 @@ Reponse: 200
 
 7A2 - If excursion name is changed, update the created_excursion_id_mapping/saved_excursion_id_mapping in the profile itinerary table of the user 
  -- Same as 1C
+ API Postman files:
+  -- Payana Profile Itinerary Object EDIT
+  Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-34eed306-9b09-443a-872c-00cf05a5757c
+
 
 7B - Add new Images to an existing check in object
 
 7B1 -- Upload the images into Google Cloud storage
   -- Same as Step 3A above
-
 
 7B2 - Update the CheckIn object metadata i.e. add the new image ID
 
@@ -412,8 +453,11 @@ Reference Files:
 -- payana_service_checkin_objects_read_write_edit_test.py
 -- payana_checkin_object_read_write_edit_test.py
 
+API Postman files:
+  -- Payana Check in PUT
+  Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-09a45bfb-91be-410e-a88b-50cb0f008a98
 
-API call:
+API call: PUT
 """
 curl --location --request PUT 'http://127.0.0.1:8888/entity/checkin/' \
 --header 'Content-Type: application/json' \
@@ -434,6 +478,10 @@ Reponse: 200
 Reference Files:
 -- payana_service_excursion_objects_read_write_edit_test.py
 -- payana_excursion_object_read_write_edit_test.py
+
+API Postman File:
+  -- Payana  Excursion objects PUT
+  Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-7d9e3878-80ba-4f89-b624-a4ddeeb6c314
 
 API call:
 """
@@ -463,6 +511,10 @@ Reponse: 200
 Reference Files:
 -- payana_service_excursion_objects_read_write_edit_test.py
 -- payana_excursion_object_read_write_edit_test.py
+
+API Postman File:
+  -- Payana  Excursion objects PUT
+  Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-7d9e3878-80ba-4f89-b624-a4ddeeb6c314
 
 API call:
 """
@@ -495,6 +547,10 @@ Reponse: 200/201
 Reference files:
 --  payana_service_gcs_image_read_write_edit_test.py
 
+API Postman file:
+  -- Payana  GCS object delete
+  Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-11f44a15-91d8-4eb2-8c7b-843ca9ae8057
+
 API call: DELETE
 """
 curl --location --request DELETE 'http://127.0.0.1:8888/entity/gcs/object/' \
@@ -510,6 +566,10 @@ Response: 200
 Reference Files:
 -- payana_service_checkin_objects_read_write_edit_test.py
 -- payana_checkin_object_read_write_edit_test.py
+
+API Postman file:
+  -- Payana Check in Delete Values
+  Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-41f53bfa-28d9-493b-8f96-c85e9e2f720f
 
 API call: POST
 """
@@ -530,6 +590,10 @@ Response: 200
 Reference Files:
 -- payana_service_excursion_objects_read_write_edit_test.py
 -- payana_excursion_object_read_write_edit_test.py
+
+API Postman file:
+  -- Payana  Excursion objects DELETE values
+  Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-da8ce965-0a6a-44ed-af38-ca44c4428bb8
 
 API call: POST
 """
@@ -560,6 +624,10 @@ Reference Files:
 -- payana_service_checkin_objects_read_write_edit_test.py
 -- payana_checkin_object_read_write_edit_test.py
 
+API Postman file:
+  -- Payana Check in Delete Row
+  Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-11c12372-ac2e-4b9b-a543-0d0b631ebace
+
 API call: DELETE
 """ 
 curl --location --request DELETE 'http://127.0.0.1:8888/entity/checkin/delete/' \
@@ -569,11 +637,15 @@ curl --location --request DELETE 'http://127.0.0.1:8888/entity/checkin/delete/' 
 
 Response: 200
 
-7E3 - Update the Excursion Object Metadata by removing the CheckIn ID and the Image IDs
+7E3 - Update the Excursion Object Metadata by removing the CheckIn ID and the Image IDs (same as 7D3 but different data)
 
 Reference Files:
 -- payana_service_excursion_objects_read_write_edit_test.py
 -- payana_excursion_object_read_write_edit_test.py
+
+API Postman file:
+  -- Payana  Excursion objects DELETE values
+  Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-da8ce965-0a6a-44ed-af38-ca44c4428bb8 
 
 API call: POST
 """
@@ -607,6 +679,10 @@ Reponse: 200/201
 Reference Files:
 -- payana_service_checkin_objects_read_write_edit_test.py
 -- payana_checkin_object_read_write_edit_test.py
+
+API Postman files:
+  -- Payana Check in PUT
+  Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-09a45bfb-91be-410e-a88b-50cb0f008a98
 
 API call:
 """
@@ -656,6 +732,10 @@ Reference Files:
 -- payana_service_excursion_objects_read_write_edit_test.py
 -- payana_excursion_object_read_write_edit_test.py
 
+API Postman files:
+  -- Payana  Excursion objects DELETE ROW
+  Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-2911225a-e3b5-41f1-9b1a-dcb3abb3673a
+
 API call: DELETE
 """
 curl --location --request DELETE 'http://127.0.0.1:8888/entity/excursion/delete/' \
@@ -672,6 +752,9 @@ Reference Files:
 -- payana_service_itinerary_object_read_write_edit_test.py 
 -- payana_itinerary_object_read_write_edit_test.py
 
+API Postman file:
+  -- Payana Itinerary objects DELETE values
+  Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-2cc42d17-c75a-4526-a88f-54144fb0bd83
 
 API call: POST
 """
@@ -694,14 +777,18 @@ Reference Files:
  -- payana_service_profile_page_itineraries_read_write_edit_test.py
  -- payana_profile_page_itineraries.py
 
+API Postman file:
+  -- Payana profile page itinerary delete value activities
+  Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-640ffa3c-2d29-4f3e-bb7a-72a183375b40
+
 API call:
 """
 curl --location --request POST 'http://127.0.0.1:8888/profile/itineraries/delete/values/activities/' \
 --header 'profile_id: 123456' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-    "created_excursion_id_list": {
-            "1674896220": "12345"
+    "created_excursion_id_mapping": {
+            "12345": "itinerary_name_one"
         }
 }'
 """
@@ -724,6 +811,10 @@ Reference Files:
 -- payana_service_itinerary_object_read_write_edit_test.py 
 -- payana_itinerary_object_read_write_edit_test.py
 
+API Postman file:
+  -- Payana Itinerary objects DELETE ROW
+  Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-c251c5f8-3276-4fbb-b30f-78bb7a71e6e4
+
 API call: DELETE
 """
 curl --location --request DELETE 'http://localhost:8888/entity/itinerary/delete/' \
@@ -745,6 +836,10 @@ Reference Files:
  -- payana_service_excursion_checkin_objects_permission_read_write_edit_test.py
  -- payana_excursion_checkin_objects_permissions.py
 
+API Postman file:
+  -- Payana  Excursion checkin objects permission POST
+  Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-3af3488f-ccd2-4b6b-af28-4a85ebe7085c
+
 API call:
 """
 curl --location 'http://127.0.0.1:8888/entity/edit/permission/' \
@@ -765,6 +860,10 @@ Step 12 - Remove edit access to itineraries
 Reference Files:
  -- payana_service_excursion_checkin_objects_permission_read_write_edit_test.py
  -- payana_excursion_checkin_objects_permissions.py
+
+API Postman file:
+  -- Payana  Excursion checkin objects permission DELETE values
+  Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-4a0532d8-3235-49d3-8541-ccb6a82cb097
 
 API call:
 """
