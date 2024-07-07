@@ -242,8 +242,8 @@ curl --location --request POST 'http://127.0.0.1:8888/profile/itineraries/delete
 --header 'profile_id: 123456' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-    "created_excursion_id_list": {
-            "1674896220": "12345"
+    "created_excursion_id_mapping": {
+            "12345": "itinerary_name_one"
         }
 }'
 """

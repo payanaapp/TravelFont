@@ -43,6 +43,10 @@ Files:
 
  -- 3A - Get a Signed Auth URL Token to upload the Profile Picture Image
 
+API postman file:
+  -- Payana  signed URL upload GET
+  Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-7a45c001-4b4a-4cb8-a771-82146efee2d3 
+
 API:
 """
 curl --location 'http://localhost:8888/entity/signed_url/upload' \
@@ -60,7 +64,12 @@ https://storage.googleapis.com/payana_profile_pictures/profile_picture_one?X-Goo
 """
 
 
- -- 3B - Upload the image via a POST call using the Signed URL token from 3A
+ -- 3B - Upload the image via a PUT call using the Signed URL token from 3A
+
+ API postman file:
+  -- Payana image upload using signed URL
+  Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-d9b83653-5be6-4ecb-8fa4-77b4e753e106
+  
  API:
 """
 curl --location --request PUT 'https://storage.googleapis.com/payana_profile_pictures/profile_picture_one?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=payana-two-bigtable%40payana-two.iam.gserviceaccount.com%2F20240324%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20240324T015906Z&X-Goog-Expires=900&X-Goog-SignedHeaders=content-type%3Bhost&X-Goog-Signature=7304c71c218ae8db0b015f5d404b7ccd761c17067cbfc329800e2deac8acaf51400b6b46f4fc9ba28476ea835911563114fedfa831527db58838c68a69daf2e5a3bae097741fdded2845842a3c9c3e9c136af8d11cfb2355f557aa8aec76e31b34c10e9899549c33b81f0340f44d8ddfef14d30efc34e9d99897fc7cba0f1ff5fb9349e272ec77fbcf87b705523646cb2eb3618f2949c13b6ff843094f76b149d1ff72c30a4dde35f1605b78b34b0f777b7abbc208d5aec2fb72c9e5e45e9c7aa889978bcaaf8609d2caaa5b0c93f8b0a3763a81a0060e3dfcfe2515e75b1c01148c80a59528a9fbdc53114ef2498699a5fe01e8b34e3e7af61db790abf2fd3c' \
