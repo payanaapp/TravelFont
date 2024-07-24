@@ -75,10 +75,8 @@ class PayanaProfilePageItineraryTable:
 
         self.create_bigtable_write_objects()
 
-        payana_profile_page_itinerary_instance.insert_columns(
+        return payana_profile_page_itinerary_instance.insert_columns(
             self.update_bigtable_write_objects)
-        
-        return False
 
     @payana_generic_exception_handler
     def create_bigtable_write_objects(self):
