@@ -1,3 +1,12 @@
 Parent Doc: payana_itinerary_creation_flow.txt 
 
+Step 1 - Save itinerary metadata via a POST call 
 
+    -- Step 1A- 1C in  payana_itinerary_creation_flow.txt  is Step 1 in this doc:
+
+Postman API name: Payana Create Itinerary/Excursion Transaction - Step 1
+
+Postman API: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-764a5558-8380-4a15-9391-a56b2370f081?ctx=documentation 
+
+
+Step 2 - 
