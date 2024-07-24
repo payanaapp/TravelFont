@@ -7,7 +7,6 @@ from payana.payana_bl.bigtable_utils.bigtable_read_write_object_wrapper import b
 from payana.payana_service.constants import payana_service_constants
 from payana.payana_service.common_utils.payana_parsers import payana_profile_id_header_parser, get_profile_id_header
 from payana.payana_service.common_utils.payana_service_exception_handlers import payana_service_generic_exception_handler
-from payana.payana_service.models.payana_bigtable_models.payana_profile_table_model import profile_table_model_schema
 from payana.payana_bl.bigtable_utils.bigtable_read_write_object_wrapper import bigtable_read_row_key_wrapper
 from payana.payana_bl.bigtable_utils.PayanaProfileTable import PayanaProfileTable
 from payana.payana_bl.bigtable_utils.PayanaBigTable import PayanaBigTable
@@ -16,9 +15,6 @@ from payana.payana_bl.bigtable_utils.bigtable_read_write_object_wrapper import b
 
 profile_table_name_space = Namespace(
     'info', description='Manage profile information')
-
-# profile_table_model = profile_table_name_space.model('Profile Table Model',
-#                                                      profile_table_model_schema)
 
 payana_profile_table_write_success_message_post = payana_service_constants.payana_profile_table_write_success_message_post
 payana_profile_table_write_success_message_put = payana_service_constants.payana_profile_table_write_success_message_put

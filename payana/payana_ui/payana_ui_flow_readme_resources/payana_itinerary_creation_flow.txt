@@ -75,7 +75,7 @@ curl --location 'http://localhost:8888/entity/itinerary/' \
         "roadtrip": "1.0"
     },
     "itinerary_metadata": {
-        "description": "Abhinandan'\''s SF excursions",
+        "description": "Abhinandan's SF excursions",
         "visit_timestamp": "123456789",
         "itinerary_id": "",
         "itinerary_owner_profile_id": "1234567",
@@ -877,3 +877,39 @@ curl --location 'http://127.0.0.1:8888/entity/edit/permission/delete/values/' \
 """
 
 Reponse: 200
+
+
+Step 13 - How to read/download an uploaded image
+
+-- Step 3C in payana_signup_flow.txt (copying from payana_signup_flow.txt for reference)
+
+How to verify if the image got uploaded successfully?
+
+   -- 3C1 - Get the Signed URL token to download the image
+
+   API:
+   """
+   curl --location 'http://localhost:8888/entity/signed_url/download' \
+    --header 'Content-Type: application/json' \
+    --header 'profile_id: 123456789' \
+    --header 'payana_storage_bucket: payana_profile_pictures' \
+    --header 'payana_storage_object: profile_picture_one'
+   """
+   Note: payana_storage_object should match the object you want to download, in this case, the email ID of the user
+
+   Response: Returns a signed URL token
+   """
+   https://storage.googleapis.com/payana_profile_pictures/profile_picture_one?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=payana-two-bigtable%40payana-two.iam.gserviceaccount.com%2F20240324%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20240324T021259Z&X-Goog-Expires=900&X-Goog-SignedHeaders=host&X-Goog-Signature=1f3b483c087a32e603c4241002eff151fbf0194892cd25707087c445a1abf2b443f2b579a17edcb0e67db4f19f874c431609c625f30055d3918eff63438da4ede94bad4f88f9a0786e13169fa21b72d38690a68251436c59ca925119af7288f4adf6631b89d56a7a52c92045effe0f8bdf05e5a47b808e1f2b7a7dcef157f5048a620d9b9c1f53badf5158f122d4cbaf451983218d2840ef6b2a26ad9d977f9ce4a692b7df15c9cdc0318805fe017d5bece363309fd429b266180ce82e3825e5b05c17ec2622700c68ece2893ff49ac15747190ef0d656cc52c598a0106c1e0adf02e6e8f32f957c814cf554ea525084681d14d7d03fa45f1e69782d9aef216b
+   """
+
+
+   -- 3C2 - Download the image 
+   API:
+   """
+   curl --location 'https://storage.googleapis.com/payana_profile_pictures/profile_picture_one?X-Goog-Algorithm=GOOG4-RSA-SHA256&X-Goog-Credential=payana-two-bigtable%40payana-two.iam.gserviceaccount.com%2F20240324%2Fauto%2Fstorage%2Fgoog4_request&X-Goog-Date=20240324T021259Z&X-Goog-Expires=900&X-Goog-SignedHeaders=host&X-Goog-Signature=1f3b483c087a32e603c4241002eff151fbf0194892cd25707087c445a1abf2b443f2b579a17edcb0e67db4f19f874c431609c625f30055d3918eff63438da4ede94bad4f88f9a0786e13169fa21b72d38690a68251436c59ca925119af7288f4adf6631b89d56a7a52c92045effe0f8bdf05e5a47b808e1f2b7a7dcef157f5048a620d9b9c1f53badf5158f122d4cbaf451983218d2840ef6b2a26ad9d977f9ce4a692b7df15c9cdc0318805fe017d5bece363309fd429b266180ce82e3825e5b05c17ec2622700c68ece2893ff49ac15747190ef0d656cc52c598a0106c1e0adf02e6e8f32f957c814cf554ea525084681d14d7d03fa45f1e69782d9aef216b'
+   """
+
+   Response:
+   """
+   200 SUCCESS 
+   """

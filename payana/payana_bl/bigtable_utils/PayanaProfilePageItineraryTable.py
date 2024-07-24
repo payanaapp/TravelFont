@@ -75,8 +75,10 @@ class PayanaProfilePageItineraryTable:
 
         self.create_bigtable_write_objects()
 
-        return payana_profile_page_itinerary_instance.insert_columns(
+        payana_profile_page_itinerary_instance.insert_columns(
             self.update_bigtable_write_objects)
+        
+        return False
 
     @payana_generic_exception_handler
     def create_bigtable_write_objects(self):
@@ -87,7 +89,7 @@ class PayanaProfilePageItineraryTable:
 
         # all activities write objects
 
-        for activity in self.activities:
+        for activity in self.activities + [bigtable_constants.payana_generic_activity_column_family]:
             if activity in bigtable_constants.payana_activity_column_family:
                     
                 saved_itinerary_id_list_activity_column_family_mapping = "_".join(
@@ -108,35 +110,35 @@ class PayanaProfilePageItineraryTable:
                 created_activity_guide_id_list_activity_column_family_mapping = "_".join(
                     [activity, self.payana_profile_page_itinerary_table_created_activity_guide_id_mapping_quantifier_value])
                 
-                for itinerary_id, itinerary_name in self.saved_itinerary_id_mapping.items():
+                for itinerary_name, itinerary_id in self.saved_itinerary_id_mapping.items():
                     # itinerary id write object
                     self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-                        self.row_id, saved_itinerary_id_list_activity_column_family_mapping, itinerary_id, itinerary_name))
+                        self.row_id, saved_itinerary_id_list_activity_column_family_mapping, itinerary_name, itinerary_id))
 
-                for excursion_id, excursion_name in self.saved_excursion_id_mapping.items():
+                for excursion_name, excursion_id in self.saved_excursion_id_mapping.items():
                     # excursion id write object
                     self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-                        self.row_id, saved_excursion_id_list_activity_column_family_mapping, excursion_id, excursion_name))
+                        self.row_id, saved_excursion_id_list_activity_column_family_mapping, excursion_name, excursion_id))
                     
-                for activity_guide_id, activity_guide_name in self.saved_activity_guide_id_mapping.items():
+                for activity_guide_name, activity_guide_id in self.saved_activity_guide_id_mapping.items():
                     # excursion id write object
                     self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-                        self.row_id, saved_activity_guide_id_list_activity_column_family_mapping, activity_guide_id, activity_guide_name))
+                        self.row_id, saved_activity_guide_id_list_activity_column_family_mapping, activity_guide_name, activity_guide_id))
             
-                for itinerary_id, itinerary_name in self.created_itinerary_id_mapping.items():
+                for itinerary_name, itinerary_id in self.created_itinerary_id_mapping.items():
                     # itinerary id write object
                     self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-                        self.row_id, created_itinerary_id_list_activity_column_family_mapping, itinerary_id, itinerary_name))
+                        self.row_id, created_itinerary_id_list_activity_column_family_mapping, itinerary_name, itinerary_id))
 
-                for excursion_id, excursion_name in self.created_excursion_id_mapping.items():
+                for excursion_name, excursion_id in self.created_excursion_id_mapping.items():
                     # excursion id write object
                     self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-                        self.row_id, created_excursion_id_list_activity_column_family_mapping, excursion_id, excursion_name))
+                        self.row_id, created_excursion_id_list_activity_column_family_mapping, excursion_name, excursion_id))
                     
-                for activity_guide_id, activity_guide_name in self.created_activity_guide_id_mapping.items():
+                for activity_guide_name, activity_guide_id in self.created_activity_guide_id_mapping.items():
                     # excursion id write object
                     self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
-                        self.row_id, created_activity_guide_id_list_activity_column_family_mapping, activity_guide_id, activity_guide_name))                
+                        self.row_id, created_activity_guide_id_list_activity_column_family_mapping, activity_guide_name, activity_guide_id))                
 
             else:
                 # to-do : raise exception that it is an invalid activity

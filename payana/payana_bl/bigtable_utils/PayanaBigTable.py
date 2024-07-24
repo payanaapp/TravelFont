@@ -741,10 +741,7 @@ class PayanaBigTable:
                 bigtable_row_cells_delete_status = bigtable_row_cells_delete(
                     self.table, row_key, column_family_id, column_qualifier_ids)
                 
-                if not bigtable_row_cells_delete_status:
-                    return bigtable_row_cells_delete_status
-                
-            return bigtable_row_cells_delete_status
+                return bigtable_row_cells_delete_status
 
         else:
             print(payana_big_table_does_not_exist_exception)

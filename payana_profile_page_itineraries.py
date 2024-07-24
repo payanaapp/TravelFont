@@ -25,12 +25,12 @@ payana_bigtable_init(client_config_file_path, bigtable_tables_schema_path)
 
 profile_page_itinerary_obj = {
     "profile_id": "12345",
-    "saved_itinerary_id_mapping": {"12345": "itinerary_name_one"},
-    "saved_excursion_id_mapping": {"12345": "excursion_name_one"},
-    "saved_activity_guide_id_mapping": {"12345": "activity_guide_name_one"},
-    "created_itinerary_id_mapping": {"12345": "itinerary_name_one"},
-    "created_activity_guide_id_mapping": {"12345": "activity_guide_name_one"},
-    "created_excursion_id_mapping": {"12345": "excursion_name_one"},
+    "saved_itinerary_id_mapping": {"itinerary_name_one": "12345"},
+    "saved_excursion_id_mapping": {"excursion_name_one": "12345"},
+    "saved_activity_guide_id_mapping": {"activity_guide_name_one": "12345"},
+    "created_itinerary_id_mapping": {"itinerary_name_one": "12345"},
+    "created_activity_guide_id_mapping": {"activity_guide_name_one": "12345"},
+    "created_excursion_id_mapping": {"excursion_name_one": "12345"},
     "activities": ["generic", "hiking", "romantic"]
 }
 
@@ -90,7 +90,7 @@ for itinerary_id in itinerary_new:
     payana_profile_page_saved_itinerary_read_row_obj = payana_profile_page_itinerary_read_obj.get_row_dict(
         row_id, include_column_family=True)
     updated_itinerary_id = payana_profile_page_saved_itinerary_read_row_obj[row_id][
-        saved_itinerary_id_list_activity_generic_column_family_id][ current_ts]
+        saved_itinerary_id_list_activity_generic_column_family_id][current_ts]
 
     print("Status of itinerary ID update for saved itinerary ID list: " +
           str(itinerary_id == updated_itinerary_id))
@@ -247,12 +247,12 @@ for itinerary_id in itinerary_new:
     # remove from saved itinerary list
     payana_profile_page_itinerary_table_write_object = bigtable_write_object_wrapper(
         row_id, saved_itinerary_id_list_activity_generic_column_family_id, current_ts, "")
-    
+
     payana_profile_page_itinerary_table_delete_object_status = payana_profile_page_itinerary_read_obj.delete_bigtable_row_column(
         payana_profile_page_itinerary_table_write_object)
     print("payana_profile_page_itinerary_table_delete_object_status: " +
           str(payana_profile_page_itinerary_table_delete_object_status))
-    
+
     payana_profile_page_itinerary_read_row_obj = payana_profile_page_itinerary_read_obj.get_row_dict(
         row_id, include_column_family=True)
     removed_itinerary_row = payana_profile_page_itinerary_read_row_obj[
@@ -260,16 +260,16 @@ for itinerary_id in itinerary_new:
 
     print("Status of itinerary ID remove from saved itinerary list: " +
           str(current_ts not in removed_itinerary_row))
-    
+
     # remove from created itinerary list
     payana_profile_page_itinerary_table_write_object = bigtable_write_object_wrapper(
         row_id, created_itinerary_id_list_activity_generic_column_family_id, current_ts, "")
-    
+
     payana_profile_page_itinerary_table_delete_object_status = payana_profile_page_itinerary_read_obj.delete_bigtable_row_column(
         payana_profile_page_itinerary_table_write_object)
     print("payana_profile_page_itinerary_table_delete_object_status: " +
           str(payana_profile_page_itinerary_table_delete_object_status))
-    
+
     payana_profile_page_itinerary_read_row_obj = payana_profile_page_itinerary_read_obj.get_row_dict(
         row_id, include_column_family=True)
     removed_itinerary_row = payana_profile_page_itinerary_read_row_obj[
@@ -282,12 +282,12 @@ for excursion_id in excursion_new:
     # remove from saved excursion list
     payana_profile_page_excursion_table_write_object = bigtable_write_object_wrapper(
         row_id, saved_excursion_id_list_activity_generic_column_family_id, current_ts, "")
-    
+
     payana_profile_page_excursion_table_delete_object_status = payana_profile_page_itinerary_read_obj.delete_bigtable_row_column(
         payana_profile_page_excursion_table_write_object)
     print("payana_profile_page_excursion_table_delete_object_status: " +
           str(payana_profile_page_excursion_table_delete_object_status))
-    
+
     payana_profile_page_excursion_read_row_obj = payana_profile_page_itinerary_read_obj.get_row_dict(
         row_id, include_column_family=True)
     removed_excursion_row = payana_profile_page_excursion_read_row_obj[
@@ -295,16 +295,16 @@ for excursion_id in excursion_new:
 
     print("Status of excursion ID remove from saved excursion list: " +
           str(current_ts not in removed_excursion_row))
-    
+
     # remove from created excursion list
     payana_profile_page_excursion_table_write_object = bigtable_write_object_wrapper(
         row_id, created_excursion_id_list_activity_generic_column_family_id, current_ts, "")
-    
+
     payana_profile_page_excursion_table_delete_object_status = payana_profile_page_itinerary_read_obj.delete_bigtable_row_column(
         payana_profile_page_excursion_table_write_object)
     print("payana_profile_page_excursion_table_delete_object_status: " +
           str(payana_profile_page_excursion_table_delete_object_status))
-    
+
     payana_profile_page_excursion_read_row_obj = payana_profile_page_itinerary_read_obj.get_row_dict(
         row_id, include_column_family=True)
     removed_excursion_row = payana_profile_page_excursion_read_row_obj[
@@ -325,36 +325,36 @@ for itinerary_id in itinerary_update:
         # remove from saved itinerary list
         payana_profile_page_itinerary_table_write_object = bigtable_write_object_wrapper(
             row_id, saved_itinerary_id_list_activity_column_family_id, current_ts_new, "")
-    
+
         payana_profile_page_itinerary_table_delete_activity_object_status = payana_profile_page_itinerary_read_obj.delete_bigtable_row_column(
             payana_profile_page_itinerary_table_write_object)
         print("payana_profile_page_itinerary_table_delete_activity_object_status: " +
-            str(payana_profile_page_itinerary_table_delete_activity_object_status))
-    
+              str(payana_profile_page_itinerary_table_delete_activity_object_status))
+
         payana_profile_page_itinerary_read_row_obj = payana_profile_page_itinerary_read_obj.get_row_dict(
             row_id, include_column_family=True)
         removed_itinerary_row = payana_profile_page_itinerary_read_row_obj[
             row_id][saved_itinerary_id_list_activity_column_family_id]
 
         print("Status of itinerary ID remove from saved itinerary list: " +
-            str(current_ts_new not in removed_itinerary_row))
-    
+              str(current_ts_new not in removed_itinerary_row))
+
         # remove from created itinerary list
         payana_profile_page_itinerary_table_write_object = bigtable_write_object_wrapper(
             row_id, created_itinerary_id_list_activity_column_family_id, current_ts_new, "")
-    
+
         payana_profile_page_itinerary_table_delete_activity_object_status = payana_profile_page_itinerary_read_obj.delete_bigtable_row_column(
             payana_profile_page_itinerary_table_write_object)
         print("payana_profile_page_itinerary_table_delete_activity_object_status: " +
-            str(payana_profile_page_itinerary_table_delete_activity_object_status))
-    
+              str(payana_profile_page_itinerary_table_delete_activity_object_status))
+
         payana_profile_page_itinerary_read_row_obj = payana_profile_page_itinerary_read_obj.get_row_dict(
             row_id, include_column_family=True)
         removed_itinerary_row = payana_profile_page_itinerary_read_row_obj[
             row_id][created_itinerary_id_list_activity_column_family_id]
 
         print("Status of itinerary ID remove from created itinerary list: " +
-            str(current_ts_new not in removed_itinerary_row))
+              str(current_ts_new not in removed_itinerary_row))
 
 # Remove the activity based excursion ID
 for excursion_id in excursion_update:
@@ -368,43 +368,44 @@ for excursion_id in excursion_update:
         # remove from saved excursion list
         payana_profile_page_excursion_table_write_object = bigtable_write_object_wrapper(
             row_id, saved_excursion_id_list_activity_column_family_id, current_ts_new, "")
-    
+
         payana_profile_page_excursion_table_delete_activity_object_status = payana_profile_page_itinerary_read_obj.delete_bigtable_row_column(
             payana_profile_page_excursion_table_write_object)
         print("payana_profile_page_excursion_table_delete_activity_saved_object_status: " +
-            str(payana_profile_page_excursion_table_delete_activity_object_status))
-    
+              str(payana_profile_page_excursion_table_delete_activity_object_status))
+
         payana_profile_page_excursion_read_row_obj = payana_profile_page_itinerary_read_obj.get_row_dict(
             row_id, include_column_family=True)
         removed_excursion_row = payana_profile_page_excursion_read_row_obj[
             row_id][saved_excursion_id_list_activity_column_family_id]
 
         print("Status of excursion ID remove from saved excursion list: " +
-            str(current_ts_new not in removed_excursion_row))
-    
+              str(current_ts_new not in removed_excursion_row))
+
         # remove from created excursion list
         payana_profile_page_excursion_table_write_object = bigtable_write_object_wrapper(
             row_id, created_excursion_id_list_activity_column_family_id, current_ts_new, "")
-    
+
         payana_profile_page_excursion_table_delete_activity_object_status = payana_profile_page_itinerary_read_obj.delete_bigtable_row_column(
             payana_profile_page_excursion_table_write_object)
         print("payana_profile_page_excursion_table_delete_activity_object_status: " +
-            str(payana_profile_page_excursion_table_delete_activity_object_status))
-    
+              str(payana_profile_page_excursion_table_delete_activity_object_status))
+
         payana_profile_page_excursion_read_row_obj = payana_profile_page_itinerary_read_obj.get_row_dict(
             row_id, include_column_family=True)
         removed_excursion_row = payana_profile_page_excursion_read_row_obj[
             row_id][created_excursion_id_list_activity_column_family_id]
 
         print("Status of excursion ID remove from created excursion list: " +
-            str(current_ts_new not in removed_excursion_row))
+              str(current_ts_new not in removed_excursion_row))
 
 # Delete the whole row
 payana_profile_page_row_delete_object = bigtable_write_object_wrapper(
     row_id, "", "", "")
 payana_profile_page_row_delete_object_status = payana_profile_page_itinerary_read_obj.delete_bigtable_row(
     payana_profile_page_row_delete_object)
-print("payana_profile_page_row_delete_object_status: " + str(payana_profile_page_row_delete_object_status))
+print("payana_profile_page_row_delete_object_status: " +
+      str(payana_profile_page_row_delete_object_status))
 
 payana_profile_page_read_row_obj = payana_profile_page_itinerary_read_obj.get_row_dict(
     row_id, include_column_family=True)

@@ -57,6 +57,7 @@ excursion_obj = {
         "last_updated_timestamp": "123456789",
         "description": "My excursion",
         "itinerary_id": "1234",
+        "itinerary_name": "NewYork, Boston, Maine",
         "place_name": "Land's End",
         # Useful when search happens on a specific profile for a given city/state/country
         "city": "SF##California##USA",
