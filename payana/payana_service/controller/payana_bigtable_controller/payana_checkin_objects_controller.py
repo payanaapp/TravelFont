@@ -17,9 +17,6 @@ from payana.payana_bl.bigtable_utils.bigtable_read_write_object_wrapper import b
 payana_checkin_name_space = Namespace(
     'checkin', description='Manage payana check in objects')
 
-# profile_table_model = payana_checkin_name_space.model('Profile Table Model',
-#                                                      profile_table_model_schema)
-
 payana_check_in_write_success_message_post = payana_service_constants.payana_check_in_write_success_message_post
 payana_check_in_write_success_message_put = payana_service_constants.payana_check_in_write_success_message_put
 payana_check_in_write_failure_message_post = payana_service_constants.payana_check_in_write_failure_message_post

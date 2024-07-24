@@ -16,9 +16,6 @@ from payana.payana_bl.bigtable_utils.bigtable_read_write_object_wrapper import b
 profile_travel_buddy_name_space = Namespace(
     'travelbuddy', description='Manage travel buddy request information')
 
-# profile_table_model = profile_travel_buddy_name_space.model('Profile Table Model',
-#                                                      profile_table_model_schema)
-
 payana_travel_buddy_write_success_message_post = payana_service_constants.payana_travel_buddy_write_success_message_post
 payana_travel_buddy_write_success_message_put = payana_service_constants.payana_travel_buddy_write_success_message_put
 payana_travel_buddy_write_failure_message_post = payana_service_constants.payana_travel_buddy_write_failure_message_post

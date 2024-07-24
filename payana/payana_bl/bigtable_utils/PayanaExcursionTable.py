@@ -46,8 +46,9 @@ class PayanaExcursionTable:
         self.column_qualifier_excursion_state = bigtable_constants.payana_excursion_state
         self.column_qualifier_excursion_country = bigtable_constants.payana_excursion_country
         self.column_qualifier_excursion_activity_guide = bigtable_constants.payana_excursion_activity_guide
-        
+
         self.column_qualifier_itinerary_id = bigtable_constants.payana_excursion_itinerary_id
+        self.column_qualifier_itinerary_name = bigtable_constants.payana_excursion_itinerary_name
         self.column_family_activities_list = bigtable_constants.payana_excursion_activities_list
 
         self.column_qualifier_excursion_id = bigtable_constants.payana_excursion_id
@@ -69,15 +70,16 @@ class PayanaExcursionTable:
         else:
             # raise invalid key error or key missing error
             pass
-        
+
         if self.column_qualifier_excursion_activity_guide in self.excursion_metadata:
-                self.activity_guide = self.excursion_metadata[self.column_qualifier_excursion_activity_guide]
+            self.activity_guide = self.excursion_metadata[self.column_qualifier_excursion_activity_guide]
         else:
             # raise invalid key error or key missing error
             pass
-        
+
         if self.column_qualifier_last_updated_timestamp in self.excursion_metadata:
-            self.last_updated_timestamp = self.excursion_metadata[self.column_qualifier_last_updated_timestamp]
+            self.last_updated_timestamp = self.excursion_metadata[
+                self.column_qualifier_last_updated_timestamp]
         else:
             # raise invalid key error or key missing error
             pass
@@ -98,28 +100,28 @@ class PayanaExcursionTable:
 
         if self.column_qualifier_excursion_place_name in self.excursion_metadata:
             self.excursion_place_name = self.excursion_metadata[
-            self.column_qualifier_excursion_place_name]
+                self.column_qualifier_excursion_place_name]
         else:
             # raise invalid key error or key missing error
             pass
-        
+
         if self.column_qualifier_excursion_city in self.excursion_metadata:
             self.excursion_city = self.excursion_metadata[
-            self.column_qualifier_excursion_city]
+                self.column_qualifier_excursion_city]
         else:
             # raise invalid key error or key missing error
             pass
-        
+
         if self.column_qualifier_excursion_state in self.excursion_metadata:
             self.excursion_state = self.excursion_metadata[
-            self.column_qualifier_excursion_state]
+                self.column_qualifier_excursion_state]
         else:
             # raise invalid key error or key missing error
             pass
-        
+
         if self.column_qualifier_excursion_country in self.excursion_metadata:
             self.excursion_country = self.excursion_metadata[
-            self.column_qualifier_excursion_country]
+                self.column_qualifier_excursion_country]
         else:
             # raise invalid key error or key missing error
             pass
@@ -134,6 +136,13 @@ class PayanaExcursionTable:
         if self.column_qualifier_itinerary_id in self.excursion_metadata:
             self.excursion_itinerary_id = self.excursion_metadata[
                 self.column_qualifier_itinerary_id]
+        else:
+            # raise invalid key error or key missing error
+            pass
+
+        if self.column_qualifier_itinerary_name in self.excursion_metadata:
+            self.excursion_itinerary_name = self.excursion_metadata[
+                self.column_qualifier_itinerary_name]
         else:
             # raise invalid key error or key missing error
             pass
@@ -181,6 +190,7 @@ class PayanaExcursionTable:
         self.set_excursion_transport_mode_write_object()
         self.set_excursion_place_id_write_object()
         self.set_excursion_itinerary_id_write_object()
+        self.set_excursion_itinerary_name_write_object()
         self.set_activity_guide_status_write_object()
         self.set_checkin_id_cities_list_write_object()
 
@@ -191,7 +201,7 @@ class PayanaExcursionTable:
         for key, checkin_id in self.checkin_id_list.items():
             self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
                 self.excursion_id, self.column_family_checkin_id_list, key, checkin_id))
-            
+
     @payana_generic_exception_handler
     def set_checkin_id_cities_list_write_object(self):
 
@@ -199,7 +209,7 @@ class PayanaExcursionTable:
         for key, city in self.checkin_id_list.items():
             self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
                 self.excursion_id, self.payana_excursion_column_family_cities_checkin_id_list, key, city))
-            
+
     @payana_generic_exception_handler
     def set_image_id_list_write_object(self):
 
@@ -245,7 +255,7 @@ class PayanaExcursionTable:
         # user_name write object
         self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
             self.excursion_id, self.column_family_excursion_metadata, self.column_qualifier_create_timestamp, self.create_timestamp))
-        
+
     @payana_generic_exception_handler
     def set_last_updated_timestamp_write_object(self):
 
@@ -274,30 +284,28 @@ class PayanaExcursionTable:
         self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
             self.excursion_id, self.column_family_excursion_metadata, self.column_qualifier_excursion_transport_mode, self.excursion_transport_mode))
 
-    @payana_generic_exception_handler 
+    @payana_generic_exception_handler
     def set_excursion_place_name_write_object(self):
 
         # user_name write object
         self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
             self.excursion_id, self.column_family_excursion_metadata, self.column_qualifier_excursion_place_name, self.excursion_place_name))
-        
-    @payana_generic_exception_handler 
+
+    @payana_generic_exception_handler
     def set_excursion_city_write_object(self):
 
         # user_name write object
         self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
             self.excursion_id, self.column_family_excursion_metadata, self.column_qualifier_excursion_city, self.excursion_city))
-        
 
-    @payana_generic_exception_handler 
+    @payana_generic_exception_handler
     def set_excursion_state_write_object(self):
 
         # user_name write object
         self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
             self.excursion_id, self.column_family_excursion_metadata, self.column_qualifier_excursion_state, self.excursion_state))
-        
 
-    @payana_generic_exception_handler 
+    @payana_generic_exception_handler
     def set_excursion_country_write_object(self):
 
         # user_name write object
@@ -317,3 +325,10 @@ class PayanaExcursionTable:
         # user_name write object
         self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
             self.excursion_id, self.column_family_excursion_metadata, self.column_qualifier_itinerary_id, self.excursion_itinerary_id))
+        
+    @payana_generic_exception_handler
+    def set_excursion_itinerary_name_write_object(self):
+
+        # user_name write object
+        self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+            self.excursion_id, self.column_family_excursion_metadata, self.column_qualifier_itinerary_name, self.excursion_itinerary_name))
