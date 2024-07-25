@@ -52,6 +52,7 @@ class PayanaCheckinTable:
         self.column_qualifier_checkin_city = bigtable_constants.payana_checkin_city
         self.column_qualifier_checkin_country = bigtable_constants.payana_checkin_country
         self.column_qualifier_checkin_state = bigtable_constants.payana_checkin_state
+        self.payana_checkin_excursion_position = bigtable_constants.payana_checkin_excursion_position
 
         self.column_qualifier_checkin_id = bigtable_constants.payana_checkin_id
 
@@ -88,6 +89,13 @@ class PayanaCheckinTable:
         if self.column_qualifier_checkin_owner_profile_id in self.checkin_metadata:
             self.checkin_owner_profile_id = self.checkin_metadata[
                 self.column_qualifier_checkin_owner_profile_id]
+        else:
+            # raise invalid key error or key missing error
+            pass
+
+        if self.payana_checkin_excursion_position in self.checkin_metadata:
+            self.checkin_excursion_position = self.checkin_metadata[
+                self.payana_checkin_excursion_position]
         else:
             # raise invalid key error or key missing error
             pass
@@ -229,6 +237,7 @@ class PayanaCheckinTable:
         self.set_checkin_excursion_id_write_object()
         self.set_instagram_metadata_write_object()
         self.set_airbnb_metadata_write_object()
+        self.set_checkin_excursion_position_write_object()
 
     @payana_generic_exception_handler
     def set_image_id_list_write_object(self):
@@ -364,3 +373,10 @@ class PayanaCheckinTable:
         # user_name write object
         self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
             self.checkin_id, self.column_family_checkin_metadata, self.column_qualifier_excursion_id, self.checkin_excursion_id))
+        
+    @payana_generic_exception_handler
+    def set_checkin_excursion_position_write_object(self):
+
+        # user_name write object
+        self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+            self.checkin_id, self.column_family_checkin_metadata, self.payana_checkin_excursion_position, self.checkin_excursion_position))
