@@ -185,6 +185,7 @@ payana_checkin_airbnb_post_id = "airbnb_post_id"
 payana_checkin_city = "city"
 payana_checkin_state = "state"
 payana_checkin_country = "country"
+payana_checkin_excursion_position = "checkin_object_position_excursion"
 
 # Payana likes table constants
 payana_likes_table_column_family = "payana_likes"

@@ -31,7 +31,7 @@ payana_itinerary_object_model = {
         bigtable_constants.payana_itinerary_column_family_description: "",
         bigtable_constants.payana_itinerary_column_family_visit_timestamp: "",
         bigtable_constants.payana_itinerary_id: "",
-        bigtable_constants.payana_itinerary_column_family_itinerary_owner_profile_id: "", 
+        bigtable_constants.payana_itinerary_column_family_itinerary_owner_profile_id: "",
         bigtable_constants.payana_itinerary_place_id: "",
         bigtable_constants.payana_itinerary_place_name: "",
         # Useful when search happens on a specific profile for a given city/state/country
@@ -52,4 +52,33 @@ profile_page_itinerary_model = {
     bigtable_constants.payana_profile_page_itinerary_table_created_activity_guide_id_mapping_quantifier_value: {},
     bigtable_constants.payana_profile_page_itinerary_table_created_excursion_id_mapping_quantifier_value: {},
     bigtable_constants.payana_profile_page_itinerary_table_activities: []
+}
+
+payana_checkin_object_model = {
+    bigtable_constants.payana_checkin_column_family_image_id_list: {},
+    bigtable_constants.payana_checkin_column_family_participants_list: {},
+    bigtable_constants.payana_checkin_activities_list: {},
+    bigtable_constants.payana_checkin_instagram_metadata: {
+        bigtable_constants.payana_checkin_instagram_embed_url: "",
+        bigtable_constants.payana_checkin_instagram_post_id: ""
+    },
+    bigtable_constants.payana_checkin_airbnb_metadata: {
+        bigtable_constants.payana_checkin_airbnb_embed_url: "",
+        bigtable_constants.payana_checkin_airbnb_post_id: ""
+    },
+    bigtable_constants.payana_checkin_metadata: {
+        bigtable_constants.payana_checkin_transport_mode: "",
+        bigtable_constants.payana_checkin_column_family_description: "",
+        bigtable_constants.payana_checkin_column_family_checkin_owner_profile_id: "",
+        bigtable_constants.payana_checkin_column_family_create_timestamp: "",
+        bigtable_constants.payana_checkin_column_family_last_updated_timestamp: "",
+        bigtable_constants.payana_checkin_id: "",
+        bigtable_constants.payana_checkin_place_id: "",
+        bigtable_constants.payana_checkin_excursion_id: "",
+        bigtable_constants.payana_checkin_itinerary_id: "",
+        bigtable_constants.payana_checkin_place_name: "",
+        bigtable_constants.payana_checkin_city: "",
+        bigtable_constants.payana_checkin_state: "",
+        bigtable_constants.payana_checkin_country: ""
+    }
 }

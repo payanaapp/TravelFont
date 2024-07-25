@@ -68,7 +68,8 @@ curl --location --request POST 'http://127.0.0.1:8888/entity/checkin/' \
         "place_name": "Land'\''s End",
         "city": "SF##California##USA",
         "state": "California##USA",
-        "country": "USA"
+        "country": "USA",
+        "checkin_object_position_excursion": "1"
     }
 }
 '
@@ -106,7 +107,8 @@ payana_checkin_obj_json = {
         # Useful when search happens on a specific profile for a given city/state/country
         "city": "SF##California##USA",
         "state": "California##USA",
-        "country": "USA"
+        "country": "USA",
+        "checkin_object_position_excursion": "1"
     }
 }
 

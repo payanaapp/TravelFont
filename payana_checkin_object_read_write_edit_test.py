@@ -56,7 +56,8 @@ checkin_obj = {
         # Useful when search happens on a specific profile for a given city/state/country
         "city": "SF##California##USA",
         "state": "California##USA",
-        "country": "USA"
+        "country": "USA",
+        "checkin_object_position_excursion": "1"
     }
 }
 
