@@ -33,7 +33,7 @@ payana_excursion_column_family_participants_list = bigtable_constants.payana_exc
 payana_excursion_column_family_checkin_id_list = bigtable_constants.payana_excursion_column_family_checkin_id_list
 
 
-# POST 
+# POST
 # CURL request
 """
 curl --location 'http://localhost:8888/entity/excursion/' \
@@ -86,18 +86,18 @@ payana_excursion_object_json = {
         "2": "23456",
         "3": "34567"
     },
-    "image_id_list":{
+    "image_id_list": {
         "1A": "12345",
         "1B": "34567",
         "2A": "23456",
         "2B": "34567",
         "3A": "23456",
-        "3B": "34567" 
+        "3B": "34567"
     },
-    "cities_checkin_id_list":{
+    "cities_checkin_id_list": {
         "1": "cupertino##california##usa",
         "2": "sunnyvale##california##usa",
-        "3": "santaclara##california##usa"       
+        "3": "santaclara##california##usa"
     },
     "participants_list": {"pf_id_1": "1234567", "pf_id_2": "1234567", "pf_id_3": "1234567"},
     "activities_list": {"hiking": "4", "roadtrip": "6"},
@@ -199,18 +199,18 @@ payana_excursion_object_edit_json = {
         "5": "34567",
         "4": "45678"
     },
-    "image_id_list":{
+    "image_id_list": {
         "1A": "12345",
         "1B": "34567",
         "2A": "23456",
         "2B": "34567",
         "3A": "23456",
-        "3B": "34567" 
+        "3B": "34567"
     },
-    "cities_checkin_id_list":{
+    "cities_checkin_id_list": {
         "1": "cupertino##california##usa",
         "2": "sunnyvale##california##usa",
-        "3": "santaclara##california##usa"       
+        "3": "santaclara##california##usa"
     },
     "participants_list": {"pf_id_4": "1234567", "pf_id_2": "12345678"},
     "activities_list": {"romantic": "4", "roadtrip": "7"},
@@ -314,9 +314,9 @@ payana_excursion_object_delete_cv_json = {
 }
 
 deleted_profile_id = "pf_id_1"
-deleted_checkin_id =  "1"
+deleted_checkin_id = "1"
 deleted_excursion_metadata_cv = "activity_guide"
-deleted_image_id =  "1A"
+deleted_image_id = "1A"
 
 response = requests.post(url, data=json.dumps(
     payana_excursion_object_delete_cv_json), headers=headers)
@@ -437,5 +437,134 @@ response = requests.get(url, headers=headers)
 
 print("Payana excursion object row delete status: " +
       str(response.status_code == 400))
+
+
+# Create Itinerary transaction POST
+""" 
+curl --location 'http://localhost:8888/entity/excursion/create/' \
+--header 'Content-Type: application/json' \
+--data '{
+    "excursion_name": "Abhi'\''s itinerary 2",
+    "activity_guide": "true",
+    "excursion_owner_profile_id": "123456789",
+    "create_timestamp": "123456789",
+    "cities_list": {
+        "Cupertino": "123456",
+        "Sunnyvale": "1234567"
+    },
+    "activities_list": {
+        "hiking": "1",
+        "spring_break": "2"
+    }
+}'
+"""
+
+payana_create_excursion_transaction_object = {
+    "excursion_name": "Abhi's itinerary 2",
+    "activity_guide": "true",
+    "excursion_owner_profile_id": "123456789",
+    "create_timestamp": "123456789",
+    "cities_list": {
+        "Cupertino": "123456",
+        "Sunnyvale": "1234567"
+    },
+    "activities_list": {
+        "hiking": "1",
+        "spring_break": "2"
+    }
+}
+
+url = "http://127.0.0.1:8888/entity/excursion/create/"
+
+headers = {payana_excursion_id: excursion_id,
+           'Content-Type': 'application/json'}
+
+response = requests.post(url, data=json.dumps(
+    payana_create_excursion_transaction_object), headers=headers)
+
+print("Payana excursion objects creation status: " +
+      str(response.status_code == 201))
+
+profile_excursion_object_response_json = response.json()
+
+excursion_id = profile_excursion_object_response_json[payana_excursion_id]
+
+# GET
+# CURL request
+"""
+curl --location 'http://127.0.0.1:8888/entity/excursion/' \
+--header 'Content-Type: application/json' \
+--header 'excursion_id: 123456789' \
+--data ''
+"""
+
+url = "http://127.0.0.1:8888/entity/excursion/"
+headers = {payana_excursion_id: excursion_id,
+           'Content-Type': 'application/json'}
+
+response = requests.get(url, headers=headers)
+
+print("Payana excursion object read status: " +
+      str(response.status_code == 200))
+
+payana_excursion_object_response = response.json()
+
+print(payana_excursion_object_response)
+
+print("Step 1: Payana excursion object creation verification status: " +
+      str(excursion_id in payana_excursion_object_response))
+
+itinerary_id = payana_excursion_object_response[excursion_id][bigtable_constants.payana_excursion_metadata][
+    bigtable_constants.payana_excursion_itinerary_id]
+
+# GET
+# CURL request
+"""
+curl --location 'http://localhost:8888/entity/itinerary/' \
+--header 'Content-Type: application/json' \
+--header 'itinerary_id: 45f71f4ed3dff44215a9aef2a18ee895b134a05739187e1d8a567e49fdd833dd' \
+--data ''
+"""
+
+url = "http://127.0.0.1:8888/entity/itinerary/"
+headers = {bigtable_constants.payana_excursion_itinerary_id: itinerary_id,
+           'Content-Type': 'application/json'}
+
+response = requests.get(url, headers=headers)
+
+print("Payana itinerary object read status: " +
+      str(response.status_code == 200))
+
+payana_itinerary_object_response = response.json()
+
+print(payana_itinerary_object_response)
+
+print("Step 2: Payana itinerary object creation verification status: " +
+      str(excursion_id in payana_itinerary_object_response[itinerary_id][bigtable_constants.payana_itinerary_column_family_excursion_id_list].values()))
+
+
+# GET profile page itinerary
+# CURL request
+"""
+curl --location --request GET 'http://127.0.0.1:8888/profile/itineraries/' \
+--header 'profile_id: 123456'
+"""
+profile_id = payana_create_excursion_transaction_object[
+    bigtable_constants.payana_excursion_column_family_excursion_owner_profile_id]
+
+url = "http://127.0.0.1:8888/profile/itineraries/"
+headers = {'profile_id': profile_id}
+
+response = requests.get(url, headers=headers)
+
+print("Profile read status: " + str(response.status_code == 200))
+
+profile_page_itinerary_response = response.json()
+
+print(profile_page_itinerary_response)
+
+print("Step 3: Profile Page Itinerary update verification status: " +
+      str(excursion_id in profile_page_itinerary_response[profile_id]
+          ["_".join([bigtable_constants.payana_generic_activity_column_family, bigtable_constants.payana_profile_page_itinerary_table_created_activity_guide_id_mapping_quantifier_value])].values()))
 
 payana_bigtable_cleanup(client_config_file_path, bigtable_tables_schema_path)
