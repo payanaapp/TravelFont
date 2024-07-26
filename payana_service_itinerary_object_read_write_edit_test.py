@@ -33,7 +33,7 @@ payana_itinerary_activities_list = bigtable_constants.payana_itinerary_activitie
 payana_itinerary_column_family_excursion_id_list = bigtable_constants.payana_itinerary_column_family_excursion_id_list
 payana_itinerary_city = bigtable_constants.payana_itinerary_city
 
-# POST 
+# POST
 # CURL request
 """
 curl --location 'http://localhost:8888/entity/itinerary/' \
@@ -65,7 +65,7 @@ curl --location 'http://localhost:8888/entity/itinerary/' \
         "sunnyvale##california##usa": "1234567"
     }
 }'
-""" 
+"""
 
 url = "http://127.0.0.1:8888/entity/itinerary/"
 
@@ -80,7 +80,7 @@ payana_itinerary_object_json = {
         "description": "Abhinandan's SF excursions",
         "visit_timestamp": "123456789",
         "itinerary_id": "12345678",
-        "itinerary_owner_profile_id": "1234567", 
+        "itinerary_owner_profile_id": "1234567",
         "place_id": "123456",
         "place_name": "Land's End",
         # Useful when search happens on a specific profile for a given city/state/country
@@ -283,7 +283,6 @@ payana_itinerary_object_delete_cv_json = {
         "roadtrip": "2.0"
     },
     "itinerary_metadata": {
-        "description": "Abhinandan's SF excursions",
         "visit_timestamp": "123456789"
     },
     "cities_list": {
@@ -293,8 +292,7 @@ payana_itinerary_object_delete_cv_json = {
 }
 
 deleted_excursion_id = "4"
-deleted_activity =  "hiking"
-deleted_itinerary_metadata_cv = "description"
+deleted_activity = "hiking"
 
 response = requests.post(url, data=json.dumps(
     payana_itinerary_object_delete_cv_json), headers=headers)
@@ -325,7 +323,66 @@ payana_itinerary_object_response = response.json()
 print(payana_itinerary_object_response)
 
 print("Payana itinerary object creation verification status: " +
-      str((itinerary_id in payana_itinerary_object_response) and (deleted_excursion_id not in payana_itinerary_object_response[itinerary_id][payana_itinerary_column_family_excursion_id_list]) and (deleted_itinerary_metadata_cv not in payana_itinerary_object_response[itinerary_id][column_family_itinerary_metadata]) and deleted_activity not in payana_itinerary_object_response[itinerary_id][payana_itinerary_activities_list]))
+      str((itinerary_id in payana_itinerary_object_response) and (deleted_excursion_id not in payana_itinerary_object_response[itinerary_id][payana_itinerary_column_family_excursion_id_list]) and deleted_activity not in payana_itinerary_object_response[itinerary_id][payana_itinerary_activities_list]))
+
+# Edit - Name and other metadata only
+""" 
+curl --location --request PUT 'http://127.0.0.1:8888/entity/itinerary/edit/metadata/' \
+--header 'itinerary_id: f7ea819b273933a93c0d4ebad6b838de5ad037f15fd4f94e3e03ea0b7dfb6963' \
+--header 'Content-Type: application/json' \
+--data '{
+    "itinerary_metadata": {
+        "description": "Abhi'\''s SF excursions - part 1"
+    }
+}'
+"""
+
+payana_itinerary_metadata_obj = {
+    "itinerary_metadata": {
+        "description": "Abhi's SF excursions - part 1"
+    }
+}
+
+new_description = payana_itinerary_metadata_obj[
+    column_family_itinerary_metadata][bigtable_constants.payana_itinerary_column_family_description]
+
+url = "http://127.0.0.1:8888/entity/itinerary/edit/metadata/"
+
+headers = {payana_itinerary_id: itinerary_id,
+           'Content-Type': 'application/json'}
+
+response = requests.put(url, data=json.dumps(
+    payana_itinerary_metadata_obj), headers=headers)
+
+print("Payana itinerary object metadata edit status: " +
+      str(response.status_code == 200))
+
+profile_itinerary_object_response_json = response.json()
+
+# GET
+# CURL request
+"""
+curl --location 'http://localhost:8888/entity/itinerary/' \
+--header 'Content-Type: application/json' \
+--header 'itinerary_id: 45f71f4ed3dff44215a9aef2a18ee895b134a05739187e1d8a567e49fdd833dd' \
+--data ''
+"""
+
+url = "http://127.0.0.1:8888/entity/itinerary/"
+headers = {payana_itinerary_id: itinerary_id,
+           'Content-Type': 'application/json'}
+
+response = requests.get(url, headers=headers)
+
+print("Payana itinerary object read status: " +
+      str(response.status_code == 200))
+
+payana_itinerary_object_response = response.json()
+
+print(payana_itinerary_object_response)
+
+print("Payana itinerary object edit name verification status: " +
+      str((new_description == payana_itinerary_object_response[itinerary_id][column_family_itinerary_metadata][bigtable_constants.payana_itinerary_column_family_description])))
 
 
 # Delete entire column family
