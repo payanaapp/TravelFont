@@ -380,6 +380,8 @@ API Postman files:
   -- Payana Profile Itinerary Object EDIT
   Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-34eed306-9b09-443a-872c-00cf05a5757c
 
+Step 6C - Update the itinerary name in the excursion object table
+
 Step 7 - Edit Excursion 
 
 7A - Edit Excursion Metadata
