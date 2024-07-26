@@ -17,6 +17,7 @@ from payana.payana_bl.bigtable_utils.PayanaBigTable import PayanaBigTable
 from payana.payana_bl.bigtable_utils.constants import bigtable_constants
 from payana.payana_bl.bigtable_utils.bigtable_read_write_object_wrapper import bigtable_write_object_wrapper
 from payana.payana_service.models.payana_bigtable_models.payana_itinerary_flow_model import payana_excursion_object_model, payana_itinerary_object_model, profile_page_itinerary_model
+from payana.payana_service.controller.payana_bigtable_controller.payana_bigtable_controller_utils.payana_bigtable_controller_itinerary_creation_utils import get_profile_page_itinerary_table, get_itinerary_object, delete_excursion_object, delete_itinerary_object, delete_profile_page_itinerary_object_column_values
 
 payana_excursion_objects_name_space = Namespace(
     'excursion', description='Manage the CRUD operations of the excursion table')
@@ -277,16 +278,11 @@ class PayanaExcursionTransactionEndPoint(Resource):
                 payana_excursion_objects_create_failure_message_post, payana_excursion_objects_name_space)
 
         # Step 2 - Get profile Itinerary object
-        payana_profile_page_itinerary_table = bigtable_constants.payana_profile_page_itinerary_table
-
-        payana_profile_page_itinerary_read_obj = PayanaBigTable(
-            payana_profile_page_itinerary_table)
-
         row_key = str(
             payana_itinerary_create_payload[bigtable_constants.payana_excursion_column_family_excursion_owner_profile_id])
 
-        payana_profile_page_itinerary_read_obj_dict = payana_profile_page_itinerary_read_obj.get_row_dict(
-            row_key, include_column_family=True)
+        payana_profile_page_itinerary_read_obj_dict = get_profile_page_itinerary_table(
+            payana_itinerary_create_payload[bigtable_constants.payana_excursion_column_family_excursion_owner_profile_id])
 
         itinerary_name = ", ".join(
             payana_itinerary_create_payload[bigtable_constants.payana_itinerary_column_family_cities_list])
@@ -306,13 +302,9 @@ class PayanaExcursionTransactionEndPoint(Resource):
 
             # Step 4 - Get the excursion count itinerary object (if it exists)
             if itinerary_id is not None and not len(itinerary_id) == 0:
-                payana_itinerary_read_obj = PayanaBigTable(
-                    bigtable_constants.payana_itinerary_table)
-
                 row_key = str(itinerary_id)
 
-                payana_itinerary_obj = payana_itinerary_read_obj.get_row_dict(
-                    row_key, include_column_family=True)
+                payana_itinerary_obj = get_itinerary_object(itinerary_id)
 
                 if len(payana_itinerary_obj) == 0:
                     raise KeyError(payana_empty_row_read_exception,
@@ -362,7 +354,7 @@ class PayanaExcursionTransactionEndPoint(Resource):
             bigtable_constants.payana_excursion_column_family_excursion_owner_profile_id]
         profile_page_itinerary_read_obj[bigtable_constants.payana_profile_page_itinerary_table_created_itinerary_id_mapping_quantifier_value] = {
             itinerary_name: itinerary_id}
-        
+
         if payana_itinerary_create_payload[bigtable_constants.payana_excursion_activity_guide].lower() == "true":
             profile_page_itinerary_read_obj[bigtable_constants.payana_profile_page_itinerary_table_created_activity_guide_id_mapping_quantifier_value] = {
                 payana_itinerary_create_payload[bigtable_constants.payana_excursion_name]: excursion_id}
@@ -386,12 +378,11 @@ class PayanaExcursionTransactionEndPoint(Resource):
 
         # Itinerary table
         payana_itinerary_obj_write_status = payana_itinerary_object.update_itinerary_bigtable()
+        print(excursion_id)
 
         if not payana_itinerary_obj_write_status:
             # delete excursion object
-            profile_excursion_read_obj = PayanaBigTable(payana_excursion_table)
-
-            payana_excursion_obj_delete_status = profile_excursion_read_obj.delete_bigtable_row_with_row_key(
+            payana_excursion_obj_delete_status = delete_excursion_object(
                 excursion_id)
 
             if not payana_excursion_obj_delete_status:
@@ -399,15 +390,12 @@ class PayanaExcursionTransactionEndPoint(Resource):
                 pass
 
             # delete itinerary table column value entry
-            payana_itinerary_read_obj = PayanaBigTable(
-                bigtable_constants.payana_itinerary_table)
-
             payana_revert_itinerary_object = {
                 bigtable_constants.payana_itinerary_column_family_excursion_id_list: {
                     str(running_itinerary_count): excursion_id}
             }
 
-            payana_itinerary_obj_delete_status = payana_itinerary_read_obj.delete_bigtable_row_column_list(
+            payana_itinerary_obj_delete_status = delete_itinerary_object(
                 itinerary_id, payana_revert_itinerary_object)
 
             if not payana_itinerary_obj_delete_status:
@@ -419,12 +407,10 @@ class PayanaExcursionTransactionEndPoint(Resource):
 
         # Profile itinerary table
         payana_profile_page_itinerary_obj_write_status = payana_profile_page_itinerary_object.update_payana_profile_page_itinerary_bigtable()
-
+        print(itinerary_id)
         if not payana_profile_page_itinerary_obj_write_status:
             # delete excursion object
-            profile_excursion_read_obj = PayanaBigTable(payana_excursion_table)
-
-            payana_excursion_obj_delete_status = profile_excursion_read_obj.delete_bigtable_row_with_row_key(
+            payana_excursion_obj_delete_status = delete_excursion_object(
                 excursion_id)
 
             if not payana_excursion_obj_delete_status:
@@ -432,15 +418,11 @@ class PayanaExcursionTransactionEndPoint(Resource):
                 pass
 
             # delete itinerary table object
-            payana_itinerary_read_obj = PayanaBigTable(
-                bigtable_constants.payana_itinerary_table)
-
             payana_revert_itinerary_object = {
                 bigtable_constants.payana_itinerary_column_family_excursion_id_list: {
                     str(running_itinerary_count): excursion_id}
             }
-
-            payana_itinerary_obj_delete_status = payana_itinerary_read_obj.delete_bigtable_row_column_list(
+            payana_itinerary_obj_delete_status = delete_itinerary_object(
                 itinerary_id, payana_revert_itinerary_object)
 
             if not payana_itinerary_obj_delete_status:
@@ -448,9 +430,6 @@ class PayanaExcursionTransactionEndPoint(Resource):
                 pass
 
             # delete profile page itinerary object
-            payana_profile_page_itinerary_read_obj = PayanaBigTable(
-                payana_profile_page_itinerary_table)
-
             payana_profile_page_itinerary_table_delete_wrappers = []
             profile_page_itinerary_object = {}
 
@@ -469,7 +448,7 @@ class PayanaExcursionTransactionEndPoint(Resource):
                         payana_profile_page_itinerary_table_delete_wrappers.append(
                             payana_profile_page_itinerary_table_delete_wrapper)
 
-            payana_profile_page_itinerary_obj_delete_status = payana_profile_page_itinerary_read_obj.delete_bigtable_row_columns(
+            payana_profile_page_itinerary_obj_delete_status = delete_profile_page_itinerary_object_column_values(
                 payana_profile_page_itinerary_table_delete_wrappers)
 
             if not payana_profile_page_itinerary_obj_delete_status:
