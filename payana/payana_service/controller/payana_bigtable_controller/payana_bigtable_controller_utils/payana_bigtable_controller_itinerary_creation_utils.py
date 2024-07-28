@@ -6,6 +6,8 @@ create and write a table, read from the table
 from payana.payana_bl.bigtable_utils.PayanaCheckinTable import PayanaCheckinTable
 from payana.payana_bl.bigtable_utils.PayanaBigTable import PayanaBigTable
 from payana.payana_bl.bigtable_utils.PayanaItineraryTable import PayanaItineraryTable
+from payana.payana_bl.bigtable_utils.PayanaProfilePageItineraryTable import PayanaProfilePageItineraryTable
+from payana.payana_bl.bigtable_utils.PayanaExcursionTable import PayanaExcursionTable
 from payana.payana_bl.bigtable_utils.constants import bigtable_constants
 from payana.payana_service.common_utils.payana_service_exception_handlers import payana_service_generic_exception_handler
 
@@ -134,8 +136,43 @@ def delete_excursion_metadata_object(excursion_id, payana_excursion_object):
 def create_itinerary_metadata_object(profile_itinerary_read_obj):
 
     payana_itinerary_object = PayanaItineraryTable(
-            **profile_itinerary_read_obj)
-    
+        **profile_itinerary_read_obj)
+
     payana_itinerary_obj_write_status = payana_itinerary_object.update_itinerary_bigtable()
-    
+
     return payana_itinerary_object, payana_itinerary_obj_write_status
+
+
+@ payana_service_generic_exception_handler
+def create_profile_page_itinerary_object(profile_page_itinerary_read_obj):
+
+    payana_profile_page_itinerary_object = PayanaProfilePageItineraryTable(
+        **profile_page_itinerary_read_obj)
+
+    payana_profile_page_itinerary_obj_write_status = payana_profile_page_itinerary_object.update_payana_profile_page_itinerary_bigtable()
+
+    return payana_profile_page_itinerary_object, payana_profile_page_itinerary_obj_write_status
+
+
+@ payana_service_generic_exception_handler
+def get_excursion_object(excursion_id):
+
+    payana_excursion_read_obj = PayanaBigTable(
+        bigtable_constants.payana_excursion_table)
+
+    row_key = str(excursion_id)
+
+    payana_excursion_obj = payana_excursion_read_obj.get_row_dict(
+        row_key, include_column_family=True)
+    
+    return payana_excursion_obj
+
+@ payana_service_generic_exception_handler
+def create_excursion_object(profile_excursion_read_obj):
+    
+    payana_excursion_object = PayanaExcursionTable(
+            **profile_excursion_read_obj)
+    
+    payana_excursion_obj_write_status = payana_excursion_object.update_excursion_bigtable()
+    
+    return payana_excursion_object, payana_excursion_obj_write_status

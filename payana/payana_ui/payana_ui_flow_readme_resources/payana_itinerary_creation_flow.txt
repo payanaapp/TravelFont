@@ -386,7 +386,7 @@ Step 7 - Edit Excursion
 
 7A - Edit Excursion Metadata
 
-7A1 - Update the Excursion Metadata table
+7A1 - Update the Excursion Metadata table (Only activities_list, participants_list, description, activities_list)
 
 Reference Files:
 -- payana_service_excursion_objects_read_write_edit_test.py

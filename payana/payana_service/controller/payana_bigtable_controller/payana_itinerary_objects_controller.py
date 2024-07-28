@@ -1,11 +1,12 @@
 from flask import Flask, request, Blueprint
 from flask_restx import Api, Resource, fields, Namespace, reqparse
 import json
+import copy
 
 from payana.payana_service.server import service_settings
 from payana.payana_bl.bigtable_utils.bigtable_read_write_object_wrapper import bigtable_write_object_wrapper
 from payana.payana_service.constants import payana_service_constants
-from payana.payana_service.common_utils.payana_parsers import get_itinerary_id_header
+from payana.payana_service.common_utils.payana_parsers import get_itinerary_id_header, get_profile_id_header
 from payana.payana_service.common_utils.payana_service_exception_handlers import payana_service_generic_exception_handler
 from payana.payana_service.common_utils.payana_controller_objects_business_logic_helpers import payana_profile_page_travel_footprint_read_parser, payana_profile_page_travel_footprint_delete_parser
 from payana.payana_bl.bigtable_utils.bigtable_read_write_object_wrapper import bigtable_read_row_key_wrapper
@@ -13,7 +14,8 @@ from payana.payana_bl.bigtable_utils.PayanaItineraryTable import PayanaItinerary
 from payana.payana_bl.bigtable_utils.PayanaBigTable import PayanaBigTable
 from payana.payana_bl.bigtable_utils.constants import bigtable_constants
 from payana.payana_bl.bigtable_utils.bigtable_read_write_object_wrapper import bigtable_write_object_wrapper
-from payana.payana_service.controller.payana_bigtable_controller.payana_bigtable_controller_utils.payana_bigtable_controller_itinerary_creation_utils import get_itinerary_object, update_itinerary_object, create_itinerary_metadata_object
+from payana.payana_service.controller.payana_bigtable_controller.payana_bigtable_controller_utils.payana_bigtable_controller_itinerary_creation_utils import get_itinerary_object, update_itinerary_object, create_itinerary_metadata_object, create_profile_page_itinerary_object, delete_profile_page_itinerary_object_column_values
+from payana.payana_service.models.payana_bigtable_models.payana_itinerary_flow_model import profile_page_itinerary_model
 
 payana_itinerary_objects_name_space = Namespace(
     'itinerary', description='Manage the CRUD operations of the excursion table')
@@ -249,9 +251,17 @@ class PayanaItineraryObjectTransactionEndPoint(Resource):
             raise KeyError(
                 payana_missing_itinerary_objects_header_exception, payana_itinerary_objects_name_space)
 
+        profile_id = get_profile_id_header(request)
+
+        if profile_id is None or len(profile_id) == 0:
+            raise KeyError(payana_service_constants.payana_missing_profile_id_header_exception,
+                           payana_itinerary_objects_name_space)
+
         # Step 1 - Fetch the existing itinerary metadata object
         payana_itinerary_existing_obj = get_itinerary_object(itinerary_id)
         payana_itinerary_existing_obj = payana_itinerary_existing_obj[itinerary_id]
+        existing_it_name = payana_itinerary_existing_obj[bigtable_constants.payana_itinerary_metadata][
+            bigtable_constants.payana_itinerary_column_family_description]
 
         # Step 2 - Update the itinerary object metadata
         payana_itinerary_object = request.json
@@ -265,6 +275,40 @@ class PayanaItineraryObjectTransactionEndPoint(Resource):
 
             raise Exception(
                 payana_itinerary_objects_create_failure_message_post, payana_itinerary_objects_name_space)
+
+        # Step 4 - Update the profile page itinerary object metadata (only if the metadata update is name/description)
+        if bigtable_constants.payana_itinerary_metadata in payana_itinerary_object and bigtable_constants.payana_itinerary_column_family_description in payana_itinerary_object[bigtable_constants.payana_itinerary_metadata]:
+
+            # 4A - update the new description/name
+            profile_page_itinerary_obj = copy.deepcopy(
+                profile_page_itinerary_model)
+
+            profile_page_itinerary_obj[bigtable_constants.payana_profile_table_profile_id] = profile_id
+
+            new_description = payana_itinerary_object[bigtable_constants.payana_itinerary_metadata][
+                bigtable_constants.payana_itinerary_column_family_description]
+
+            profile_page_itinerary_obj[bigtable_constants.payana_profile_page_itinerary_table_created_itinerary_id_mapping_quantifier_value] = {
+                new_description: itinerary_id
+            }
+
+            _, payana_profile_page_itinerary_obj_write_status = create_profile_page_itinerary_object(
+                profile_page_itinerary_obj)
+
+            # 4B - delete the existing description/name
+            if payana_profile_page_itinerary_obj_write_status:
+                payana_profile_page_itinerary_table_delete_wrappers = []
+                generic_activity_cf = "_".join([bigtable_constants.payana_generic_activity_column_family,
+                                               bigtable_constants.payana_profile_page_itinerary_table_created_itinerary_id_mapping_quantifier_value])
+
+                payana_profile_page_itinerary_table_delete_wrapper = bigtable_write_object_wrapper(profile_id, generic_activity_cf,
+                                                                                                   existing_it_name, itinerary_id)
+
+                payana_profile_page_itinerary_table_delete_wrappers.append(
+                    payana_profile_page_itinerary_table_delete_wrapper)
+
+                _ = delete_profile_page_itinerary_object_column_values(
+                    payana_profile_page_itinerary_table_delete_wrappers)
 
         return {
             status: payana_200_response,

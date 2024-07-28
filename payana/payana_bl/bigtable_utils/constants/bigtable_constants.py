@@ -230,7 +230,7 @@ payana_neighboring_cities_column_family = "neighboring_city_list"
 
 # Payana activity constants
 payana_generic_activity_column_family = "generic"
-payana_activity_column_family = ["generic", "hiking", "aerial_activities", "city_culture", "coffee_bar", "fashion_trips", "food_trips", "instagrammable_locations", "island_beaches", "kid_friendly", "land_adventures", "romantic", "rooftop_bars", "spring_break", "staycation", "water_activities", "weekend_getaway"]
+payana_activity_column_family = ["generic", "hiking", "aerial_activities", "bar_hopping", "city_culture", "clubbing", "coffee_bar", "fashion_trips", "food_trips", "instagrammable_locations", "island_beaches", "kid_friendly", "land_adventures", "live_events", "road_trips", "romantic", "rooftop_bars", "spring_break", "staycation", "water_activities", "weekend_getaway"]
 
 # Payana personal place ID itinerary table constants
 payana_personal_place_id_itinerary_table_itinerary_id_quantifier_value = "itinerary_id"
