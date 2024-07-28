@@ -16,3 +16,11 @@ Parent Doc: payana_itinerary_creation_flow.txt
     Postman API name: "Payana Create CheckIn object transaction - Steps 3A & 3B"
 
     Postman API: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-372dac47-ec6e-4928-b19a-cb58bd7e1292?ctx=documentation 
+
+#3 
+
+  -- Steps 6A, 6B combined into one transaction
+
+    Postman API name: "Payana Update Itinerary Metadata (itinerary_metadata only)"
+
+    Postman API: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-914bcf33-5377-4b06-8e01-46b0afab6185?ctx=documentation 
