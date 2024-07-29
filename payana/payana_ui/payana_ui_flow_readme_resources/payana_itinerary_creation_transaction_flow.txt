@@ -24,3 +24,12 @@ Parent Doc: payana_itinerary_creation_flow.txt
     Postman API name: "Payana Update Itinerary Metadata (itinerary_metadata only)"
 
     Postman API: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-914bcf33-5377-4b06-8e01-46b0afab6185?ctx=documentation 
+
+
+#4
+
+  -- Steps 7A1, 7A2 combined into one transaction
+
+    Postman API name: "Payana update excursion metadata (Steps 7A1, 7A2)"
+
+    Postman API: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-df3c9c3b-87f1-4c7a-96f4-84246ce6e8e5?ctx=documentation 

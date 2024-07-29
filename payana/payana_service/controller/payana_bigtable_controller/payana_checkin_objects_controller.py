@@ -15,7 +15,7 @@ from payana.payana_bl.bigtable_utils.PayanaBigTable import PayanaBigTable
 from payana.payana_bl.bigtable_utils.constants import bigtable_constants
 from payana.payana_bl.bigtable_utils.bigtable_read_write_object_wrapper import bigtable_write_object_wrapper
 from payana.payana_service.models.payana_bigtable_models.payana_itinerary_flow_model import payana_excursion_object_model
-from payana.payana_service.controller.payana_bigtable_controller.payana_bigtable_controller_utils.payana_bigtable_controller_itinerary_creation_utils import create_checkin_object, delete_checkin_object, update_excursion_metadata_object, delete_excursion_metadata_object
+from payana.payana_service.controller.payana_bigtable_controller.payana_bigtable_controller_utils.payana_bigtable_controller_itinerary_creation_utils import create_checkin_object, delete_checkin_object, update_excursion_metadata_object, delete_excursion_metadata_object, get_checkin_object, update_checkin_object, update_excursion_object, delete_excursion_column_value, delete_checkin_column_value
 
 payana_checkin_name_space = Namespace(
     'checkin', description='Manage payana check in objects')
@@ -239,10 +239,9 @@ class PayanaCheckinTableColumnFamilyDeleteEndPoint(Resource):
 
 
 @payana_checkin_name_space.route("/create/")
-class PayanaCheckinTableEndPoint(Resource):
+class PayanaCheckinTableCreateTransactionEndPoint(Resource):
 
     @payana_checkin_name_space.doc(responses={200: payana_200_response, 400: payana_400_response, 500: payana_500_response})
-    # @payana_checkin_name_space.expect(profile_table_model)
     @payana_service_generic_exception_handler
     def post(self):
 
@@ -304,3 +303,87 @@ class PayanaCheckinTableEndPoint(Resource):
             message: payana_check_in_write_success_message_post,
             status_code: payana_201
         }, payana_201
+
+
+@payana_checkin_name_space.route("/edit/")
+class PayanaCheckinTableUpdateeTransactionEndPoint(Resource):
+
+    @payana_checkin_name_space.doc(responses={200: payana_200_response, 400: payana_400_response, 500: payana_500_response})
+    @payana_service_generic_exception_handler
+    def put(self):
+        checkin_id = get_checkin_id_header(request)
+
+        if checkin_id is None or len(checkin_id) == 0:
+            raise KeyError(
+                payana_missing_check_in_id_header_exception, payana_checkin_name_space)
+
+        # Step 1 - Fetch the existing checkin object
+        payana_existing_checkin_read_obj_dict = get_checkin_object(checkin_id)
+
+        if len(payana_existing_checkin_read_obj_dict) == 0:
+            raise KeyError(payana_empty_row_read_exception,
+                           payana_checkin_name_space)
+
+        payana_existing_checkin_read_obj_dict = payana_existing_checkin_read_obj_dict[
+            checkin_id]
+
+        # Step 2 - Update the Checkin object
+        payana_checkin_new_object = request.json
+
+        payana_checkin_obj_edit_status = update_checkin_object(
+            checkin_id, payana_checkin_new_object)
+
+        if not payana_checkin_obj_edit_status:
+            # Revert the check in object to Step 1
+            update_checkin_object(
+                checkin_id, payana_existing_checkin_read_obj_dict)
+
+            raise Exception(
+                payana_check_in_write_failure_message_post, payana_checkin_name_space)
+
+        # Step 3 - Update the excursion object if there is a new image addition or place update
+        payana_update_excursion_object = {}
+
+        if bigtable_constants.payana_excursion_column_family_image_id_list in payana_checkin_new_object:
+            payana_update_excursion_object[bigtable_constants.payana_checkin_column_family_image_id_list] = payana_checkin_new_object[
+                bigtable_constants.payana_excursion_column_family_image_id_list]
+
+        if bigtable_constants.payana_checkin_metadata in payana_checkin_new_object and bigtable_constants.payana_excursion_city in payana_checkin_new_object[bigtable_constants.payana_checkin_metadata]:
+            payana_update_excursion_object[bigtable_constants.payana_excursion_column_family_cities_checkin_id_list] = {payana_existing_checkin_read_obj_dict[bigtable_constants.payana_checkin_metadata][bigtable_constants.payana_checkin_excursion_position]: payana_checkin_new_object[bigtable_constants.payana_checkin_metadata][
+                bigtable_constants.payana_excursion_city]}
+
+        if not len(payana_update_excursion_object) == 0:
+
+            payana_excursion_obj_write_status = update_excursion_object(
+                payana_existing_checkin_read_obj_dict[bigtable_constants.payana_checkin_metadata][bigtable_constants.payana_checkin_excursion_id], payana_update_excursion_object)
+
+            if not payana_excursion_obj_write_status:
+                # Revert the check in object to Step 1
+                payana_checkin_obj_write_status = update_checkin_object(
+                    checkin_id, payana_existing_checkin_read_obj_dict)
+
+                if not payana_checkin_obj_write_status:
+                    # Add logging to uato-handle this
+                    pass
+
+                # Revert checkin & excursion object to previous state by removing new image ID added
+                payana_revert_excursion_object = {}
+
+                if bigtable_constants.payana_excursion_column_family_image_id_list in payana_checkin_new_object:
+                    payana_revert_excursion_object[bigtable_constants.payana_checkin_column_family_image_id_list] = payana_checkin_new_object[
+                        bigtable_constants.payana_excursion_column_family_image_id_list]
+                    
+                delete_checkin_column_value(checkin_id, payana_revert_excursion_object)
+
+                delete_excursion_column_value(
+                    payana_existing_checkin_read_obj_dict[bigtable_constants.payana_checkin_metadata][bigtable_constants.payana_checkin_excursion_id], payana_revert_excursion_object)
+
+                raise Exception(
+                    payana_check_in_write_failure_message_post, payana_checkin_name_space)
+
+        return {
+            status: payana_200_response,
+            payana_check_in_id_header: checkin_id,
+            message: payana_check_in_write_success_message_put,
+            status_code: payana_200
+        }, payana_200

@@ -100,6 +100,18 @@ def create_checkin_object(payana_checkin_object):
 
 
 @ payana_service_generic_exception_handler
+def update_checkin_object(checkin_id, payana_checkin_object):
+
+    payana_checkin_read_obj = PayanaBigTable(
+        bigtable_constants.payana_checkin_table)
+
+    payana_checkin_obj_edit_status = payana_checkin_read_obj.insert_columns_column_family(
+        checkin_id, payana_checkin_object)
+
+    return payana_checkin_obj_edit_status
+
+
+@ payana_service_generic_exception_handler
 def delete_checkin_object(checkin_id):
     payana_checkin_read_obj = PayanaBigTable(
         bigtable_constants.payana_checkin_table)
@@ -164,15 +176,65 @@ def get_excursion_object(excursion_id):
 
     payana_excursion_obj = payana_excursion_read_obj.get_row_dict(
         row_key, include_column_family=True)
-    
+
     return payana_excursion_obj
+
 
 @ payana_service_generic_exception_handler
 def create_excursion_object(profile_excursion_read_obj):
-    
+
     payana_excursion_object = PayanaExcursionTable(
-            **profile_excursion_read_obj)
-    
+        **profile_excursion_read_obj)
+
     payana_excursion_obj_write_status = payana_excursion_object.update_excursion_bigtable()
-    
+
     return payana_excursion_object, payana_excursion_obj_write_status
+
+
+@ payana_service_generic_exception_handler
+def get_checkin_object(checkin_id):
+
+    payana_checkin_read_obj = PayanaBigTable(
+        bigtable_constants.payana_checkin_table)
+
+    row_key = str(checkin_id)
+
+    payana_checkin_read_obj_dict = payana_checkin_read_obj.get_row_dict(
+        row_key, include_column_family=True)
+
+    return payana_checkin_read_obj_dict
+
+
+@ payana_service_generic_exception_handler
+def update_excursion_object(excursion_id, payana_excursion_object):
+
+    payana_excursion_read_obj = PayanaBigTable(
+        bigtable_constants.payana_excursion_table)
+
+    payana_excursion_obj_write_status = payana_excursion_read_obj.insert_columns_column_family(
+        excursion_id, payana_excursion_object)
+
+    return payana_excursion_obj_write_status
+
+
+@ payana_service_generic_exception_handler
+def delete_excursion_column_value(excursion_id, payana_excursion_object):
+
+    payana_excursion_read_obj = PayanaBigTable(
+        bigtable_constants.payana_excursion_table)
+
+    payana_excursion_obj_delete_status = payana_excursion_read_obj.delete_bigtable_row_column_list(
+        excursion_id, payana_excursion_object)
+    
+    return payana_excursion_obj_delete_status
+
+@ payana_service_generic_exception_handler
+def delete_checkin_column_value(checkin_id, payana_checkin_object):
+
+    payana_checkin_read_obj = PayanaBigTable(
+        bigtable_constants.payana_checkin_table)
+
+    payana_checkin_obj_delete_status = payana_checkin_read_obj.delete_bigtable_row_column_list(
+        checkin_id, payana_checkin_object)
+    
+    return payana_checkin_obj_delete_status
