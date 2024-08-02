@@ -20,7 +20,8 @@ payana_excursion_object_model = {
         bigtable_constants.payana_excursion_place_name: "",
         bigtable_constants.payana_excursion_city: "",
         bigtable_constants.payana_excursion_state: "",
-        bigtable_constants.payana_excursion_country: ""
+        bigtable_constants.payana_excursion_country: "",
+        bigtable_constants.payana_excursion_itinerary_position: ""
     }
 }
 

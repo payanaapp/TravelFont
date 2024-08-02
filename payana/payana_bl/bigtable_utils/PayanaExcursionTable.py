@@ -46,6 +46,7 @@ class PayanaExcursionTable:
         self.column_qualifier_excursion_state = bigtable_constants.payana_excursion_state
         self.column_qualifier_excursion_country = bigtable_constants.payana_excursion_country
         self.column_qualifier_excursion_activity_guide = bigtable_constants.payana_excursion_activity_guide
+        self.payana_excursion_itinerary_position = bigtable_constants.payana_excursion_itinerary_position
 
         self.column_qualifier_itinerary_id = bigtable_constants.payana_excursion_itinerary_id
         self.column_qualifier_itinerary_name = bigtable_constants.payana_excursion_itinerary_name
@@ -101,6 +102,13 @@ class PayanaExcursionTable:
         if self.column_qualifier_excursion_place_name in self.excursion_metadata:
             self.excursion_place_name = self.excursion_metadata[
                 self.column_qualifier_excursion_place_name]
+        else:
+            # raise invalid key error or key missing error
+            pass
+
+        if self.payana_excursion_itinerary_position in self.excursion_metadata:
+            self.excursion_itinerary_position = self.excursion_metadata[
+                self.payana_excursion_itinerary_position]
         else:
             # raise invalid key error or key missing error
             pass
@@ -193,6 +201,7 @@ class PayanaExcursionTable:
         self.set_excursion_itinerary_name_write_object()
         self.set_activity_guide_status_write_object()
         self.set_checkin_id_cities_list_write_object()
+        self.set_excursion_itinerary_position_write_object()
 
     @payana_generic_exception_handler
     def set_checkin_id_list_write_object(self):
@@ -325,10 +334,17 @@ class PayanaExcursionTable:
         # user_name write object
         self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
             self.excursion_id, self.column_family_excursion_metadata, self.column_qualifier_itinerary_id, self.excursion_itinerary_id))
-        
+
     @payana_generic_exception_handler
     def set_excursion_itinerary_name_write_object(self):
 
         # user_name write object
         self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
             self.excursion_id, self.column_family_excursion_metadata, self.column_qualifier_itinerary_name, self.excursion_itinerary_name))
+
+    @payana_generic_exception_handler
+    def set_excursion_itinerary_position_write_object(self):
+
+        # user_name write object
+        self.update_bigtable_write_objects.append(bigtable_write_object_wrapper(
+            self.excursion_id, self.column_family_excursion_metadata, self.payana_excursion_itinerary_position, self.excursion_itinerary_position))
