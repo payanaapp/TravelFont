@@ -73,7 +73,8 @@ curl --location 'http://localhost:8888/entity/excursion/' \
         "place_name": "Land'\''s End",
         "city": "SF##California##USA",
         "state": "California##USA",
-        "country": "USA"
+        "country": "USA",
+        "excursion_object_position_itinerary": "1"
     }
 }'
 """
@@ -115,7 +116,8 @@ payana_excursion_object_json = {
         "place_name": "Land's End",
         "city": "SF##California##USA",
         "state": "California##USA",
-        "country": "USA"
+        "country": "USA",
+        "excursion_object_position_itinerary": "1"
     }
 }
 

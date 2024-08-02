@@ -33,3 +33,50 @@ Parent Doc: payana_itinerary_creation_flow.txt
     Postman API name: "Payana update excursion metadata (Steps 7A1, 7A2)"
 
     Postman API: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-df3c9c3b-87f1-4c7a-96f4-84246ce6e8e5?ctx=documentation 
+
+
+#5
+
+  -- Steps 7B2, 7B3 combined into one transaction
+
+    Postman API name: "Payana Update CheckIn Metadata or add a new image ID - 7B2, 7B3"
+
+    Postman API: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-fe2af6ce-e42b-4dbd-b75b-3316c679a836?ctx=documentation 
+
+#6
+
+  -- Steps 7C2, 7C3 combined into one transaction
+
+  Same as #2 above
+
+#7
+
+  -- Steps 7D2, 7D3 combined into one transaction
+
+    Postman API name: "Payana Delete Image - 7D2, 7D3"
+
+    Postman API: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-5db95695-e944-4212-811b-cd10462b7f8a?ctx=documentation 
+
+#8
+
+  -- Steps 7E2, 7E3 combined into one transaction
+
+    Postman API name: "Payana Delete CheckIn - 7E2, 7E3"
+
+    Postman API: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-87896c95-6c75-45eb-9620-e39eabbe4ed3?ctx=documentation 
+
+#9
+
+  -- Steps 9A, 9C-E combined into one transaction
+
+    Postman API name: "Payana Delete Excursion Transaction - 9A, 9C-E combined"
+
+    Postman API: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-f0d39b82-4214-4653-b125-bd6bfe5b8207?ctx=documentation 
+
+#10
+
+  -- Steps 10A-B, 10D-E combined into one transaction
+
+    Postman API name: "Payana Delete Itinerary Transaction - 10A-B, 10D-E combined"
+
+    Postman API:https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-c1dbd13e-a6bc-42dc-8f85-a63e7ff19a5d?ctx=documentation 

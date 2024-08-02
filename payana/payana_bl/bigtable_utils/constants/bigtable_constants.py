@@ -160,6 +160,7 @@ payana_excursion_city = "city"
 payana_excursion_state = "state"
 payana_excursion_country = "country"
 payana_excursion_activity_guide = "activity_guide"
+payana_excursion_itinerary_position = "excursion_object_position_itinerary"
 
 # Payana check in table constants
 payana_checkin_column_family_image_id_list = "image_id_list"

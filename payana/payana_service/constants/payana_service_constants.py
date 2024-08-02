@@ -215,6 +215,7 @@ payana_excursion_objects_values_delete_success_message = "Payana excursion check
 payana_missing_excursion_object = "Missing Payana excursion checkin object in the request body"
 payana_missing_excursion_objects_header_exception = "Missing Payana excursion checkin header in the request body"
 payana_excursion_id_header = "excursion_id"
+payana_excursion_id_missing_exception_message = "Payana excursion in ID missing in the headers"
 
 # Payana itinerary objects controller constants
 payana_itinerary_objects_write_success_message_post = "Payana itinerary checkin object successfully created!"

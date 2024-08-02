@@ -915,3 +915,50 @@ How to verify if the image got uploaded successfully?
    """
    200 SUCCESS 
    """
+
+Step 14 - No duplicate excursion names for one profile/user. 
+          When the user enters an excursion after clicking '+' button or edits an excursion name. 
+          Make a GET call below to fetch the existing excursions on the user's profile page.
+          Check inside "generic_created_activity_guide_id_mapping", "generic_created_excursion_id_mapping", "generic_saved_activity_guide_id_mapping", "generic_saved_excursion_id_mapping" to make sure the excursion names are not repeated.
+
+Reference Files:
+ -- payana_service_profile_page_itineraries_read_write_edit_test.py
+ -- payana_profile_page_itineraries.py
+
+API Postman file:
+  -- Payana Profile Itinerary Object READ
+
+API call:
+"""
+curl --location 'http://localhost:8888/profile/itineraries/' \
+--header 'profile_id: 123456789'
+"""
+
+Response:
+"""
+{
+    "123456789": {
+        "generic_created_activity_guide_id_mapping": {
+            "Abhi's itinerary 7": "fc032ff9ea7a92fdd69a049009a72f6c6267e36bb43461fbc44d93f80877ae0f"
+        },
+        "generic_created_itinerary_id_mapping": {
+            "Cupertino, Sunnyvale": "82b6ce1ffd10f6dbba2decf127f6cb44d9d01028c8afb5a4c0670bd7ec53f554"
+        },
+        "hiking_created_activity_guide_id_mapping": {
+            "Abhi's itinerary 7": "fc032ff9ea7a92fdd69a049009a72f6c6267e36bb43461fbc44d93f80877ae0f"
+        },
+        "hiking_created_itinerary_id_mapping": {
+            "Cupertino, Sunnyvale": "82b6ce1ffd10f6dbba2decf127f6cb44d9d01028c8afb5a4c0670bd7ec53f554"
+        },
+        "road_trips_created_activity_guide_id_mapping": {
+            "Abhi's itinerary 7": "fc032ff9ea7a92fdd69a049009a72f6c6267e36bb43461fbc44d93f80877ae0f"
+        },
+        "romantic_created_activity_guide_id_mapping": {
+            "Abhi's itinerary 7": "fc032ff9ea7a92fdd69a049009a72f6c6267e36bb43461fbc44d93f80877ae0f"
+        },
+        "spring_break_created_itinerary_id_mapping": {
+            "Cupertino, Sunnyvale": "82b6ce1ffd10f6dbba2decf127f6cb44d9d01028c8afb5a4c0670bd7ec53f554"
+        }
+    }
+}
+"""
