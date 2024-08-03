@@ -626,15 +626,16 @@ class PayanaExcursionObjectDeleteTransactionEndPoint(Resource):
                 payana_excursion_objects_delete_failure_message, payana_excursion_objects_name_space)
 
         # Step 3 - Delete all checkin objects
-        checkin_id_list = payana_excursion_existing_obj[
-            bigtable_constants.payana_excursion_column_family_checkin_id_list]
+        if bigtable_constants.payana_excursion_column_family_checkin_id_list in payana_excursion_existing_obj:
+            checkin_id_list = payana_excursion_existing_obj[
+                bigtable_constants.payana_excursion_column_family_checkin_id_list]
 
-        for _, checkin_id in checkin_id_list.items():
-            delete_checkin_object_status = delete_checkin_object(checkin_id)
+            for _, checkin_id in checkin_id_list.items():
+                delete_checkin_object_status = delete_checkin_object(checkin_id)
 
-            if not delete_checkin_object_status:
-                # Add logging to auto-handle later
-                pass
+                if not delete_checkin_object_status:
+                    # Add logging to auto-handle later
+                    pass
 
         # Step 4 - Update Itinerary object by removing the excursion ID
         payana_itinerary_delete_obj = {bigtable_constants.payana_itinerary_column_family_excursion_id_list: {payana_excursion_existing_obj[bigtable_constants.payana_excursion_metadata][
