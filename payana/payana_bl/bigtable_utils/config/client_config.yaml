@@ -1,7 +1,7 @@
 instance_id: inst-payana
 project_id: payana-four
 cluster_id: clus-payana
-location_id: me-central1-a
+location_id: me-west1-a
 serve_nodes: 1
 production_flag: false
 labels:
