@@ -74,7 +74,8 @@ curl --location 'http://localhost:8888/entity/excursion/' \
         "city": "SF##California##USA",
         "state": "California##USA",
         "country": "USA",
-        "excursion_object_position_itinerary": "1"
+        "excursion_object_position_itinerary": "1",
+        "excursion_clone_parent_id": ""
     }
 }'
 """
@@ -117,7 +118,8 @@ payana_excursion_object_json = {
         "city": "SF##California##USA",
         "state": "California##USA",
         "country": "USA",
-        "excursion_object_position_itinerary": "1"
+        "excursion_object_position_itinerary": "1",
+        "excursion_clone_parent_id": ""
     }
 }
 

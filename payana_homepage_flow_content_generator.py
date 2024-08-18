@@ -97,7 +97,8 @@ excursion_obj_1 = {
         "city": "sanfrancisco##California##USA",
         "state": "California##USA",
         "country": "USA",
-        "excursion_object_position_itinerary": "1"
+        "excursion_object_position_itinerary": "1",
+        "excursion_clone_parent_id": ""
     }
 }
 
