@@ -229,6 +229,7 @@ payana_itinerary_objects_values_delete_success_message = "Payana itinerary check
 payana_missing_itinerary_object = "Missing Payana itinerary checkin object in the request body"
 payana_missing_itinerary_objects_header_exception = "Missing Payana itinerary checkin header in the request body"
 payana_itinerary_id_header = "itinerary_id"
+payana_itinerary_name_header = "itinerary_name"
 
 # Payana global city itinerary rating controller constants
 payana_global_city_rating_itinerary_objects_write_success_message_post = "Payana global city itinerary rating object successfully created!"

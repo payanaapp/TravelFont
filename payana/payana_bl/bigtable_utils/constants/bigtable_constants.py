@@ -154,6 +154,8 @@ payana_excursion_transport_mode = "transport_mode"
 payana_excursion_place_name = "place_name"
 payana_excursion_place_id = "place_id"
 payana_excursion_activities_list = "activities_list"
+# The above code appears to be a Python variable declaration. It is creating a variable named
+# "payana_excursion_itinerary_id" and assigning it a value or placeholder. The triple hash symbols "
 payana_excursion_itinerary_id = "itinerary_id"
 payana_excursion_itinerary_name = "itinerary_name"
 payana_excursion_city = "city"
@@ -161,6 +163,7 @@ payana_excursion_state = "state"
 payana_excursion_country = "country"
 payana_excursion_activity_guide = "activity_guide"
 payana_excursion_itinerary_position = "excursion_object_position_itinerary"
+payana_excursion_clone_parent_id = "excursion_clone_parent_id"
 
 # Payana check in table constants
 payana_checkin_column_family_image_id_list = "image_id_list"

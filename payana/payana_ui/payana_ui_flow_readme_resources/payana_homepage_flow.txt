@@ -543,7 +543,7 @@ Step 5 - When the User clicks on "Save this Itinerary" and clicks on "Add To Exi
 
 
   5C
-    - For each excursion ID from 5B, make a GET call to fetch the metadata i.e. Image ID list (this is to show an image for a given itinerary)
+    - For each excursion ID from 5B, make a GET call to fetch the excursion metadata i.e. Image ID list (this is to show an image for a given itinerary)
       - Repeat Step 3D
 
   5D
@@ -555,36 +555,11 @@ Step 5 - When the User clicks on "Save this Itinerary" and clicks on "Add To Exi
     - * payana_itinerary_object_read_write_edit_test.py
     - * payana_service_itinerary_object_read_write_edit_test.py
 
-  API call:
-  """
-  curl --location --request PUT 'http://localhost:8888/entity/itinerary/' \
-  --header 'Content-Type: application/json' \
-  --header 'itinerary_id: 12345678' \
-  --data '{
-      "excursion_id_list": {
-          "4": "34567"
-      },
-      "activities_list": {
-          "hiking": "1.0",
-          "aerial_activities": "1.0"
-      }
-  }'
-  """
+   5E1 - API calls to create new itinerary and clone the excursion object
 
-  In the API call: 
-  -- "4": "34567" is <position of the excursion>: <excursion_id>. Get the position of the excursion from the response in 5B i.e. <largest key in "excursion_id_list"> + 1
-  -- itinerary_id is what the user selects
-  -- excursion_id is the one user wishes to save
+   5E2 - API calls to clone the excursion object into an existing itinerary object
 
-  Response:
-  """
-  {
-      "status": "OK",
-      "itinerary_id": "12345678",
-      "message": "Payana itinerary checkin object successfully updated!",
-      "statusCode": 200
-  }
-  """
+   5E3 - Profile page itinerary table saved_list_itinerary or saved_list_excursion
 
 Step 6 - When the User clicks on "Save this Itinerary" and clicks on "New Itinerary"
   
@@ -750,7 +725,7 @@ curl --location 'http://localhost:8888/entity/autocomplete/users/' \
 --header 'Content-Type: application/json' \
 --header 'city: sanfrancisco##california##usa' \
 --header 'user;'
-"""
+""",
 
 Response:
 """

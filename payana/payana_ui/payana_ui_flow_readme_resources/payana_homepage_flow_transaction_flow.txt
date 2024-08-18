@@ -1,0 +1,11 @@
+Steps 5E1- 5E3 in payana_homepage_flow.txt merged into one transaction
+
+API postman file: Payana Save Itinerary transaction - Steps 5E1, 5E2, 5E3
+Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-0ae133b1-5195-4aeb-a3e0-156c332a8073 
+
+
+
+Steps 6A, 6B in payana_homepage_flow.txt merged into one transaction
+
+API postman file: Payana Save Itinerary transaction - Steps 6A, 6B
+Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-e032fac1-39fa-4542-b638-e072f40f2cdd 
