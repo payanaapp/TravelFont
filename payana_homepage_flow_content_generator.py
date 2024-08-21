@@ -37,8 +37,6 @@ payana_bigtable_init(client_config_file_path, bigtable_tables_schema_path)
 neighboring_cities_obj = {
     "city": "sanfrancisco##california##usa",
     "neighboring_city_list": {
-        "cupertino##california##usa": "72.56",
-        "santaclara##california##usa": "82.56",
         "sanfrancisco##california##usa": "77.78"
     }
 }
@@ -237,7 +235,7 @@ for itinerary_obj in itinerary_object_list:
 
 # 3A4 - Upload Google cloud images
 # upload a blob
-gcs_payana_itinerary_pictures_bucket_name = "payana_itinerary_pictures"
+gcs_payana_itinerary_pictures_bucket_name = bigtable_constants.payana_gcs_profile_pictures
 
 itinerary_picture_bucket_name_list = {"12345": "fishermans_wharf.jpg", "34567": "golden_gate_night.jpg", "23456": "golden-gate-bridge-sf.jpg",
                                       "45678": "fishermans_wharf.jpg", "23456": "golden_gate_night.jpg", "56789": "golden-gate-bridge-sf.jpg"}
@@ -390,7 +388,8 @@ autocomplete_cities_obj = {
         "santaclara##california##usa": "789",
         "seattle##washington##usa": "8678",
         "sanjuan##xyz##puertorico": "1457",
-        "sanfrancisco##california##usa": "123"
+        "sanfrancisco##california##usa": "123",
+        "zainzibar": "1234"
     }
 }
 
@@ -445,7 +444,7 @@ for travel_buddy_obj in travel_buddy_objects:
 
     payana_travel_buddy_obj_write_status = payana_travel_buddy_obj.update_travel_buddy_bigtable()
     print("payana_travel_buddy_obj_write_status: " +
-        str(payana_travel_buddy_obj_write_status))
+          str(payana_travel_buddy_obj_write_status))
 
     payana_travel_buddy_table = bigtable_constants.payana_travel_buddy_list_table
     profile_id = payana_travel_buddy_obj.profile_id
@@ -462,10 +461,11 @@ for travel_buddy_obj in travel_buddy_objects:
 autocomplete_users_obj = {
     "city": "sanfrancisco##california##usa",
     "payana_autocomplete_users_list": {
-        "user_1": "156", # user_name: user_id
+        "user_1": "156",  # user_name: user_id
         "user_2": "789",
         "user_3": "8678",
-        "user_4": "1457"
+        "user_4": "1457",
+        "zain": "6799"
     }
 }
 
@@ -487,4 +487,3 @@ print(payana_autocomplete_users_read_obj.get_row_dict(
 
 # Add travel buddy profiles, profile pictures for travel buddy objects in 7B1, 7B2 above
 # Do it in travel buddy page
-

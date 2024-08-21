@@ -190,6 +190,7 @@ payana_autocomplete_users_objects_delete_success_message = "Payana autocomplete 
 payana_autocomplete_users_missing_object = "Missing Payana autocomplete users object in the request body"
 payana_autocomplete_users_header = "user"
 payana_missing_autocomplete_users_header_exception = "Missing Payana autocomplete users header in the request body"
+payana_autocomplete_header = "autocomplete"
 
 # Payana excursion chekc in objects controller constants
 payana_excursion_checkin_objects_permission_write_success_message_post = "Payana excursion checkin permission object successfully created!"
@@ -339,3 +340,10 @@ payana_missing_comment_id_header_exception = "Missing comment ID in the headers"
 payana_missing_city_header_exception = "Missing city in the headers"
 payana_missing_mail_id_header_exception = "Missing Mail ID in the headers"
 payana_missing_activity_guide_header_exception = "Missing activity in the headers"
+
+# Payana not found excpetions
+payana_city_not_found_exception = "City not found"
+payana_top_excursion_guides_not_found_exception = "Excursion and cativity guides not found for the given city"
+payana_invalid_activity_id_exception = "Invalid activity ID"
+payana_activity_guide_header = "activity_guide"
+payana_excursion_guide_header = "excursion"

@@ -5,7 +5,7 @@ import json
 from payana.payana_service.server import service_settings
 from payana.payana_bl.bigtable_utils.bigtable_read_write_object_wrapper import bigtable_write_object_wrapper
 from payana.payana_service.constants import payana_service_constants
-from payana.payana_service.common_utils.payana_parsers import get_city_header
+from payana.payana_service.common_utils.payana_parsers import get_city_header, get_autocomplete_header, get_profile_id_header
 from payana.payana_service.common_utils.payana_service_exception_handlers import payana_service_generic_exception_handler
 from payana.payana_service.common_utils.payana_controller_objects_business_logic_helpers import payana_profile_page_travel_footprint_read_parser, payana_profile_page_travel_footprint_delete_parser
 from payana.payana_bl.bigtable_utils.bigtable_read_write_object_wrapper import bigtable_read_row_key_wrapper
@@ -170,7 +170,7 @@ class PayanaAutocompleteCityColumnValuesDeleteEndPoint(Resource):
 
         payana_autocomplete_city_read_obj = PayanaBigTable(
             payana_city_autocomplete_table)
-        
+
         payana_autocomplete_city_obj_delete_status = payana_autocomplete_city_read_obj.delete_bigtable_row_column_list(
             city, payana_autocomplete_city_object)
 
@@ -184,3 +184,74 @@ class PayanaAutocompleteCityColumnValuesDeleteEndPoint(Resource):
             message: payana_autocomplete_cities_objects_delete_success_message,
             status_code: payana_200
         }, payana_200
+
+
+@payana_autocomplete_cities_name_space.route("/user/")
+class PayanaAutocompleteUserCityEndPoint(Resource):
+
+    @payana_autocomplete_cities_name_space.doc(responses={200: payana_200_response, 400: payana_400_response, 500: payana_500_response})
+    @payana_service_generic_exception_handler
+    def get(self):
+
+        autocomplete = get_autocomplete_header(request)
+
+        if autocomplete is None or len(autocomplete) == 0:
+            raise KeyError(
+                payana_missing_autocomplete_cities_header_exception, payana_autocomplete_cities_name_space)
+
+        profile_id = get_profile_id_header(request)
+
+        if profile_id is None or len(profile_id) == 0:
+            raise KeyError(
+                bigtable_constants.payana_missing_travel_buddy_profile_id_header_exception, payana_autocomplete_cities_name_space)
+
+        city = get_city_header(request)
+
+        if city is None:
+            city = ""
+
+        payana_autocomplete_obj = {}
+
+        # Step 1 - fetch city
+        payana_autocomplete_city_read_obj = PayanaBigTable(
+            payana_city_autocomplete_table)
+
+        city_row_key = bigtable_constants.payana_city_autocomplete_row_key
+        city_regex = str(autocomplete)
+
+        payana_autocomplete_city_obj = payana_autocomplete_city_read_obj.get_row_cells_column_qualifier(
+            city_row_key, city_regex, include_column_family=True)
+
+        if payana_autocomplete_city_obj is not None and city_row_key in payana_autocomplete_city_obj and bigtable_constants.payana_city_autocomplete_column_family in payana_autocomplete_city_obj[city_row_key]:
+            payana_autocomplete_obj[city_row_key] = payana_autocomplete_city_obj[city_row_key][
+                bigtable_constants.payana_city_autocomplete_column_family]
+
+        # Step 2 - fetch connected travel buddies
+        payana_travel_buddy_read_obj = PayanaBigTable(
+            bigtable_constants.payana_travel_buddy_list_table)
+
+        profile_id = str(profile_id)
+        buddy_regex = str(autocomplete)
+
+        payana_travel_buddy_read_obj_dict = payana_travel_buddy_read_obj.get_row_cells_column_qualifier(
+            profile_id, buddy_regex, include_column_family=True)
+
+        if payana_travel_buddy_read_obj_dict is not None and profile_id in payana_travel_buddy_read_obj_dict and bigtable_constants.payana_travel_buddy_table_column_family_travel_buddy_list in payana_travel_buddy_read_obj_dict[profile_id]:
+            payana_autocomplete_obj[bigtable_constants.payana_city_autocomplete_personal_travel_buddies] = payana_travel_buddy_read_obj_dict[
+                profile_id][bigtable_constants.payana_travel_buddy_table_column_family_travel_buddy_list]
+
+        # Step 3 - fetch travel buddies local to a given area
+        payana_autocomplete_users_read_obj = PayanaBigTable(
+            bigtable_constants.payana_users_autocomplete_table)
+
+        if len(city) == 0:
+            payana_users_obj = payana_autocomplete_users_read_obj.get_cells_column_qualifier(
+                buddy_regex, include_column_family=False)
+        else:
+            payana_users_obj = payana_autocomplete_users_read_obj.get_table_rows_rowkey_regex_column_qualifier_regex_chain(
+                city, buddy_regex, include_column_family=False)
+
+        if payana_users_obj is not None and city in payana_users_obj:
+            payana_autocomplete_obj[bigtable_constants.payana_city_autocomplete_city_travel_buddies] = payana_users_obj[city]
+
+        return payana_autocomplete_obj, payana_200
