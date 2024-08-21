@@ -56,3 +56,16 @@ Response structure:
 city => list of cities
 personal_travel_buddies => travel buddies in your connected circle
 city_travel_buddies => unconnected travel influencers in the user's current city
+
+New steps:
+
+Step 8: When the user clicks on an excursion, we show the excursion details with check in objects, images etc
+
+API postman file: Payana HomePage transaction to fetch excursion details on clicking the itinerary/activity guide - Step 8
+Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-206da4aa-9602-47db-8f25-6e37424a1045
+
+
+Step 9: When the user clicks on an activity image, load the list of activity guides
+
+API postman file: Payana HomePage transaction to fetch activity guide details on clicking the activity guide icon - Step 9
+Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-d2363ad3-ed56-48ec-a65e-ecd10a69698b 

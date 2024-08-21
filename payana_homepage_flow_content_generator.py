@@ -215,7 +215,6 @@ payana_itinerary_object_two = {
 itinerary_object_list = [
     payana_itinerary_object_one, payana_itinerary_object_two]
 
-# 3A3 - Create Check In objects
 for itinerary_obj in itinerary_object_list:
     payana_itinerary_obj = PayanaItineraryTable(**itinerary_obj)
 
@@ -232,6 +231,126 @@ for itinerary_obj in itinerary_object_list:
 
     print("Addition of a new itinerary object: " +
           str(itinerary_obj_read != None))
+
+# 3A3 - Create Check In objects
+payana_checkin_obj_json_one = {
+    "image_id_list": {
+        "A": "12345",
+        "B": "34567",
+    },
+    "participants_list": {"pf_id_1": "1234567", "pf_id_2": "1234567", "pf_id_3": "1234567"},
+    "activities_list": {"hiking": "8", "roadtrip": "9"},
+    "instagram_metadata": {
+        "instagram_embed_url": "xyz.com",
+        "instagram_post_id": "12345"
+    },
+    "airbnb_metadata": {
+        "airbnb_embed_url": "xyz.com",
+        "airbnb_post_id": "12345"
+    },
+    "checkin_metadata": {
+        "transport_mode": "drive",
+        "description": "Enjoying the beach!",
+        "checkin_owner_profile_id": "1234567",
+        "create_timestamp": "123456789",
+        "last_updated_timestamp": "123456789",
+        "checkin_id": "12345",
+        "place_id": "1234567",
+        "excursion_id": "12345",
+        "itinerary_id": "1234678",
+        "place_name": "Land's End",
+        # Useful when search happens on a specific profile for a given city/state/country
+        "city": "SF##California##USA",
+        "state": "California##USA",
+        "country": "USA",
+        "checkin_object_position_excursion": "1"
+    }
+}
+
+payana_checkin_obj_json_two = {
+    "image_id_list": {
+        "A": "23456",
+        "B": "45678",
+    },
+    "participants_list": {"pf_id_1": "1234567", "pf_id_2": "1234567", "pf_id_3": "1234567"},
+    "activities_list": {"hiking": "8", "roadtrip": "9"},
+    "instagram_metadata": {
+        "instagram_embed_url": "xyz.com",
+        "instagram_post_id": "12345"
+    },
+    "airbnb_metadata": {
+        "airbnb_embed_url": "xyz.com",
+        "airbnb_post_id": "12345"
+    },
+    "checkin_metadata": {
+        "transport_mode": "drive",
+        "description": "Enjoying the beach!",
+        "checkin_owner_profile_id": "1234567",
+        "create_timestamp": "123456789",
+        "last_updated_timestamp": "123456789",
+        "checkin_id": "23456",
+        "place_id": "1234567",
+        "excursion_id": "12345",
+        "itinerary_id": "1234678",
+        "place_name": "Land's End",
+        # Useful when search happens on a specific profile for a given city/state/country
+        "city": "SF##California##USA",
+        "state": "California##USA",
+        "country": "USA",
+        "checkin_object_position_excursion": "2"
+    }
+}
+
+payana_checkin_obj_json_three = {
+    "image_id_list": {
+        "A": "23456",
+        "B": "56789",
+    },
+    "participants_list": {"pf_id_1": "1234567", "pf_id_2": "1234567", "pf_id_3": "1234567"},
+    "activities_list": {"hiking": "8", "roadtrip": "9"},
+    "instagram_metadata": {
+        "instagram_embed_url": "xyz.com",
+        "instagram_post_id": "12345"
+    },
+    "airbnb_metadata": {
+        "airbnb_embed_url": "xyz.com",
+        "airbnb_post_id": "12345"
+    },
+    "checkin_metadata": {
+        "transport_mode": "drive",
+        "description": "Enjoying the beach!",
+        "checkin_owner_profile_id": "1234567",
+        "create_timestamp": "123456789",
+        "last_updated_timestamp": "123456789",
+        "checkin_id": "23456",
+        "place_id": "1234567",
+        "excursion_id": "12345",
+        "itinerary_id": "1234678",
+        "place_name": "Land's End",
+        # Useful when search happens on a specific profile for a given city/state/country
+        "city": "SF##California##USA",
+        "state": "California##USA",
+        "country": "USA",
+        "checkin_object_position_excursion": "3"
+    }
+}
+
+
+payana_checkin_obj_list = [payana_checkin_obj_json_one,
+                           payana_checkin_obj_json_two, payana_checkin_obj_json_three]
+
+for checkin_obj in payana_checkin_obj_list:
+    payana_checkin_obj = PayanaCheckinTable(**checkin_obj)
+    payana_checkin_obj_write_status = payana_checkin_obj.update_checkin_bigtable()
+    print("Payana checkin object write status: " +
+          str(payana_checkin_obj_write_status))
+
+    checkin_id = payana_checkin_obj.checkin_id
+    payana_checkin_table = bigtable_constants.payana_checkin_table
+    payana_checkin_read_obj = PayanaBigTable(payana_checkin_table)
+    checkin_obj_read = payana_checkin_read_obj.get_row_dict(
+        checkin_id, include_column_family=True)
+    print(checkin_obj_read)
 
 # 3A4 - Upload Google cloud images
 # upload a blob
@@ -349,7 +468,7 @@ payana_activity_thumbnail_obj = {
     },
     payana_activity_thumbnail_city: "sanfrancisco##california##usa"
 }
-
+payana_activity_column_family.append("generic")
 print(payana_activity_thumbnail_obj)
 
 city = payana_activity_thumbnail_obj[payana_activity_thumbnail_city]
@@ -481,9 +600,3 @@ payana_autocomplete_users_read_obj = PayanaBigTable(
     payana_autocomplete_users_table)
 print(payana_autocomplete_users_read_obj.get_row_dict(
     city, include_column_family=True))
-
-# Steps 7C or 7D
-# 7B1 and 7B2 above covers
-
-# Add travel buddy profiles, profile pictures for travel buddy objects in 7B1, 7B2 above
-# Do it in travel buddy page

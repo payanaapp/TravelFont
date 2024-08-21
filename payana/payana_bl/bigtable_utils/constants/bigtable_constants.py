@@ -172,6 +172,7 @@ payana_excursion_country = "country"
 payana_excursion_activity_guide = "activity_guide"
 payana_excursion_itinerary_position = "excursion_object_position_itinerary"
 payana_excursion_clone_parent_id = "excursion_clone_parent_id"
+payana_excursion_checkin_objects = "payana_excursion_checkin_objects"
 
 # Payana check in table constants
 payana_checkin_column_family_image_id_list = "image_id_list"
