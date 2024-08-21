@@ -26,6 +26,7 @@ def gunicorn_init_app(port, server, workers, payana_flask_app):
     options = {
         'bind': '%s:%s' % (server, port),
         'workers': workers,
+        'timeout': 300,
     }
     gunicorn_payana = StandaloneApplication(payana_flask_app, options)
     return gunicorn_payana
