@@ -22,6 +22,7 @@ payana_itinerary_name_header = payana_service_constants.payana_itinerary_name_he
 payana_friend_id_header = payana_service_constants.payana_friend_id_header
 payana_signed_url_storage_bucket_header = payana_service_constants.payana_signed_url_storage_bucket_header
 payana_signed_url_storage_object_header = payana_service_constants.payana_signed_url_storage_object_header
+payana_autocomplete_header = payana_service_constants.payana_autocomplete_header
 
 @payana_service_generic_exception_handler
 def payana_profile_id_header_parser():
@@ -70,6 +71,13 @@ def get_city_header(request):
     city = request.headers.get(payana_city_header)
 
     return None if city is None else city.strip()
+
+@payana_service_generic_exception_handler
+def get_autocomplete_header(request):
+
+    autocomplete = request.headers.get(payana_autocomplete_header)
+
+    return None if autocomplete is None else autocomplete.strip()
 
 @payana_service_generic_exception_handler
 def get_user_header(request):

@@ -9,3 +9,50 @@ Steps 6A, 6B in payana_homepage_flow.txt merged into one transaction
 
 API postman file: Payana Save Itinerary transaction - Steps 6A, 6B
 Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-e032fac1-39fa-4542-b638-e072f40f2cdd 
+
+
+
+Steps 2, 3A, 3B, 3C1, 3D, 3E in payana_homepage_flow.txt merged into one transaction. 
+After this use 3C2 in payana_homepage_flow.txt to download the images. image_id is in the returned object.
+
+API postman file: Payana HomePage transaction to fetch the feed - Steps 2, 3A, 3B, 3C1, 3D, 3E
+Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-7c37e651-2f38-45dd-b0f3-7b9e41ced60e
+
+
+Steps 5A-5C merged - take profile ID as input and get the list of itineraries with an image ID, signed URL
+
+API postman file: Payana Fetch Saved Itineraries transaction - Steps 5A, 5B, 5C
+Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-a30753a9-6982-4121-9421-cd0236f277e1 
+
+Response structure:
+{
+    itinerary_id: {
+        itinerary_name:{
+            image_id: signed_url
+        }
+    }
+}
+
+
+Steps 7A, 7B1, 7B2 combined - fetch auto-complete list for cities, users
+
+API postman file: Payana HomePage transaction to fetch users, city for search string - Steps 7A, 7B1, 7B2 combined
+Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-91c4a84a-d799-45f3-8b2d-e566157e7e8c 
+
+
+Response structure:
+{
+    "city": {
+        "zainzibar": "1234"
+    },
+    "personal_travel_buddies": {
+        "zain": "5678910"
+    },
+    "city_travel_buddies": {
+        "zain": "6799"
+    }
+}
+
+city => list of cities
+personal_travel_buddies => travel buddies in your connected circle
+city_travel_buddies => unconnected travel influencers in the user's current city

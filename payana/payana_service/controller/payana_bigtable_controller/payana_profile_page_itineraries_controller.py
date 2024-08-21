@@ -12,6 +12,7 @@ from payana.payana_bl.bigtable_utils.PayanaProfilePageItineraryTable import Paya
 from payana.payana_bl.bigtable_utils.PayanaBigTable import PayanaBigTable
 from payana.payana_bl.bigtable_utils.constants import bigtable_constants
 from payana.payana_bl.bigtable_utils.bigtable_read_write_object_wrapper import bigtable_write_object_wrapper
+from payana.payana_bl.cloud_storage_utils.payana_generate_gcs_signed_url import payana_generate_download_signed_url
 
 profile_page_itineraries_name_space = Namespace(
     'itineraries', description='Manage profile page itineraries')
@@ -250,6 +251,7 @@ class PayanaProfileTableColumnFamilyDeleteEndPoint(Resource):
             status_code: payana_200
         }, payana_200
 
+
 @profile_page_itineraries_name_space.route("/delete/values/activities/")
 class PayanaProfilePageItinerariesColumnValuesDeleteEndPoint(Resource):
 
@@ -275,11 +277,11 @@ class PayanaProfilePageItinerariesColumnValuesDeleteEndPoint(Resource):
         payana_profile_page_itinerary_table_delete_wrappers = []
 
         for column_family, column_family_dict in profile_page_itinerary_object.items():
-            
+
             for activity in bigtable_constants.payana_activity_column_family:
                 activity_column_family_mapping = "_".join(
                     [activity, column_family])
-                
+
                 # Delete specific column family and column values
                 for column_quantifier, column_value in column_family_dict.items():
                     payana_profile_page_itinerary_table_delete_wrapper = bigtable_write_object_wrapper(
@@ -301,3 +303,85 @@ class PayanaProfilePageItinerariesColumnValuesDeleteEndPoint(Resource):
             message: payana_profile_page_itinerary_objects_delete_success_message,
             status_code: payana_200
         }, payana_200
+
+
+@profile_page_itineraries_name_space.route("/save/")
+class PayanaProfilePageItinerariesEndPoint(Resource):
+
+    @profile_page_itineraries_name_space.doc(responses={200: payana_200_response, 400: payana_400_response, 500: payana_500_response})
+    @payana_service_generic_exception_handler
+    def get(self):
+
+        profile_id = get_profile_id_header(request)
+
+        if profile_id is None or len(profile_id) == 0:
+            raise KeyError(payana_missing_profile_id_header_exception,
+                           profile_page_itineraries_name_space)
+
+        payana_profile_page_itinerary_read_obj = PayanaBigTable(
+            payana_profile_page_itinerary_table)
+
+        profile_id = str(profile_id)
+
+        payana_profile_page_itinerary_read_obj_dict = payana_profile_page_itinerary_read_obj.get_row_dict(
+            profile_id, include_column_family=True)
+
+        if len(payana_profile_page_itinerary_read_obj_dict) == 0:
+            return {}, payana_200
+
+        activity_guide_identifier = '_'.join([bigtable_constants.payana_generic_activity_column_family,
+                                             bigtable_constants.payana_profile_page_itinerary_table_saved_itinerary_id_mapping_quantifier_value])
+
+        if activity_guide_identifier not in payana_profile_page_itinerary_read_obj_dict[profile_id]:
+            return {}, payana_200
+
+        payana_profile_page_itinerary_read_obj_dict = payana_profile_page_itinerary_read_obj_dict[profile_id][
+            activity_guide_identifier]
+
+        payana_itinerary_return_obj = {}
+
+        for itinerary_name, itinerary_id in payana_profile_page_itinerary_read_obj_dict.items():
+            payana_itinerary_return_obj[itinerary_id] = {itinerary_name: {}}
+            payana_itinerary_read_obj = PayanaBigTable(
+                bigtable_constants.payana_itinerary_table)
+
+            itinerary_id = str(itinerary_id)
+
+            payana_itinerary_obj = payana_itinerary_read_obj.get_row_dict(
+                itinerary_id, include_column_family=True)
+
+            if len(payana_itinerary_obj) == 0 or itinerary_id not in payana_itinerary_obj:
+                continue
+
+            payana_itinerary_obj = payana_itinerary_obj[itinerary_id][
+                bigtable_constants.payana_itinerary_column_family_excursion_id_list]
+
+            for _, excursion_id in payana_itinerary_obj.items():
+                payana_excursion_read_obj = PayanaBigTable(
+                    bigtable_constants.payana_excursion_table)
+
+                excursion_id = str(excursion_id)
+
+                payana_excursion_obj = payana_excursion_read_obj.get_row_dict(
+                    excursion_id, include_column_family=True)
+
+                if len(payana_excursion_obj) == 0 or excursion_id not in payana_excursion_obj:
+                    continue
+
+                payana_excursion_obj = payana_excursion_obj[excursion_id][
+                    bigtable_constants.payana_excursion_column_family_image_id_list]
+
+                for _, image_id in payana_excursion_obj.items():
+                    payana_profile_picture_download_signed_url_content = payana_generate_download_signed_url(
+                        bigtable_constants.payana_gcs_itinerary_pictures, image_id)
+
+                    payana_itinerary_return_obj[itinerary_id][itinerary_name] = {
+                        image_id: payana_profile_picture_download_signed_url_content}
+
+                    if len(payana_itinerary_return_obj[itinerary_id][itinerary_name]) > 0:
+                        break
+
+                if len(payana_itinerary_return_obj[itinerary_id][itinerary_name]) > 0:
+                    break
+
+        return payana_itinerary_return_obj, payana_200

@@ -2,11 +2,12 @@ import copy
 from flask import Flask, request, Blueprint
 from flask_restx import Api, Resource, fields, Namespace, reqparse
 import json
+import random
 
 from payana.payana_service.server import service_settings
 from payana.payana_bl.bigtable_utils.bigtable_read_write_object_wrapper import bigtable_write_object_wrapper
 from payana.payana_service.constants import payana_service_constants
-from payana.payana_service.common_utils.payana_parsers import get_excursion_id_header, get_profile_id_header, get_itinerary_id_header, get_itinerary_name_header
+from payana.payana_service.common_utils.payana_parsers import get_excursion_id_header, get_profile_id_header, get_itinerary_id_header, get_itinerary_name_header, get_city_header, get_activity_id_header
 from payana.payana_service.common_utils.payana_service_exception_handlers import payana_service_generic_exception_handler
 from payana.payana_service.common_utils.payana_controller_objects_business_logic_helpers import payana_profile_page_travel_footprint_read_parser, payana_profile_page_travel_footprint_delete_parser
 from payana.payana_bl.bigtable_utils.bigtable_read_write_object_wrapper import bigtable_read_row_key_wrapper
@@ -18,6 +19,7 @@ from payana.payana_bl.bigtable_utils.constants import bigtable_constants
 from payana.payana_bl.bigtable_utils.bigtable_read_write_object_wrapper import bigtable_write_object_wrapper
 from payana.payana_service.models.payana_bigtable_models.payana_itinerary_flow_model import payana_excursion_object_model, payana_itinerary_object_model, profile_page_itinerary_model
 from payana.payana_service.controller.payana_bigtable_controller.payana_bigtable_controller_utils.payana_bigtable_controller_itinerary_creation_utils import get_profile_page_itinerary_table, get_itinerary_object, delete_excursion_object, delete_itinerary_object, delete_profile_page_itinerary_object_column_values, get_excursion_object, update_excursion_metadata_object, create_excursion_object, create_profile_page_itinerary_object, delete_checkin_object, delete_profile_page_itinerary_table_entity_id, update_itinerary_object
+from payana.payana_bl.cloud_storage_utils.payana_generate_gcs_signed_url import payana_generate_download_signed_url
 
 payana_excursion_objects_name_space = Namespace(
     'excursion', description='Manage the CRUD operations of the excursion table')
@@ -1118,3 +1120,130 @@ class PayanaExcursionTransactionEndPoint(Resource):
             message: payana_excursion_objects_write_success_message_post,
             status_code: payana_201
         }, payana_201
+
+
+@payana_excursion_objects_name_space.route("/home/")
+class PayanaExcursionObjectHomeEndPoint(Resource):
+
+    @payana_excursion_objects_name_space.doc(responses={200: payana_200_response, 400: payana_400_response, 500: payana_500_response})
+    @payana_service_generic_exception_handler
+    def get(self):
+
+        city = get_city_header(request)
+
+        if city is None or len(city) == 0:
+            raise KeyError(
+                payana_service_constants.payana_missing_city_header_exception, payana_excursion_objects_name_space)
+
+        city = str(city)
+
+        activity = get_activity_id_header(request)
+
+        if activity is None or len(activity) == 0:
+            activity = bigtable_constants.payana_generic_activity_column_family
+        elif activity not in bigtable_constants.payana_activity_column_family:
+            raise KeyError(
+                payana_service_constants.payana_invalid_activity_id_exception, payana_excursion_objects_name_space)
+
+        activity = str(activity)
+
+        # Step 1 - fetch neighboring cities
+        payana_neighboring_cities_read_obj = PayanaBigTable(
+            bigtable_constants.payana_neighboring_cities_table)
+        payana_homepage_cities_list = payana_neighboring_cities_read_obj.get_row_dict(
+            city, include_column_family=True)
+
+        if payana_homepage_cities_list is None or len(payana_homepage_cities_list) == 0 or city not in payana_homepage_cities_list:
+            raise Exception(
+                payana_service_constants.payana_city_not_found_exception, payana_excursion_objects_name_space)
+
+        payana_homepage_cities_list = payana_homepage_cities_list[city][
+            bigtable_constants.payana_neighboring_cities_column_family]
+
+        # Step 2 - get city wise ranked excursion/activity objects
+        payana_homepage_return_obj = {payana_service_constants.payana_activity_guide_header: [
+        ], payana_service_constants.payana_excursion_guide_header: []}
+
+        for homepage_city in payana_homepage_cities_list:
+            payana_global_city_itinerary_read_obj = PayanaBigTable(
+                bigtable_constants.payana_global_city_itinerary_table)
+            payana_global_city_itinerary_read_row_obj = payana_global_city_itinerary_read_obj.get_row_dict(
+                homepage_city, include_column_family=True)
+
+            if payana_global_city_itinerary_read_row_obj is None or len(payana_global_city_itinerary_read_row_obj) == 0 or homepage_city not in payana_global_city_itinerary_read_row_obj:
+                raise (payana_service_constants.payana_top_excursion_guides_not_found_exception,
+                       payana_excursion_objects_name_space)
+
+            payana_global_city_itinerary_read_row_obj = payana_global_city_itinerary_read_row_obj[
+                homepage_city]
+
+            activity_guide_identifier = '_'.join([activity, bigtable_constants.payana_global_city_itinerary_table_itinerary_id_timestamp_quantifier_value,
+                                                 bigtable_constants.payana_global_city_itinerary_table_activity_guide_id_quantifier_value])
+            excursion_identifier = '_'.join([activity, bigtable_constants.payana_global_city_itinerary_table_itinerary_id_timestamp_quantifier_value,
+                                            bigtable_constants.payana_global_city_itinerary_table_excursion_id_quantifier_value])
+
+            activity_guide_id_list = {}
+            if activity_guide_identifier in payana_global_city_itinerary_read_row_obj:
+                activity_guide_id_list = payana_global_city_itinerary_read_row_obj[
+                    activity_guide_identifier]
+
+            excursion_id_list = {}
+            if excursion_identifier in payana_global_city_itinerary_read_row_obj:
+                excursion_id_list = payana_global_city_itinerary_read_row_obj[excursion_identifier]
+
+            # Step 3 - for each excursion, activity ID, get metadata
+            payana_excursion_read_obj = PayanaBigTable(payana_excursion_table)
+            gcs_payana_itinerary_pictures_bucket_name = bigtable_constants.payana_gcs_itinerary_pictures
+
+            # sort by timestamp later
+            for excursion_id in {**excursion_id_list, **activity_guide_id_list}:
+                
+                payana_excursion_object = payana_excursion_read_obj.get_row_dict(
+                    excursion_id, include_column_family=True)
+
+                if payana_excursion_object is None or len(payana_excursion_object) == 0 or excursion_id not in payana_excursion_object or bigtable_constants.payana_excursion_column_family_image_id_list not in payana_excursion_object[excursion_id]:
+                    continue
+
+                payana_excursion_object[excursion_id][bigtable_constants.payana_excursion_image_id_signed_url_mapping] = {
+                }
+                
+                # Step 4 - fetch image IDs and get the signed download URLs
+                if activity == bigtable_constants.payana_generic_activity_column_family and excursion_id in activity_guide_id_list:
+                    # fetch activity guide thumbnail images
+                    payana_activity_thumbnail_obj = PayanaBigTable(
+                        bigtable_constants.payana_activity_guide_thumbnail_table)
+
+                    payana_activity_thumbnail_obj_read = payana_activity_thumbnail_obj.get_row_dict(
+                        homepage_city, include_column_family=True)
+
+                    if homepage_city in payana_activity_thumbnail_obj_read:
+                        for activity_id in bigtable_constants.payana_activity_column_family:
+                            activity_thumbnail_identifier = '_'.join(
+                                [activity_id, bigtable_constants.payana_activity_thumbnail])
+                            if activity_thumbnail_identifier in payana_activity_thumbnail_obj_read[homepage_city]:
+                                rand_int = random.randint(0, len(
+                                    payana_activity_thumbnail_obj_read[homepage_city][activity_thumbnail_identifier])-1)
+                                image_id = list(payana_activity_thumbnail_obj_read[homepage_city][activity_thumbnail_identifier].keys())[
+                                    rand_int]
+                                payana_profile_picture_download_signed_url_content = payana_generate_download_signed_url(
+                                    gcs_payana_itinerary_pictures_bucket_name, image_id)
+                                payana_excursion_object[excursion_id][bigtable_constants.payana_excursion_image_id_signed_url_mapping].update({activity_id: {image_id: payana_profile_picture_download_signed_url_content
+                                                                                                                                                             }})
+                else:
+                    for _, image_id in payana_excursion_object[excursion_id][bigtable_constants.payana_excursion_column_family_image_id_list].items():
+                        payana_profile_picture_download_signed_url_content = payana_generate_download_signed_url(
+                            gcs_payana_itinerary_pictures_bucket_name, image_id)
+
+                        payana_excursion_object[excursion_id][bigtable_constants.payana_excursion_image_id_signed_url_mapping].update({image_id: payana_profile_picture_download_signed_url_content
+                                                                                                                                       })
+                        if len(payana_excursion_object[excursion_id][bigtable_constants.payana_excursion_image_id_signed_url_mapping]) == 4:
+                            break
+
+                if excursion_id in activity_guide_id_list:
+                    payana_homepage_return_obj[payana_service_constants.payana_activity_guide_header].append(
+                        payana_excursion_object)
+                else:
+                    payana_homepage_return_obj[payana_service_constants.payana_excursion_guide_header].append(
+                        payana_excursion_object)
+
+        return payana_homepage_return_obj, payana_200

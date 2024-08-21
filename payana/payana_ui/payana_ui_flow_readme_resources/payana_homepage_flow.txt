@@ -706,37 +706,3 @@ Response:
     }
 }
 """
-
-7C - Fetch travel influencer names based on names 
- -- Same API as 7B, just use city = "" (empty string)
-
-7D - Fetch travel influencer names based on city
-
-Reference files:
-  - * payana_service_autocomplete_users_read_write_edit_test.py 
-  - * payana_autocomplete_users_read_write_edit.py
-
-API postman file: Payana  autocomplete users object GET
-Link: https://red-robot-449517.postman.co/workspace/28d8f057-fa71-4844-966d-2bac94136c58/request/921141-50a0a044-834c-406d-babe-3fc6c218bc48
-
-API call:
-"""
-curl --location 'http://localhost:8888/entity/autocomplete/users/' \
---header 'Content-Type: application/json' \
---header 'city: sanfrancisco##california##usa' \
---header 'user;'
-""",
-
-Response:
-"""
-{
-    "sanfrancisco##california##usa": {
-        "payana_autocomplete_users_list": {
-            "user_1": "156",
-            "user_2": "789",
-            "user_3": "8678",
-            "user_4": "1457"
-        }
-    }
-}
-"""

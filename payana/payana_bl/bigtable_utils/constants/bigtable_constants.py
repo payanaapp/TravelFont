@@ -13,8 +13,10 @@ travelfont_home = os.environ.get("travelfont_home")
 
 
 # client_config.yaml constants
-bigtable_client_config_path = os.path.join(travelfont_home, "payana/payana_bl/bigtable_utils/config/client_config.yaml")
-gcs_client_config_path = os.path.join(travelfont_home, "payana/payana_bl/cloud_storage_utils/config/gcs_bucket_schema.json")
+bigtable_client_config_path = os.path.join(
+    travelfont_home, "payana/payana_bl/bigtable_utils/config/client_config.yaml")
+gcs_client_config_path = os.path.join(
+    travelfont_home, "payana/payana_bl/cloud_storage_utils/config/gcs_bucket_schema.json")
 bigtable_instance_id = "instance_id"
 bigtable_project_id = "project_id"
 bigtable_cluster_id = "cluster_id"
@@ -27,7 +29,8 @@ bigtable_storage_type = enums.StorageType.SSD
 bigtable_production = enums.Instance.Type.PRODUCTION
 
 # bigtable table creation schema constants
-bigtable_schema_config_file = os.path.join(travelfont_home, "payana/payana_bl/bigtable_utils/config/bigtable_schema.json")
+bigtable_schema_config_file = os.path.join(
+    travelfont_home, "payana/payana_bl/bigtable_utils/config/bigtable_schema.json")
 bigtable_schema_column_family_id = "column_family_id"
 bigtable_schema_max_versions = "max_versions"
 bigtable_schema_description = "description"
@@ -70,6 +73,10 @@ payana_mail_share_itinerary_notification_table = "payana_mail_share_itinerary_no
 payana_profile_auth_table = "payana_profile_auth_table"
 payana_activity_guide_thumbnail_table = "payana_activity_guide_thumbnail_table"
 
+# payana gcs bucket names
+payana_gcs_itinerary_pictures = "payana_itinerary_pictures"
+payana_gcs_profile_pictures = "payana_profile_pictures"
+
 # payana_auth_profile_table
 payana_auth_information = "auth_information"
 payana_auth_mail_id = "mail_id"
@@ -88,7 +95,7 @@ payana_profile_table_email = "email"
 payana_profile_table_phone = "phone"
 payana_profile_table_private_account = "private_account"
 payana_profile_table_gender = "gender"
-payana_profile_table_doj = "doj" #date of joining
+payana_profile_table_doj = "doj"  # date of joining
 payana_profile_table_date_of_birth = "date_of_birth"
 payana_profile_table_top_activities_tracker_rating = "top_activities_tracker_rating"
 payana_profile_favorite_places_preference = "favorite_places_preference"
@@ -142,9 +149,10 @@ payana_itinerary_column_family_cities_list = "cities_list"
 payana_excursion_column_family_checkin_id_list = "checkin_id_list"
 payana_excursion_column_family_cities_checkin_id_list = "cities_checkin_id_list"
 payana_excursion_column_family_image_id_list = "image_id_list"
+payana_excursion_image_id_signed_url_mapping = "image_id_signed_url_list"
 payana_excursion_column_family_participants_list = "participants_list"
 payana_excursion_column_family_description = "description"
-payana_excursion_column_family_create_timestamp = "create_timestamp" 
+payana_excursion_column_family_create_timestamp = "create_timestamp"
 payana_excursion_column_family_last_updated_timestamp = "last_updated_timestamp"
 payana_excursion_column_family_excursion_owner_profile_id = "excursion_owner_profile_id"
 payana_excursion_id = "excursion_id"
@@ -234,7 +242,8 @@ payana_neighboring_cities_column_family = "neighboring_city_list"
 
 # Payana activity constants
 payana_generic_activity_column_family = "generic"
-payana_activity_column_family = ["generic", "hiking", "aerial_activities", "bar_hopping", "city_culture", "clubbing", "coffee_bar", "fashion_trips", "food_trips", "instagrammable_locations", "island_beaches", "kid_friendly", "land_adventures", "live_events", "road_trips", "romantic", "rooftop_bars", "spring_break", "staycation", "water_activities", "weekend_getaway"]
+payana_activity_column_family = ["generic", "hiking", "aerial_activities", "bar_hopping", "city_culture", "clubbing", "coffee_bar", "fashion_trips", "food_trips", "instagrammable_locations",
+                                 "island_beaches", "kid_friendly", "land_adventures", "live_events", "road_trips", "romantic", "rooftop_bars", "spring_break", "staycation", "water_activities", "weekend_getaway"]
 
 # Payana personal place ID itinerary table constants
 payana_personal_place_id_itinerary_table_itinerary_id_quantifier_value = "itinerary_id"
@@ -373,6 +382,8 @@ payana_users_autocomplete_column_family = "payana_autocomplete_users_list"
 # payana_city_autocomplete_table constants
 payana_city_autocomplete_column_family = "payana_autocomplete_cities_list"
 payana_city_autocomplete_row_key = "city"
+payana_city_autocomplete_personal_travel_buddies = "personal_travel_buddies"
+payana_city_autocomplete_city_travel_buddies = "city_travel_buddies"
 
 # payana_mail_sign_up_notification
 payana_sign_up_mail_id_list_column_family = "sign_up_mail_id_list"
