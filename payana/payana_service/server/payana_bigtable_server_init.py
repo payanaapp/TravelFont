@@ -6,10 +6,11 @@ from payana.payana_service.server.payana_bigtable_server_blueprints.payana_home_
 from payana.payana_service.server.payana_bigtable_server_blueprints.payana_generic_entity_blueprint import payana_entity_api_blueprint
 from payana.payana_service.server.payana_bigtable_server_blueprints.payana_health_blueprint import payana_health_api_blueprint
 from payana.payana_service.server.payana_bigtable_gunicorn_server_init import gunicorn_init_app
-
+from flask_cors import CORS
 import multiprocessing
 
 payana_flask_app = Flask(__name__)
+CORS(payana_flask_app)
 port = '8888'
 flask_server_name = '127.0.0.1'
 
