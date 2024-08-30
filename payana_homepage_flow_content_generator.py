@@ -352,8 +352,31 @@ for checkin_obj in payana_checkin_obj_list:
         checkin_id, include_column_family=True)
     print(checkin_obj_read)
 
-# 3A4 - Upload Google cloud images
+# 3A4 - Upload Google cloud images - Itinerary bucket
 # upload a blob
+gcs_payana_itinerary_pictures_bucket_name = bigtable_constants.payana_gcs_itinerary_pictures
+
+itinerary_picture_bucket_name_list = {"12345": "fishermans_wharf.jpg", "34567": "golden_gate_night.jpg", "23456": "golden-gate-bridge-sf.jpg",
+                                      "45678": "fishermans_wharf.jpg", "23456": "golden_gate_night.jpg", "56789": "golden-gate-bridge-sf.jpg"}
+
+for itinerary_picture_bucket_name, image_path in itinerary_picture_bucket_name_list.items():
+    payana_gcs_image_upload_path = os.path.join(
+        bigtable_constants.travelfont_home, image_path)
+
+    payana_profile_picture_upload_storage_object_status = payana_upload_storage_object(
+        gcs_payana_itinerary_pictures_bucket_name, payana_gcs_image_upload_path, itinerary_picture_bucket_name)
+
+    print("Payana Profile Picture Upload Storage Object Status: " +
+          str(payana_profile_picture_upload_storage_object_status))
+
+    payana_gcs_image_download_path = os.path.join(
+        bigtable_constants.travelfont_home, "downloaded_" + image_path)
+
+    # download a blob
+    payana_profile_picture_download_storage_object_status = payana_download_storage_object(
+        gcs_payana_itinerary_pictures_bucket_name, itinerary_picture_bucket_name, payana_gcs_image_download_path)
+    
+# Profile Pictures bucket
 gcs_payana_itinerary_pictures_bucket_name = bigtable_constants.payana_gcs_profile_pictures
 
 itinerary_picture_bucket_name_list = {"12345": "fishermans_wharf.jpg", "34567": "golden_gate_night.jpg", "23456": "golden-gate-bridge-sf.jpg",

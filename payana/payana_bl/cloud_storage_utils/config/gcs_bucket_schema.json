@@ -1,10 +1,10 @@
 {
     "payana_profile_pictures": {
-        "bucket_location":"us",
+        "bucket_location":"ME-CENTRAL1",
         "bucket_storage_class":"STANDARD"
     },
     "payana_itinerary_pictures": {
-        "bucket_location":"us",
+        "bucket_location":"ME-CENTRAL1",
         "bucket_storage_class":"STANDARD"
     }
 }
