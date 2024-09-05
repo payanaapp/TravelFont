@@ -87,8 +87,10 @@ payana_tables_delete_failure_message = "Failed to delete the Payana tables"
 payana_signed_url_success_message_get = "Payana Signed URL successfully fetched!"
 payana_signed_url_storage_bucket_header = "payana_storage_bucket"
 payana_signed_url_storage_object_header = "payana_storage_object"
+payana_signed_url_content_type = "Content-Type"
 payana_signed_url_storage_bucket_header_missing_exception = "Payana storage bucket entity header missing"
 payana_signed_url_storage_object_header_missing_exception  = "Payana storage object entity header missing"
+payana_signed_url_content_type_header_missing_exception  = "Payana storage object content type header missing"
 
 # Payana GCS object controller constants
 payana_gcs_object_success_message_delete = "Payana GCS object successfully deleted!"

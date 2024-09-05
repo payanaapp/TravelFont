@@ -17,8 +17,8 @@ from urllib import response
 import requests
 import json
 
-payana_cloud_storage_init_status = payana_cloud_storage_init(
-    bigtable_constants.gcs_client_config_path)
+# payana_cloud_storage_init_status = payana_cloud_storage_init(
+#     bigtable_constants.gcs_client_config_path)
 
 payana_gcs_image_upload_path = os.path.join(
     bigtable_constants.travelfont_home, "gcs_upload.jpg")
@@ -44,7 +44,8 @@ curl --location --request GET 'http://127.0.0.1:8888/entity/signed_url/upload' \
 url = "http://127.0.0.1:8888/entity/signed_url/upload/"
 
 headers = {'payana_storage_bucket': gcs_payana_profile_pictures_bucket_name,
-           'payana_storage_object': profile_picture_bucket_name}
+           'payana_storage_object': profile_picture_bucket_name,
+           'Content-Type': 'image/jpeg'}
 
 response = requests.get(url, headers=headers)
 
@@ -67,20 +68,9 @@ url = payana_signed_url
 
 image_path = os.path.join(bigtable_constants.travelfont_home, "image.jpg")
 
-with open(image_path, "rb") as f:
-    im_bytes = f.read()
+payload = open(image_path,'rb').read()
 
-im_b64 = base64.b64encode(im_bytes).decode("utf8")
-
-payload = json.dumps({"image": im_b64})
-
-headers = {'Content-Type': 'application/octet-stream'}
-
-# response = requests.put(
-#     url, data={'upload': open(image_path, 'rb')})
-
-# response = requests.put(url, headers=headers, files={
-#                          'image': open(image_path, 'rb')})
+headers = {'Content-Type': 'image/jpeg'}
 
 response = requests.put(url, headers=headers, data=payload)
 
