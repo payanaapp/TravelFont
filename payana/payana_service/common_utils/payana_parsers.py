@@ -23,6 +23,8 @@ payana_friend_id_header = payana_service_constants.payana_friend_id_header
 payana_signed_url_storage_bucket_header = payana_service_constants.payana_signed_url_storage_bucket_header
 payana_signed_url_storage_object_header = payana_service_constants.payana_signed_url_storage_object_header
 payana_autocomplete_header = payana_service_constants.payana_autocomplete_header
+payana_signed_url_content_type = payana_service_constants.payana_signed_url_content_type
+
 
 @payana_service_generic_exception_handler
 def payana_profile_id_header_parser():
@@ -152,3 +154,10 @@ def get_gcs_bucket_id_header(request):
     storage_bucket_id = request.headers.get(payana_signed_url_storage_bucket_header)
 
     return None if storage_bucket_id is None else storage_bucket_id.strip()
+
+@payana_service_generic_exception_handler
+def get_gcs_content_type_header(request):
+
+    content_type = request.headers.get(payana_signed_url_content_type)
+
+    return None if content_type is None else content_type

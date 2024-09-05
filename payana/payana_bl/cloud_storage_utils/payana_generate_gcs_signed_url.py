@@ -11,13 +11,13 @@ from payana.payana_core.cloud_storage_utils.create_signed_url_gcs import create_
 from payana.payana_bl.cloud_storage_utils.constants import gcs_constants
 
 @ payana_generic_exception_handler
-def payana_generate_upload_signed_url(bucket_name, blob_name):
+def payana_generate_upload_signed_url(bucket_name, blob_name, content_type):
     
 
     payana_upload_signed_url_expiration_time = gcs_constants.payana_upload_signed_url_expiration_time
 
     return create_upload_signed_url(bucket_name, blob_name,
-                                    payana_upload_signed_url_expiration_time)
+                                    payana_upload_signed_url_expiration_time, content_type)
 
 
 @ payana_generic_exception_handler

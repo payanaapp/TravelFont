@@ -22,16 +22,17 @@ from google.cloud.bigtable import column_family
 class PayanaSignedURL:
 
     @payana_generic_exception_handler
-    def __init__(self, payana_bucket_name, payana_object_name):
+    def __init__(self, payana_bucket_name, payana_object_name, content_type="image/jpeg"):
 
         self.payana_bucket_name = payana_bucket_name
         self.payana_object_name = payana_object_name
+        self.content_type = content_type
 
     @payana_generic_exception_handler
     def get_signed_upload_url(self):
 
         return payana_generate_upload_signed_url(
-            self.payana_bucket_name, self.payana_object_name)
+            self.payana_bucket_name, self.payana_object_name, self.content_type)
 
     @payana_generic_exception_handler
     def get_signed_resumable_upload_url(self):

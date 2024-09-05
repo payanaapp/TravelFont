@@ -5,7 +5,7 @@ import json
 from payana.payana_service.server import service_settings
 from payana.payana_bl.bigtable_utils.bigtable_read_write_object_wrapper import bigtable_write_object_wrapper
 from payana.payana_service.constants import payana_service_constants
-from payana.payana_service.common_utils.payana_parsers import get_gcs_object_id_header, get_gcs_bucket_id_header
+from payana.payana_service.common_utils.payana_parsers import get_gcs_object_id_header, get_gcs_bucket_id_header, get_gcs_content_type_header
 from payana.payana_service.common_utils.payana_service_exception_handlers import payana_service_generic_exception_handler
 from payana.payana_service.common_utils.payana_controller_objects_business_logic_helpers import payana_profile_page_travel_footprint_read_parser, payana_profile_page_travel_footprint_delete_parser
 from payana.payana_bl.bigtable_utils.bigtable_read_write_object_wrapper import bigtable_read_row_key_wrapper
@@ -22,6 +22,7 @@ payana_signed_url_storage_bucket_header = payana_service_constants.payana_signed
 payana_signed_url_storage_object_header = payana_service_constants.payana_signed_url_storage_object_header
 payana_signed_url_storage_bucket_header_missing_exception = payana_service_constants.payana_signed_url_storage_bucket_header_missing_exception
 payana_signed_url_storage_object_header_missing_exception  = payana_service_constants.payana_signed_url_storage_object_header_missing_exception
+payana_signed_url_content_type_header_missing_exception = payana_service_constants.payana_signed_url_content_type_header_missing_exception
 
 status = payana_service_constants.status
 message = payana_service_constants.message
@@ -57,8 +58,14 @@ class PayanaSignedUploadURLEndPoint(Resource):
         if gcs_bucket_id is None or len(gcs_bucket_id) == 0:
             raise KeyError(
                 payana_signed_url_storage_bucket_header_missing_exception, payana_signed_url_name_space)
+            
+        content_type = get_gcs_content_type_header(request)
 
-        payana_signed_url_read_obj = PayanaSignedURL(gcs_bucket_id, gcs_object_id)
+        if content_type is None or len(content_type) == 0:
+            raise KeyError(
+                payana_signed_url_content_type_header_missing_exception, payana_signed_url_name_space)
+            
+        payana_signed_url_read_obj = PayanaSignedURL(gcs_bucket_id, gcs_object_id, content_type)
 
         payana_signed_url = payana_signed_url_read_obj.get_signed_upload_url()
 

@@ -8,6 +8,7 @@ from payana.payana_bl.cloud_storage_utils.payana_set_cors_policy_gcs_bucket impo
 from payana.payana_bl.cloud_storage_utils.payana_generate_gcs_signed_url import payana_generate_upload_signed_url, payana_generate_upload_resumable_signed_url, payana_generate_download_signed_url
 from payana.payana_bl.cloud_storage_utils.payana_set_metadata_gcs_object import payana_set_metadata_gcs_object
 from payana.payana_bl.cloud_storage_utils.payana_get_metadata_gcs_object import payana_get_metadata_gcs_object
+from payana.payana_bl.cloud_storage_utils.constants.gcs_constants import payana_cors_policy
 
 import os
 
@@ -32,30 +33,11 @@ gcs_payana_profile_pictures_bucket_name = "payana_profile_pictures"
 metadata_object = {'payana_object_id': '123467QWERTY123467QWERTY123467QWERTY',
                    'author_name': 'abkr', 'location': 'Cupertino'}
 
-cors_object = [
-    {
-        "origin": [
-            "*"
-        ],
-        "responseHeader": [
-            "Content-Type",
-            "x-goog-resumable"
-        ],
-        "method": [
-            "PUT",
-            "POST",
-            "GET",
-            "DELETE"
-        ],
-        "maxAgeSeconds": 3600
-    }
-]
-
 # set a CORS policy
-payana_set_cors_policy_status = payana_set_cors_policy_storage_bucket(
-    gcs_payana_profile_pictures_bucket_name, cors_object)
+# payana_set_cors_policy_status = payana_set_cors_policy_storage_bucket(
+#     gcs_payana_profile_pictures_bucket_name, payana_cors_policy)
 
-print("Payana Cors Policy Status: " + str(payana_set_cors_policy_status))
+# print("Payana Cors Policy Status: " + str(payana_set_cors_policy_status))
 
 # Get a CORS policy
 payana_get_cors_policy_status = payana_get_cors_policy_storage_bucket(

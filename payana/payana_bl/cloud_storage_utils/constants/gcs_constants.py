@@ -18,10 +18,11 @@ payana_cors_policy = [
         "origin": ["*"],
         # "responseHeader": [
         #     "Content-Type",
-        #     "x-goog-resumable"],
+        #     "x-goog-resumable",
+        #     "Access-Control-Allow-Origin"],
         "responseHeader": ["*"],
         "method": ["*"],
-        # "method": ['PUT', 'POST', 'GET'],
+        # "method": ['PUT', 'POST', 'GET', 'DELETE', 'OPTIONS'],
         "maxAgeSeconds": 3600
     }
 ]

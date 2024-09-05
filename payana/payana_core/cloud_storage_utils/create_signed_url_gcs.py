@@ -10,7 +10,7 @@ from payana.payana_core.common_utils.payana_core_exception_handler_utils import 
 
 
 @payana_generic_exception_handler
-def create_upload_signed_url(bucket_name, blob_name, expiration_time):
+def create_upload_signed_url(bucket_name, blob_name, expiration_time, content_type):
     """Generates a v4 signed URL for uploading a blob using HTTP PUT.
 
     Note that this method requires a service account key file. You can not use
@@ -28,7 +28,7 @@ def create_upload_signed_url(bucket_name, blob_name, expiration_time):
         expiration=datetime.timedelta(minutes=expiration_time),
         # Allow PUT requests using this URL.
         method="PUT",
-        content_type="application/octet-stream",
+        content_type=content_type,
     )
 
     return url
